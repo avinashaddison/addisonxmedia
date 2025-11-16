@@ -200,8 +200,10 @@ export default function Home() {
       </section>
 
       {/* Services Grid */}
-      <section className="py-20 md:py-28 relative">
-        <div className="absolute inset-0 bg-gradient-to-b from-background via-primary/5 to-background"></div>
+      <section className="py-20 md:py-28 relative overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-br from-background via-primary/5 to-background"></div>
+        <div className="absolute top-20 right-10 w-72 h-72 bg-primary/10 rounded-full blur-3xl"></div>
+        <div className="absolute bottom-20 left-10 w-72 h-72 bg-purple-500/10 rounded-full blur-3xl"></div>
         <div className="max-w-7xl mx-auto px-4 md:px-6 relative z-10">
           <div className="text-center mb-16">
             <Badge variant="secondary" className="mb-4">
@@ -220,13 +222,13 @@ export default function Home() {
             {services.map((service, index) => {
               const Icon = service.icon;
               return (
-                <Card key={index} className="group p-8 transition-all duration-300" data-testid={`card-service-${index}`}>
-                  <div className="mb-6">
-                    <div className="inline-flex items-center justify-center w-16 h-16 rounded-xl bg-primary/10 group-hover:bg-primary/15 transition-colors">
-                      <Icon className="h-8 w-8 text-primary" />
+                <Card key={index} className="group p-8 transition-all duration-500 border-primary/10 hover:border-primary/30 hover:shadow-xl hover:shadow-primary/10 bg-gradient-to-br from-card to-card/80" data-testid={`card-service-${index}`}>
+                  <div className="mb-6 relative">
+                    <div className="inline-flex items-center justify-center w-16 h-16 rounded-xl bg-gradient-to-br from-primary/20 to-primary/10 group-hover:from-primary/30 group-hover:to-primary/20 transition-all duration-300">
+                      <Icon className="h-8 w-8 text-primary group-hover:scale-110 transition-transform duration-300" />
                     </div>
                   </div>
-                  <h3 className="text-xl md:text-2xl font-bold mb-3 group-hover:text-primary transition-colors" data-testid={`text-service-title-${index}`}>
+                  <h3 className="text-xl md:text-2xl font-bold mb-3 group-hover:text-primary transition-colors duration-300" data-testid={`text-service-title-${index}`}>
                     {service.title}
                   </h3>
                   <p className="text-base text-muted-foreground leading-relaxed" data-testid={`text-service-description-${index}`}>
@@ -239,7 +241,7 @@ export default function Home() {
 
           <div className="text-center mt-16">
             <Link href="/services">
-              <Button size="lg" variant="default" className="group" data-testid="button-explore-all-services">
+              <Button size="lg" variant="default" className="group shadow-lg hover:shadow-xl transition-all duration-300" data-testid="button-explore-all-services">
                 Explore All Services
                 <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
               </Button>
@@ -356,14 +358,11 @@ export default function Home() {
                   <Badge variant="default">CEO & Founder</Badge>
                 </div>
               </div>
-              <h3 className="text-xl font-bold mb-2" data-testid="text-team-name-0">
-                Amit Kumar
+              <h3 className="text-xl font-bold" data-testid="text-team-name-0">
+                Mr. Ajay Kumar
               </h3>
-              <p className="text-sm text-primary font-semibold mb-3" data-testid="text-team-position-0">
+              <p className="text-sm text-primary font-semibold" data-testid="text-team-position-0">
                 CEO & Founder
-              </p>
-              <p className="text-sm text-muted-foreground">
-                Visionary leader with 10+ years in digital marketing
               </p>
             </Card>
 
@@ -374,14 +373,11 @@ export default function Home() {
                   <div className="text-4xl font-bold text-primary">P</div>
                 </div>
               </div>
-              <h3 className="text-xl font-bold mb-2" data-testid="text-team-name-1">
+              <h3 className="text-xl font-bold" data-testid="text-team-name-1">
                 Priya Sharma
               </h3>
-              <p className="text-sm text-primary font-semibold mb-3" data-testid="text-team-position-1">
+              <p className="text-sm text-primary font-semibold" data-testid="text-team-position-1">
                 Head of Marketing
-              </p>
-              <p className="text-sm text-muted-foreground">
-                Strategic marketing expert with data-driven approach
               </p>
             </Card>
 
@@ -392,14 +388,11 @@ export default function Home() {
                   <div className="text-4xl font-bold text-primary">R</div>
                 </div>
               </div>
-              <h3 className="text-xl font-bold mb-2" data-testid="text-team-name-2">
+              <h3 className="text-xl font-bold" data-testid="text-team-name-2">
                 Rahul Singh
               </h3>
-              <p className="text-sm text-primary font-semibold mb-3" data-testid="text-team-position-2">
+              <p className="text-sm text-primary font-semibold" data-testid="text-team-position-2">
                 Lead Developer
-              </p>
-              <p className="text-sm text-muted-foreground">
-                Full-stack developer crafting exceptional web experiences
               </p>
             </Card>
 
@@ -410,14 +403,11 @@ export default function Home() {
                   <div className="text-4xl font-bold text-primary">S</div>
                 </div>
               </div>
-              <h3 className="text-xl font-bold mb-2" data-testid="text-team-name-3">
+              <h3 className="text-xl font-bold" data-testid="text-team-name-3">
                 Sneha Verma
               </h3>
-              <p className="text-sm text-primary font-semibold mb-3" data-testid="text-team-position-3">
+              <p className="text-sm text-primary font-semibold" data-testid="text-team-position-3">
                 Creative Director
-              </p>
-              <p className="text-sm text-muted-foreground">
-                Creative mind designing captivating brand experiences
               </p>
             </Card>
           </div>
@@ -457,11 +447,16 @@ export default function Home() {
             </div>
 
             <div className="text-center" data-testid="partner-logo-3">
+              <div className="text-2xl md:text-3xl font-bold text-foreground/70 mb-1">Facebook</div>
+              <div className="text-xs text-muted-foreground">Meta Business</div>
+            </div>
+
+            <div className="text-center" data-testid="partner-logo-4">
               <div className="text-2xl md:text-3xl font-bold text-foreground/70 mb-1">Titan</div>
               <div className="text-xs text-muted-foreground">Email Suite</div>
             </div>
 
-            <div className="text-center" data-testid="partner-logo-4">
+            <div className="text-center" data-testid="partner-logo-5">
               <div className="text-2xl md:text-3xl font-bold text-foreground/70 mb-1">Perplexity</div>
               <div className="text-xs text-muted-foreground">AI Search</div>
             </div>
