@@ -100,18 +100,22 @@ export function Navbar() {
 
             {/* Desktop Navigation */}
             <div className="hidden lg:flex items-center gap-1">
-              {navLinks.map((link) => (
-                <Link key={link.path} href={link.path}>
-                  <Button
-                    variant={location === link.path ? "default" : "ghost"}
-                    size="default"
-                    data-testid={`link-${link.label.toLowerCase().replace(" ", "-")}`}
-                    className="font-medium px-4"
-                  >
-                    {link.label}
-                  </Button>
-                </Link>
-              ))}
+              {navLinks.map((link) => {
+                const Icon = link.icon;
+                return (
+                  <Link key={link.path} href={link.path}>
+                    <Button
+                      variant={location === link.path ? "default" : "ghost"}
+                      size="default"
+                      data-testid={`link-${link.label.toLowerCase().replace(" ", "-")}`}
+                      className="font-medium px-4"
+                    >
+                      <Icon className="h-4 w-4 mr-2" />
+                      {link.label}
+                    </Button>
+                  </Link>
+                );
+              })}
             </div>
 
             {/* CTA Button - Desktop */}
