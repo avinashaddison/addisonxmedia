@@ -41,7 +41,7 @@ const heroImages = [
 ];
 
 function HeroSlider() {
-  const [emblaRef, emblaApi] = useEmblaCarousel({ loop: true });
+  const [emblaRef, emblaApi] = useEmblaCarousel({ loop: true, startIndex: 0 });
   const [selectedIndex, setSelectedIndex] = useState(0);
 
   const scrollPrev = useCallback(() => {
@@ -56,39 +56,41 @@ function HeroSlider() {
     if (emblaApi) emblaApi.scrollTo(index);
   }, [emblaApi]);
 
-  const onSelect = useCallback(() => {
-    if (!emblaApi) return;
-    setSelectedIndex(emblaApi.selectedScrollSnap());
-  }, [emblaApi]);
-
   useEffect(() => {
     if (!emblaApi) return;
-    onSelect();
-    emblaApi.on("select", onSelect);
+    
+    const handleSelect = () => {
+      setSelectedIndex(emblaApi.selectedScrollSnap());
+    };
+    
+    handleSelect();
+    emblaApi.on("select", handleSelect);
+    emblaApi.on("reInit", handleSelect);
     
     const interval = setInterval(() => {
       emblaApi.scrollNext();
-    }, 5000);
+    }, 6000);
 
     return () => {
       clearInterval(interval);
-      emblaApi.off("select", onSelect);
+      emblaApi.off("select", handleSelect);
+      emblaApi.off("reInit", handleSelect);
     };
-  }, [emblaApi, onSelect]);
+  }, [emblaApi]);
 
   return (
-    <div className="absolute inset-0 overflow-hidden">
-      <div className="overflow-hidden h-full" ref={emblaRef}>
-        <div className="flex h-full">
+    <div className="absolute inset-0">
+      <div className="overflow-hidden h-full w-full" ref={emblaRef}>
+        <div className="flex h-full touch-pan-y">
           {heroImages.map((image, index) => (
             <div key={index} className="flex-[0_0_100%] min-w-0 relative h-full">
               <img
                 src={image}
                 alt={`Hero ${index + 1}`}
-                className="w-full h-full object-cover"
+                className="w-full h-full object-cover pointer-events-none"
                 data-testid={`img-hero-slide-${index}`}
               />
-              <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-black/50 to-black/30"></div>
+              <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-black/50 to-black/30 pointer-events-none"></div>
             </div>
           ))}
         </div>
@@ -96,33 +98,34 @@ function HeroSlider() {
 
       <button
         onClick={scrollPrev}
-        className="absolute left-4 top-1/2 -translate-y-1/2 z-20 bg-white/10 hover-elevate active-elevate-2 backdrop-blur-md rounded-full p-3 transition-all"
+        className="absolute left-4 top-1/2 -translate-y-1/2 z-50 bg-white/10 hover-elevate active-elevate-2 backdrop-blur-md rounded-full p-3 transition-all pointer-events-auto"
         aria-label="Previous slide"
         data-testid="button-hero-prev"
       >
-        <ChevronLeft className="h-6 w-6 text-white" />
+        <ChevronLeft className="h-6 w-6 text-white pointer-events-none" />
       </button>
 
       <button
         onClick={scrollNext}
-        className="absolute right-4 top-1/2 -translate-y-1/2 z-20 bg-white/10 hover-elevate active-elevate-2 backdrop-blur-md rounded-full p-3 transition-all"
+        className="absolute right-4 top-1/2 -translate-y-1/2 z-50 bg-white/10 hover-elevate active-elevate-2 backdrop-blur-md rounded-full p-3 transition-all pointer-events-auto"
         aria-label="Next slide"
         data-testid="button-hero-next"
       >
-        <ChevronRight className="h-6 w-6 text-white" />
+        <ChevronRight className="h-6 w-6 text-white pointer-events-none" />
       </button>
 
-      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 z-20 flex gap-2">
+      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 z-50 flex gap-2">
         {heroImages.map((_, index) => (
           <button
             key={index}
             onClick={() => scrollTo(index)}
-            className={`h-2 rounded-full transition-all ${
+            className={`h-2 rounded-full transition-all pointer-events-auto ${
               index === selectedIndex 
                 ? "w-8 bg-white" 
                 : "w-2 bg-white/50 hover:bg-white/75"
             }`}
             aria-label={`Go to slide ${index + 1}`}
+            aria-current={index === selectedIndex ? "true" : "false"}
             data-testid={`button-hero-dot-${index}`}
           />
         ))}
@@ -248,14 +251,14 @@ export default function Home() {
         <HeroSlider />
         
         {/* Overlay for better text visibility */}
-        <div className="absolute inset-0 bg-gradient-to-r from-black/60 via-black/40 to-transparent z-10"></div>
+        <div className="absolute inset-0 bg-gradient-to-r from-black/60 via-black/40 to-transparent z-10 pointer-events-none"></div>
         
         {/* Floating Elements */}
-        <div className="absolute top-20 left-10 w-72 h-72 bg-primary/10 rounded-full mix-blend-multiply filter blur-xl animate-blob z-10"></div>
-        <div className="absolute top-40 right-10 w-72 h-72 bg-purple-300/10 rounded-full mix-blend-multiply filter blur-xl animate-blob animation-delay-2000 z-10"></div>
-        <div className="absolute -bottom-8 left-20 w-72 h-72 bg-pink-300/10 rounded-full mix-blend-multiply filter blur-xl animate-blob animation-delay-4000 z-10"></div>
+        <div className="absolute top-20 left-10 w-72 h-72 bg-primary/10 rounded-full mix-blend-multiply filter blur-xl animate-blob z-10 pointer-events-none"></div>
+        <div className="absolute top-40 right-10 w-72 h-72 bg-purple-300/10 rounded-full mix-blend-multiply filter blur-xl animate-blob animation-delay-2000 z-10 pointer-events-none"></div>
+        <div className="absolute -bottom-8 left-20 w-72 h-72 bg-pink-300/10 rounded-full mix-blend-multiply filter blur-xl animate-blob animation-delay-4000 z-10 pointer-events-none"></div>
         
-        <div className="max-w-7xl mx-auto px-4 md:px-6 py-20 md:py-28 lg:py-36 text-center relative z-30">
+        <div className="max-w-7xl mx-auto px-4 md:px-6 py-20 md:py-28 lg:py-36 text-center relative z-40 pointer-events-none">
           <div className="inline-flex items-center gap-2 mb-6 px-4 py-2 bg-white/10 backdrop-blur-sm rounded-full border border-white/20">
             <Sparkles className="h-4 w-4 text-white" />
             <span className="text-sm font-semibold text-white" data-testid="text-location-badge">
@@ -276,14 +279,14 @@ export default function Home() {
           </p>
           
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center animate-in fade-in slide-in-from-bottom-8 duration-1000 delay-300">
-            <Link href="/services">
+            <Link href="/services" className="pointer-events-auto">
               <Button size="lg" className="min-w-[220px] h-14 text-base group" data-testid="button-view-services">
                 <Zap className="mr-2 h-5 w-5 group-hover:rotate-12 transition-transform" />
                 View Our Services
                 <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
               </Button>
             </Link>
-            <Link href="/contact">
+            <Link href="/contact" className="pointer-events-auto">
               <Button size="lg" variant="outline" className="min-w-[220px] h-14 text-base backdrop-blur-sm border-white/30 text-white hover:bg-white/20" data-testid="button-get-consultation">
                 Get Free Consultation
               </Button>
