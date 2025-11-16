@@ -427,7 +427,7 @@ export default function Home() {
       </section>
 
       {/* Partners Section */}
-      <section className="py-20 md:py-24 bg-card border-y">
+      <section className="py-20 md:py-24 bg-card border-y overflow-hidden">
         <div className="max-w-7xl mx-auto px-4 md:px-6">
           <div className="text-center mb-12">
             <Badge variant="secondary" className="mb-4">
@@ -442,35 +442,73 @@ export default function Home() {
             </p>
           </div>
 
-          <div className="flex gap-12 md:gap-16 items-center justify-center flex-wrap">
-            <div className="text-center" data-testid="partner-logo-0">
-              <div className="text-2xl md:text-3xl font-bold text-foreground/70 mb-1">ChatGPT</div>
-              <div className="text-xs text-muted-foreground">OpenAI</div>
-            </div>
+          <div className="relative">
+            <div className="flex animate-slide-infinite gap-16">
+              {/* First set of partners */}
+              <div className="flex gap-16 shrink-0">
+                <div className="text-center min-w-[120px]" data-testid="partner-logo-0">
+                  <div className="text-2xl md:text-3xl font-bold text-foreground/70 mb-1">ChatGPT</div>
+                  <div className="text-xs text-muted-foreground">OpenAI</div>
+                </div>
 
-            <div className="text-center" data-testid="partner-logo-1">
-              <div className="text-2xl md:text-3xl font-bold text-foreground/70 mb-1">Make</div>
-              <div className="text-xs text-muted-foreground">Automation</div>
-            </div>
+                <div className="text-center min-w-[120px]" data-testid="partner-logo-1">
+                  <div className="text-2xl md:text-3xl font-bold text-foreground/70 mb-1">Make</div>
+                  <div className="text-xs text-muted-foreground">Automation</div>
+                </div>
 
-            <div className="text-center" data-testid="partner-logo-2">
-              <div className="text-2xl md:text-3xl font-bold text-foreground/70 mb-1">Google</div>
-              <div className="text-xs text-muted-foreground">Cloud & Ads</div>
-            </div>
+                <div className="text-center min-w-[120px]" data-testid="partner-logo-2">
+                  <div className="text-2xl md:text-3xl font-bold text-foreground/70 mb-1">Google</div>
+                  <div className="text-xs text-muted-foreground">Cloud & Ads</div>
+                </div>
 
-            <div className="text-center" data-testid="partner-logo-3">
-              <div className="text-2xl md:text-3xl font-bold text-foreground/70 mb-1">Facebook</div>
-              <div className="text-xs text-muted-foreground">Meta Business</div>
-            </div>
+                <div className="text-center min-w-[120px]" data-testid="partner-logo-3">
+                  <div className="text-2xl md:text-3xl font-bold text-foreground/70 mb-1">Facebook</div>
+                  <div className="text-xs text-muted-foreground">Meta Business</div>
+                </div>
 
-            <div className="text-center" data-testid="partner-logo-4">
-              <div className="text-2xl md:text-3xl font-bold text-foreground/70 mb-1">Titan</div>
-              <div className="text-xs text-muted-foreground">Email Suite</div>
-            </div>
+                <div className="text-center min-w-[120px]" data-testid="partner-logo-4">
+                  <div className="text-2xl md:text-3xl font-bold text-foreground/70 mb-1">Titan</div>
+                  <div className="text-xs text-muted-foreground">Email Suite</div>
+                </div>
 
-            <div className="text-center" data-testid="partner-logo-5">
-              <div className="text-2xl md:text-3xl font-bold text-foreground/70 mb-1">Perplexity</div>
-              <div className="text-xs text-muted-foreground">AI Search</div>
+                <div className="text-center min-w-[120px]" data-testid="partner-logo-5">
+                  <div className="text-2xl md:text-3xl font-bold text-foreground/70 mb-1">Perplexity</div>
+                  <div className="text-xs text-muted-foreground">AI Search</div>
+                </div>
+              </div>
+
+              {/* Duplicate set for seamless loop */}
+              <div className="flex gap-16 shrink-0" aria-hidden="true">
+                <div className="text-center min-w-[120px]">
+                  <div className="text-2xl md:text-3xl font-bold text-foreground/70 mb-1">ChatGPT</div>
+                  <div className="text-xs text-muted-foreground">OpenAI</div>
+                </div>
+
+                <div className="text-center min-w-[120px]">
+                  <div className="text-2xl md:text-3xl font-bold text-foreground/70 mb-1">Make</div>
+                  <div className="text-xs text-muted-foreground">Automation</div>
+                </div>
+
+                <div className="text-center min-w-[120px]">
+                  <div className="text-2xl md:text-3xl font-bold text-foreground/70 mb-1">Google</div>
+                  <div className="text-xs text-muted-foreground">Cloud & Ads</div>
+                </div>
+
+                <div className="text-center min-w-[120px]">
+                  <div className="text-2xl md:text-3xl font-bold text-foreground/70 mb-1">Facebook</div>
+                  <div className="text-xs text-muted-foreground">Meta Business</div>
+                </div>
+
+                <div className="text-center min-w-[120px]">
+                  <div className="text-2xl md:text-3xl font-bold text-foreground/70 mb-1">Titan</div>
+                  <div className="text-xs text-muted-foreground">Email Suite</div>
+                </div>
+
+                <div className="text-center min-w-[120px]">
+                  <div className="text-2xl md:text-3xl font-bold text-foreground/70 mb-1">Perplexity</div>
+                  <div className="text-xs text-muted-foreground">AI Search</div>
+                </div>
+              </div>
             </div>
           </div>
         </div>

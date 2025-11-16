@@ -330,4 +330,22 @@
     background-size: 200% 200%;
     animation: gradient 3s ease infinite;
   }
+
+  /* Infinite Slide Animation */
+  @keyframes slide-infinite {
+    0% {
+      transform: translateX(0);
+    }
+    100% {
+      transform: translateX(-50%);
+    }
+  }
+
+  .animate-slide-infinite {
+    animation: slide-infinite 20s linear infinite;
+  }
+
+  .animate-slide-infinite:hover {
+    animation-play-state: paused;
+  }
 }
