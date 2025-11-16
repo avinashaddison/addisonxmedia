@@ -90,7 +90,6 @@ function HeroSlider() {
                 className="w-full h-full object-cover pointer-events-none"
                 data-testid={`img-hero-slide-${index}`}
               />
-              <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-black/50 to-black/30 pointer-events-none"></div>
             </div>
           ))}
         </div>
@@ -249,50 +248,6 @@ export default function Home() {
       <section className="relative min-h-[90vh] flex items-center justify-center overflow-hidden">
         {/* Hero Image Slider */}
         <HeroSlider />
-        
-        {/* Overlay for better text visibility */}
-        <div className="absolute inset-0 bg-gradient-to-r from-black/60 via-black/40 to-transparent z-10 pointer-events-none"></div>
-        
-        {/* Floating Elements */}
-        <div className="absolute top-20 left-10 w-72 h-72 bg-primary/10 rounded-full mix-blend-multiply filter blur-xl animate-blob z-10 pointer-events-none"></div>
-        <div className="absolute top-40 right-10 w-72 h-72 bg-purple-300/10 rounded-full mix-blend-multiply filter blur-xl animate-blob animation-delay-2000 z-10 pointer-events-none"></div>
-        <div className="absolute -bottom-8 left-20 w-72 h-72 bg-pink-300/10 rounded-full mix-blend-multiply filter blur-xl animate-blob animation-delay-4000 z-10 pointer-events-none"></div>
-        
-        <div className="max-w-7xl mx-auto px-4 md:px-6 py-20 md:py-28 lg:py-36 text-center relative z-40 pointer-events-none">
-          <div className="inline-flex items-center gap-2 mb-6 px-4 py-2 bg-white/10 backdrop-blur-sm rounded-full border border-white/20">
-            <Sparkles className="h-4 w-4 text-white" />
-            <span className="text-sm font-semibold text-white" data-testid="text-location-badge">
-              Ranchi's Premier Digital Marketing Agency
-            </span>
-          </div>
-          
-          <h1 className="text-5xl md:text-6xl lg:text-8xl font-bold leading-tight mb-8 text-white animate-in fade-in slide-in-from-bottom-4 duration-1000" data-testid="text-hero-title">
-            Transform Your<br className="hidden md:block" />
-            <span className="bg-gradient-to-r from-primary via-purple-400 to-pink-400 bg-clip-text text-transparent animate-gradient">
-              Digital Presence
-            </span>
-          </h1>
-          
-          <p className="text-xl md:text-2xl text-white/90 max-w-3xl mx-auto mb-12 leading-relaxed animate-in fade-in slide-in-from-bottom-6 duration-1000 delay-200" data-testid="text-hero-description">
-            We deliver cutting-edge digital marketing solutions that drive growth, 
-            enhance brand visibility, and maximize your business potential.
-          </p>
-          
-          <div className="flex flex-col sm:flex-row gap-4 justify-center items-center animate-in fade-in slide-in-from-bottom-8 duration-1000 delay-300">
-            <Link href="/services" className="pointer-events-auto">
-              <Button size="lg" className="min-w-[220px] h-14 text-base group" data-testid="button-view-services">
-                <Zap className="mr-2 h-5 w-5 group-hover:rotate-12 transition-transform" />
-                View Our Services
-                <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
-              </Button>
-            </Link>
-            <Link href="/contact" className="pointer-events-auto">
-              <Button size="lg" variant="outline" className="min-w-[220px] h-14 text-base backdrop-blur-sm border-white/30 text-white hover:bg-white/20" data-testid="button-get-consultation">
-                Get Free Consultation
-              </Button>
-            </Link>
-          </div>
-        </div>
       </section>
 
       {/* Stats Section */}
