@@ -1,4 +1,6 @@
 import { Card } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Link } from "wouter";
 import { 
   Code, 
   ShoppingCart, 
@@ -9,11 +11,13 @@ import {
   MessageCircle, 
   Share2, 
   Wrench,
-  Check
+  Check,
+  ArrowRight
 } from "lucide-react";
 
 const services = [
   {
+    slug: "web-development",
     icon: Code,
     title: "Web Development",
     description: "Create powerful, responsive websites that engage your audience and drive conversions.",
@@ -26,6 +30,7 @@ const services = [
     ]
   },
   {
+    slug: "ecommerce",
     icon: ShoppingCart,
     title: "Ecommerce Development",
     description: "Build robust online stores that provide seamless shopping experiences and boost sales.",
@@ -38,6 +43,7 @@ const services = [
     ]
   },
   {
+    slug: "brand-promotion",
     icon: TrendingUp,
     title: "Brand Promotion",
     description: "Elevate your brand presence with strategic campaigns that resonate with your target audience.",
@@ -50,6 +56,7 @@ const services = [
     ]
   },
   {
+    slug: "local-seo",
     icon: Search,
     title: "Local SEO",
     description: "Dominate local search results in Ranchi with our targeted SEO strategies and optimization.",
@@ -62,6 +69,7 @@ const services = [
     ]
   },
   {
+    slug: "ads-management",
     icon: Target,
     title: "Ads Management",
     description: "Maximize your ROI with data-driven advertising campaigns across Google, Facebook, and more.",
@@ -74,6 +82,7 @@ const services = [
     ]
   },
   {
+    slug: "graphic-designing",
     icon: Palette,
     title: "Graphic Designing",
     description: "Create stunning visual content that captures attention and communicates your brand message.",
@@ -86,6 +95,7 @@ const services = [
     ]
   },
   {
+    slug: "whatsapp-marketing",
     icon: MessageCircle,
     title: "WhatsApp Marketing",
     description: "Reach customers directly with personalized WhatsApp campaigns that drive engagement.",
@@ -98,6 +108,7 @@ const services = [
     ]
   },
   {
+    slug: "social-media-marketing",
     icon: Share2,
     title: "Social Media Marketing",
     description: "Build and engage your community across Facebook, Instagram, LinkedIn, and Twitter.",
@@ -105,11 +116,12 @@ const services = [
       "Social media strategy development",
       "Content creation and curation",
       "Community management",
-      "Influencer collaboration",
+      "Influencer partnerships",
       "Analytics and reporting"
     ]
   },
   {
+    slug: "custom-development",
     icon: Wrench,
     title: "Custom Development",
     description: "Get tailored software solutions designed specifically for your unique business requirements.",
@@ -126,58 +138,54 @@ const services = [
 export default function Services() {
   return (
     <div className="flex flex-col">
-      {/* Hero Section */}
       <section className="py-16 md:py-24 lg:py-32 bg-gradient-to-br from-primary/10 via-background to-primary/5">
         <div className="max-w-7xl mx-auto px-4 md:px-6">
           <div className="max-w-4xl mx-auto text-center">
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6" data-testid="text-services-page-title">
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6" data-testid="text-services-title">
               Our Services
             </h1>
-            <p className="text-lg md:text-xl text-muted-foreground leading-relaxed" data-testid="text-services-page-description">
-              Comprehensive digital marketing solutions designed to grow your business 
-              and establish a strong online presence.
+            <p className="text-lg md:text-xl text-muted-foreground leading-relaxed" data-testid="text-services-description">
+              Comprehensive digital marketing solutions to help your business thrive in Ranchi 
+              and beyond. From web development to social media marketing, we've got you covered.
             </p>
           </div>
         </div>
       </section>
 
-      {/* Services Grid */}
       <section className="py-16 md:py-24">
         <div className="max-w-7xl mx-auto px-4 md:px-6">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-12">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {services.map((service, index) => {
               const Icon = service.icon;
               return (
-                <Card key={index} className="p-6 md:p-8" data-testid={`card-service-detail-${index}`}>
-                  <div className="mb-6">
-                    <div className="inline-flex items-center justify-center w-14 h-14 rounded-md bg-primary/10 mb-4">
-                      <Icon className="h-7 w-7 text-primary" />
+                <Card key={index} className="p-6 flex flex-col hover-elevate transition-all" data-testid={`card-service-${index}`}>
+                  <div className="flex items-center gap-4 mb-4">
+                    <div className="w-12 h-12 rounded-md bg-primary/10 flex items-center justify-center flex-shrink-0">
+                      <Icon className="h-6 w-6 text-primary" />
                     </div>
-                    <h2 className="text-2xl md:text-3xl font-bold mb-3" data-testid={`text-service-detail-title-${index}`}>
+                    <h3 className="text-xl font-bold" data-testid={`text-service-title-${index}`}>
                       {service.title}
-                    </h2>
-                    <p className="text-base text-muted-foreground leading-relaxed" data-testid={`text-service-detail-description-${index}`}>
-                      {service.description}
-                    </p>
-                  </div>
-
-                  <div className="space-y-3">
-                    <h3 className="text-sm font-semibold uppercase tracking-wide text-muted-foreground">
-                      Key Features
                     </h3>
-                    {service.features.map((feature, featureIndex) => (
-                      <div key={featureIndex} className="flex items-start gap-3">
-                        <div className="flex-shrink-0 mt-0.5">
-                          <div className="w-5 h-5 rounded-full bg-primary/10 flex items-center justify-center">
-                            <Check className="h-3 w-3 text-primary" />
-                          </div>
-                        </div>
-                        <span className="text-sm text-muted-foreground" data-testid={`text-feature-${index}-${featureIndex}`}>
-                          {feature}
-                        </span>
+                  </div>
+                  
+                  <p className="text-muted-foreground mb-6 flex-grow" data-testid={`text-service-description-${index}`}>
+                    {service.description}
+                  </p>
+
+                  <div className="space-y-2 mb-6">
+                    {service.features.slice(0, 4).map((feature, idx) => (
+                      <div key={idx} className="flex items-start gap-2">
+                        <Check className="h-4 w-4 text-primary flex-shrink-0 mt-0.5" />
+                        <span className="text-sm text-muted-foreground">{feature}</span>
                       </div>
                     ))}
                   </div>
+
+                  <Link href={`/services/${service.slug}`}>
+                    <Button className="w-full" variant="outline" data-testid={`button-learn-more-${index}`}>
+                      Learn More <ArrowRight className="ml-2 h-4 w-4" />
+                    </Button>
+                  </Link>
                 </Card>
               );
             })}
@@ -185,37 +193,21 @@ export default function Services() {
         </div>
       </section>
 
-      {/* Process Section */}
       <section className="py-16 md:py-24 bg-card">
         <div className="max-w-7xl mx-auto px-4 md:px-6">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-4" data-testid="text-process-title">
-              Our Process
+          <div className="text-center max-w-3xl mx-auto">
+            <h2 className="text-3xl md:text-4xl font-bold mb-6" data-testid="text-cta-title">
+              Ready to Transform Your Digital Presence?
             </h2>
-            <p className="text-lg text-muted-foreground max-w-2xl mx-auto" data-testid="text-process-description">
-              A proven methodology that delivers results
+            <p className="text-lg text-muted-foreground mb-8" data-testid="text-cta-description">
+              Let's discuss how our services can help your business grow in Ranchi and beyond. 
+              Get in touch today for a free consultation.
             </p>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-6 md:gap-8">
-            {[
-              { step: "01", title: "Discovery", description: "We learn about your business, goals, and target audience" },
-              { step: "02", title: "Strategy", description: "We develop a customized plan tailored to your objectives" },
-              { step: "03", title: "Execution", description: "We implement the strategy with precision and creativity" },
-              { step: "04", title: "Optimization", description: "We continuously monitor and improve performance" }
-            ].map((phase, index) => (
-              <div key={index} className="text-center" data-testid={`card-process-${index}`}>
-                <div className="text-5xl font-bold text-primary/20 mb-4" data-testid={`text-process-step-${index}`}>
-                  {phase.step}
-                </div>
-                <h3 className="text-xl font-semibold mb-3" data-testid={`text-process-phase-title-${index}`}>
-                  {phase.title}
-                </h3>
-                <p className="text-sm text-muted-foreground" data-testid={`text-process-phase-description-${index}`}>
-                  {phase.description}
-                </p>
-              </div>
-            ))}
+            <Link href="/contact">
+              <Button size="lg" data-testid="button-get-started">
+                Get Started <ArrowRight className="ml-2 h-5 w-5" />
+              </Button>
+            </Link>
           </div>
         </div>
       </section>
