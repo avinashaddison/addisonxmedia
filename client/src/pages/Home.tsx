@@ -354,9 +354,6 @@ export default function Home() {
                 <div className="w-24 h-24 mx-auto rounded-full bg-primary/10 flex items-center justify-center">
                   <div className="text-4xl font-bold text-primary">A</div>
                 </div>
-                <div className="mt-4">
-                  <Badge variant="default">CEO & Founder</Badge>
-                </div>
               </div>
               <h3 className="text-xl font-bold" data-testid="text-team-name-0">
                 Mr. Ajay Kumar
@@ -371,9 +368,6 @@ export default function Home() {
               <div className="mb-6">
                 <div className="w-24 h-24 mx-auto rounded-full bg-primary/10 flex items-center justify-center">
                   <div className="text-4xl font-bold text-primary">N</div>
-                </div>
-                <div className="mt-4">
-                  <Badge variant="default">Co-Founder</Badge>
                 </div>
               </div>
               <h3 className="text-xl font-bold" data-testid="text-team-name-1">
