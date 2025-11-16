@@ -31,7 +31,7 @@ function HeroBanner() {
       <img
         src={heroBanner}
         alt="AddisonX Media - Professional Digital Marketing Services"
-        className="w-full h-[580px] object-cover"
+        className="w-full h-[577px] object-cover"
         data-testid="img-hero-banner"
       />
     </div>
