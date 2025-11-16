@@ -27,11 +27,11 @@ import heroBanner from "@assets/Phoenix_10_Create_a_modern_premium_promotional_b
 
 function HeroBanner() {
   return (
-    <div className="w-full">
+    <div className="w-full lg:rounded-lg lg:overflow-hidden">
       <img
         src={heroBanner}
         alt="AddisonX Media - Professional Digital Marketing Services"
-        className="w-full h-auto"
+        className="w-full h-auto object-cover"
         data-testid="img-hero-banner"
       />
     </div>
@@ -154,8 +154,8 @@ export default function Home() {
         {/* Hero Banner */}
         <HeroBanner />
         
-        {/* Gradient Transition Overlay */}
-        <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-background to-transparent pointer-events-none"></div>
+        {/* Gradient Transition Overlay - Desktop Only */}
+        <div className="hidden lg:block absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-background to-transparent pointer-events-none"></div>
       </section>
 
       {/* Stats Section */}
@@ -204,38 +204,38 @@ export default function Home() {
       </section>
 
       {/* Services Grid */}
-      <section className="py-20 md:py-28 relative overflow-hidden">
+      <section className="py-12 md:py-20 lg:py-28 relative overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-br from-background via-primary/5 to-background"></div>
-        <div className="absolute top-20 right-10 w-72 h-72 bg-primary/10 rounded-full blur-3xl"></div>
-        <div className="absolute bottom-20 left-10 w-72 h-72 bg-purple-500/10 rounded-full blur-3xl"></div>
+        <div className="hidden md:block absolute top-20 right-10 w-72 h-72 bg-primary/10 rounded-full blur-3xl"></div>
+        <div className="hidden md:block absolute bottom-20 left-10 w-72 h-72 bg-purple-500/10 rounded-full blur-3xl"></div>
         <div className="max-w-7xl mx-auto px-4 md:px-6 relative z-10">
-          <div className="text-center mb-16">
-            <Badge variant="secondary" className="mb-4">
+          <div className="text-center mb-8 md:mb-12 lg:mb-16">
+            <Badge variant="secondary" className="mb-3 md:mb-4">
               <Sparkles className="h-3 w-3 mr-2" />
               What We Offer
             </Badge>
-            <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6" data-testid="text-services-title">
+            <h2 className="text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold mb-3 md:mb-6" data-testid="text-services-title">
               Our Services
             </h2>
-            <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto" data-testid="text-services-description">
+            <p className="text-base md:text-lg lg:text-xl text-muted-foreground max-w-2xl mx-auto px-2" data-testid="text-services-description">
               Comprehensive digital marketing solutions tailored to elevate your brand and drive measurable results
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6 lg:gap-8">
             {services.map((service, index) => {
               const Icon = service.icon;
               return (
-                <Card key={index} className="group p-8 transition-all duration-500 border-primary/10 hover:border-primary/30 hover:shadow-xl hover:shadow-primary/10 bg-gradient-to-br from-card to-card/80" data-testid={`card-service-${index}`}>
-                  <div className="mb-6 relative">
-                    <div className="inline-flex items-center justify-center w-16 h-16 rounded-xl bg-gradient-to-br from-primary/20 to-primary/10 group-hover:from-primary/30 group-hover:to-primary/20 transition-all duration-300">
-                      <Icon className="h-8 w-8 text-primary group-hover:scale-110 transition-transform duration-300" />
+                <Card key={index} className="group p-5 md:p-6 lg:p-8 transition-all duration-500 border-primary/10 hover:border-primary/30 hover:shadow-xl hover:shadow-primary/10 bg-gradient-to-br from-card to-card/80" data-testid={`card-service-${index}`}>
+                  <div className="mb-4 md:mb-5 lg:mb-6 relative">
+                    <div className="inline-flex items-center justify-center w-12 h-12 md:w-14 md:h-14 lg:w-16 lg:h-16 rounded-xl bg-gradient-to-br from-primary/20 to-primary/10 group-hover:from-primary/30 group-hover:to-primary/20 transition-all duration-300">
+                      <Icon className="h-6 w-6 md:h-7 md:w-7 lg:h-8 lg:w-8 text-primary group-hover:scale-110 transition-transform duration-300" />
                     </div>
                   </div>
-                  <h3 className="text-xl md:text-2xl font-bold mb-3 group-hover:text-primary transition-colors duration-300" data-testid={`text-service-title-${index}`}>
+                  <h3 className="text-lg md:text-xl lg:text-2xl font-bold mb-2 md:mb-3 group-hover:text-primary transition-colors duration-300" data-testid={`text-service-title-${index}`}>
                     {service.title}
                   </h3>
-                  <p className="text-base text-muted-foreground leading-relaxed" data-testid={`text-service-description-${index}`}>
+                  <p className="text-sm md:text-base text-muted-foreground leading-relaxed" data-testid={`text-service-description-${index}`}>
                     {service.description}
                   </p>
                 </Card>
@@ -243,11 +243,11 @@ export default function Home() {
             })}
           </div>
 
-          <div className="text-center mt-16">
+          <div className="text-center mt-8 md:mt-12 lg:mt-16">
             <Link href="/services">
-              <Button size="lg" variant="default" className="group shadow-lg hover:shadow-xl transition-all duration-300" data-testid="button-explore-all-services">
+              <Button size="default" className="group shadow-lg hover:shadow-xl transition-all duration-300 md:px-8 lg:px-10" data-testid="button-explore-all-services">
                 Explore All Services
-                <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
+                <ArrowRight className="ml-2 h-4 w-4 md:h-5 md:w-5 group-hover:translate-x-1 transition-transform" />
               </Button>
             </Link>
           </div>
