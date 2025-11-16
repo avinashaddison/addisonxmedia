@@ -1,6 +1,6 @@
 import { Link } from "wouter";
 import { useQuery } from "@tanstack/react-query";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -19,9 +19,117 @@ import {
   ArrowRight,
   CheckCircle,
   Sparkles,
-  Zap
+  Zap,
+  ChevronLeft,
+  ChevronRight
 } from "lucide-react";
+import useEmblaCarousel from "embla-carousel-react";
 import type { Testimonial } from "@shared/schema";
+
+import heroImage1 from "@assets/stock_images/digital_marketing_te_6e20120c.jpg";
+import heroImage2 from "@assets/stock_images/digital_marketing_te_01875939.jpg";
+import heroImage3 from "@assets/stock_images/web_development_codi_8ffa3130.jpg";
+import heroImage4 from "@assets/stock_images/business_team_collab_a0270f86.jpg";
+import heroImage5 from "@assets/stock_images/business_team_collab_65b62d2f.jpg";
+
+const heroImages = [
+  heroImage1,
+  heroImage2,
+  heroImage3,
+  heroImage4,
+  heroImage5
+];
+
+function HeroSlider() {
+  const [emblaRef, emblaApi] = useEmblaCarousel({ loop: true });
+  const [selectedIndex, setSelectedIndex] = useState(0);
+
+  const scrollPrev = useCallback(() => {
+    if (emblaApi) emblaApi.scrollPrev();
+  }, [emblaApi]);
+
+  const scrollNext = useCallback(() => {
+    if (emblaApi) emblaApi.scrollNext();
+  }, [emblaApi]);
+
+  const scrollTo = useCallback((index: number) => {
+    if (emblaApi) emblaApi.scrollTo(index);
+  }, [emblaApi]);
+
+  const onSelect = useCallback(() => {
+    if (!emblaApi) return;
+    setSelectedIndex(emblaApi.selectedScrollSnap());
+  }, [emblaApi]);
+
+  useEffect(() => {
+    if (!emblaApi) return;
+    onSelect();
+    emblaApi.on("select", onSelect);
+    
+    const interval = setInterval(() => {
+      emblaApi.scrollNext();
+    }, 5000);
+
+    return () => {
+      clearInterval(interval);
+      emblaApi.off("select", onSelect);
+    };
+  }, [emblaApi, onSelect]);
+
+  return (
+    <div className="absolute inset-0 overflow-hidden">
+      <div className="overflow-hidden h-full" ref={emblaRef}>
+        <div className="flex h-full">
+          {heroImages.map((image, index) => (
+            <div key={index} className="flex-[0_0_100%] min-w-0 relative h-full">
+              <img
+                src={image}
+                alt={`Hero ${index + 1}`}
+                className="w-full h-full object-cover"
+                data-testid={`img-hero-slide-${index}`}
+              />
+              <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-black/50 to-black/30"></div>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <button
+        onClick={scrollPrev}
+        className="absolute left-4 top-1/2 -translate-y-1/2 z-20 bg-white/10 hover-elevate active-elevate-2 backdrop-blur-md rounded-full p-3 transition-all"
+        aria-label="Previous slide"
+        data-testid="button-hero-prev"
+      >
+        <ChevronLeft className="h-6 w-6 text-white" />
+      </button>
+
+      <button
+        onClick={scrollNext}
+        className="absolute right-4 top-1/2 -translate-y-1/2 z-20 bg-white/10 hover-elevate active-elevate-2 backdrop-blur-md rounded-full p-3 transition-all"
+        aria-label="Next slide"
+        data-testid="button-hero-next"
+      >
+        <ChevronRight className="h-6 w-6 text-white" />
+      </button>
+
+      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 z-20 flex gap-2">
+        {heroImages.map((_, index) => (
+          <button
+            key={index}
+            onClick={() => scrollTo(index)}
+            className={`h-2 rounded-full transition-all ${
+              index === selectedIndex 
+                ? "w-8 bg-white" 
+                : "w-2 bg-white/50 hover:bg-white/75"
+            }`}
+            aria-label={`Go to slide ${index + 1}`}
+            data-testid={`button-hero-dot-${index}`}
+          />
+        ))}
+      </div>
+    </div>
+  );
+}
 
 const services = [
   {
@@ -136,31 +244,33 @@ export default function Home() {
     <div className="flex flex-col">
       {/* Hero Section */}
       <section className="relative min-h-[90vh] flex items-center justify-center overflow-hidden">
-        {/* Animated Background */}
-        <div className="absolute inset-0 bg-gradient-to-br from-primary/20 via-background to-primary/10"></div>
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_120%,rgba(120,119,198,0.3),rgba(255,255,255,0))]"></div>
+        {/* Hero Image Slider */}
+        <HeroSlider />
+        
+        {/* Overlay for better text visibility */}
+        <div className="absolute inset-0 bg-gradient-to-r from-black/60 via-black/40 to-transparent z-10"></div>
         
         {/* Floating Elements */}
-        <div className="absolute top-20 left-10 w-72 h-72 bg-primary/10 rounded-full mix-blend-multiply filter blur-xl animate-blob"></div>
-        <div className="absolute top-40 right-10 w-72 h-72 bg-purple-300/10 rounded-full mix-blend-multiply filter blur-xl animate-blob animation-delay-2000"></div>
-        <div className="absolute -bottom-8 left-20 w-72 h-72 bg-pink-300/10 rounded-full mix-blend-multiply filter blur-xl animate-blob animation-delay-4000"></div>
+        <div className="absolute top-20 left-10 w-72 h-72 bg-primary/10 rounded-full mix-blend-multiply filter blur-xl animate-blob z-10"></div>
+        <div className="absolute top-40 right-10 w-72 h-72 bg-purple-300/10 rounded-full mix-blend-multiply filter blur-xl animate-blob animation-delay-2000 z-10"></div>
+        <div className="absolute -bottom-8 left-20 w-72 h-72 bg-pink-300/10 rounded-full mix-blend-multiply filter blur-xl animate-blob animation-delay-4000 z-10"></div>
         
-        <div className="max-w-7xl mx-auto px-4 md:px-6 py-20 md:py-28 lg:py-36 text-center relative z-10">
-          <div className="inline-flex items-center gap-2 mb-6 px-4 py-2 bg-primary/10 backdrop-blur-sm rounded-full border border-primary/20">
-            <Sparkles className="h-4 w-4 text-primary" />
-            <span className="text-sm font-semibold text-primary" data-testid="text-location-badge">
+        <div className="max-w-7xl mx-auto px-4 md:px-6 py-20 md:py-28 lg:py-36 text-center relative z-30">
+          <div className="inline-flex items-center gap-2 mb-6 px-4 py-2 bg-white/10 backdrop-blur-sm rounded-full border border-white/20">
+            <Sparkles className="h-4 w-4 text-white" />
+            <span className="text-sm font-semibold text-white" data-testid="text-location-badge">
               Ranchi's Premier Digital Marketing Agency
             </span>
           </div>
           
-          <h1 className="text-5xl md:text-6xl lg:text-8xl font-bold leading-tight mb-8 animate-in fade-in slide-in-from-bottom-4 duration-1000" data-testid="text-hero-title">
+          <h1 className="text-5xl md:text-6xl lg:text-8xl font-bold leading-tight mb-8 text-white animate-in fade-in slide-in-from-bottom-4 duration-1000" data-testid="text-hero-title">
             Transform Your<br className="hidden md:block" />
-            <span className="bg-gradient-to-r from-primary via-purple-500 to-pink-500 bg-clip-text text-transparent animate-gradient">
+            <span className="bg-gradient-to-r from-primary via-purple-400 to-pink-400 bg-clip-text text-transparent animate-gradient">
               Digital Presence
             </span>
           </h1>
           
-          <p className="text-xl md:text-2xl text-muted-foreground max-w-3xl mx-auto mb-12 leading-relaxed animate-in fade-in slide-in-from-bottom-6 duration-1000 delay-200" data-testid="text-hero-description">
+          <p className="text-xl md:text-2xl text-white/90 max-w-3xl mx-auto mb-12 leading-relaxed animate-in fade-in slide-in-from-bottom-6 duration-1000 delay-200" data-testid="text-hero-description">
             We deliver cutting-edge digital marketing solutions that drive growth, 
             enhance brand visibility, and maximize your business potential.
           </p>
@@ -174,7 +284,7 @@ export default function Home() {
               </Button>
             </Link>
             <Link href="/contact">
-              <Button size="lg" variant="outline" className="min-w-[220px] h-14 text-base backdrop-blur-sm" data-testid="button-get-consultation">
+              <Button size="lg" variant="outline" className="min-w-[220px] h-14 text-base backdrop-blur-sm border-white/30 text-white hover:bg-white/20" data-testid="button-get-consultation">
                 Get Free Consultation
               </Button>
             </Link>
