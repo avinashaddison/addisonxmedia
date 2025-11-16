@@ -347,7 +347,7 @@ export default function Home() {
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 max-w-5xl mx-auto">
             {/* CEO & Founder */}
             <Card className="p-8 text-center" data-testid="card-team-0">
               <div className="mb-6">
@@ -366,48 +366,66 @@ export default function Home() {
               </p>
             </Card>
 
-            {/* Team Member 2 */}
+            {/* Co-Founder */}
             <Card className="p-8 text-center" data-testid="card-team-1">
               <div className="mb-6">
                 <div className="w-24 h-24 mx-auto rounded-full bg-primary/10 flex items-center justify-center">
-                  <div className="text-4xl font-bold text-primary">P</div>
+                  <div className="text-4xl font-bold text-primary">N</div>
+                </div>
+                <div className="mt-4">
+                  <Badge variant="default">Co-Founder</Badge>
                 </div>
               </div>
               <h3 className="text-xl font-bold" data-testid="text-team-name-1">
-                Priya Sharma
+                Neha Kumari
               </h3>
               <p className="text-sm text-primary font-semibold" data-testid="text-team-position-1">
-                Head of Marketing
+                Co-Founder
               </p>
             </Card>
 
-            {/* Team Member 3 */}
+            {/* Social Media Manager */}
             <Card className="p-8 text-center" data-testid="card-team-2">
-              <div className="mb-6">
-                <div className="w-24 h-24 mx-auto rounded-full bg-primary/10 flex items-center justify-center">
-                  <div className="text-4xl font-bold text-primary">R</div>
-                </div>
-              </div>
-              <h3 className="text-xl font-bold" data-testid="text-team-name-2">
-                Rahul Singh
-              </h3>
-              <p className="text-sm text-primary font-semibold" data-testid="text-team-position-2">
-                Lead Developer
-              </p>
-            </Card>
-
-            {/* Team Member 4 */}
-            <Card className="p-8 text-center" data-testid="card-team-3">
               <div className="mb-6">
                 <div className="w-24 h-24 mx-auto rounded-full bg-primary/10 flex items-center justify-center">
                   <div className="text-4xl font-bold text-primary">S</div>
                 </div>
               </div>
+              <h3 className="text-xl font-bold" data-testid="text-team-name-2">
+                Suraj Munda
+              </h3>
+              <p className="text-sm text-primary font-semibold" data-testid="text-team-position-2">
+                Social Media Manager
+              </p>
+            </Card>
+
+            {/* Web Developer */}
+            <Card className="p-8 text-center" data-testid="card-team-3">
+              <div className="mb-6">
+                <div className="w-24 h-24 mx-auto rounded-full bg-primary/10 flex items-center justify-center">
+                  <div className="text-4xl font-bold text-primary">V</div>
+                </div>
+              </div>
               <h3 className="text-xl font-bold" data-testid="text-team-name-3">
-                Sneha Verma
+                Vikash Munda
               </h3>
               <p className="text-sm text-primary font-semibold" data-testid="text-team-position-3">
-                Creative Director
+                Web Developer
+              </p>
+            </Card>
+
+            {/* Sales Manager */}
+            <Card className="p-8 text-center" data-testid="card-team-4">
+              <div className="mb-6">
+                <div className="w-24 h-24 mx-auto rounded-full bg-primary/10 flex items-center justify-center">
+                  <div className="text-4xl font-bold text-primary">P</div>
+                </div>
+              </div>
+              <h3 className="text-xl font-bold" data-testid="text-team-name-4">
+                Priyanshu Singh
+              </h3>
+              <p className="text-sm text-primary font-semibold" data-testid="text-team-position-4">
+                Sales Manager
               </p>
             </Card>
           </div>
