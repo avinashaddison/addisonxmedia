@@ -40,7 +40,7 @@ export default function VerifyEmployee() {
       <div className="absolute top-1/3 left-1/3 w-[400px] h-[400px] bg-gradient-to-br from-blue-500/10 to-transparent rounded-full blur-3xl opacity-20"></div>
 
       {/* Main Content */}
-      <section className="flex-1 flex items-center justify-center py-16 px-4 md:px-6 relative z-10">
+      <section className="flex-1 flex items-center justify-center py-12 px-4 md:px-6 relative z-10">
         <div className="w-full max-w-3xl animate-in fade-in slide-in-from-bottom-4 duration-700">
           {/* Main Card */}
           <Card className="relative overflow-hidden border-2 border-primary/20 shadow-2xl bg-gradient-to-br from-card via-card/95 to-card/90 backdrop-blur-md">
@@ -245,11 +245,11 @@ export default function VerifyEmployee() {
       </section>
 
       {/* Info Section */}
-      <section className="py-20 md:py-28 bg-gradient-to-br from-card via-background to-primary/5 relative overflow-hidden">
+      <section className="py-12 md:py-16 bg-gradient-to-br from-card via-background to-primary/5 relative overflow-hidden">
         <div className="absolute top-20 right-20 w-72 h-72 bg-primary/5 rounded-full blur-3xl"></div>
         <div className="absolute bottom-20 left-20 w-72 h-72 bg-purple-500/5 rounded-full blur-3xl"></div>
         <div className="max-w-7xl mx-auto px-4 md:px-6 relative z-10">
-          <div className="max-w-3xl mx-auto text-center mb-16">
+          <div className="max-w-3xl mx-auto text-center mb-10">
             <Badge variant="secondary" className="mb-6">
               <Sparkles className="h-3 w-3 mr-2" />
               Secure & Reliable
