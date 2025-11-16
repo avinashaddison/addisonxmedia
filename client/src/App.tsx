@@ -26,6 +26,7 @@ function Router() {
       
       {/* Admin Routes */}
       <Route path="/admin" component={Dashboard} />
+      <Route path="/admin/dashboard" component={Dashboard} />
       <Route path="/admin/employees/new" component={EmployeeForm} />
       <Route path="/admin/employees/:id/edit" component={EmployeeForm} />
       
