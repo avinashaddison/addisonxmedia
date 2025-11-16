@@ -335,94 +335,94 @@ export default function Home() {
       )}
 
       {/* Team Section */}
-      <section className="py-20 md:py-28 relative">
+      <section className="py-12 md:py-20 lg:py-28 relative">
         <div className="absolute inset-0 bg-gradient-to-b from-background via-primary/5 to-background"></div>
         <div className="max-w-7xl mx-auto px-4 md:px-6 relative z-10">
-          <div className="text-center mb-16">
-            <Badge variant="secondary" className="mb-4">
+          <div className="text-center mb-8 md:mb-12 lg:mb-16">
+            <Badge variant="secondary" className="mb-3 md:mb-4">
               <Sparkles className="h-3 w-3 mr-2" />
               Meet Our Team
             </Badge>
-            <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6" data-testid="text-team-title">
+            <h2 className="text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold mb-3 md:mb-6" data-testid="text-team-title">
               AddisonX Media Team
             </h2>
-            <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto" data-testid="text-team-description">
+            <p className="text-base md:text-lg lg:text-xl text-muted-foreground max-w-2xl mx-auto px-2" data-testid="text-team-description">
               Our passionate team of digital marketing experts dedicated to your success
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-6 md:gap-8">
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3 md:gap-6 lg:gap-8">
             {/* CEO & Founder */}
-            <Card className="p-8 text-center" data-testid="card-team-0">
-              <div className="mb-6">
-                <div className="w-24 h-24 mx-auto rounded-full bg-primary/10 flex items-center justify-center">
-                  <div className="text-4xl font-bold text-primary">A</div>
+            <Card className="p-4 md:p-6 lg:p-8 text-center" data-testid="card-team-0">
+              <div className="mb-3 md:mb-4 lg:mb-6">
+                <div className="w-16 h-16 md:w-20 md:h-20 lg:w-24 lg:h-24 mx-auto rounded-full bg-primary/10 flex items-center justify-center">
+                  <div className="text-2xl md:text-3xl lg:text-4xl font-bold text-primary">A</div>
                 </div>
               </div>
-              <h3 className="text-xl font-bold" data-testid="text-team-name-0">
+              <h3 className="text-sm md:text-base lg:text-xl font-bold" data-testid="text-team-name-0">
                 Mr. Ajay Kumar
               </h3>
-              <p className="text-sm text-primary font-semibold" data-testid="text-team-position-0">
+              <p className="text-xs md:text-sm text-primary font-semibold" data-testid="text-team-position-0">
                 CEO & Founder
               </p>
             </Card>
 
             {/* Co-Founder */}
-            <Card className="p-8 text-center" data-testid="card-team-1">
-              <div className="mb-6">
-                <div className="w-24 h-24 mx-auto rounded-full bg-primary/10 flex items-center justify-center">
-                  <div className="text-4xl font-bold text-primary">N</div>
+            <Card className="p-4 md:p-6 lg:p-8 text-center" data-testid="card-team-1">
+              <div className="mb-3 md:mb-4 lg:mb-6">
+                <div className="w-16 h-16 md:w-20 md:h-20 lg:w-24 lg:h-24 mx-auto rounded-full bg-primary/10 flex items-center justify-center">
+                  <div className="text-2xl md:text-3xl lg:text-4xl font-bold text-primary">N</div>
                 </div>
               </div>
-              <h3 className="text-xl font-bold" data-testid="text-team-name-1">
+              <h3 className="text-sm md:text-base lg:text-xl font-bold" data-testid="text-team-name-1">
                 Neha Kumari
               </h3>
-              <p className="text-sm text-primary font-semibold" data-testid="text-team-position-1">
+              <p className="text-xs md:text-sm text-primary font-semibold" data-testid="text-team-position-1">
                 Co-Founder
               </p>
             </Card>
 
             {/* Web Developer */}
-            <Card className="p-8 text-center" data-testid="card-team-2">
-              <div className="mb-6">
-                <div className="w-24 h-24 mx-auto rounded-full bg-primary/10 flex items-center justify-center">
-                  <div className="text-4xl font-bold text-primary">V</div>
+            <Card className="p-4 md:p-6 lg:p-8 text-center" data-testid="card-team-2">
+              <div className="mb-3 md:mb-4 lg:mb-6">
+                <div className="w-16 h-16 md:w-20 md:h-20 lg:w-24 lg:h-24 mx-auto rounded-full bg-primary/10 flex items-center justify-center">
+                  <div className="text-2xl md:text-3xl lg:text-4xl font-bold text-primary">V</div>
                 </div>
               </div>
-              <h3 className="text-xl font-bold" data-testid="text-team-name-2">
+              <h3 className="text-sm md:text-base lg:text-xl font-bold" data-testid="text-team-name-2">
                 Vikash Munda
               </h3>
-              <p className="text-sm text-primary font-semibold" data-testid="text-team-position-2">
+              <p className="text-xs md:text-sm text-primary font-semibold" data-testid="text-team-position-2">
                 Web Developer
               </p>
             </Card>
 
             {/* Social Media Manager */}
-            <Card className="p-8 text-center" data-testid="card-team-3">
-              <div className="mb-6">
-                <div className="w-24 h-24 mx-auto rounded-full bg-primary/10 flex items-center justify-center">
-                  <div className="text-4xl font-bold text-primary">S</div>
+            <Card className="p-4 md:p-6 lg:p-8 text-center" data-testid="card-team-3">
+              <div className="mb-3 md:mb-4 lg:mb-6">
+                <div className="w-16 h-16 md:w-20 md:h-20 lg:w-24 lg:h-24 mx-auto rounded-full bg-primary/10 flex items-center justify-center">
+                  <div className="text-2xl md:text-3xl lg:text-4xl font-bold text-primary">S</div>
                 </div>
               </div>
-              <h3 className="text-xl font-bold" data-testid="text-team-name-3">
+              <h3 className="text-sm md:text-base lg:text-xl font-bold" data-testid="text-team-name-3">
                 Suraj Munda
               </h3>
-              <p className="text-sm text-primary font-semibold" data-testid="text-team-position-3">
+              <p className="text-xs md:text-sm text-primary font-semibold" data-testid="text-team-position-3">
                 Social Media Manager
               </p>
             </Card>
 
             {/* Sales Manager */}
-            <Card className="p-8 text-center" data-testid="card-team-4">
-              <div className="mb-6">
-                <div className="w-24 h-24 mx-auto rounded-full bg-primary/10 flex items-center justify-center">
-                  <div className="text-4xl font-bold text-primary">P</div>
+            <Card className="p-4 md:p-6 lg:p-8 text-center" data-testid="card-team-4">
+              <div className="mb-3 md:mb-4 lg:mb-6">
+                <div className="w-16 h-16 md:w-20 md:h-20 lg:w-24 lg:h-24 mx-auto rounded-full bg-primary/10 flex items-center justify-center">
+                  <div className="text-2xl md:text-3xl lg:text-4xl font-bold text-primary">P</div>
                 </div>
               </div>
-              <h3 className="text-xl font-bold" data-testid="text-team-name-4">
+              <h3 className="text-sm md:text-base lg:text-xl font-bold" data-testid="text-team-name-4">
                 Priyanshu Singh
               </h3>
-              <p className="text-sm text-primary font-semibold" data-testid="text-team-position-4">
+              <p className="text-xs md:text-sm text-primary font-semibold" data-testid="text-team-position-4">
                 Sales Manager
               </p>
             </Card>
