@@ -4,7 +4,7 @@ import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Search, UserCheck, Phone, MapPin, Briefcase, AlertCircle, CheckCircle2 } from "lucide-react";
+import { Search, UserCheck, Phone, MapPin, Briefcase, AlertCircle, CheckCircle2, Shield, Sparkles } from "lucide-react";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import type { Employee } from "@shared/schema";
 import verifiedBadge from "@assets/verify_1763302805305.png";
