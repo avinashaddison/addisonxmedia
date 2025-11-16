@@ -378,33 +378,33 @@ export default function Home() {
               </p>
             </Card>
 
-            {/* Social Media Manager */}
-            <Card className="p-8 text-center" data-testid="card-team-2">
-              <div className="mb-6">
-                <div className="w-24 h-24 mx-auto rounded-full bg-primary/10 flex items-center justify-center">
-                  <div className="text-4xl font-bold text-primary">S</div>
-                </div>
-              </div>
-              <h3 className="text-xl font-bold" data-testid="text-team-name-2">
-                Suraj Munda
-              </h3>
-              <p className="text-sm text-primary font-semibold" data-testid="text-team-position-2">
-                Social Media Manager
-              </p>
-            </Card>
-
             {/* Web Developer */}
-            <Card className="p-8 text-center" data-testid="card-team-3">
+            <Card className="p-8 text-center" data-testid="card-team-2">
               <div className="mb-6">
                 <div className="w-24 h-24 mx-auto rounded-full bg-primary/10 flex items-center justify-center">
                   <div className="text-4xl font-bold text-primary">V</div>
                 </div>
               </div>
-              <h3 className="text-xl font-bold" data-testid="text-team-name-3">
+              <h3 className="text-xl font-bold" data-testid="text-team-name-2">
                 Vikash Munda
               </h3>
-              <p className="text-sm text-primary font-semibold" data-testid="text-team-position-3">
+              <p className="text-sm text-primary font-semibold" data-testid="text-team-position-2">
                 Web Developer
+              </p>
+            </Card>
+
+            {/* Social Media Manager */}
+            <Card className="p-8 text-center" data-testid="card-team-3">
+              <div className="mb-6">
+                <div className="w-24 h-24 mx-auto rounded-full bg-primary/10 flex items-center justify-center">
+                  <div className="text-4xl font-bold text-primary">S</div>
+                </div>
+              </div>
+              <h3 className="text-xl font-bold" data-testid="text-team-name-3">
+                Suraj Munda
+              </h3>
+              <p className="text-sm text-primary font-semibold" data-testid="text-team-position-3">
+                Social Media Manager
               </p>
             </Card>
 
