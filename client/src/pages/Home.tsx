@@ -27,11 +27,11 @@ import heroBanner from "@assets/Phoenix_10_Create_a_modern_premium_promotional_b
 
 function HeroBanner() {
   return (
-    <div className="w-full h-full">
+    <div className="w-full">
       <img
         src={heroBanner}
         alt="AddisonX Media - Professional Digital Marketing Services"
-        className="w-full h-full object-cover"
+        className="w-full h-auto"
         data-testid="img-hero-banner"
       />
     </div>
@@ -150,7 +150,7 @@ export default function Home() {
   return (
     <div className="flex flex-col">
       {/* Hero Section */}
-      <section className="relative w-full max-w-[1728px] mx-auto overflow-hidden" style={{ height: '576px' }}>
+      <section className="relative w-full mx-auto overflow-hidden">
         {/* Hero Banner */}
         <HeroBanner />
       </section>
