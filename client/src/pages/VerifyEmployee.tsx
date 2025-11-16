@@ -33,174 +33,234 @@ export default function VerifyEmployee() {
   };
 
   return (
-    <div className="flex flex-col min-h-screen relative overflow-hidden">
-      {/* Animated Background */}
-      <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-background to-purple-500/5"></div>
-      <div className="absolute top-20 right-20 w-96 h-96 bg-primary/10 rounded-full blur-3xl animate-pulse"></div>
-      <div className="absolute bottom-20 left-20 w-96 h-96 bg-purple-500/10 rounded-full blur-3xl animate-pulse"></div>
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-blue-500/5 rounded-full blur-3xl"></div>
+    <div className="flex flex-col min-h-screen relative overflow-hidden bg-gradient-to-br from-background via-primary/[0.02] to-background">
+      {/* Animated Background Orbs */}
+      <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-gradient-to-br from-primary/20 via-primary/10 to-transparent rounded-full blur-3xl opacity-30 animate-pulse"></div>
+      <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-gradient-to-tr from-purple-500/20 via-blue-500/10 to-transparent rounded-full blur-3xl opacity-30 animate-pulse" style={{ animationDelay: '1s' }}></div>
+      <div className="absolute top-1/3 left-1/3 w-[400px] h-[400px] bg-gradient-to-br from-blue-500/10 to-transparent rounded-full blur-3xl opacity-20"></div>
 
-      {/* Search Section */}
-      <section className="flex-1 flex items-center justify-center py-20 px-4 md:px-6 relative z-10">
-        <div className="w-full max-w-2xl">
-          <Card className="p-10 md:p-14 shadow-2xl border-primary/30 bg-gradient-to-br from-card/95 via-card/90 to-primary/5 backdrop-blur-sm">
-            <form onSubmit={handleSearch} className="space-y-8">
-              <div className="text-center space-y-6">
-                <div className="inline-flex items-center justify-center w-24 h-24 rounded-3xl bg-gradient-to-br from-primary/20 to-primary/10 mb-4 shadow-lg">
-                  <UserCheck className="h-12 w-12 text-primary" />
+      {/* Main Content */}
+      <section className="flex-1 flex items-center justify-center py-16 px-4 md:px-6 relative z-10">
+        <div className="w-full max-w-3xl animate-in fade-in slide-in-from-bottom-4 duration-700">
+          {/* Main Card */}
+          <Card className="relative overflow-hidden border-2 border-primary/20 shadow-2xl bg-gradient-to-br from-card via-card/95 to-card/90 backdrop-blur-md">
+            {/* Card Glow Effect */}
+            <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-purple-500/5 pointer-events-none"></div>
+            
+            <div className="relative p-8 md:p-12 lg:p-16">
+              <form onSubmit={handleSearch} className="space-y-10">
+                {/* Header Section */}
+                <div className="text-center space-y-6">
+                  {/* Icon */}
+                  <div className="relative inline-block">
+                    <div className="absolute inset-0 bg-gradient-to-br from-primary/30 to-primary/10 rounded-3xl blur-xl"></div>
+                    <div className="relative inline-flex items-center justify-center w-28 h-28 rounded-3xl bg-gradient-to-br from-primary/20 via-primary/15 to-primary/10 shadow-xl border border-primary/20">
+                      <UserCheck className="h-14 w-14 text-primary" />
+                    </div>
+                  </div>
+                  
+                  {/* Title & Description */}
+                  <div className="space-y-4">
+                    <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight" data-testid="text-verify-title">
+                      Employee Verification
+                    </h1>
+                    <p className="text-lg md:text-xl text-muted-foreground max-w-xl mx-auto leading-relaxed" data-testid="text-verify-description">
+                      Enter an employee ID to instantly verify credentials and view information
+                    </p>
+                  </div>
+                  
+                  {/* Security Badge */}
+                  <div className="flex justify-center">
+                    <Badge variant="secondary" className="text-sm px-5 py-2.5 shadow-md">
+                      <Shield className="h-4 w-4 mr-2" />
+                      Secure & Encrypted
+                    </Badge>
+                  </div>
                 </div>
-                <div>
-                  <h1 className="text-4xl md:text-5xl font-bold mb-4" data-testid="text-verify-title">
-                    Employee Verification
-                  </h1>
-                  <p className="text-lg text-muted-foreground leading-relaxed" data-testid="text-verify-description">
-                    Enter employee ID to verify credentials instantly
-                  </p>
+                
+                {/* Input Section */}
+                <div className="space-y-5">
+                  <label htmlFor="employee-id" className="block text-lg font-semibold text-center">
+                    Employee ID
+                  </label>
+                  <div className="flex flex-col sm:flex-row gap-4">
+                    <div className="flex-1">
+                      <Input
+                        id="employee-id"
+                        type="text"
+                        placeholder="Enter Employee ID (e.g., EMP001)"
+                        value={employeeId}
+                        onChange={(e) => setEmployeeId(e.target.value)}
+                        className="h-16 text-lg px-6 shadow-lg border-2 border-primary/20 focus:border-primary/40 bg-background/50 backdrop-blur-sm transition-all duration-200"
+                        data-testid="input-employee-id"
+                      />
+                    </div>
+                    <Button 
+                      type="submit" 
+                      size="lg" 
+                      disabled={isLoading}
+                      className="h-16 px-12 text-lg font-semibold shadow-xl transition-all duration-200 hover:shadow-2xl w-full sm:w-auto"
+                      data-testid="button-search-employee"
+                    >
+                      {isLoading ? (
+                        <>
+                          <div className="animate-spin rounded-full h-5 w-5 border-2 border-background border-t-transparent mr-3"></div>
+                          Verifying...
+                        </>
+                      ) : (
+                        <>
+                          <Search className="h-5 w-5 mr-3" />
+                          Verify Now
+                        </>
+                      )}
+                    </Button>
+                  </div>
                 </div>
-                <Badge variant="secondary" className="text-sm px-4 py-2">
-                  <Shield className="h-3 w-3 mr-2" />
-                  Secure Verification System
-                </Badge>
-              </div>
-              
-              <div className="space-y-4">
-                <label htmlFor="employee-id" className="block text-base font-semibold text-center">
-                  Employee ID
-                </label>
-                <div className="flex flex-col sm:flex-row gap-3">
-                  <Input
-                    id="employee-id"
-                    type="text"
-                    placeholder="e.g., EMP001"
-                    value={employeeId}
-                    onChange={(e) => setEmployeeId(e.target.value)}
-                    className="flex-1 h-14 text-lg text-center sm:text-left px-6 shadow-md border-2 focus:border-primary"
-                    data-testid="input-employee-id"
-                  />
-                  <Button 
-                    type="submit" 
-                    size="lg" 
-                    disabled={isLoading}
-                    className="h-14 px-10 text-base shadow-xl w-full sm:w-auto"
-                    data-testid="button-search-employee"
-                  >
-                    <Search className="h-5 w-5 mr-2" />
-                    Verify Now
-                  </Button>
-                </div>
-              </div>
-            </form>
+              </form>
+            </div>
           </Card>
 
           {/* Results Section */}
           {searchId && (
-            <div className="mt-8">
+            <div className="mt-8 animate-in fade-in slide-in-from-bottom-4 duration-500">
               {isLoading && (
-                <Card className="p-12 bg-gradient-to-br from-card to-card/80">
-                  <div className="text-center">
-                    <div className="inline-block animate-spin rounded-full h-12 w-12 border-4 border-primary border-t-transparent mb-6"></div>
-                    <p className="text-lg font-medium" data-testid="text-loading">
-                      Searching for employee...
-                    </p>
-                    <p className="text-sm text-muted-foreground mt-2">This will only take a moment</p>
+                <Card className="p-16 bg-gradient-to-br from-card via-card/95 to-card/90 border-2 border-primary/20">
+                  <div className="text-center space-y-6">
+                    <div className="relative inline-block">
+                      <div className="absolute inset-0 bg-primary/20 rounded-full blur-xl"></div>
+                      <div className="relative inline-block animate-spin rounded-full h-16 w-16 border-4 border-primary/30 border-t-primary"></div>
+                    </div>
+                    <div className="space-y-2">
+                      <p className="text-xl font-semibold" data-testid="text-loading">
+                        Verifying Employee...
+                      </p>
+                      <p className="text-base text-muted-foreground">Please wait while we securely verify the credentials</p>
+                    </div>
                   </div>
                 </Card>
               )}
 
               {error && (
-                <Alert variant="destructive" className="border-2" data-testid="alert-error">
-                  <AlertCircle className="h-5 w-5" />
-                  <AlertDescription className="text-base">
-                    Employee not found. Please check the ID and try again.
-                  </AlertDescription>
+                <Alert variant="destructive" className="border-2 shadow-lg p-6" data-testid="alert-error">
+                  <div className="flex items-start gap-4">
+                    <div className="flex-shrink-0">
+                      <div className="w-12 h-12 rounded-xl bg-destructive/10 flex items-center justify-center">
+                        <AlertCircle className="h-6 w-6" />
+                      </div>
+                    </div>
+                    <div className="flex-1">
+                      <h3 className="font-semibold text-lg mb-1">Employee Not Found</h3>
+                      <AlertDescription className="text-base">
+                        The employee ID you entered could not be verified. Please check the ID and try again.
+                      </AlertDescription>
+                    </div>
+                  </div>
                 </Alert>
               )}
 
               {employee && !isLoading && (
-                <Card className="p-8 md:p-10 shadow-2xl border-primary/30 bg-gradient-to-br from-card via-card to-primary/5 animate-in fade-in slide-in-from-bottom-4 duration-500" data-testid="card-employee-result">
-                  {/* Verified Badge */}
-                  <div className="mb-6 flex justify-center">
-                    <Badge variant="default" className="text-base px-4 py-2">
-                      <CheckCircle2 className="h-4 w-4 mr-2" />
-                      <span data-testid="text-verified-badge">Verified Employee</span>
-                    </Badge>
+                <Card className="p-8 md:p-12 shadow-2xl border-2 border-primary/30 bg-gradient-to-br from-card via-card/98 to-primary/5 animate-in fade-in slide-in-from-bottom-6 duration-700" data-testid="card-employee-result">
+                  {/* Success Header */}
+                  <div className="mb-8 text-center">
+                    <div className="inline-flex items-center gap-2 bg-green-500/10 border border-green-500/20 rounded-full px-6 py-3 shadow-lg">
+                      <div className="w-8 h-8 rounded-full bg-green-500 flex items-center justify-center">
+                        <CheckCircle2 className="h-5 w-5 text-white" />
+                      </div>
+                      <span className="text-lg font-semibold text-green-600 dark:text-green-400" data-testid="text-verified-badge">
+                        Verified Employee
+                      </span>
+                    </div>
                   </div>
 
-                  <div className="flex flex-col md:flex-row gap-8">
+                  <div className="flex flex-col md:flex-row gap-10 items-center md:items-start">
                     {/* Employee Photo */}
-                    <div className="flex-shrink-0 mx-auto md:mx-0">
+                    <div className="flex-shrink-0">
                       {employee.photoUrl ? (
-                        <div className="relative">
-                          <div className="absolute inset-0 bg-gradient-to-br from-primary/20 to-purple-500/20 rounded-2xl blur-xl"></div>
+                        <div className="relative group">
+                          <div className="absolute -inset-1 bg-gradient-to-br from-primary/30 via-purple-500/20 to-blue-500/20 rounded-3xl blur-2xl opacity-75 group-hover:opacity-100 transition duration-300"></div>
                           <img
                             src={employee.photoUrl}
                             alt={employee.fullName}
-                            className="relative w-40 h-40 rounded-2xl object-cover border-4 border-primary/20"
+                            className="relative w-48 h-48 rounded-3xl object-cover border-4 border-primary/30 shadow-2xl"
                             data-testid="img-employee-photo"
                           />
                         </div>
                       ) : (
-                        <div className="w-40 h-40 rounded-2xl bg-gradient-to-br from-primary/20 to-primary/10 flex items-center justify-center border-4 border-primary/20">
-                          <UserCheck className="h-16 w-16 text-primary" />
+                        <div className="relative group">
+                          <div className="absolute -inset-1 bg-gradient-to-br from-primary/30 to-primary/20 rounded-3xl blur-2xl opacity-75"></div>
+                          <div className="relative w-48 h-48 rounded-3xl bg-gradient-to-br from-primary/20 via-primary/15 to-primary/10 flex items-center justify-center border-4 border-primary/30 shadow-2xl">
+                            <UserCheck className="h-20 w-20 text-primary" />
+                          </div>
                         </div>
                       )}
                     </div>
 
                     {/* Employee Details */}
-                    <div className="flex-1 space-y-6">
-                      <div className="text-center md:text-left">
-                        <div className="flex items-center gap-3 justify-center md:justify-start">
-                          <h2 className="text-3xl md:text-4xl font-bold" data-testid="text-employee-name">
+                    <div className="flex-1 space-y-8 text-center md:text-left">
+                      {/* Name & Badge */}
+                      <div className="space-y-3">
+                        <div className="flex items-center gap-3 justify-center md:justify-start flex-wrap">
+                          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight" data-testid="text-employee-name">
                             {employee.fullName}
                           </h2>
                           <div className="flex-shrink-0">
                             <img 
                               src={verifiedBadge} 
                               alt="Verified" 
-                              className="h-8 w-8"
+                              className="h-10 w-10"
                               data-testid="img-verified-badge"
                             />
                           </div>
                         </div>
-                        <p className="text-base text-muted-foreground mt-2" data-testid="text-employee-id-display">
-                          Employee ID: <span className="font-semibold text-primary">{employee.employeeId}</span>
-                        </p>
+                        <div className="inline-flex items-center gap-2 bg-primary/10 border border-primary/20 rounded-full px-4 py-2">
+                          <p className="text-sm font-semibold text-muted-foreground">Employee ID:</p>
+                          <p className="text-base font-bold text-primary" data-testid="text-employee-id-display">
+                            {employee.employeeId}
+                          </p>
+                        </div>
                       </div>
 
-                      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        <div className="flex items-start gap-4">
-                          <div className="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center flex-shrink-0">
-                            <Briefcase className="h-5 w-5 text-primary" />
-                          </div>
-                          <div>
-                            <p className="text-sm font-semibold mb-1 text-muted-foreground">Position</p>
-                            <p className="text-base font-semibold" data-testid="text-employee-position">
-                              {employee.position}
-                            </p>
-                          </div>
-                        </div>
-
-                        <div className="flex items-start gap-4">
-                          <div className="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center flex-shrink-0">
-                            <Phone className="h-5 w-5 text-primary" />
-                          </div>
-                          <div>
-                            <p className="text-sm font-semibold mb-1 text-muted-foreground">Mobile Number</p>
-                            <p className="text-base font-semibold" data-testid="text-employee-mobile">
-                              {employee.mobile}
-                            </p>
+                      {/* Details Grid */}
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                        <div className="group p-5 rounded-2xl bg-gradient-to-br from-primary/5 to-primary/[0.02] border border-primary/10 hover:border-primary/20 transition-all duration-200">
+                          <div className="flex items-start gap-4">
+                            <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-primary/20 to-primary/10 flex items-center justify-center flex-shrink-0 shadow-md">
+                              <Briefcase className="h-6 w-6 text-primary" />
+                            </div>
+                            <div className="flex-1 min-w-0">
+                              <p className="text-sm font-semibold text-muted-foreground mb-1.5">Position</p>
+                              <p className="text-lg font-bold break-words" data-testid="text-employee-position">
+                                {employee.position}
+                              </p>
+                            </div>
                           </div>
                         </div>
 
-                        <div className="flex items-start gap-4 md:col-span-2">
-                          <div className="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center flex-shrink-0">
-                            <MapPin className="h-5 w-5 text-primary" />
+                        <div className="group p-5 rounded-2xl bg-gradient-to-br from-primary/5 to-primary/[0.02] border border-primary/10 hover:border-primary/20 transition-all duration-200">
+                          <div className="flex items-start gap-4">
+                            <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-primary/20 to-primary/10 flex items-center justify-center flex-shrink-0 shadow-md">
+                              <Phone className="h-6 w-6 text-primary" />
+                            </div>
+                            <div className="flex-1 min-w-0">
+                              <p className="text-sm font-semibold text-muted-foreground mb-1.5">Mobile Number</p>
+                              <p className="text-lg font-bold break-words" data-testid="text-employee-mobile">
+                                {employee.mobile}
+                              </p>
+                            </div>
                           </div>
-                          <div>
-                            <p className="text-sm font-semibold mb-1 text-muted-foreground">Address</p>
-                            <p className="text-base font-semibold" data-testid="text-employee-address">
-                              {employee.address}
-                            </p>
+                        </div>
+
+                        <div className="group p-5 rounded-2xl bg-gradient-to-br from-primary/5 to-primary/[0.02] border border-primary/10 hover:border-primary/20 transition-all duration-200 sm:col-span-2">
+                          <div className="flex items-start gap-4">
+                            <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-primary/20 to-primary/10 flex items-center justify-center flex-shrink-0 shadow-md">
+                              <MapPin className="h-6 w-6 text-primary" />
+                            </div>
+                            <div className="flex-1 min-w-0">
+                              <p className="text-sm font-semibold text-muted-foreground mb-1.5">Address</p>
+                              <p className="text-lg font-bold break-words" data-testid="text-employee-address">
+                                {employee.address}
+                              </p>
+                            </div>
                           </div>
                         </div>
                       </div>
