@@ -196,68 +196,68 @@ export default function VerifyEmployee() {
                     </div>
 
                     {/* Employee Details */}
-                    <div className="flex-1 space-y-8 text-center md:text-left">
+                    <div className="flex-1 space-y-6 text-center md:text-left">
                       {/* Name & Badge */}
                       <div className="space-y-3">
                         <div className="flex items-center gap-3 justify-center md:justify-start flex-wrap">
-                          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight" data-testid="text-employee-name">
+                          <h2 className="text-2xl md:text-3xl font-bold tracking-tight" data-testid="text-employee-name">
                             {employee.fullName}
                           </h2>
                           <div className="flex-shrink-0">
                             <img 
                               src={verifiedBadge} 
                               alt="Verified" 
-                              className="h-10 w-10"
+                              className="h-7 w-7"
                               data-testid="img-verified-badge"
                             />
                           </div>
                         </div>
-                        <div className="inline-flex items-center gap-2 bg-primary/10 border border-primary/20 rounded-full px-4 py-2">
-                          <p className="text-sm font-semibold text-muted-foreground">Employee ID:</p>
-                          <p className="text-base font-bold text-primary" data-testid="text-employee-id-display">
+                        <div className="inline-flex items-center gap-2 bg-primary/10 border border-primary/20 rounded-full px-3 py-1.5">
+                          <p className="text-xs font-semibold text-muted-foreground">Employee ID:</p>
+                          <p className="text-sm font-bold text-primary" data-testid="text-employee-id-display">
                             {employee.employeeId}
                           </p>
                         </div>
                       </div>
 
                       {/* Details Grid */}
-                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                        <div className="group p-5 rounded-2xl bg-gradient-to-br from-primary/5 to-primary/[0.02] border border-primary/10 hover:border-primary/20 transition-all duration-200">
-                          <div className="flex items-start gap-4">
-                            <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-primary/20 to-primary/10 flex items-center justify-center flex-shrink-0 shadow-md">
-                              <Briefcase className="h-6 w-6 text-primary" />
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <div className="group p-4 rounded-xl bg-gradient-to-br from-primary/5 to-primary/[0.02] border border-primary/10 hover:border-primary/20 transition-all duration-200">
+                          <div className="flex items-start gap-3">
+                            <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-primary/20 to-primary/10 flex items-center justify-center flex-shrink-0 shadow-sm">
+                              <Briefcase className="h-5 w-5 text-primary" />
                             </div>
                             <div className="flex-1 min-w-0">
-                              <p className="text-sm font-semibold text-muted-foreground mb-1.5">Position</p>
-                              <p className="text-lg font-bold break-words" data-testid="text-employee-position">
+                              <p className="text-xs font-semibold text-muted-foreground mb-1">Position</p>
+                              <p className="text-base font-semibold break-words" data-testid="text-employee-position">
                                 {employee.position}
                               </p>
                             </div>
                           </div>
                         </div>
 
-                        <div className="group p-5 rounded-2xl bg-gradient-to-br from-primary/5 to-primary/[0.02] border border-primary/10 hover:border-primary/20 transition-all duration-200">
-                          <div className="flex items-start gap-4">
-                            <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-primary/20 to-primary/10 flex items-center justify-center flex-shrink-0 shadow-md">
-                              <Phone className="h-6 w-6 text-primary" />
+                        <div className="group p-4 rounded-xl bg-gradient-to-br from-primary/5 to-primary/[0.02] border border-primary/10 hover:border-primary/20 transition-all duration-200">
+                          <div className="flex items-start gap-3">
+                            <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-primary/20 to-primary/10 flex items-center justify-center flex-shrink-0 shadow-sm">
+                              <Phone className="h-5 w-5 text-primary" />
                             </div>
                             <div className="flex-1 min-w-0">
-                              <p className="text-sm font-semibold text-muted-foreground mb-1.5">Mobile Number</p>
-                              <p className="text-lg font-bold break-words" data-testid="text-employee-mobile">
+                              <p className="text-xs font-semibold text-muted-foreground mb-1">Mobile Number</p>
+                              <p className="text-base font-semibold break-words" data-testid="text-employee-mobile">
                                 {employee.mobile}
                               </p>
                             </div>
                           </div>
                         </div>
 
-                        <div className="group p-5 rounded-2xl bg-gradient-to-br from-primary/5 to-primary/[0.02] border border-primary/10 hover:border-primary/20 transition-all duration-200 sm:col-span-2">
-                          <div className="flex items-start gap-4">
-                            <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-primary/20 to-primary/10 flex items-center justify-center flex-shrink-0 shadow-md">
-                              <MapPin className="h-6 w-6 text-primary" />
+                        <div className="group p-4 rounded-xl bg-gradient-to-br from-primary/5 to-primary/[0.02] border border-primary/10 hover:border-primary/20 transition-all duration-200 sm:col-span-2">
+                          <div className="flex items-start gap-3">
+                            <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-primary/20 to-primary/10 flex items-center justify-center flex-shrink-0 shadow-sm">
+                              <MapPin className="h-5 w-5 text-primary" />
                             </div>
                             <div className="flex-1 min-w-0">
-                              <p className="text-sm font-semibold text-muted-foreground mb-1.5">Address</p>
-                              <p className="text-lg font-bold break-words" data-testid="text-employee-address">
+                              <p className="text-xs font-semibold text-muted-foreground mb-1">Address</p>
+                              <p className="text-base font-semibold break-words" data-testid="text-employee-address">
                                 {employee.address}
                               </p>
                             </div>
