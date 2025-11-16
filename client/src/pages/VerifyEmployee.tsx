@@ -154,10 +154,15 @@ export default function VerifyEmployee() {
                     {/* Employee Details */}
                     <div className="flex-1 space-y-6">
                       <div className="text-center md:text-left">
-                        <h2 className="text-3xl md:text-4xl font-bold mb-2" data-testid="text-employee-name">
-                          {employee.fullName}
-                        </h2>
-                        <p className="text-base text-muted-foreground" data-testid="text-employee-id-display">
+                        <div className="flex items-center gap-3 justify-center md:justify-start">
+                          <h2 className="text-3xl md:text-4xl font-bold" data-testid="text-employee-name">
+                            {employee.fullName}
+                          </h2>
+                          <div className="flex-shrink-0">
+                            <CheckCircle2 className="h-8 w-8 text-blue-500 fill-blue-500" />
+                          </div>
+                        </div>
+                        <p className="text-base text-muted-foreground mt-2" data-testid="text-employee-id-display">
                           Employee ID: <span className="font-semibold text-primary">{employee.employeeId}</span>
                         </p>
                       </div>
