@@ -245,7 +245,7 @@ export default function Home() {
   return (
     <div className="flex flex-col">
       {/* Hero Section */}
-      <section className="relative min-h-[90vh] flex items-center justify-center overflow-hidden">
+      <section className="relative w-full max-w-[1728px] mx-auto overflow-hidden" style={{ height: '576px' }}>
         {/* Hero Image Slider */}
         <HeroSlider />
       </section>
