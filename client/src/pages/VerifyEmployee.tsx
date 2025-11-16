@@ -33,65 +33,59 @@ export default function VerifyEmployee() {
   };
 
   return (
-    <div className="flex flex-col">
-      {/* Hero Section */}
-      <section className="py-20 md:py-28 lg:py-32 relative overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-br from-primary/10 via-purple-500/5 to-background"></div>
-        <div className="absolute top-20 right-10 w-96 h-96 bg-primary/10 rounded-full blur-3xl"></div>
-        <div className="absolute bottom-20 left-10 w-96 h-96 bg-purple-500/10 rounded-full blur-3xl"></div>
-        <div className="max-w-7xl mx-auto px-4 md:px-6 relative z-10">
-          <div className="max-w-4xl mx-auto text-center">
-            <Badge variant="secondary" className="mb-6">
-              <Shield className="h-3 w-3 mr-2" />
-              Secure Verification System
-            </Badge>
-            <div className="mb-8">
-              <div className="inline-flex items-center justify-center w-20 h-20 rounded-2xl bg-gradient-to-br from-primary/20 to-primary/10 mb-6">
-                <UserCheck className="h-10 w-10 text-primary" />
-              </div>
-            </div>
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6" data-testid="text-verify-title">
-              Employee Verification
-            </h1>
-            <p className="text-lg md:text-xl text-muted-foreground leading-relaxed" data-testid="text-verify-description">
-              Enter an employee ID to verify their credentials and view their information securely
-            </p>
-          </div>
-        </div>
-      </section>
+    <div className="flex flex-col min-h-screen relative overflow-hidden">
+      {/* Animated Background */}
+      <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-background to-purple-500/5"></div>
+      <div className="absolute top-20 right-20 w-96 h-96 bg-primary/10 rounded-full blur-3xl animate-pulse"></div>
+      <div className="absolute bottom-20 left-20 w-96 h-96 bg-purple-500/10 rounded-full blur-3xl animate-pulse"></div>
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-blue-500/5 rounded-full blur-3xl"></div>
 
       {/* Search Section */}
-      <section className="py-16 md:py-20 -mt-10 relative z-20">
-        <div className="max-w-3xl mx-auto px-4 md:px-6">
-          <Card className="p-8 md:p-10 shadow-xl border-primary/20 bg-gradient-to-br from-card to-card/80">
-            <form onSubmit={handleSearch} className="space-y-6">
-              <div className="text-center mb-6">
-                <h2 className="text-2xl font-bold mb-2">Search Employee</h2>
-                <p className="text-sm text-muted-foreground">Enter the employee ID to get instant verification</p>
+      <section className="flex-1 flex items-center justify-center py-20 px-4 md:px-6 relative z-10">
+        <div className="w-full max-w-2xl">
+          <Card className="p-10 md:p-14 shadow-2xl border-primary/30 bg-gradient-to-br from-card/95 via-card/90 to-primary/5 backdrop-blur-sm">
+            <form onSubmit={handleSearch} className="space-y-8">
+              <div className="text-center space-y-6">
+                <div className="inline-flex items-center justify-center w-24 h-24 rounded-3xl bg-gradient-to-br from-primary/20 to-primary/10 mb-4 shadow-lg">
+                  <UserCheck className="h-12 w-12 text-primary" />
+                </div>
+                <div>
+                  <h1 className="text-4xl md:text-5xl font-bold mb-4" data-testid="text-verify-title">
+                    Employee Verification
+                  </h1>
+                  <p className="text-lg text-muted-foreground leading-relaxed" data-testid="text-verify-description">
+                    Enter employee ID to verify credentials instantly
+                  </p>
+                </div>
+                <Badge variant="secondary" className="text-sm px-4 py-2">
+                  <Shield className="h-3 w-3 mr-2" />
+                  Secure Verification System
+                </Badge>
               </div>
-              <div>
-                <label htmlFor="employee-id" className="block text-sm font-semibold mb-3">
+              
+              <div className="space-y-4">
+                <label htmlFor="employee-id" className="block text-base font-semibold text-center">
                   Employee ID
                 </label>
-                <div className="flex gap-3">
+                <div className="flex flex-col sm:flex-row gap-3">
                   <Input
                     id="employee-id"
                     type="text"
                     placeholder="e.g., EMP001"
                     value={employeeId}
                     onChange={(e) => setEmployeeId(e.target.value)}
-                    className="flex-1 h-12 text-base"
+                    className="flex-1 h-14 text-lg text-center sm:text-left px-6 shadow-md border-2 focus:border-primary"
                     data-testid="input-employee-id"
                   />
                   <Button 
                     type="submit" 
                     size="lg" 
                     disabled={isLoading}
-                    className="h-12 px-8 shadow-lg"
+                    className="h-14 px-10 text-base shadow-xl w-full sm:w-auto"
                     data-testid="button-search-employee"
                   >
-                    <Search className="h-4 w-4 mr-2" />
-                    Verify
+                    <Search className="h-5 w-5 mr-2" />
+                    Verify Now
                   </Button>
                 </div>
               </div>
