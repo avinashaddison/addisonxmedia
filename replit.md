@@ -6,6 +6,8 @@ AddisonX Media is a digital marketing agency based in Ranchi, Jharkhand, offerin
 
 The application follows a modern monorepo structure with a React frontend powered by Vite, an Express.js backend, and PostgreSQL database using Drizzle ORM. It implements Replit's authentication system for admin access and provides both public-facing pages and protected administrative functionality.
 
+**Recent Update (November 16, 2025):** Homepage hero section now features a custom promotional banner (1728 x 576 pixels) showcasing AddisonX Media's professional digital marketing services with branding, service highlights, and "Get Started Now" CTA.
+
 ## User Preferences
 
 Preferred communication style: Simple, everyday language.

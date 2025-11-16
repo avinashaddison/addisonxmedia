@@ -1,6 +1,6 @@
 import { Link } from "wouter";
 import { useQuery } from "@tanstack/react-query";
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -19,116 +19,21 @@ import {
   ArrowRight,
   CheckCircle,
   Sparkles,
-  Zap,
-  ChevronLeft,
-  ChevronRight
+  Zap
 } from "lucide-react";
-import useEmblaCarousel from "embla-carousel-react";
 import type { Testimonial } from "@shared/schema";
 
-import heroImage1 from "@assets/stock_images/digital_marketing_te_6e20120c.jpg";
-import heroImage2 from "@assets/stock_images/digital_marketing_te_01875939.jpg";
-import heroImage3 from "@assets/stock_images/web_development_codi_8ffa3130.jpg";
-import heroImage4 from "@assets/stock_images/business_team_collab_a0270f86.jpg";
-import heroImage5 from "@assets/stock_images/business_team_collab_65b62d2f.jpg";
+import heroBanner from "@assets/Phoenix_10_Create_a_modern_premium_promotional_banner_in_the_s_2_1763291282547.jpg";
 
-const heroImages = [
-  heroImage1,
-  heroImage2,
-  heroImage3,
-  heroImage4,
-  heroImage5
-];
-
-function HeroSlider() {
-  const [emblaRef, emblaApi] = useEmblaCarousel({ loop: true, startIndex: 0 });
-  const [selectedIndex, setSelectedIndex] = useState(0);
-
-  const scrollPrev = useCallback(() => {
-    if (emblaApi) emblaApi.scrollPrev();
-  }, [emblaApi]);
-
-  const scrollNext = useCallback(() => {
-    if (emblaApi) emblaApi.scrollNext();
-  }, [emblaApi]);
-
-  const scrollTo = useCallback((index: number) => {
-    if (emblaApi) emblaApi.scrollTo(index);
-  }, [emblaApi]);
-
-  useEffect(() => {
-    if (!emblaApi) return;
-    
-    const handleSelect = () => {
-      setSelectedIndex(emblaApi.selectedScrollSnap());
-    };
-    
-    handleSelect();
-    emblaApi.on("select", handleSelect);
-    emblaApi.on("reInit", handleSelect);
-    
-    const interval = setInterval(() => {
-      emblaApi.scrollNext();
-    }, 6000);
-
-    return () => {
-      clearInterval(interval);
-      emblaApi.off("select", handleSelect);
-      emblaApi.off("reInit", handleSelect);
-    };
-  }, [emblaApi]);
-
+function HeroBanner() {
   return (
-    <div className="absolute inset-0">
-      <div className="overflow-hidden h-full w-full" ref={emblaRef}>
-        <div className="flex h-full touch-pan-y">
-          {heroImages.map((image, index) => (
-            <div key={index} className="flex-[0_0_100%] min-w-0 relative h-full">
-              <img
-                src={image}
-                alt={`Hero ${index + 1}`}
-                className="w-full h-full object-cover pointer-events-none"
-                data-testid={`img-hero-slide-${index}`}
-              />
-            </div>
-          ))}
-        </div>
-      </div>
-
-      <button
-        onClick={scrollPrev}
-        className="absolute left-4 top-1/2 -translate-y-1/2 z-50 bg-white/10 hover-elevate active-elevate-2 backdrop-blur-md rounded-full p-3 transition-all pointer-events-auto"
-        aria-label="Previous slide"
-        data-testid="button-hero-prev"
-      >
-        <ChevronLeft className="h-6 w-6 text-white pointer-events-none" />
-      </button>
-
-      <button
-        onClick={scrollNext}
-        className="absolute right-4 top-1/2 -translate-y-1/2 z-50 bg-white/10 hover-elevate active-elevate-2 backdrop-blur-md rounded-full p-3 transition-all pointer-events-auto"
-        aria-label="Next slide"
-        data-testid="button-hero-next"
-      >
-        <ChevronRight className="h-6 w-6 text-white pointer-events-none" />
-      </button>
-
-      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 z-50 flex gap-2">
-        {heroImages.map((_, index) => (
-          <button
-            key={index}
-            onClick={() => scrollTo(index)}
-            className={`h-2 rounded-full transition-all pointer-events-auto ${
-              index === selectedIndex 
-                ? "w-8 bg-white" 
-                : "w-2 bg-white/50 hover:bg-white/75"
-            }`}
-            aria-label={`Go to slide ${index + 1}`}
-            aria-current={index === selectedIndex ? "true" : "false"}
-            data-testid={`button-hero-dot-${index}`}
-          />
-        ))}
-      </div>
+    <div className="w-full h-full">
+      <img
+        src={heroBanner}
+        alt="AddisonX Media - Professional Digital Marketing Services"
+        className="w-full h-full object-cover"
+        data-testid="img-hero-banner"
+      />
     </div>
   );
 }
@@ -246,8 +151,8 @@ export default function Home() {
     <div className="flex flex-col">
       {/* Hero Section */}
       <section className="relative w-full max-w-[1728px] mx-auto overflow-hidden" style={{ height: '576px' }}>
-        {/* Hero Image Slider */}
-        <HeroSlider />
+        {/* Hero Banner */}
+        <HeroBanner />
       </section>
 
       {/* Stats Section */}
