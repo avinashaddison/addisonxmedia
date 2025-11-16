@@ -1,11 +1,14 @@
 import {
   users,
   employees,
+  contactSubmissions,
   type User,
   type UpsertUser,
   type Employee,
   type InsertEmployee,
   type UpdateEmployee,
+  type ContactSubmission,
+  type InsertContactSubmission,
 } from "@shared/schema";
 import { db } from "./db";
 import { eq } from "drizzle-orm";
@@ -22,6 +25,11 @@ export interface IStorage {
   createEmployee(employee: InsertEmployee): Promise<Employee>;
   updateEmployee(id: string, employee: UpdateEmployee): Promise<Employee | undefined>;
   deleteEmployee(id: string): Promise<void>;
+
+  // Contact submission operations
+  createContactSubmission(submission: InsertContactSubmission): Promise<ContactSubmission>;
+  getAllContactSubmissions(): Promise<ContactSubmission[]>;
+  updateContactSubmissionStatus(id: string, status: string): Promise<ContactSubmission | undefined>;
 }
 
 export class DatabaseStorage implements IStorage {
@@ -83,6 +91,28 @@ export class DatabaseStorage implements IStorage {
 
   async deleteEmployee(id: string): Promise<void> {
     await db.delete(employees).where(eq(employees.id, id));
+  }
+
+  // Contact submission operations
+  async createContactSubmission(submissionData: InsertContactSubmission): Promise<ContactSubmission> {
+    const [submission] = await db
+      .insert(contactSubmissions)
+      .values(submissionData)
+      .returning();
+    return submission;
+  }
+
+  async getAllContactSubmissions(): Promise<ContactSubmission[]> {
+    return db.select().from(contactSubmissions).orderBy(contactSubmissions.createdAt);
+  }
+
+  async updateContactSubmissionStatus(id: string, status: string): Promise<ContactSubmission | undefined> {
+    const [submission] = await db
+      .update(contactSubmissions)
+      .set({ status })
+      .where(eq(contactSubmissions.id, id))
+      .returning();
+    return submission;
   }
 }
 

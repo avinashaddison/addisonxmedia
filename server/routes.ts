@@ -3,7 +3,7 @@ import { createServer, type Server } from "http";
 import { storage } from "./storage";
 import { setupAuth, isAuthenticated } from "./replitAuth";
 import { ObjectStorageService } from "./objectStorage";
-import { insertEmployeeSchema, updateEmployeeSchema } from "@shared/schema";
+import { insertEmployeeSchema, updateEmployeeSchema, insertContactSubmissionSchema } from "@shared/schema";
 import { z } from "zod";
 
 export async function registerRoutes(app: Express): Promise<Server> {
@@ -155,6 +155,66 @@ export async function registerRoutes(app: Express): Promise<Server> {
     } catch (error) {
       console.error("Error deleting employee:", error);
       res.status(500).json({ message: "Failed to delete employee" });
+    }
+  });
+
+  // Contact submission routes
+  app.post("/api/contact", async (req, res) => {
+    try {
+      const parseResult = insertContactSubmissionSchema.safeParse(req.body);
+      
+      if (!parseResult.success) {
+        return res.status(400).json({ message: "Invalid data", errors: parseResult.error.errors });
+      }
+
+      const submission = await storage.createContactSubmission(parseResult.data);
+      
+      // Email notification setup:
+      // To enable email notifications, integrate an email service (e.g., Resend, SendGrid, Mailgun)
+      // 1. Install email provider SDK
+      // 2. Add API key to environment variables
+      // 3. Send notification email here after successful submission
+      // Example: await sendEmail({ to: 'info@addisonxmedia.com', subject: `New Contact: ${submission.name}`, ... })
+      
+      res.status(201).json({ 
+        message: "Thank you for contacting us! We'll get back to you soon.",
+        submission 
+      });
+    } catch (error) {
+      console.error("Error creating contact submission:", error);
+      res.status(500).json({ message: "Failed to submit contact form" });
+    }
+  });
+
+  app.get("/api/contact", isAuthenticated, async (req, res) => {
+    try {
+      const submissions = await storage.getAllContactSubmissions();
+      res.json(submissions);
+    } catch (error) {
+      console.error("Error fetching contact submissions:", error);
+      res.status(500).json({ message: "Failed to fetch contact submissions" });
+    }
+  });
+
+  app.patch("/api/contact/:id/status", isAuthenticated, async (req, res) => {
+    try {
+      const { id } = req.params;
+      const { status } = req.body;
+      
+      if (!status || !["new", "contacted", "closed"].includes(status)) {
+        return res.status(400).json({ message: "Invalid status" });
+      }
+
+      const submission = await storage.updateContactSubmissionStatus(id, status);
+      
+      if (!submission) {
+        return res.status(404).json({ message: "Submission not found" });
+      }
+
+      res.json(submission);
+    } catch (error) {
+      console.error("Error updating submission status:", error);
+      res.status(500).json({ message: "Failed to update submission status" });
     }
   });
 

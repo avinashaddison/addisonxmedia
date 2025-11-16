@@ -1,10 +1,62 @@
 import { Card } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
 import { MapPin, Phone, Mail, Clock } from "lucide-react";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { insertContactSubmissionSchema, type InsertContactSubmission } from "@shared/schema";
+import { useMutation } from "@tanstack/react-query";
+import { apiRequest } from "@/lib/queryClient";
+import { useToast } from "@/hooks/use-toast";
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 
 export default function Contact() {
+  const { toast } = useToast();
+  
+  const form = useForm<InsertContactSubmission>({
+    resolver: zodResolver(insertContactSubmissionSchema),
+    defaultValues: {
+      name: "",
+      email: "",
+      phone: "",
+      company: "",
+      message: "",
+    },
+  });
+
+  const mutation = useMutation({
+    mutationFn: async (data: InsertContactSubmission) => {
+      await apiRequest("POST", "/api/contact", data);
+    },
+    onSuccess: () => {
+      toast({
+        title: "Message Sent!",
+        description: "Thank you for contacting us. We'll get back to you soon.",
+      });
+      form.reset({
+        name: "",
+        email: "",
+        phone: "",
+        company: "",
+        message: "",
+      });
+    },
+    onError: () => {
+      toast({
+        title: "Error",
+        description: "Failed to send message. Please try again.",
+        variant: "destructive",
+      });
+    },
+  });
+
+  const onSubmit = (data: InsertContactSubmission) => {
+    mutation.mutate(data);
+  };
+
   return (
     <div className="flex flex-col">
-      {/* Hero Section */}
       <section className="py-16 md:py-24 lg:py-32 bg-gradient-to-br from-primary/10 via-background to-primary/5">
         <div className="max-w-7xl mx-auto px-4 md:px-6">
           <div className="max-w-4xl mx-auto text-center">
@@ -13,17 +65,15 @@ export default function Contact() {
             </h1>
             <p className="text-lg md:text-xl text-muted-foreground leading-relaxed" data-testid="text-contact-description">
               Have a project in mind? We'd love to hear from you. Reach out to discuss 
-              how we can help grow your business.
+              how we can help grow your business in Ranchi and beyond.
             </p>
           </div>
         </div>
       </section>
 
-      {/* Contact Info */}
       <section className="py-16 md:py-24">
         <div className="max-w-7xl mx-auto px-4 md:px-6">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12">
-            {/* Contact Information */}
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
             <div>
               <h2 className="text-3xl md:text-4xl font-bold mb-8" data-testid="text-contact-info-title">
                 Contact Information
@@ -58,7 +108,7 @@ export default function Contact() {
                     <div>
                       <h3 className="font-semibold mb-2" data-testid="text-phone-title">Phone</h3>
                       <p className="text-muted-foreground" data-testid="text-phone-number">
-                        +91 XXX XXX XXXX
+                        +91 1234567890
                       </p>
                     </div>
                   </div>
@@ -104,59 +154,123 @@ export default function Contact() {
               </div>
             </div>
 
-            {/* Why Contact Us */}
             <div>
-              <h2 className="text-3xl md:text-4xl font-bold mb-8" data-testid="text-why-contact-title">
-                Why Work With Us?
+              <h2 className="text-3xl md:text-4xl font-bold mb-8" data-testid="text-contact-form-title">
+                Send Us a Message
               </h2>
               
-              <div className="space-y-6">
-                <Card className="p-6">
-                  <h3 className="text-xl font-semibold mb-3" data-testid="text-benefit-title-0">
-                    Local Expertise
-                  </h3>
-                  <p className="text-muted-foreground leading-relaxed" data-testid="text-benefit-description-0">
-                    As a Ranchi-based agency, we understand the local market dynamics and 
-                    can create strategies that resonate with your target audience.
-                  </p>
-                </Card>
+              <Card className="p-6 md:p-8">
+                <Form {...form}>
+                  <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+                    <FormField
+                      control={form.control}
+                      name="name"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>Name *</FormLabel>
+                          <FormControl>
+                            <Input 
+                              placeholder="Your full name" 
+                              data-testid="input-contact-name"
+                              {...field} 
+                            />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
 
-                <Card className="p-6">
-                  <h3 className="text-xl font-semibold mb-3" data-testid="text-benefit-title-1">
-                    Proven Results
-                  </h3>
-                  <p className="text-muted-foreground leading-relaxed" data-testid="text-benefit-description-1">
-                    Our track record speaks for itself. We've helped numerous businesses 
-                    achieve their digital marketing goals and grow their online presence.
-                  </p>
-                </Card>
+                    <FormField
+                      control={form.control}
+                      name="email"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>Email *</FormLabel>
+                          <FormControl>
+                            <Input 
+                              type="email" 
+                              placeholder="your@email.com" 
+                              data-testid="input-contact-email"
+                              {...field} 
+                            />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
 
-                <Card className="p-6">
-                  <h3 className="text-xl font-semibold mb-3" data-testid="text-benefit-title-2">
-                    Comprehensive Services
-                  </h3>
-                  <p className="text-muted-foreground leading-relaxed" data-testid="text-benefit-description-2">
-                    From web development to social media marketing, we offer all the services 
-                    you need under one roof for seamless collaboration.
-                  </p>
-                </Card>
+                    <FormField
+                      control={form.control}
+                      name="phone"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>Phone</FormLabel>
+                          <FormControl>
+                            <Input 
+                              type="tel" 
+                              placeholder="+91 1234567890" 
+                              data-testid="input-contact-phone"
+                              {...field} 
+                            />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
 
-                <Card className="p-6">
-                  <h3 className="text-xl font-semibold mb-3" data-testid="text-benefit-title-3">
-                    Transparent Communication
-                  </h3>
-                  <p className="text-muted-foreground leading-relaxed" data-testid="text-benefit-description-3">
-                    We believe in keeping you informed every step of the way with regular 
-                    updates and clear reporting on your campaign performance.
-                  </p>
-                </Card>
-              </div>
+                    <FormField
+                      control={form.control}
+                      name="company"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>Company</FormLabel>
+                          <FormControl>
+                            <Input 
+                              placeholder="Your company name" 
+                              data-testid="input-contact-company"
+                              {...field} 
+                            />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+
+                    <FormField
+                      control={form.control}
+                      name="message"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>Message *</FormLabel>
+                          <FormControl>
+                            <Textarea 
+                              placeholder="Tell us about your project or inquiry..." 
+                              className="min-h-32"
+                              data-testid="input-contact-message"
+                              {...field} 
+                            />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+
+                    <Button 
+                      type="submit" 
+                      className="w-full" 
+                      disabled={mutation.isPending}
+                      data-testid="button-contact-submit"
+                    >
+                      {mutation.isPending ? "Sending..." : "Send Message"}
+                    </Button>
+                  </form>
+                </Form>
+              </Card>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Location Highlight */}
       <section className="py-16 md:py-24 bg-card">
         <div className="max-w-7xl mx-auto px-4 md:px-6">
           <div className="text-center max-w-3xl mx-auto">
