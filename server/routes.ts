@@ -3,7 +3,7 @@ import { createServer, type Server } from "http";
 import { storage } from "./storage";
 import { setupAuth, isAuthenticated } from "./replitAuth";
 import { ObjectStorageService } from "./objectStorage";
-import { insertEmployeeSchema, updateEmployeeSchema, insertContactSubmissionSchema } from "@shared/schema";
+import { insertEmployeeSchema, updateEmployeeSchema, insertContactSubmissionSchema, insertTestimonialSchema, updateTestimonialSchema } from "@shared/schema";
 import { z } from "zod";
 
 export async function registerRoutes(app: Express): Promise<Server> {
@@ -215,6 +215,120 @@ export async function registerRoutes(app: Express): Promise<Server> {
     } catch (error) {
       console.error("Error updating submission status:", error);
       res.status(500).json({ message: "Failed to update submission status" });
+    }
+  });
+
+  // Testimonial routes
+  app.get("/api/testimonials/active", async (req, res) => {
+    try {
+      const testimonials = await storage.getActiveTestimonials();
+      res.json(testimonials);
+    } catch (error) {
+      console.error("Error fetching active testimonials:", error);
+      res.status(500).json({ message: "Failed to fetch testimonials" });
+    }
+  });
+
+  app.get("/api/testimonials", isAuthenticated, async (req, res) => {
+    try {
+      const testimonials = await storage.getAllTestimonials();
+      res.json(testimonials);
+    } catch (error) {
+      console.error("Error fetching testimonials:", error);
+      res.status(500).json({ message: "Failed to fetch testimonials" });
+    }
+  });
+
+  app.get("/api/testimonials/:id", isAuthenticated, async (req, res) => {
+    try {
+      const { id } = req.params;
+      const testimonial = await storage.getTestimonial(id);
+      
+      if (!testimonial) {
+        return res.status(404).json({ message: "Testimonial not found" });
+      }
+
+      res.json(testimonial);
+    } catch (error) {
+      console.error("Error fetching testimonial:", error);
+      res.status(500).json({ message: "Failed to fetch testimonial" });
+    }
+  });
+
+  app.post("/api/testimonials/upload-photo", isAuthenticated, async (req, res) => {
+    try {
+      const objectStorageService = new ObjectStorageService();
+      const uploadURL = await objectStorageService.getUploadURL();
+      res.json({ uploadURL });
+    } catch (error) {
+      console.error("Error getting upload URL:", error);
+      res.status(500).json({ message: "Failed to get upload URL" });
+    }
+  });
+
+  app.post("/api/testimonials", isAuthenticated, async (req, res) => {
+    try {
+      const parseResult = insertTestimonialSchema.safeParse(req.body);
+      
+      if (!parseResult.success) {
+        return res.status(400).json({ message: "Invalid data", errors: parseResult.error.errors });
+      }
+
+      const objectStorageService = new ObjectStorageService();
+      const photoUrl = parseResult.data.photoUrl
+        ? objectStorageService.normalizeObjectPath(parseResult.data.photoUrl)
+        : undefined;
+
+      const testimonial = await storage.createTestimonial({
+        ...parseResult.data,
+        photoUrl,
+      });
+      
+      res.status(201).json(testimonial);
+    } catch (error) {
+      console.error("Error creating testimonial:", error);
+      res.status(500).json({ message: "Failed to create testimonial" });
+    }
+  });
+
+  app.put("/api/testimonials/:id", isAuthenticated, async (req, res) => {
+    try {
+      const { id } = req.params;
+      const parseResult = updateTestimonialSchema.safeParse(req.body);
+      
+      if (!parseResult.success) {
+        return res.status(400).json({ message: "Invalid data", errors: parseResult.error.errors });
+      }
+
+      const objectStorageService = new ObjectStorageService();
+      const photoUrl = parseResult.data.photoUrl
+        ? objectStorageService.normalizeObjectPath(parseResult.data.photoUrl)
+        : undefined;
+
+      const testimonial = await storage.updateTestimonial(id, {
+        ...parseResult.data,
+        photoUrl,
+      });
+      
+      if (!testimonial) {
+        return res.status(404).json({ message: "Testimonial not found" });
+      }
+
+      res.json(testimonial);
+    } catch (error) {
+      console.error("Error updating testimonial:", error);
+      res.status(500).json({ message: "Failed to update testimonial" });
+    }
+  });
+
+  app.delete("/api/testimonials/:id", isAuthenticated, async (req, res) => {
+    try {
+      const { id } = req.params;
+      await storage.deleteTestimonial(id);
+      res.status(204).send();
+    } catch (error) {
+      console.error("Error deleting testimonial:", error);
+      res.status(500).json({ message: "Failed to delete testimonial" });
     }
   });
 

@@ -6,7 +6,7 @@ import { isUnauthorizedError } from "@/lib/authUtils";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Link } from "wouter";
-import { Users, Plus, LogOut } from "lucide-react";
+import { Users, Plus, LogOut, Star } from "lucide-react";
 import { EmployeeList } from "@/components/admin/EmployeeList";
 import type { Employee } from "@shared/schema";
 
@@ -79,21 +79,39 @@ export default function Dashboard() {
 
       {/* Main Content */}
       <main className="max-w-7xl mx-auto px-4 md:px-6 py-8">
-        {/* Stats */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-          <Card className="p-6">
-            <div className="flex items-center gap-4">
-              <div className="w-12 h-12 rounded-md bg-primary/10 flex items-center justify-center">
-                <Users className="h-6 w-6 text-primary" />
+        {/* Quick Navigation */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+          <Link href="/admin/employees/new">
+            <Card className="p-6 hover-elevate transition-all cursor-pointer">
+              <div className="flex items-center gap-4">
+                <div className="w-12 h-12 rounded-md bg-primary/10 flex items-center justify-center">
+                  <Users className="h-6 w-6 text-primary" />
+                </div>
+                <div>
+                  <h3 className="font-semibold mb-1">Manage Employees</h3>
+                  <p className="text-sm text-muted-foreground">
+                    {employees.length} employees registered
+                  </p>
+                </div>
               </div>
-              <div>
-                <p className="text-sm text-muted-foreground">Total Employees</p>
-                <p className="text-2xl font-bold" data-testid="text-total-employees">
-                  {employees.length}
-                </p>
+            </Card>
+          </Link>
+
+          <Link href="/admin/testimonials">
+            <Card className="p-6 hover-elevate transition-all cursor-pointer" data-testid="card-testimonials">
+              <div className="flex items-center gap-4">
+                <div className="w-12 h-12 rounded-md bg-primary/10 flex items-center justify-center">
+                  <Star className="h-6 w-6 text-primary" />
+                </div>
+                <div>
+                  <h3 className="font-semibold mb-1">Manage Testimonials</h3>
+                  <p className="text-sm text-muted-foreground">
+                    Client reviews and testimonials
+                  </p>
+                </div>
               </div>
-            </div>
-          </Card>
+            </Card>
+          </Link>
         </div>
 
         {/* Actions */}

@@ -2,6 +2,7 @@ import {
   users,
   employees,
   contactSubmissions,
+  testimonials,
   type User,
   type UpsertUser,
   type Employee,
@@ -9,6 +10,9 @@ import {
   type UpdateEmployee,
   type ContactSubmission,
   type InsertContactSubmission,
+  type Testimonial,
+  type InsertTestimonial,
+  type UpdateTestimonial,
 } from "@shared/schema";
 import { db } from "./db";
 import { eq } from "drizzle-orm";
@@ -30,6 +34,14 @@ export interface IStorage {
   createContactSubmission(submission: InsertContactSubmission): Promise<ContactSubmission>;
   getAllContactSubmissions(): Promise<ContactSubmission[]>;
   updateContactSubmissionStatus(id: string, status: string): Promise<ContactSubmission | undefined>;
+
+  // Testimonial operations
+  getAllTestimonials(): Promise<Testimonial[]>;
+  getActiveTestimonials(): Promise<Testimonial[]>;
+  getTestimonial(id: string): Promise<Testimonial | undefined>;
+  createTestimonial(testimonial: InsertTestimonial): Promise<Testimonial>;
+  updateTestimonial(id: string, testimonial: UpdateTestimonial): Promise<Testimonial | undefined>;
+  deleteTestimonial(id: string): Promise<void>;
 }
 
 export class DatabaseStorage implements IStorage {
@@ -113,6 +125,44 @@ export class DatabaseStorage implements IStorage {
       .where(eq(contactSubmissions.id, id))
       .returning();
     return submission;
+  }
+
+  // Testimonial operations
+  async getAllTestimonials(): Promise<Testimonial[]> {
+    return db.select().from(testimonials).orderBy(testimonials.createdAt);
+  }
+
+  async getActiveTestimonials(): Promise<Testimonial[]> {
+    return db.select().from(testimonials).where(eq(testimonials.isActive, "true")).orderBy(testimonials.createdAt);
+  }
+
+  async getTestimonial(id: string): Promise<Testimonial | undefined> {
+    const [testimonial] = await db.select().from(testimonials).where(eq(testimonials.id, id));
+    return testimonial;
+  }
+
+  async createTestimonial(testimonialData: InsertTestimonial): Promise<Testimonial> {
+    const [testimonial] = await db
+      .insert(testimonials)
+      .values(testimonialData)
+      .returning();
+    return testimonial;
+  }
+
+  async updateTestimonial(id: string, testimonialData: UpdateTestimonial): Promise<Testimonial | undefined> {
+    const [testimonial] = await db
+      .update(testimonials)
+      .set({
+        ...testimonialData,
+        updatedAt: new Date(),
+      })
+      .where(eq(testimonials.id, id))
+      .returning();
+    return testimonial;
+  }
+
+  async deleteTestimonial(id: string): Promise<void> {
+    await db.delete(testimonials).where(eq(testimonials.id, id));
   }
 }
 

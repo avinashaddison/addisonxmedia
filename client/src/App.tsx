@@ -13,6 +13,8 @@ import Contact from "@/pages/Contact";
 import VerifyEmployee from "@/pages/VerifyEmployee";
 import Dashboard from "@/pages/admin/Dashboard";
 import EmployeeForm from "@/pages/admin/EmployeeForm";
+import Testimonials from "@/pages/admin/Testimonials";
+import TestimonialForm from "@/pages/admin/TestimonialForm";
 import NotFound from "@/pages/not-found";
 
 function Router() {
@@ -31,6 +33,9 @@ function Router() {
       <Route path="/admin/dashboard" component={Dashboard} />
       <Route path="/admin/employees/new" component={EmployeeForm} />
       <Route path="/admin/employees/:id/edit" component={EmployeeForm} />
+      <Route path="/admin/testimonials" component={Testimonials} />
+      <Route path="/admin/testimonials/new" component={TestimonialForm} />
+      <Route path="/admin/testimonials/:id/edit" component={TestimonialForm} />
       
       {/* 404 */}
       <Route component={NotFound} />
