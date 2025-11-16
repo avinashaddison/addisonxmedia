@@ -1,5 +1,5 @@
 import { Link, useLocation } from "wouter";
-import { Phone, Mail, Sparkles, Home, Info, Briefcase, UserCheck, MessageCircle } from "lucide-react";
+import { Phone, Mail, Sparkles, Home, Info, Briefcase, UserCheck, MessageCircle, MessageSquare } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import logoUrl from "@assets/Screenshot 2025-11-15 182956_1763276506016.png";
 
@@ -39,20 +39,64 @@ export function Navbar() {
         </div>
 
       {/* Main Navigation */}
-      <nav className="bg-background/95 backdrop-blur-md supports-[backdrop-filter]:bg-background/80 border-b shadow-md">
+      <nav className="relative bg-background/95 backdrop-blur-md supports-[backdrop-filter]:bg-background/80 border-b shadow-md">
         <div className="max-w-7xl mx-auto px-4 md:px-6">
-          <div className="flex items-center justify-between h-14 md:h-20">
-            {/* Logo - Optimized for Mobile */}
-            <Link href="/" data-testid="link-home">
-              <div className="flex items-center gap-2 cursor-pointer group">
-                <img 
-                  src={logoUrl} 
-                  alt="AddisonX Media" 
-                  className="h-10 md:h-14 w-auto transition-transform group-hover:scale-105"
-                  data-testid="img-logo"
-                />
+          <div className="flex items-center justify-between h-16 md:h-20">
+            {/* Mobile Logo with Brand Info */}
+            <Link href="/" data-testid="link-home" className="flex-1 lg:flex-none">
+              <div className="flex items-center gap-3 cursor-pointer group">
+                {/* Logo Container with Glow */}
+                <div className="relative">
+                  <div className="absolute inset-0 bg-gradient-to-br from-primary/30 to-purple-500/30 rounded-2xl blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 lg:hidden"></div>
+                  <div className="relative bg-gradient-to-br from-primary/5 to-purple-500/5 p-1.5 rounded-xl lg:bg-transparent lg:p-0">
+                    <img 
+                      src={logoUrl} 
+                      alt="AddisonX Media" 
+                      className="h-9 md:h-14 w-auto relative z-10 transition-all duration-300 group-hover:scale-105"
+                      data-testid="img-logo"
+                    />
+                  </div>
+                </div>
+                
+                {/* Mobile Brand Text with Gradient */}
+                <div className="lg:hidden flex flex-col">
+                  <span className="text-sm font-bold bg-gradient-to-r from-primary via-purple-600 to-primary bg-clip-text text-transparent animate-gradient">
+                    AddisonX
+                  </span>
+                  <span className="text-[9px] text-muted-foreground font-medium tracking-wide">
+                    Digital Marketing
+                  </span>
+                </div>
               </div>
             </Link>
+
+            {/* Mobile Action Buttons with Premium Style */}
+            <div className="lg:hidden flex items-center gap-2">
+              {/* Phone Call Button */}
+              <a 
+                href="tel:+919709707311"
+                className="relative group"
+                data-testid="button-mobile-call"
+              >
+                <div className="absolute inset-0 bg-gradient-to-br from-green-500/40 to-emerald-600/40 rounded-xl blur-md opacity-0 group-active:opacity-100 transition-opacity duration-300"></div>
+                <div className="relative flex items-center justify-center w-11 h-11 rounded-xl bg-gradient-to-br from-green-50 to-emerald-50 dark:from-green-950 dark:to-emerald-950 border border-green-200/50 dark:border-green-800/50 transition-all duration-300 group-active:scale-90 shadow-lg">
+                  <Phone className="h-4.5 w-4.5 text-green-600 dark:text-green-400" />
+                </div>
+              </a>
+
+              {/* Contact Message Button */}
+              <Link href="/contact">
+                <button 
+                  className="relative group"
+                  data-testid="button-mobile-contact"
+                >
+                  <div className="absolute inset-0 bg-gradient-to-br from-primary to-purple-600 rounded-xl blur-md opacity-60 group-active:opacity-90 transition-opacity duration-300 animate-pulse"></div>
+                  <div className="relative flex items-center justify-center w-11 h-11 rounded-xl bg-gradient-to-br from-primary to-purple-600 shadow-xl shadow-primary/40 transition-all duration-300 group-active:scale-90">
+                    <MessageSquare className="h-4.5 w-4.5 text-white" />
+                  </div>
+                </button>
+              </Link>
+            </div>
 
             {/* Desktop Navigation */}
             <div className="hidden lg:flex items-center gap-1">
@@ -84,8 +128,10 @@ export function Navbar() {
               </Link>
             </div>
           </div>
-
         </div>
+        
+        {/* Mobile Bottom Accent Line */}
+        <div className="lg:hidden absolute bottom-0 left-0 right-0 h-0.5 bg-gradient-to-r from-transparent via-primary/50 to-transparent"></div>
       </nav>
     </header>
 
