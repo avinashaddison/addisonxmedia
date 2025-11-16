@@ -159,43 +159,43 @@ export default function Home() {
       </section>
 
       {/* Stats Section */}
-      <section className="py-12 md:py-16 relative overflow-hidden bg-gradient-to-br from-background via-primary/5 to-background">
-        <div className="absolute top-0 left-1/4 w-96 h-96 bg-primary/10 rounded-full blur-3xl opacity-50"></div>
-        <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-purple-500/10 rounded-full blur-3xl opacity-50"></div>
+      <section className="py-6 md:py-12 lg:py-16 relative overflow-hidden bg-gradient-to-br from-background via-primary/5 to-background">
+        <div className="hidden md:block absolute top-0 left-1/4 w-96 h-96 bg-primary/10 rounded-full blur-3xl opacity-50"></div>
+        <div className="hidden md:block absolute bottom-0 right-1/4 w-96 h-96 bg-purple-500/10 rounded-full blur-3xl opacity-50"></div>
         <div className="max-w-7xl mx-auto px-4 md:px-6 relative z-10">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12">
+          <div className="grid grid-cols-3 md:grid-cols-3 gap-3 md:gap-8 lg:gap-12">
             <div className="text-center group cursor-default">
-              <div className="relative inline-block mb-3">
-                <div className="absolute inset-0 bg-primary/20 rounded-2xl blur-xl group-hover:blur-2xl transition-all"></div>
-                <div className="relative text-5xl md:text-6xl font-bold bg-gradient-to-r from-primary to-purple-500 bg-clip-text text-transparent" data-testid="text-stat-value-0">
+              <div className="relative inline-block mb-1 md:mb-2 lg:mb-3">
+                <div className="hidden md:block absolute inset-0 bg-primary/20 rounded-2xl blur-xl group-hover:blur-2xl transition-all"></div>
+                <div className="relative text-2xl md:text-4xl lg:text-5xl xl:text-6xl font-bold bg-gradient-to-r from-primary to-purple-500 bg-clip-text text-transparent" data-testid="text-stat-value-0">
                   <AnimatedCounter end={100} />+
                 </div>
               </div>
-              <div className="text-base font-medium text-muted-foreground" data-testid="text-stat-label-0">
+              <div className="text-[10px] md:text-sm lg:text-base font-medium text-muted-foreground" data-testid="text-stat-label-0">
                 Projects Completed
               </div>
             </div>
             
             <div className="text-center group cursor-default">
-              <div className="relative inline-block mb-3">
-                <div className="absolute inset-0 bg-primary/20 rounded-2xl blur-xl group-hover:blur-2xl transition-all"></div>
-                <div className="relative text-5xl md:text-6xl font-bold bg-gradient-to-r from-primary to-purple-500 bg-clip-text text-transparent" data-testid="text-stat-value-1">
+              <div className="relative inline-block mb-1 md:mb-2 lg:mb-3">
+                <div className="hidden md:block absolute inset-0 bg-primary/20 rounded-2xl blur-xl group-hover:blur-2xl transition-all"></div>
+                <div className="relative text-2xl md:text-4xl lg:text-5xl xl:text-6xl font-bold bg-gradient-to-r from-primary to-purple-500 bg-clip-text text-transparent" data-testid="text-stat-value-1">
                   <AnimatedCounter end={50} />+
                 </div>
               </div>
-              <div className="text-base font-medium text-muted-foreground" data-testid="text-stat-label-1">
+              <div className="text-[10px] md:text-sm lg:text-base font-medium text-muted-foreground" data-testid="text-stat-label-1">
                 Happy Clients
               </div>
             </div>
             
             <div className="text-center group cursor-default">
-              <div className="relative inline-block mb-3">
-                <div className="absolute inset-0 bg-primary/20 rounded-2xl blur-xl group-hover:blur-2xl transition-all"></div>
-                <div className="relative text-5xl md:text-6xl font-bold bg-gradient-to-r from-primary to-purple-500 bg-clip-text text-transparent" data-testid="text-stat-value-2">
+              <div className="relative inline-block mb-1 md:mb-2 lg:mb-3">
+                <div className="hidden md:block absolute inset-0 bg-primary/20 rounded-2xl blur-xl group-hover:blur-2xl transition-all"></div>
+                <div className="relative text-2xl md:text-4xl lg:text-5xl xl:text-6xl font-bold bg-gradient-to-r from-primary to-purple-500 bg-clip-text text-transparent" data-testid="text-stat-value-2">
                   <AnimatedCounter end={5} />+
                 </div>
               </div>
-              <div className="text-base font-medium text-muted-foreground" data-testid="text-stat-label-2">
+              <div className="text-[10px] md:text-sm lg:text-base font-medium text-muted-foreground" data-testid="text-stat-label-2">
                 Years Experience
               </div>
             </div>
