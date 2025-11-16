@@ -23,13 +23,13 @@ export function Navbar() {
         <div className="max-w-7xl mx-auto px-4 md:px-6">
           <div className="flex items-center justify-between h-10 text-xs md:text-sm">
             <div className="flex items-center gap-4 md:gap-6 text-white/90">
-              <a href="tel:+919876543210" className="flex items-center gap-1.5 hover:text-white transition-colors" data-testid="link-phone">
+              <a href="tel:+919709707311" className="flex items-center gap-1.5 hover:text-white transition-colors" data-testid="link-phone">
                 <Phone className="h-3 w-3 md:h-3.5 md:w-3.5" />
-                <span className="hidden sm:inline">+91 98765 43210</span>
+                <span className="hidden sm:inline">+91 97097 07311</span>
               </a>
-              <a href="mailto:info@addisonxmedia.com" className="flex items-center gap-1.5 hover:text-white transition-colors" data-testid="link-email">
+              <a href="mailto:team@addisonxmedia.com" className="flex items-center gap-1.5 hover:text-white transition-colors" data-testid="link-email">
                 <Mail className="h-3 w-3 md:h-3.5 md:w-3.5" />
-                <span className="hidden sm:inline">info@addisonxmedia.com</span>
+                <span className="hidden sm:inline">team@addisonxmedia.com</span>
               </a>
             </div>
             <div className="text-white/90 font-medium hidden md:block">
@@ -63,7 +63,7 @@ export function Navbar() {
                     variant={location === link.path ? "default" : "ghost"}
                     size="default"
                     data-testid={`link-${link.label.toLowerCase().replace(" ", "-")}`}
-                    className="hover-elevate active-elevate-2 font-medium px-4"
+                    className="font-medium px-4"
                   >
                     {link.label}
                   </Button>
@@ -106,7 +106,7 @@ export function Navbar() {
                     <Button
                       variant={location === link.path ? "default" : "ghost"}
                       size="default"
-                      className="w-full justify-start hover-elevate active-elevate-2 font-medium"
+                      className="w-full justify-start font-medium"
                       onClick={() => setMobileMenuOpen(false)}
                       data-testid={`mobile-link-${link.label.toLowerCase().replace(" ", "-")}`}
                     >

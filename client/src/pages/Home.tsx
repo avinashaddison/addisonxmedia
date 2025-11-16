@@ -200,19 +200,19 @@ export default function Home() {
       </section>
 
       {/* Services Grid */}
-      <section className="py-16 md:py-24 lg:py-32 relative">
+      <section className="py-20 md:py-28 relative">
         <div className="absolute inset-0 bg-gradient-to-b from-background via-primary/5 to-background"></div>
         <div className="max-w-7xl mx-auto px-4 md:px-6 relative z-10">
-          <div className="text-center mb-12 md:mb-16">
+          <div className="text-center mb-16">
             <Badge variant="secondary" className="mb-4">
               <Sparkles className="h-3 w-3 mr-2" />
               What We Offer
             </Badge>
-            <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 bg-gradient-to-r from-foreground to-foreground/70 bg-clip-text" data-testid="text-services-title">
+            <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6" data-testid="text-services-title">
               Our Services
             </h2>
             <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto" data-testid="text-services-description">
-              Comprehensive digital marketing solutions tailored to your business needs
+              Comprehensive digital marketing solutions tailored to elevate your brand and drive measurable results
             </p>
           </div>
 
@@ -220,10 +220,10 @@ export default function Home() {
             {services.map((service, index) => {
               const Icon = service.icon;
               return (
-                <Card key={index} className="group p-8 hover-elevate transition-all duration-500 border-primary/10 hover:border-primary/30 hover:shadow-2xl hover:shadow-primary/10" data-testid={`card-service-${index}`}>
+                <Card key={index} className="group p-8 transition-all duration-300" data-testid={`card-service-${index}`}>
                   <div className="mb-6">
-                    <div className="relative inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-gradient-to-br from-primary/20 to-purple-500/20 group-hover:scale-110 transition-transform duration-500">
-                      <Icon className="h-8 w-8 text-primary group-hover:rotate-6 transition-transform duration-500" />
+                    <div className="inline-flex items-center justify-center w-16 h-16 rounded-xl bg-primary/10 group-hover:bg-primary/15 transition-colors">
+                      <Icon className="h-8 w-8 text-primary" />
                     </div>
                   </div>
                   <h3 className="text-xl md:text-2xl font-bold mb-3 group-hover:text-primary transition-colors" data-testid={`text-service-title-${index}`}>
@@ -239,9 +239,9 @@ export default function Home() {
 
           <div className="text-center mt-16">
             <Link href="/services">
-              <Button size="lg" variant="outline" className="group border-2 hover:border-primary/50" data-testid="button-explore-all-services">
+              <Button size="lg" variant="default" className="group" data-testid="button-explore-all-services">
                 Explore All Services
-                <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-2 transition-transform" />
+                <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
               </Button>
             </Link>
           </div>
@@ -327,6 +327,147 @@ export default function Home() {
           </div>
         </section>
       )}
+
+      {/* Team Section */}
+      <section className="py-20 md:py-28 relative">
+        <div className="absolute inset-0 bg-gradient-to-b from-background via-primary/5 to-background"></div>
+        <div className="max-w-7xl mx-auto px-4 md:px-6 relative z-10">
+          <div className="text-center mb-16">
+            <Badge variant="secondary" className="mb-4">
+              <Sparkles className="h-3 w-3 mr-2" />
+              Meet Our Team
+            </Badge>
+            <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6" data-testid="text-team-title">
+              AddisonX Media Team
+            </h2>
+            <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto" data-testid="text-team-description">
+              Our passionate team of digital marketing experts dedicated to your success
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8">
+            {/* CEO & Founder */}
+            <Card className="p-8 text-center" data-testid="card-team-0">
+              <div className="mb-6">
+                <div className="w-24 h-24 mx-auto rounded-full bg-primary/10 flex items-center justify-center">
+                  <div className="text-4xl font-bold text-primary">A</div>
+                </div>
+                <div className="mt-4">
+                  <Badge variant="default">CEO & Founder</Badge>
+                </div>
+              </div>
+              <h3 className="text-xl font-bold mb-2" data-testid="text-team-name-0">
+                Amit Kumar
+              </h3>
+              <p className="text-sm text-primary font-semibold mb-3" data-testid="text-team-position-0">
+                CEO & Founder
+              </p>
+              <p className="text-sm text-muted-foreground">
+                Visionary leader with 10+ years in digital marketing
+              </p>
+            </Card>
+
+            {/* Team Member 2 */}
+            <Card className="p-8 text-center" data-testid="card-team-1">
+              <div className="mb-6">
+                <div className="w-24 h-24 mx-auto rounded-full bg-primary/10 flex items-center justify-center">
+                  <div className="text-4xl font-bold text-primary">P</div>
+                </div>
+              </div>
+              <h3 className="text-xl font-bold mb-2" data-testid="text-team-name-1">
+                Priya Sharma
+              </h3>
+              <p className="text-sm text-primary font-semibold mb-3" data-testid="text-team-position-1">
+                Head of Marketing
+              </p>
+              <p className="text-sm text-muted-foreground">
+                Strategic marketing expert with data-driven approach
+              </p>
+            </Card>
+
+            {/* Team Member 3 */}
+            <Card className="p-8 text-center" data-testid="card-team-2">
+              <div className="mb-6">
+                <div className="w-24 h-24 mx-auto rounded-full bg-primary/10 flex items-center justify-center">
+                  <div className="text-4xl font-bold text-primary">R</div>
+                </div>
+              </div>
+              <h3 className="text-xl font-bold mb-2" data-testid="text-team-name-2">
+                Rahul Singh
+              </h3>
+              <p className="text-sm text-primary font-semibold mb-3" data-testid="text-team-position-2">
+                Lead Developer
+              </p>
+              <p className="text-sm text-muted-foreground">
+                Full-stack developer crafting exceptional web experiences
+              </p>
+            </Card>
+
+            {/* Team Member 4 */}
+            <Card className="p-8 text-center" data-testid="card-team-3">
+              <div className="mb-6">
+                <div className="w-24 h-24 mx-auto rounded-full bg-primary/10 flex items-center justify-center">
+                  <div className="text-4xl font-bold text-primary">S</div>
+                </div>
+              </div>
+              <h3 className="text-xl font-bold mb-2" data-testid="text-team-name-3">
+                Sneha Verma
+              </h3>
+              <p className="text-sm text-primary font-semibold mb-3" data-testid="text-team-position-3">
+                Creative Director
+              </p>
+              <p className="text-sm text-muted-foreground">
+                Creative mind designing captivating brand experiences
+              </p>
+            </Card>
+          </div>
+        </div>
+      </section>
+
+      {/* Partners Section */}
+      <section className="py-20 md:py-24 bg-card border-y">
+        <div className="max-w-7xl mx-auto px-4 md:px-6">
+          <div className="text-center mb-12">
+            <Badge variant="secondary" className="mb-4">
+              <Sparkles className="h-3 w-3 mr-2" />
+              Trusted Partners
+            </Badge>
+            <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-4" data-testid="text-partners-title">
+              Our Partners
+            </h2>
+            <p className="text-lg text-muted-foreground max-w-2xl mx-auto" data-testid="text-partners-description">
+              Partnering with industry leaders to deliver exceptional results
+            </p>
+          </div>
+
+          <div className="flex gap-12 md:gap-16 items-center justify-center flex-wrap">
+            <div className="text-center" data-testid="partner-logo-0">
+              <div className="text-2xl md:text-3xl font-bold text-foreground/70 mb-1">ChatGPT</div>
+              <div className="text-xs text-muted-foreground">OpenAI</div>
+            </div>
+
+            <div className="text-center" data-testid="partner-logo-1">
+              <div className="text-2xl md:text-3xl font-bold text-foreground/70 mb-1">Make</div>
+              <div className="text-xs text-muted-foreground">Automation</div>
+            </div>
+
+            <div className="text-center" data-testid="partner-logo-2">
+              <div className="text-2xl md:text-3xl font-bold text-foreground/70 mb-1">Google</div>
+              <div className="text-xs text-muted-foreground">Cloud & Ads</div>
+            </div>
+
+            <div className="text-center" data-testid="partner-logo-3">
+              <div className="text-2xl md:text-3xl font-bold text-foreground/70 mb-1">Titan</div>
+              <div className="text-xs text-muted-foreground">Email Suite</div>
+            </div>
+
+            <div className="text-center" data-testid="partner-logo-4">
+              <div className="text-2xl md:text-3xl font-bold text-foreground/70 mb-1">Perplexity</div>
+              <div className="text-xs text-muted-foreground">AI Search</div>
+            </div>
+          </div>
+        </div>
+      </section>
 
       {/* Location Highlight */}
       <section className="py-16 md:py-24 bg-gradient-to-br from-primary/5 to-background">
