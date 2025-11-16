@@ -7,6 +7,7 @@ import { Badge } from "@/components/ui/badge";
 import { Search, UserCheck, Phone, MapPin, Briefcase, AlertCircle, Shield, CheckCircle2, Sparkles } from "lucide-react";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import type { Employee } from "@shared/schema";
+import blueCheckIcon from "@assets/check_1763302718857.png";
 
 export default function VerifyEmployee() {
   const [employeeId, setEmployeeId] = useState("");
@@ -159,7 +160,12 @@ export default function VerifyEmployee() {
                             {employee.fullName}
                           </h2>
                           <div className="flex-shrink-0">
-                            <CheckCircle2 className="h-8 w-8 text-blue-500 fill-blue-500" />
+                            <img 
+                              src={blueCheckIcon} 
+                              alt="Verified" 
+                              className="h-8 w-8"
+                              data-testid="img-verified-badge"
+                            />
                           </div>
                         </div>
                         <p className="text-base text-muted-foreground mt-2" data-testid="text-employee-id-display">
