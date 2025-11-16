@@ -61,7 +61,7 @@ function App() {
             {(params) => !params.path?.startsWith('/admin') && <Navbar />}
           </Route>
           
-          <div className="flex-1">
+          <div className="flex-1 pb-20 lg:pb-0">
             <Router />
           </div>
           
