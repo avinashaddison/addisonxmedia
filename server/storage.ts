@@ -3,6 +3,7 @@ import {
   employees,
   contactSubmissions,
   testimonials,
+  verificationLogs,
   type User,
   type UpsertUser,
   type Employee,
@@ -13,9 +14,11 @@ import {
   type Testimonial,
   type InsertTestimonial,
   type UpdateTestimonial,
+  type VerificationLog,
+  type InsertVerificationLog,
 } from "@shared/schema";
 import { db } from "./db";
-import { eq } from "drizzle-orm";
+import { eq, desc, count, sql as sqlQuery } from "drizzle-orm";
 
 export interface IStorage {
   // User operations for Replit Auth
@@ -42,6 +45,15 @@ export interface IStorage {
   createTestimonial(testimonial: InsertTestimonial): Promise<Testimonial>;
   updateTestimonial(id: string, testimonial: UpdateTestimonial): Promise<Testimonial | undefined>;
   deleteTestimonial(id: string): Promise<void>;
+
+  // Verification log operations (for analytics)
+  logVerification(log: InsertVerificationLog): Promise<VerificationLog>;
+  getVerificationStats(): Promise<{
+    totalSearches: number;
+    successfulSearches: number;
+    failedSearches: number;
+    recentLogs: VerificationLog[];
+  }>;
 }
 
 export class DatabaseStorage implements IStorage {
@@ -163,6 +175,49 @@ export class DatabaseStorage implements IStorage {
 
   async deleteTestimonial(id: string): Promise<void> {
     await db.delete(testimonials).where(eq(testimonials.id, id));
+  }
+
+  // Verification log operations
+  async logVerification(logData: InsertVerificationLog): Promise<VerificationLog> {
+    const [log] = await db
+      .insert(verificationLogs)
+      .values(logData)
+      .returning();
+    return log;
+  }
+
+  async getVerificationStats(): Promise<{
+    totalSearches: number;
+    successfulSearches: number;
+    failedSearches: number;
+    recentLogs: VerificationLog[];
+  }> {
+    const totalSearchesResult = await db
+      .select({ count: count() })
+      .from(verificationLogs);
+    
+    const successfulSearchesResult = await db
+      .select({ count: count() })
+      .from(verificationLogs)
+      .where(eq(verificationLogs.found, "true"));
+    
+    const failedSearchesResult = await db
+      .select({ count: count() })
+      .from(verificationLogs)
+      .where(eq(verificationLogs.found, "false"));
+    
+    const recentLogs = await db
+      .select()
+      .from(verificationLogs)
+      .orderBy(desc(verificationLogs.searchDate))
+      .limit(100);
+
+    return {
+      totalSearches: totalSearchesResult[0]?.count || 0,
+      successfulSearches: successfulSearchesResult[0]?.count || 0,
+      failedSearches: failedSearchesResult[0]?.count || 0,
+      recentLogs,
+    };
   }
 }
 

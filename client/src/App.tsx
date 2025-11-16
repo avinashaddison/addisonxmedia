@@ -15,6 +15,7 @@ import Dashboard from "@/pages/admin/Dashboard";
 import EmployeeForm from "@/pages/admin/EmployeeForm";
 import Testimonials from "@/pages/admin/Testimonials";
 import TestimonialForm from "@/pages/admin/TestimonialForm";
+import Analytics from "@/pages/admin/Analytics";
 import NotFound from "@/pages/not-found";
 
 function Router() {
@@ -36,6 +37,7 @@ function Router() {
       <Route path="/admin/testimonials" component={Testimonials} />
       <Route path="/admin/testimonials/new" component={TestimonialForm} />
       <Route path="/admin/testimonials/:id/edit" component={TestimonialForm} />
+      <Route path="/admin/analytics" component={Analytics} />
       
       {/* 404 */}
       <Route component={NotFound} />

@@ -116,3 +116,22 @@ export const updateTestimonialSchema = insertTestimonialSchema.partial();
 export type InsertTestimonial = z.infer<typeof insertTestimonialSchema>;
 export type UpdateTestimonial = z.infer<typeof updateTestimonialSchema>;
 export type Testimonial = typeof testimonials.$inferSelect;
+
+// Verification logs table for analytics
+export const verificationLogs = pgTable("verification_logs", {
+  id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
+  employeeId: varchar("employee_id").notNull(),
+  found: varchar("found").notNull().default("false"),
+  searchDate: timestamp("search_date").defaultNow(),
+}, (table) => [
+  index("IDX_verification_employee_id").on(table.employeeId),
+  index("IDX_verification_search_date").on(table.searchDate),
+]);
+
+export const insertVerificationLogSchema = createInsertSchema(verificationLogs).omit({
+  id: true,
+  searchDate: true,
+});
+
+export type InsertVerificationLog = z.infer<typeof insertVerificationLogSchema>;
+export type VerificationLog = typeof verificationLogs.$inferSelect;

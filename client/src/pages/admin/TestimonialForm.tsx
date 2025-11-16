@@ -48,7 +48,8 @@ export default function TestimonialForm() {
 
   const { data: testimonial } = useQuery<Testimonial>({
     queryKey: [`/api/testimonials/${testimonialId}`],
-    enabled: isEditing && isAuthenticated,
+    enabled: isEditing && isAuthenticated && !isAuthLoading,
+    retry: false,
   });
 
   const form = useForm<InsertTestimonial>({

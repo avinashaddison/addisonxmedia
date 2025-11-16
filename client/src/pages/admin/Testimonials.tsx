@@ -33,7 +33,8 @@ export default function Testimonials() {
 
   const { data: testimonials, isLoading } = useQuery<Testimonial[]>({
     queryKey: ["/api/testimonials"],
-    enabled: isAuthenticated,
+    enabled: isAuthenticated && !isAuthLoading,
+    retry: false,
   });
 
   const deleteMutation = useMutation({

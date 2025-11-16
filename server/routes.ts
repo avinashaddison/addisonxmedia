@@ -28,6 +28,12 @@ export async function registerRoutes(app: Express): Promise<Server> {
       const { employeeId } = req.params;
       const employee = await storage.getEmployeeByEmployeeId(employeeId);
       
+      // Log the verification attempt for analytics
+      await storage.logVerification({
+        employeeId,
+        found: employee ? "true" : "false",
+      });
+
       if (!employee) {
         return res.status(404).json({ message: "Employee not found" });
       }
@@ -329,6 +335,17 @@ export async function registerRoutes(app: Express): Promise<Server> {
     } catch (error) {
       console.error("Error deleting testimonial:", error);
       res.status(500).json({ message: "Failed to delete testimonial" });
+    }
+  });
+
+  // Analytics routes (admin only)
+  app.get("/api/analytics/verification-stats", isAuthenticated, async (req, res) => {
+    try {
+      const stats = await storage.getVerificationStats();
+      res.json(stats);
+    } catch (error) {
+      console.error("Error fetching verification stats:", error);
+      res.status(500).json({ message: "Failed to fetch verification stats" });
     }
   });
 
