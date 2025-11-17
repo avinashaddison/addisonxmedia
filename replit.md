@@ -6,7 +6,9 @@ AddisonX Media is a digital marketing agency based in Ranchi, Jharkhand, offerin
 
 The application follows a modern monorepo structure with a React frontend powered by Vite, an Express.js backend, and PostgreSQL database using Drizzle ORM. It implements Replit's authentication system for admin access and provides both public-facing pages and protected administrative functionality.
 
-**Recent Update (November 16, 2025):** Homepage hero section now features a custom promotional banner (1728 x 576 pixels) showcasing AddisonX Media's professional digital marketing services with branding, service highlights, and "Get Started Now" CTA.
+**Recent Updates:**
+- **November 17, 2025**: Comprehensive admin panel with vertical Shadcn Sidebar, featuring 13 management categories including dashboard with analytics, contact submissions tracking, employee management, and placeholder pages for clients, leads, projects, invoices, and settings. Layout refactored to separate admin and public routes completely.
+- **November 16, 2025**: Homepage hero section now features a custom promotional banner (1728 x 576 pixels) showcasing AddisonX Media's professional digital marketing services with branding, service highlights, and "Get Started Now" CTA.
 
 ## User Preferences
 
@@ -34,8 +36,15 @@ Preferred communication style: Simple, everyday language.
 - No global client state management (follows server-driven architecture)
 
 **Route Structure**
-- Public routes: Home, About, Services, Contact, Employee Verification
-- Admin routes: Dashboard, Employee Management (Create/Edit)
+- **Public routes**: Home, About, Services, Contact, Employee Verification
+- **Admin routes** (all wrapped with AdminLayout):
+  - Dashboard: Analytics overview with statistics and quick actions
+  - Employees: Full CRUD employee management
+  - Contacts: Contact submission tracking with status management (new/contacted/closed)
+  - Testimonials: Testimonial management with approval workflow
+  - Analytics: Verification statistics and metrics
+  - Settings: System configuration (placeholder)
+  - Placeholder pages: Clients, Leads, Projects, Invoices (ready for future enhancement)
 - 404 fallback for undefined routes
 
 ### Backend Architecture
@@ -55,8 +64,15 @@ Preferred communication style: Simple, everyday language.
 
 **API Design**
 - RESTful endpoints under `/api` prefix
-- Public endpoint: `GET /api/employees/verify/:employeeId`
-- Protected endpoints: Employee CRUD operations requiring authentication
+- **Public endpoints**:
+  - `GET /api/employees/verify/:employeeId` - Employee verification
+  - `GET /api/testimonials/active` - Active testimonials for public display
+- **Protected endpoints** (require authentication):
+  - Employee CRUD: GET/POST/PUT/DELETE `/api/employees`
+  - Contact submissions: GET `/api/contact`, PATCH `/api/contact/:id/status`
+  - Testimonials: GET/POST/PUT/DELETE `/api/testimonials`
+  - Analytics: GET `/api/analytics/verification-stats`
+  - Placeholder endpoints: `/api/clients`, `/api/leads`, `/api/projects`, `/api/invoices`
 - Consistent error handling with appropriate HTTP status codes
 
 **Storage Layer Pattern**
@@ -92,10 +108,34 @@ employees
 ├── joiningDate
 └── photoUrl
 
+contact_submissions
+├── id (VARCHAR UUID, primary key)
+├── name, email, phone, company
+├── message
+├── status (new/contacted/closed)
+└── createdAt
+
+testimonials
+├── id (VARCHAR UUID, primary key)
+├── clientName, position, company
+├── content, rating, photoUrl
+├── isActive (boolean)
+└── createdAt, updatedAt
+
+clients, leads, projects, invoices (placeholder tables)
+├── id (VARCHAR UUID, primary key)
+├── status field for filtering
+└── Basic fields ready for future enhancement
+
 sessions (for Replit Auth)
 ├── sid (primary key)
 ├── sess (JSONB)
 └── expire (indexed)
+
+verification_logs
+├── id (serial, primary key)
+├── employeeId, found (for analytics)
+└── timestamp
 ```
 
 **Migration Strategy**
