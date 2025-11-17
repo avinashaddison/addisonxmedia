@@ -62,6 +62,10 @@ const services = [
 
 export function Navbar() {
   const [location] = useLocation();
+  const [pathname, search] = location.split('?');
+  const isServicesListPage = pathname === '/services';
+  const searchParams = new URLSearchParams(search || '');
+  const currentFilter = searchParams.get('filter');
 
   const navLinks = [
     { path: "/", label: "Home", icon: Home },
@@ -171,8 +175,8 @@ export function Navbar() {
 
                   {/* Web Development */}
                   <NavigationMenuItem>
-                    <NavigationMenuLink asChild className={`${navigationMenuTriggerStyle()} ${location === '/services' ? 'bg-primary text-primary-foreground' : ''}`}>
-                      <Link href="/services">
+                    <NavigationMenuLink asChild className={`${navigationMenuTriggerStyle()} ${isServicesListPage && currentFilter === 'web-development' ? 'bg-primary text-primary-foreground' : ''}`}>
+                      <Link href="/services?filter=web-development">
                         <Code className="h-4 w-4 mr-2" />
                         Web Development
                       </Link>
@@ -181,8 +185,8 @@ export function Navbar() {
 
                   {/* Ads Management */}
                   <NavigationMenuItem>
-                    <NavigationMenuLink asChild className={`${navigationMenuTriggerStyle()} ${location === '/services' ? 'bg-primary text-primary-foreground' : ''}`}>
-                      <Link href="/services">
+                    <NavigationMenuLink asChild className={`${navigationMenuTriggerStyle()} ${isServicesListPage && currentFilter === 'ads-management' ? 'bg-primary text-primary-foreground' : ''}`}>
+                      <Link href="/services?filter=ads-management">
                         <Target className="h-4 w-4 mr-2" />
                         Ads Management
                       </Link>
@@ -191,8 +195,8 @@ export function Navbar() {
 
                   {/* WhatsApp Marketing */}
                   <NavigationMenuItem>
-                    <NavigationMenuLink asChild className={`${navigationMenuTriggerStyle()} ${location === '/services' ? 'bg-primary text-primary-foreground' : ''}`}>
-                      <Link href="/services">
+                    <NavigationMenuLink asChild className={`${navigationMenuTriggerStyle()} ${isServicesListPage && currentFilter === 'whatsapp-marketing' ? 'bg-primary text-primary-foreground' : ''}`}>
+                      <Link href="/services?filter=whatsapp-marketing">
                         <MessageCircle className="h-4 w-4 mr-2" />
                         WhatsApp Marketing
                       </Link>
@@ -201,7 +205,7 @@ export function Navbar() {
 
                   {/* All Services Dropdown */}
                   <NavigationMenuItem>
-                    <NavigationMenuTrigger data-testid="nav-all-services-trigger" className={location === '/services' ? 'bg-primary text-primary-foreground' : ''}>
+                    <NavigationMenuTrigger data-testid="nav-all-services-trigger" className={isServicesListPage && !currentFilter ? 'bg-primary text-primary-foreground' : ''}>
                       <Briefcase className="h-4 w-4 mr-2" />
                       All Services
                     </NavigationMenuTrigger>
@@ -266,7 +270,17 @@ export function Navbar() {
         <div className="flex items-center justify-around max-w-md mx-auto">
           {navLinks.map((link) => {
             const Icon = link.icon;
-            const isActive = location === link.path;
+            let isActive = false;
+            
+            if (link.path === '/') {
+              isActive = location === '/';
+            } else if (link.path.startsWith('/services')) {
+              const linkFilter = new URLSearchParams(link.path.split('?')[1] || '').get('filter');
+              isActive = isServicesListPage && currentFilter === linkFilter;
+            } else {
+              isActive = location === link.path;
+            }
+            
             return (
               <Link key={link.path} href={link.path}>
                 <button

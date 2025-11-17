@@ -1,6 +1,7 @@
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Link } from "wouter";
+import { useEffect, useRef } from "react";
 import { 
   Code, 
   ShoppingCart, 
@@ -136,6 +137,21 @@ const services = [
 ];
 
 export default function Services() {
+  const searchParams = new URLSearchParams(window.location.search);
+  const filter = searchParams.get('filter');
+  const serviceRefs = useRef<{ [key: string]: HTMLDivElement | null }>({});
+
+  useEffect(() => {
+    if (filter && serviceRefs.current[filter]) {
+      setTimeout(() => {
+        serviceRefs.current[filter]?.scrollIntoView({ 
+          behavior: 'smooth', 
+          block: 'center' 
+        });
+      }, 100);
+    }
+  }, [filter]);
+
   return (
     <div className="flex flex-col">
       <section className="py-16 md:py-24 lg:py-32 bg-gradient-to-br from-primary/10 via-background to-primary/5">
@@ -157,8 +173,14 @@ export default function Services() {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {services.map((service, index) => {
               const Icon = service.icon;
+              const isHighlighted = filter === service.slug;
               return (
-                <Card key={index} className="p-6 flex flex-col hover-elevate transition-all" data-testid={`card-service-${index}`}>
+                <Card 
+                  key={index} 
+                  ref={(el) => { serviceRefs.current[service.slug] = el; }}
+                  className={`p-6 flex flex-col hover-elevate transition-all ${isHighlighted ? 'ring-2 ring-primary' : ''}`}
+                  data-testid={`card-service-${index}`}
+                >
                   <div className="flex items-center gap-4 mb-4">
                     <div className="w-12 h-12 rounded-md bg-primary/10 flex items-center justify-center flex-shrink-0">
                       <Icon className="h-6 w-6 text-primary" />
