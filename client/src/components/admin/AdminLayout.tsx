@@ -163,19 +163,16 @@ export function AdminLayout({ children }: AdminLayoutProps) {
         <div className="flex h-screen w-full">
           <Sidebar>
             <SidebarHeader className="border-b border-sidebar-border p-6">
-              <div className="flex items-center gap-3">
+              <div className="flex flex-col gap-2">
                 <img 
                   src={logoUrl} 
                   alt="AddisonX Media Logo" 
-                  className="w-12 h-12 rounded-md object-contain p-1 bg-white shadow-lg"
+                  className="h-12 w-auto rounded-md object-contain p-2 bg-white shadow-lg"
                   style={{
                     boxShadow: '0 0 20px rgba(255, 77, 54, 0.4), 0 0 40px rgba(255, 77, 54, 0.2)'
                   }}
                 />
-                <div>
-                  <h2 className="font-bold text-base tracking-tight">AddisonX Media</h2>
-                  <p className="text-xs text-muted-foreground">Admin Dashboard</p>
-                </div>
+                <p className="text-xs text-muted-foreground">Admin Dashboard</p>
               </div>
             </SidebarHeader>
 
