@@ -9,6 +9,8 @@ import {
   projects,
   invoices,
   settings,
+  homepageCustomization,
+  seoSettings,
   type User,
   type UpsertUser,
   type Employee,
@@ -36,6 +38,12 @@ import {
   type Setting,
   type InsertSetting,
   type UpdateSetting,
+  type HomepageCustomization,
+  type InsertHomepageCustomization,
+  type UpdateHomepageCustomization,
+  type SeoSetting,
+  type InsertSeoSetting,
+  type UpdateSeoSetting,
 } from "@shared/schema";
 import { db } from "./db";
 import { eq, desc, count, sql as sqlQuery } from "drizzle-orm";
@@ -108,6 +116,18 @@ export interface IStorage {
   getSetting(key: string): Promise<Setting | undefined>;
   upsertSetting(setting: InsertSetting): Promise<Setting>;
   deleteSetting(key: string): Promise<void>;
+
+  // Homepage Customization operations
+  getAllHomepageCustomizations(): Promise<HomepageCustomization[]>;
+  getHomepageCustomization(section: string): Promise<HomepageCustomization | undefined>;
+  upsertHomepageCustomization(customization: InsertHomepageCustomization): Promise<HomepageCustomization>;
+  deleteHomepageCustomization(section: string): Promise<void>;
+
+  // SEO Settings operations
+  getAllSeoSettings(): Promise<SeoSetting[]>;
+  getSeoSetting(page: string): Promise<SeoSetting | undefined>;
+  upsertSeoSetting(seoSetting: InsertSeoSetting): Promise<SeoSetting>;
+  deleteSeoSetting(page: string): Promise<void>;
 }
 
 export class DatabaseStorage implements IStorage {
@@ -437,6 +457,70 @@ export class DatabaseStorage implements IStorage {
 
   async deleteSetting(key: string): Promise<void> {
     await db.delete(settings).where(eq(settings.key, key));
+  }
+
+  // Homepage Customization operations
+  async getAllHomepageCustomizations(): Promise<HomepageCustomization[]> {
+    return db.select().from(homepageCustomization).orderBy(homepageCustomization.section);
+  }
+
+  async getHomepageCustomization(section: string): Promise<HomepageCustomization | undefined> {
+    const [customization] = await db
+      .select()
+      .from(homepageCustomization)
+      .where(eq(homepageCustomization.section, section));
+    return customization;
+  }
+
+  async upsertHomepageCustomization(customizationData: InsertHomepageCustomization): Promise<HomepageCustomization> {
+    const [customization] = await db
+      .insert(homepageCustomization)
+      .values(customizationData)
+      .onConflictDoUpdate({
+        target: homepageCustomization.section,
+        set: {
+          ...customizationData,
+          updatedAt: new Date(),
+        },
+      })
+      .returning();
+    return customization;
+  }
+
+  async deleteHomepageCustomization(section: string): Promise<void> {
+    await db.delete(homepageCustomization).where(eq(homepageCustomization.section, section));
+  }
+
+  // SEO Settings operations
+  async getAllSeoSettings(): Promise<SeoSetting[]> {
+    return db.select().from(seoSettings).orderBy(seoSettings.page);
+  }
+
+  async getSeoSetting(page: string): Promise<SeoSetting | undefined> {
+    const [seoSetting] = await db
+      .select()
+      .from(seoSettings)
+      .where(eq(seoSettings.page, page));
+    return seoSetting;
+  }
+
+  async upsertSeoSetting(seoSettingData: InsertSeoSetting): Promise<SeoSetting> {
+    const [seoSetting] = await db
+      .insert(seoSettings)
+      .values(seoSettingData)
+      .onConflictDoUpdate({
+        target: seoSettings.page,
+        set: {
+          ...seoSettingData,
+          updatedAt: new Date(),
+        },
+      })
+      .returning();
+    return seoSetting;
+  }
+
+  async deleteSeoSetting(page: string): Promise<void> {
+    await db.delete(seoSettings).where(eq(seoSettings.page, page));
   }
 }
 
