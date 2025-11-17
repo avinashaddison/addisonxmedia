@@ -363,7 +363,7 @@ export default function Home() {
             </p>
           </div>
 
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3 md:gap-6 lg:gap-8">
+          <div className="grid grid-cols-2 md:grid-cols-3 gap-4 md:gap-6 lg:gap-8 max-w-5xl mx-auto">
             {/* CEO & Founder */}
             <Card className="p-4 md:p-6 lg:p-8 text-center relative overflow-hidden bg-gradient-to-br from-card to-primary/5 border-2 border-primary/30 shadow-lg" data-testid="card-team-0">
               <div className="mb-3 md:mb-4 lg:mb-6">
@@ -446,6 +446,23 @@ export default function Home() {
               </h3>
               <p className="text-xs md:text-sm font-bold bg-gradient-to-r from-primary to-purple-600 bg-clip-text text-transparent" data-testid="text-team-position-4">
                 Sales Manager
+              </p>
+            </Card>
+
+            {/* Marketing Specialist */}
+            <Card className="p-4 md:p-6 lg:p-8 text-center relative overflow-hidden bg-gradient-to-br from-card to-primary/5 border-2 border-primary/30 shadow-lg" data-testid="card-team-5">
+              <div className="mb-3 md:mb-4 lg:mb-6">
+                <div className="w-20 h-20 md:w-24 md:h-24 lg:w-28 lg:h-28 mx-auto rounded-full bg-gradient-to-br from-primary via-orange-500 to-purple-600 p-[3px] shadow-xl">
+                  <div className="w-full h-full rounded-full bg-background flex items-center justify-center">
+                    <div className="text-2xl md:text-3xl lg:text-4xl font-extrabold bg-gradient-to-br from-primary via-orange-500 to-purple-600 bg-clip-text text-transparent">S</div>
+                  </div>
+                </div>
+              </div>
+              <h3 className="text-sm md:text-base lg:text-xl font-bold mb-1" data-testid="text-team-name-5">
+                Shubham Kant Mehta
+              </h3>
+              <p className="text-xs md:text-sm font-bold bg-gradient-to-r from-primary to-purple-600 bg-clip-text text-transparent" data-testid="text-team-position-5">
+                Marketing Specialist
               </p>
             </Card>
           </div>

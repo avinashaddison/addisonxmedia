@@ -38,6 +38,7 @@ The backend is an **Express.js** application with TypeScript. **Replit OpenID Co
 
 ### UI/UX Decisions
 - **Navbar**: Clean, minimal design with simple logo (no animations or effects). Eye-catching "Contact Us" button with static gradient background (primary→purple), rounded-full pill shape, bold white text, subtle white border, and shadow for depth - no animations.
+- **Team Section**: Cool modern design with 6 team members in 3x2 grid layout. Features gradient title text, premium badge, triple-gradient avatar rings (primary→orange→purple), gradient job titles, enhanced shadows, and consistent card styling. Team: Ajay Kumar (CEO), Neha Kumari (Co-Founder), Vikash Munda (Web Developer), Suraj Munda (Social Media Manager), Priyanshu Singh (Sales Manager), Shubham Kant Mehta (Marketing Specialist).
 - **WhatsApp Widget**: Interactive chat with quick reply buttons, custom input, and mobile-responsive design.
 - **Navigation**: Main navigation restructured for service-specific links. Mobile bottom navigation mirrors desktop.
 - **Website Customization**: Admin panel for dynamic homepage control (services, images, SEO meta tags).
