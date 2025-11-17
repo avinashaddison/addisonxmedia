@@ -37,7 +37,7 @@ The backend is an **Express.js** application with TypeScript. **Replit OpenID Co
 **Schema Design**: Key tables include `users`, `employees`, `contact_submissions`, `testimonials`, `clients`, `leads`, `projects`, `invoices`, `settings`, `homepage_customization`, `seo_settings`, `sessions`, and `verification_logs`. Schema definitions are managed via `drizzle-kit`.
 
 ### UI/UX Decisions
-- **Navbar**: Clean, minimal design with simple logo (no animations or effects). "Contact" CTA button for straightforward call-to-action.
+- **Navbar**: Clean, minimal design with simple logo (no animations or effects). Eye-catching Contact button with animated gradient background glow (primary→purple→pink), triple-color gradient on button itself, pulsing icon animation, and enhanced shadow effects on hover.
 - **WhatsApp Widget**: Interactive chat with quick reply buttons, custom input, and mobile-responsive design.
 - **Navigation**: Main navigation restructured for service-specific links. Mobile bottom navigation mirrors desktop.
 - **Website Customization**: Admin panel for dynamic homepage control (services, images, SEO meta tags).

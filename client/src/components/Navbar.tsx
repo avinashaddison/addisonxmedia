@@ -242,15 +242,18 @@ export function Navbar() {
               </NavigationMenu>
             </div>
 
-            {/* CTA Button - Desktop */}
-            <div className="hidden lg:block">
+            {/* CTA Button - Desktop - Cool Design */}
+            <div className="hidden lg:block relative group">
+              {/* Animated Background Glow */}
+              <div className="absolute -inset-1 bg-gradient-to-r from-primary via-purple-600 to-pink-600 rounded-lg blur opacity-75 group-hover:opacity-100 transition duration-500 group-hover:duration-200 animate-gradient"></div>
+              
               <Link href="/contact">
                 <Button 
                   size="default" 
-                  className="bg-gradient-to-r from-primary to-purple-600 hover:from-primary/90 hover:to-purple-600/90 text-white font-semibold shadow-lg hover:shadow-xl transition-all px-8"
+                  className="relative bg-gradient-to-r from-primary via-purple-600 to-primary bg-[length:200%_100%] hover:bg-[position:100%_0] text-white font-bold shadow-lg hover:shadow-2xl hover:shadow-primary/50 transition-all duration-300 px-8 animate-gradient"
                   data-testid="button-cta-desktop"
                 >
-                  <MessageSquare className="mr-2 h-4 w-4" />
+                  <MessageSquare className="mr-2 h-4 w-4 animate-pulse" />
                   Contact
                 </Button>
               </Link>
