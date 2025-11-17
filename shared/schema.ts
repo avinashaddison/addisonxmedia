@@ -270,3 +270,47 @@ export const updateSettingSchema = insertSettingSchema.partial();
 export type InsertSetting = z.infer<typeof insertSettingSchema>;
 export type UpdateSetting = z.infer<typeof updateSettingSchema>;
 export type Setting = typeof settings.$inferSelect;
+
+// Homepage Customization table
+export const homepageCustomization = pgTable("homepage_customization", {
+  id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
+  section: varchar("section").notNull().unique(), // hero, services, banners, slider
+  content: jsonb("content").notNull(), // Store all section data as JSON
+  isActive: varchar("is_active").notNull().default("true"),
+  updatedAt: timestamp("updated_at").defaultNow(),
+});
+
+export const insertHomepageCustomizationSchema = createInsertSchema(homepageCustomization).omit({
+  id: true,
+  updatedAt: true,
+});
+
+export const updateHomepageCustomizationSchema = insertHomepageCustomizationSchema.partial();
+
+export type InsertHomepageCustomization = z.infer<typeof insertHomepageCustomizationSchema>;
+export type UpdateHomepageCustomization = z.infer<typeof updateHomepageCustomizationSchema>;
+export type HomepageCustomization = typeof homepageCustomization.$inferSelect;
+
+// SEO Settings table
+export const seoSettings = pgTable("seo_settings", {
+  id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
+  page: varchar("page").notNull().unique(), // home, about, services, contact, etc.
+  metaTitle: varchar("meta_title").notNull(),
+  metaDescription: text("meta_description").notNull(),
+  metaKeywords: text("meta_keywords"),
+  ogTitle: varchar("og_title"),
+  ogDescription: text("og_description"),
+  ogImage: varchar("og_image"),
+  updatedAt: timestamp("updated_at").defaultNow(),
+});
+
+export const insertSeoSettingSchema = createInsertSchema(seoSettings).omit({
+  id: true,
+  updatedAt: true,
+});
+
+export const updateSeoSettingSchema = insertSeoSettingSchema.partial();
+
+export type InsertSeoSetting = z.infer<typeof insertSeoSettingSchema>;
+export type UpdateSeoSetting = z.infer<typeof updateSeoSettingSchema>;
+export type SeoSetting = typeof seoSettings.$inferSelect;
