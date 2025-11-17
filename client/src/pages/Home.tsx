@@ -305,7 +305,7 @@ export default function Home() {
                 <Card key={testimonial.id} className="p-6 md:p-8 hover-elevate transition-all duration-300" data-testid={`testimonial-card-${index}`}>
                   <div className="flex items-center mb-4">
                     {[...Array(parseInt(testimonial.rating))].map((_, i) => (
-                      <Star key={i} className="h-5 w-5 fill-green-500 text-green-500" />
+                      <Star key={i} className="h-5 w-5 fill-green-700 text-green-700" />
                     ))}
                   </div>
                   <p className="text-muted-foreground mb-6 leading-relaxed" data-testid={`text-testimonial-review-${index}`}>
