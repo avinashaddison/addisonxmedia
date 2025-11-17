@@ -274,6 +274,36 @@ export default function Contact() {
         </div>
       </section>
 
+      <section className="py-12 md:py-16 lg:py-24 bg-muted/30">
+        <div className="max-w-7xl mx-auto px-4 md:px-6">
+          <div className="text-center max-w-3xl mx-auto mb-8 md:mb-12">
+            <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold mb-4 md:mb-6" data-testid="text-location-title">
+              Find Us Here
+            </h2>
+            <p className="text-base md:text-lg text-muted-foreground leading-relaxed px-2" data-testid="text-location-description">
+              Visit our office in Ranchi to discuss your digital marketing needs in person. 
+              We're conveniently located near Kawasaki Showroom on Itki Road.
+            </p>
+          </div>
+          
+          <div className="max-w-5xl mx-auto">
+            <Card className="overflow-hidden" data-testid="card-google-maps">
+              <div className="relative w-full" style={{ paddingBottom: '56.25%' }}>
+                <iframe 
+                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3662.2116410958984!2d85.29144099999999!3d23.380559699999996!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x39f4e1547faba215%3A0x14446796ff2072c2!2sAddisonX%20Media!5e0!3m2!1sen!2sin!4v1763371489401!5m2!1sen!2sin"
+                  className="absolute top-0 left-0 w-full h-full border-0"
+                  allowFullScreen
+                  loading="lazy"
+                  referrerPolicy="no-referrer-when-downgrade"
+                  title="AddisonX Media Location"
+                  data-testid="iframe-google-maps"
+                />
+              </div>
+            </Card>
+          </div>
+        </div>
+      </section>
+
       <section className="py-12 md:py-16 lg:py-24 bg-card">
         <div className="max-w-7xl mx-auto px-4 md:px-6">
           <div className="text-center max-w-3xl mx-auto">
