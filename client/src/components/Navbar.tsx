@@ -65,10 +65,10 @@ export function Navbar() {
 
   const navLinks = [
     { path: "/", label: "Home", icon: Home },
-    { path: "/about", label: "About", icon: Info },
-    { path: "/services", label: "Services", icon: Briefcase },
-    { path: "/verify-employee", label: "Verify", icon: UserCheck },
-    { path: "/contact", label: "Contact", icon: MessageCircle },
+    { path: "/services?filter=web-development", label: "Web Dev", icon: Code },
+    { path: "/services?filter=ads-management", label: "Ads", icon: Target },
+    { path: "/services?filter=whatsapp-marketing", label: "WhatsApp", icon: MessageCircle },
+    { path: "/services", label: "All Services", icon: Briefcase },
   ];
 
   return (
@@ -169,21 +169,41 @@ export function Navbar() {
                     </NavigationMenuLink>
                   </NavigationMenuItem>
 
-                  {/* About */}
+                  {/* Web Development */}
                   <NavigationMenuItem>
-                    <NavigationMenuLink asChild className={`${navigationMenuTriggerStyle()} ${location === '/about' ? 'bg-primary text-primary-foreground' : ''}`}>
-                      <Link href="/about">
-                        <Info className="h-4 w-4 mr-2" />
-                        About
+                    <NavigationMenuLink asChild className={`${navigationMenuTriggerStyle()} ${location === '/services' ? 'bg-primary text-primary-foreground' : ''}`}>
+                      <Link href="/services">
+                        <Code className="h-4 w-4 mr-2" />
+                        Web Development
                       </Link>
                     </NavigationMenuLink>
                   </NavigationMenuItem>
 
-                  {/* Services Dropdown */}
+                  {/* Ads Management */}
                   <NavigationMenuItem>
-                    <NavigationMenuTrigger data-testid="nav-services-trigger" className={location === '/services' ? 'bg-primary text-primary-foreground' : ''}>
+                    <NavigationMenuLink asChild className={`${navigationMenuTriggerStyle()} ${location === '/services' ? 'bg-primary text-primary-foreground' : ''}`}>
+                      <Link href="/services">
+                        <Target className="h-4 w-4 mr-2" />
+                        Ads Management
+                      </Link>
+                    </NavigationMenuLink>
+                  </NavigationMenuItem>
+
+                  {/* WhatsApp Marketing */}
+                  <NavigationMenuItem>
+                    <NavigationMenuLink asChild className={`${navigationMenuTriggerStyle()} ${location === '/services' ? 'bg-primary text-primary-foreground' : ''}`}>
+                      <Link href="/services">
+                        <MessageCircle className="h-4 w-4 mr-2" />
+                        WhatsApp Marketing
+                      </Link>
+                    </NavigationMenuLink>
+                  </NavigationMenuItem>
+
+                  {/* All Services Dropdown */}
+                  <NavigationMenuItem>
+                    <NavigationMenuTrigger data-testid="nav-all-services-trigger" className={location === '/services' ? 'bg-primary text-primary-foreground' : ''}>
                       <Briefcase className="h-4 w-4 mr-2" />
-                      Services
+                      All Services
                     </NavigationMenuTrigger>
                     <NavigationMenuContent>
                       <div className="grid w-[800px] gap-3 p-6 md:grid-cols-3">
@@ -207,26 +227,6 @@ export function Navbar() {
                         })}
                       </div>
                     </NavigationMenuContent>
-                  </NavigationMenuItem>
-
-                  {/* Verify */}
-                  <NavigationMenuItem>
-                    <NavigationMenuLink asChild className={`${navigationMenuTriggerStyle()} ${location === '/verify-employee' ? 'bg-primary text-primary-foreground' : ''}`}>
-                      <Link href="/verify-employee">
-                        <UserCheck className="h-4 w-4 mr-2" />
-                        Verify
-                      </Link>
-                    </NavigationMenuLink>
-                  </NavigationMenuItem>
-
-                  {/* Contact */}
-                  <NavigationMenuItem>
-                    <NavigationMenuLink asChild className={`${navigationMenuTriggerStyle()} ${location === '/contact' ? 'bg-primary text-primary-foreground' : ''}`}>
-                      <Link href="/contact">
-                        <MessageCircle className="h-4 w-4 mr-2" />
-                        Contact
-                      </Link>
-                    </NavigationMenuLink>
                   </NavigationMenuItem>
                 </NavigationMenuList>
               </NavigationMenu>
