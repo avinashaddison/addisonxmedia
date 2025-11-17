@@ -18,13 +18,22 @@ export function WhatsAppButton() {
   const handleSendMessage = () => {
     const encodedMessage = encodeURIComponent(message || "Hi! I'm interested in your services.");
     const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodedMessage}`;
-    window.open(whatsappUrl, '_blank', 'noopener,noreferrer');
-    setIsOpen(false);
+    
+    setTimeout(() => {
+      window.open(whatsappUrl, '_blank', 'noopener,noreferrer');
+    }, 100);
+    
     setMessage("");
+    setIsOpen(false);
   };
 
   const handlePredefinedMessage = (msg: string) => {
     setMessage(msg);
+  };
+
+  const handleClose = () => {
+    setIsOpen(false);
+    setMessage("");
   };
 
   return (
@@ -64,14 +73,14 @@ export function WhatsAppButton() {
         <>
           {/* Backdrop */}
           <div 
-            className="fixed inset-0 bg-black/20 z-40 md:hidden"
-            onClick={() => setIsOpen(false)}
+            className="fixed inset-0 bg-black/20 z-[45] md:hidden"
+            onClick={handleClose}
             data-testid="whatsapp-backdrop"
           />
           
           {/* Chat Widget */}
           <div 
-            className="fixed bottom-44 right-4 md:bottom-24 md:right-6 w-[calc(100%-2rem)] md:w-96 bg-background dark:bg-card border border-border rounded-2xl shadow-2xl z-50 overflow-hidden animate-in slide-in-from-bottom-4 duration-300"
+            className="fixed bottom-44 right-4 md:bottom-24 md:right-6 w-[calc(100%-2rem)] md:w-96 bg-background dark:bg-card border border-border rounded-2xl shadow-2xl z-[50] animate-in slide-in-from-bottom-4 duration-300"
             data-testid="whatsapp-chat-widget"
           >
             {/* Header */}
@@ -88,17 +97,17 @@ export function WhatsAppButton() {
                 </div>
               </div>
               <button
-                onClick={() => setIsOpen(false)}
-                className="text-white hover:bg-white/20 rounded-full p-2 transition-colors"
+                onClick={handleClose}
+                className="text-white hover:bg-white/20 rounded-full p-2 transition-colors flex-shrink-0"
                 data-testid="button-close-whatsapp"
                 aria-label="Close chat"
               >
-                <X className="w-5 h-5" />
+                <X className="w-6 h-6" />
               </button>
             </div>
 
             {/* Chat Content */}
-            <div className="p-6 bg-gradient-to-b from-green-50/50 to-background dark:from-green-950/20 dark:to-card space-y-4 max-h-96 overflow-y-auto">
+            <div className="p-6 bg-gradient-to-b from-green-50/50 to-background dark:from-green-950/20 dark:to-card space-y-4 max-h-[350px] overflow-y-auto overflow-x-hidden">
               {/* Welcome Message */}
               <div className="flex gap-2">
                 <div className="w-8 h-8 rounded-full bg-green-500 flex items-center justify-center flex-shrink-0">
