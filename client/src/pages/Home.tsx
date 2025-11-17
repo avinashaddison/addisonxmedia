@@ -92,29 +92,6 @@ const stats = [
   { value: "5+", label: "Years Experience" }
 ];
 
-const benefits = [
-  {
-    icon: CheckCircle,
-    title: "Expert Team",
-    description: "Experienced professionals dedicated to your success"
-  },
-  {
-    icon: CheckCircle,
-    title: "Local Knowledge",
-    description: "Deep understanding of Ranchi market dynamics"
-  },
-  {
-    icon: CheckCircle,
-    title: "Proven Results",
-    description: "Track record of delivering measurable outcomes"
-  },
-  {
-    icon: CheckCircle,
-    title: "24/7 Support",
-    description: "Always available to address your concerns"
-  }
-];
-
 function AnimatedCounter({ end, duration = 2000 }: { end: number; duration?: number }) {
   const [count, setCount] = useState(0);
 
@@ -268,39 +245,6 @@ export default function Home() {
                 <ArrowRight className="ml-2 h-4 w-4 md:h-5 md:w-5 group-hover:translate-x-1 transition-transform" />
               </Button>
             </Link>
-          </div>
-        </div>
-      </section>
-
-      {/* Why Choose Us Section */}
-      <section className="py-16 md:py-24 bg-gradient-to-br from-primary/5 via-background to-primary/10">
-        <div className="max-w-7xl mx-auto px-4 md:px-6">
-          <div className="text-center mb-12 md:mb-16">
-            <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-4" data-testid="text-why-choose-title">
-              Why Choose AddisonX Media?
-            </h2>
-            <p className="text-lg text-muted-foreground max-w-2xl mx-auto" data-testid="text-why-choose-description">
-              We combine local expertise with global best practices to deliver exceptional results
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8">
-            {benefits.map((benefit, index) => {
-              const Icon = benefit.icon;
-              return (
-                <div key={index} className="text-center" data-testid={`benefit-${index}`}>
-                  <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-primary/10 mb-4">
-                    <Icon className="h-8 w-8 text-primary" />
-                  </div>
-                  <h3 className="text-xl font-semibold mb-2" data-testid={`text-benefit-title-${index}`}>
-                    {benefit.title}
-                  </h3>
-                  <p className="text-muted-foreground" data-testid={`text-benefit-description-${index}`}>
-                    {benefit.description}
-                  </p>
-                </div>
-              );
-            })}
           </div>
         </div>
       </section>

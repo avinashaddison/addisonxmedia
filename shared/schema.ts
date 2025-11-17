@@ -101,7 +101,7 @@ export const testimonials = pgTable("testimonials", {
   testimonialText: text("testimonial_text").notNull(),
   rating: varchar("rating").notNull().default("5"),
   photoUrl: varchar("photo_url"),
-  isActive: varchar("is_active").notNull().default("true"),
+  isActive: boolean("is_active").notNull().default(true),
   createdAt: timestamp("created_at").defaultNow(),
   updatedAt: timestamp("updated_at").defaultNow(),
 });
@@ -111,7 +111,6 @@ export const insertTestimonialSchema = createInsertSchema(testimonials).omit({
   createdAt: true,
   updatedAt: true,
 }).extend({
-  isActive: z.enum(["true", "false"]).default("true"),
   rating: z.enum(["3", "4", "5"]).default("5"),
 });
 
