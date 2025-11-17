@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useQuery, useMutation } from "@tanstack/react-query";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -12,7 +12,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { useToast } from "@/hooks/use-toast";
 import { apiRequest, queryClient } from "@/lib/queryClient";
-import { Settings, Image, Search, Plus, X } from "lucide-react";
+import { Settings, Image, Search, Plus, X, Upload, Loader2 } from "lucide-react";
 import type { HomepageCustomization, SeoSetting } from "@shared/schema";
 
 export default function Customize() {
@@ -233,27 +233,96 @@ function ServicesForm({ customization }: { customization?: HomepageCustomization
 // Banners Form Component
 function BannersForm({ customization }: { customization?: HomepageCustomization }) {
   const { toast } = useToast();
+  const fileInputRef = useRef<HTMLInputElement>(null);
+  
   const content = customization?.content as any || {
+    heroBanner: null,
     banners: [],
     sliders: []
   };
 
+  const [heroBanner, setHeroBanner] = useState<string | null>(content.heroBanner || null);
   const [banners, setBanners] = useState(content.banners || []);
   const [sliders, setSliders] = useState(content.sliders || []);
 
   useEffect(() => {
     if (customization?.content) {
       const content = customization.content as any;
+      setHeroBanner(content.heroBanner || null);
       setBanners(content.banners || []);
       setSliders(content.sliders || []);
     }
   }, [customization]);
 
+  // Hero Banner Upload Mutation
+  const uploadHeroBannerMutation = useMutation({
+    mutationFn: async (file: File) => {
+      // Request upload URL with file metadata for server-side validation
+      const response = await fetch("/api/customization/upload-banner", {
+        method: "POST",
+        credentials: "include",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          contentType: file.type,
+          fileSize: file.size,
+        }),
+      });
+
+      if (!response.ok) {
+        const error = await response.json();
+        throw new Error(error.message || "Failed to get upload URL");
+      }
+
+      const { uploadURL, normalizedPath } = await response.json();
+
+      await fetch(uploadURL, {
+        method: "PUT",
+        body: file,
+        headers: {
+          "Content-Type": file.type,
+        },
+      });
+
+      return normalizedPath;
+    },
+    onSuccess: (normalizedPath) => {
+      setHeroBanner(normalizedPath);
+      toast({
+        title: "Success",
+        description: "Hero banner uploaded successfully. Don't forget to save!",
+      });
+    },
+    onError: () => {
+      toast({
+        title: "Error",
+        description: "Failed to upload hero banner",
+        variant: "destructive",
+      });
+    },
+  });
+
+  const handleHeroBannerChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (file) {
+      if (!file.type.startsWith("image/")) {
+        toast({
+          title: "Error",
+          description: "Please select an image file",
+          variant: "destructive",
+        });
+        return;
+      }
+      uploadHeroBannerMutation.mutate(file);
+    }
+  };
+
   const mutation = useMutation({
     mutationFn: async () => {
       return apiRequest("POST", "/api/customization", {
         section: "banners",
-        content: { banners, sliders },
+        content: { heroBanner, banners, sliders },
         isActive: "true",
       });
     },
@@ -278,10 +347,85 @@ function BannersForm({ customization }: { customization?: HomepageCustomization 
       <CardHeader>
         <CardTitle>Banners & Slider Images</CardTitle>
         <CardDescription>
-          Manage banner images and slider images for your homepage
+          Manage hero banner, banner images and slider images for your homepage
         </CardDescription>
       </CardHeader>
       <CardContent className="space-y-6">
+        {/* Hero Banner Section */}
+        <div className="space-y-4">
+          <div className="flex items-center justify-between">
+            <div>
+              <Label className="text-lg font-semibold">Hero Banner</Label>
+              <p className="text-sm text-muted-foreground mt-1">Upload a custom hero banner image for your homepage</p>
+            </div>
+            <input
+              ref={fileInputRef}
+              type="file"
+              accept="image/*"
+              onChange={handleHeroBannerChange}
+              className="hidden"
+              data-testid="input-hero-banner-file"
+            />
+            <Button
+              type="button"
+              onClick={() => fileInputRef.current?.click()}
+              disabled={uploadHeroBannerMutation.isPending}
+              size="sm"
+              data-testid="button-upload-hero-banner"
+            >
+              {uploadHeroBannerMutation.isPending ? (
+                <>
+                  <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+                  Uploading...
+                </>
+              ) : (
+                <>
+                  <Upload className="h-4 w-4 mr-2" />
+                  Upload Hero Banner
+                </>
+              )}
+            </Button>
+          </div>
+
+          {heroBanner && (
+            <Card className="p-4 bg-muted/50">
+              <div className="space-y-3">
+                <div className="flex items-center justify-between">
+                  <Label>Current Hero Banner</Label>
+                  <Button
+                    type="button"
+                    variant="ghost"
+                    size="sm"
+                    onClick={() => setHeroBanner(null)}
+                    data-testid="button-remove-hero-banner"
+                  >
+                    <X className="h-4 w-4 mr-2" />
+                    Remove
+                  </Button>
+                </div>
+                <img
+                  src={heroBanner}
+                  alt="Hero Banner Preview"
+                  className="w-full h-48 object-cover rounded-md border-2 border-primary/20"
+                  data-testid="image-hero-banner-preview"
+                />
+                <p className="text-xs text-muted-foreground">This banner will be displayed at the top of your homepage</p>
+              </div>
+            </Card>
+          )}
+
+          {!heroBanner && (
+            <Card className="p-6 bg-muted/30 border-dashed">
+              <div className="text-center space-y-2">
+                <Image className="h-12 w-12 mx-auto text-muted-foreground/50" />
+                <p className="text-sm text-muted-foreground">No hero banner uploaded. Upload one to replace the default banner.</p>
+              </div>
+            </Card>
+          )}
+        </div>
+
+        <div className="border-t pt-6"></div>
+
         <div className="space-y-4">
           <div className="flex items-center justify-between">
             <Label>Banner Images</Label>

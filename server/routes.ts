@@ -766,6 +766,37 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // Hero Banner Upload endpoint with validation
+  app.post("/api/customization/upload-banner", isAuthenticated, async (req, res) => {
+    try {
+      const { contentType, fileSize } = req.body;
+
+      // Validate MIME type
+      const allowedMimeTypes = ['image/jpeg', 'image/jpg', 'image/png', 'image/webp', 'image/gif'];
+      if (!contentType || !allowedMimeTypes.includes(contentType.toLowerCase())) {
+        return res.status(400).json({ 
+          message: "Invalid file type. Only JPEG, PNG, WebP, and GIF images are allowed." 
+        });
+      }
+
+      // Validate file size (max 5MB)
+      const maxFileSize = 5 * 1024 * 1024; // 5MB in bytes
+      if (!fileSize || fileSize > maxFileSize) {
+        return res.status(400).json({ 
+          message: "File size exceeds maximum limit of 5MB." 
+        });
+      }
+
+      const objectStorageService = new ObjectStorageService();
+      const uploadURL = await objectStorageService.getHeroBannerUploadURL();
+      const normalizedPath = objectStorageService.normalizeObjectPath(uploadURL);
+      res.json({ uploadURL, normalizedPath });
+    } catch (error) {
+      console.error("Error getting upload URL for hero banner:", error);
+      res.status(500).json({ message: "Failed to get upload URL" });
+    }
+  });
+
   // SEO Settings routes (admin only)
   app.get("/api/seo", isAuthenticated, async (req, res) => {
     try {

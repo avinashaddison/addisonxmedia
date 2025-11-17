@@ -26,11 +26,13 @@ import type { Testimonial, TeamMember } from "@shared/schema";
 import heroBanner from "@assets/Phoenix_10_Create_a_modern_premium_promotional_banner_in_the_s_2_1763291282547.jpg";
 import reviewQR from "@assets/WhatsApp Image 2025-11-17 at 3.50.29 PM_1763395709789.jpeg";
 
-function HeroBanner() {
+function HeroBanner({ customBannerUrl }: { customBannerUrl?: string | null }) {
+  const bannerUrl = customBannerUrl || heroBanner;
+  
   return (
     <div className="relative w-full lg:rounded-lg lg:overflow-hidden">
       <img
-        src={heroBanner}
+        src={bannerUrl}
         alt="AddisonX Media - Professional Digital Marketing Services"
         className="w-full h-auto object-cover"
         data-testid="img-hero-banner"
@@ -131,6 +133,10 @@ export default function Home() {
     queryKey: ["/api/customization/services"],
   });
 
+  const { data: bannersCustomization } = useQuery<any>({
+    queryKey: ["/api/customization/banners"],
+  });
+
   const activeTestimonials = testimonials || [];
   const activeTeamMembers = teamMembers || [];
 
@@ -138,13 +144,14 @@ export default function Home() {
   const servicesTitle = servicesCustomization?.content?.title || "Our Services";
   const servicesDescription = servicesCustomization?.content?.description || "Comprehensive digital marketing solutions tailored to elevate your brand and drive measurable results";
   const customServices = servicesCustomization?.content?.services || services;
+  const customHeroBanner = bannersCustomization?.content?.heroBanner || null;
 
   return (
     <div className="flex flex-col">
       {/* Hero Section */}
       <section className="relative w-full mx-auto overflow-hidden">
         {/* Hero Banner */}
-        <HeroBanner />
+        <HeroBanner customBannerUrl={customHeroBanner} />
         
         {/* Gradient Transition Overlay - Desktop Only */}
         <div className="hidden lg:block absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-background to-transparent pointer-events-none"></div>
