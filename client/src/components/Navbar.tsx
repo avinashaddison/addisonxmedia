@@ -161,7 +161,7 @@ export function Navbar() {
                 <NavigationMenuList>
                   {/* Home */}
                   <NavigationMenuItem>
-                    <NavigationMenuLink asChild className={navigationMenuTriggerStyle()}>
+                    <NavigationMenuLink asChild className={`${navigationMenuTriggerStyle()} ${location === '/' ? 'bg-primary text-primary-foreground' : ''}`}>
                       <Link href="/">
                         <Home className="h-4 w-4 mr-2" />
                         Home
@@ -171,7 +171,7 @@ export function Navbar() {
 
                   {/* About */}
                   <NavigationMenuItem>
-                    <NavigationMenuLink asChild className={navigationMenuTriggerStyle()}>
+                    <NavigationMenuLink asChild className={`${navigationMenuTriggerStyle()} ${location === '/about' ? 'bg-primary text-primary-foreground' : ''}`}>
                       <Link href="/about">
                         <Info className="h-4 w-4 mr-2" />
                         About
@@ -181,7 +181,7 @@ export function Navbar() {
 
                   {/* Services Dropdown */}
                   <NavigationMenuItem>
-                    <NavigationMenuTrigger data-testid="nav-services-trigger">
+                    <NavigationMenuTrigger data-testid="nav-services-trigger" className={location === '/services' ? 'bg-primary text-primary-foreground' : ''}>
                       <Briefcase className="h-4 w-4 mr-2" />
                       Services
                     </NavigationMenuTrigger>
@@ -211,7 +211,7 @@ export function Navbar() {
 
                   {/* Verify */}
                   <NavigationMenuItem>
-                    <NavigationMenuLink asChild className={navigationMenuTriggerStyle()}>
+                    <NavigationMenuLink asChild className={`${navigationMenuTriggerStyle()} ${location === '/verify-employee' ? 'bg-primary text-primary-foreground' : ''}`}>
                       <Link href="/verify-employee">
                         <UserCheck className="h-4 w-4 mr-2" />
                         Verify
@@ -221,7 +221,7 @@ export function Navbar() {
 
                   {/* Contact */}
                   <NavigationMenuItem>
-                    <NavigationMenuLink asChild className={navigationMenuTriggerStyle()}>
+                    <NavigationMenuLink asChild className={`${navigationMenuTriggerStyle()} ${location === '/contact' ? 'bg-primary text-primary-foreground' : ''}`}>
                       <Link href="/contact">
                         <MessageCircle className="h-4 w-4 mr-2" />
                         Contact
