@@ -145,7 +145,21 @@ export default function Home() {
     queryKey: ["/api/testimonials"],
   });
 
+  const { data: customizationData } = useQuery<any[]>({
+    queryKey: ["/api/customization"],
+  });
+
   const activeTestimonials = testimonials?.filter(t => t.isActive === "true").slice(0, 3) || [];
+
+  // Extract customization settings
+  const heroCustomization = customizationData?.find(c => c.section === 'hero');
+  const servicesCustomization = customizationData?.find(c => c.section === 'services');
+  const bannersCustomization = customizationData?.find(c => c.section === 'banners');
+
+  // Use customized or default values
+  const servicesTitle = servicesCustomization?.content?.title || "Our Services";
+  const servicesDescription = servicesCustomization?.content?.description || "Comprehensive digital marketing solutions tailored to elevate your brand and drive measurable results";
+  const customServices = servicesCustomization?.content?.services || services;
 
   return (
     <div className="flex flex-col">
@@ -215,21 +229,22 @@ export default function Home() {
               What We Offer
             </Badge>
             <h2 className="text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold mb-3 md:mb-6" data-testid="text-services-title">
-              Our Services
+              {servicesTitle}
             </h2>
             <p className="text-base md:text-lg lg:text-xl text-muted-foreground max-w-2xl mx-auto px-2" data-testid="text-services-description">
-              Comprehensive digital marketing solutions tailored to elevate your brand and drive measurable results
+              {servicesDescription}
             </p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6 lg:gap-8">
-            {services.map((service, index) => {
-              const Icon = service.icon;
+            {customServices.map((service: any, index: number) => {
+              const Icon = service.icon || Code;
+              const IconComponent = typeof Icon === 'string' ? Code : Icon;
               return (
                 <Card key={index} className="group p-5 md:p-6 lg:p-8 transition-all duration-500 border-primary/10 hover:border-primary/30 hover:shadow-xl hover:shadow-primary/10 bg-gradient-to-br from-card to-card/80" data-testid={`card-service-${index}`}>
                   <div className="mb-4 md:mb-5 lg:mb-6 relative">
                     <div className="inline-flex items-center justify-center w-12 h-12 md:w-14 md:h-14 lg:w-16 lg:h-16 rounded-xl bg-gradient-to-br from-primary/20 to-primary/10 group-hover:from-primary/30 group-hover:to-primary/20 transition-all duration-300">
-                      <Icon className="h-6 w-6 md:h-7 md:w-7 lg:h-8 lg:w-8 text-primary group-hover:scale-110 transition-transform duration-300" />
+                      <IconComponent className="h-6 w-6 md:h-7 md:w-7 lg:h-8 lg:w-8 text-primary group-hover:scale-110 transition-transform duration-300" />
                     </div>
                   </div>
                   <h3 className="text-lg md:text-xl lg:text-2xl font-bold mb-2 md:mb-3 group-hover:text-primary transition-colors duration-300" data-testid={`text-service-title-${index}`}>
