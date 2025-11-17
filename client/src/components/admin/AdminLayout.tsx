@@ -83,6 +83,11 @@ const menuItems = [
     icon: Star,
   },
   {
+    title: "Team Members",
+    url: "/admin/team-members",
+    icon: UserCircle2,
+  },
+  {
     title: "Analytics",
     url: "/admin/analytics",
     icon: BarChart3,

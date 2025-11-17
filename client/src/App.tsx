@@ -26,6 +26,8 @@ import InvoiceForm from "@/pages/admin/InvoiceForm";
 import Contacts from "@/pages/admin/Contacts";
 import Testimonials from "@/pages/admin/Testimonials";
 import TestimonialForm from "@/pages/admin/TestimonialForm";
+import TeamMembers from "@/pages/admin/TeamMembers";
+import TeamMemberForm from "@/pages/admin/TeamMemberForm";
 import Analytics from "@/pages/admin/Analytics";
 import Customize from "@/pages/admin/Customize";
 import Settings from "@/pages/admin/Settings";
@@ -106,6 +108,15 @@ function Router() {
       </Route>
       <Route path="/admin/testimonials/:id/edit">
         {() => <AdminLayout><TestimonialForm /></AdminLayout>}
+      </Route>
+      <Route path="/admin/team-members">
+        {() => <AdminLayout><TeamMembers /></AdminLayout>}
+      </Route>
+      <Route path="/admin/team-members/new">
+        {() => <AdminLayout><TeamMemberForm /></AdminLayout>}
+      </Route>
+      <Route path="/admin/team-members/:id/edit">
+        {() => <AdminLayout><TeamMemberForm /></AdminLayout>}
       </Route>
       <Route path="/admin/analytics">
         {() => <AdminLayout><Analytics /></AdminLayout>}
