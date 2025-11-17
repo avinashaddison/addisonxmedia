@@ -879,6 +879,42 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // Hero banner serving route
+  app.get("/api/hero-banner", async (req, res) => {
+    try {
+      const { path } = req.query;
+      
+      if (!path || typeof path !== 'string') {
+        return res.status(400).json({ message: "Path parameter is required" });
+      }
+
+      // Decode the URL-encoded path
+      const decodedPath = decodeURIComponent(path);
+
+      // Parse the full object storage path
+      const { bucketName, objectName } = parseObjectPath(decodedPath);
+
+      // Security: Validate that the object belongs to the homepage-banners directory
+      // Note: objectName doesn't have leading slash, e.g. "public/homepage-banners/uuid"
+      if (!objectName.includes('public/homepage-banners/')) {
+        console.warn(`Rejected unauthorized hero banner access attempt: ${objectName}`);
+        return res.status(403).json({ message: "Access denied: Invalid banner path" });
+      }
+
+      const signedUrl = await signObjectURL({
+        bucketName,
+        objectName,
+        method: "GET",
+        ttlSec: 3600,
+      });
+
+      res.redirect(signedUrl);
+    } catch (error) {
+      console.error("Error serving hero banner:", error);
+      res.status(500).json({ message: "Failed to serve hero banner" });
+    }
+  });
+
   // Helper function to convert photo URLs
   const convertPhotoUrl = (photoUrl: string | null): string | null => {
     if (!photoUrl) return null;

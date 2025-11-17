@@ -15,6 +15,20 @@ import { apiRequest, queryClient } from "@/lib/queryClient";
 import { Settings, Image, Search, Plus, X, Upload, Loader2 } from "lucide-react";
 import type { HomepageCustomization, SeoSetting } from "@shared/schema";
 
+// Helper function to convert storage path to displayable API URL
+const convertHeroBannerToUrl = (storagePath: string | null): string | null => {
+  if (!storagePath) return null;
+  
+  // If it's already an API URL, return as is
+  if (storagePath.startsWith('/api/hero-banner')) {
+    return storagePath;
+  }
+  
+  // Convert storage path to API URL
+  const encodedPath = encodeURIComponent(storagePath);
+  return `/api/hero-banner?path=${encodedPath}`;
+};
+
 export default function Customize() {
   const { toast } = useToast();
   const [activeTab, setActiveTab] = useState("services");
@@ -404,7 +418,7 @@ function BannersForm({ customization }: { customization?: HomepageCustomization 
                   </Button>
                 </div>
                 <img
-                  src={heroBanner}
+                  src={heroBanner ? (convertHeroBannerToUrl(heroBanner) || heroBanner) : ""}
                   alt="Hero Banner Preview"
                   className="w-full h-48 object-cover rounded-md border-2 border-primary/20"
                   data-testid="image-hero-banner-preview"

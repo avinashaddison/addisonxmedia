@@ -26,8 +26,22 @@ import type { Testimonial, TeamMember } from "@shared/schema";
 import heroBanner from "@assets/Phoenix_10_Create_a_modern_premium_promotional_banner_in_the_s_2_1763291282547.jpg";
 import reviewQR from "@assets/WhatsApp Image 2025-11-17 at 3.50.29 PM_1763395709789.jpeg";
 
+// Helper function to convert storage path to displayable API URL
+const convertHeroBannerToUrl = (storagePath: string | null | undefined): string | null => {
+  if (!storagePath) return null;
+  
+  // If it's already an API URL, return as is
+  if (storagePath.startsWith('/api/hero-banner')) {
+    return storagePath;
+  }
+  
+  // Convert storage path to API URL
+  const encodedPath = encodeURIComponent(storagePath);
+  return `/api/hero-banner?path=${encodedPath}`;
+};
+
 function HeroBanner({ customBannerUrl }: { customBannerUrl?: string | null }) {
-  const bannerUrl = customBannerUrl || heroBanner;
+  const bannerUrl = convertHeroBannerToUrl(customBannerUrl) || heroBanner;
   
   return (
     <div className="relative w-full lg:rounded-lg lg:overflow-hidden">
