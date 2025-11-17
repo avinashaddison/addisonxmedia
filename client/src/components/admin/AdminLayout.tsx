@@ -30,6 +30,7 @@ import {
   LogOut,
   Building2,
   TrendingUp,
+  Palette,
 } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { ThemeProvider } from "@/components/ThemeProvider";
@@ -85,6 +86,11 @@ const menuItems = [
     title: "Analytics",
     url: "/admin/analytics",
     icon: BarChart3,
+  },
+  {
+    title: "Customize",
+    url: "/admin/customize",
+    icon: Palette,
   },
   {
     title: "Settings",

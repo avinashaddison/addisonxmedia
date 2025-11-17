@@ -27,6 +27,7 @@ import Contacts from "@/pages/admin/Contacts";
 import Testimonials from "@/pages/admin/Testimonials";
 import TestimonialForm from "@/pages/admin/TestimonialForm";
 import Analytics from "@/pages/admin/Analytics";
+import Customize from "@/pages/admin/Customize";
 import Settings from "@/pages/admin/Settings";
 import NotFound from "@/pages/not-found";
 import { AdminLayout } from "@/components/admin/AdminLayout";
@@ -108,6 +109,9 @@ function Router() {
       </Route>
       <Route path="/admin/analytics">
         {() => <AdminLayout><Analytics /></AdminLayout>}
+      </Route>
+      <Route path="/admin/customize">
+        {() => <AdminLayout><Customize /></AdminLayout>}
       </Route>
       <Route path="/admin/settings">
         {() => <AdminLayout><Settings /></AdminLayout>}
