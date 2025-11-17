@@ -103,61 +103,31 @@ export function Navbar() {
       <nav className="relative bg-background/95 backdrop-blur-md supports-[backdrop-filter]:bg-background/80 border-b shadow-md">
         <div className="max-w-7xl mx-auto px-4 md:px-6">
           <div className="flex items-center justify-between h-16 md:h-20">
-            {/* Desktop Logo - Premium Design */}
+            {/* Desktop Logo - Simple Design */}
             <Link href="/" data-testid="link-home" className="hidden lg:block">
-              <div className="flex items-center gap-3 cursor-pointer group relative">
-                {/* Logo Container with Premium Effects */}
-                <div className="relative p-1">
-                  {/* Animated Glow Ring - More Visible */}
-                  <div className="absolute -inset-2 bg-gradient-to-r from-primary/40 via-purple-500/40 to-primary/40 rounded-2xl blur-xl opacity-0 group-hover:opacity-100 transition-all duration-500"></div>
-                  
-                  {/* Secondary Pulse Glow */}
-                  <div className="absolute -inset-1 bg-gradient-to-r from-primary/60 to-purple-600/60 rounded-xl blur-md opacity-0 group-hover:opacity-75 transition-all duration-700 animate-pulse"></div>
-                  
-                  {/* Logo Background with Border and Shadow */}
-                  <div className="relative bg-gradient-to-br from-white via-gray-50 to-white dark:from-gray-900 dark:via-gray-850 dark:to-gray-900 p-2.5 rounded-xl border-2 border-primary/10 group-hover:border-primary/40 transition-all duration-300 shadow-[0_4px_20px_rgba(0,0,0,0.08)] group-hover:shadow-[0_8px_30px_rgba(139,92,246,0.3)] dark:shadow-[0_4px_20px_rgba(0,0,0,0.3)] dark:group-hover:shadow-[0_8px_30px_rgba(139,92,246,0.5)]">
-                    {/* Inner Gradient Overlay */}
-                    <div className="absolute inset-0 bg-gradient-to-br from-primary/8 via-transparent to-purple-500/8 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                    
-                    {/* Animated Border Shimmer */}
-                    <div className="absolute inset-0 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500">
-                      <div className="absolute inset-0 rounded-xl bg-gradient-to-r from-transparent via-primary/20 to-transparent animate-shimmer"></div>
-                    </div>
-                    
-                    <img 
-                      src={logoUrl} 
-                      alt="AddisonX Media" 
-                      className="h-12 w-auto relative z-10 transition-all duration-500 group-hover:scale-105 group-hover:brightness-110 drop-shadow-sm"
-                      data-testid="img-logo"
-                    />
-                  </div>
-                  
-                  {/* Sparkle Effects - Multiple */}
-                  <div className="absolute -top-1 -right-1 w-2 h-2 bg-primary rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300 animate-ping"></div>
-                  <div className="absolute -bottom-1 -left-1 w-2 h-2 bg-purple-500 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-500 animate-ping" style={{ animationDelay: '150ms' }}></div>
-                </div>
+              <div className="flex items-center gap-3 cursor-pointer group">
+                <img 
+                  src={logoUrl} 
+                  alt="AddisonX Media" 
+                  className="h-12 w-auto"
+                  data-testid="img-logo"
+                />
               </div>
             </Link>
 
             {/* Mobile Logo with Brand Info */}
             <Link href="/" data-testid="link-home-mobile" className="flex-1 lg:hidden">
-              <div className="flex items-center gap-3 cursor-pointer group">
-                {/* Logo Container with Glow */}
-                <div className="relative">
-                  <div className="absolute inset-0 bg-gradient-to-br from-primary/30 to-purple-500/30 rounded-2xl blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-                  <div className="relative bg-gradient-to-br from-primary/5 to-purple-500/5 p-1.5 rounded-xl">
-                    <img 
-                      src={logoUrl} 
-                      alt="AddisonX Media" 
-                      className="h-9 md:h-14 w-auto relative z-10 transition-all duration-300 group-hover:scale-105"
-                      data-testid="img-logo-mobile"
-                    />
-                  </div>
-                </div>
+              <div className="flex items-center gap-3 cursor-pointer">
+                <img 
+                  src={logoUrl} 
+                  alt="AddisonX Media" 
+                  className="h-9 md:h-14 w-auto"
+                  data-testid="img-logo-mobile"
+                />
                 
-                {/* Mobile Brand Text with Gradient */}
+                {/* Mobile Brand Text */}
                 <div className="flex flex-col">
-                  <span className="text-sm font-bold bg-gradient-to-r from-primary via-purple-600 to-primary bg-clip-text text-transparent animate-gradient">
+                  <span className="text-sm font-bold text-primary">
                     AddisonX
                   </span>
                   <span className="text-[9px] text-muted-foreground font-medium tracking-wide">
