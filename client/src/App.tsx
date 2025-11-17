@@ -12,12 +12,20 @@ import Services from "@/pages/Services";
 import ServiceDetail from "@/pages/ServiceDetail";
 import Contact from "@/pages/Contact";
 import VerifyEmployee from "@/pages/VerifyEmployee";
-import Dashboard from "@/pages/admin/Dashboard";
+import NewDashboard from "@/pages/admin/NewDashboard";
+import Employees from "@/pages/admin/Employees";
 import EmployeeForm from "@/pages/admin/EmployeeForm";
+import Clients from "@/pages/admin/Clients";
+import Leads from "@/pages/admin/Leads";
+import Projects from "@/pages/admin/Projects";
+import Invoices from "@/pages/admin/Invoices";
+import Contacts from "@/pages/admin/Contacts";
 import Testimonials from "@/pages/admin/Testimonials";
 import TestimonialForm from "@/pages/admin/TestimonialForm";
 import Analytics from "@/pages/admin/Analytics";
+import Settings from "@/pages/admin/Settings";
 import NotFound from "@/pages/not-found";
+import { AdminLayout } from "@/components/admin/AdminLayout";
 
 function Router() {
   return (
@@ -30,15 +38,52 @@ function Router() {
       <Route path="/contact" component={Contact} />
       <Route path="/verify-employee" component={VerifyEmployee} />
       
-      {/* Admin Routes */}
-      <Route path="/admin" component={Dashboard} />
-      <Route path="/admin/dashboard" component={Dashboard} />
-      <Route path="/admin/employees/new" component={EmployeeForm} />
-      <Route path="/admin/employees/:id/edit" component={EmployeeForm} />
-      <Route path="/admin/testimonials" component={Testimonials} />
-      <Route path="/admin/testimonials/new" component={TestimonialForm} />
-      <Route path="/admin/testimonials/:id/edit" component={TestimonialForm} />
-      <Route path="/admin/analytics" component={Analytics} />
+      {/* Admin Routes - wrapped with AdminLayout */}
+      <Route path="/admin">
+        {() => <AdminLayout><NewDashboard /></AdminLayout>}
+      </Route>
+      <Route path="/admin/dashboard">
+        {() => <AdminLayout><NewDashboard /></AdminLayout>}
+      </Route>
+      <Route path="/admin/employees">
+        {() => <AdminLayout><Employees /></AdminLayout>}
+      </Route>
+      <Route path="/admin/employees/new">
+        {() => <AdminLayout><EmployeeForm /></AdminLayout>}
+      </Route>
+      <Route path="/admin/employees/:id/edit">
+        {() => <AdminLayout><EmployeeForm /></AdminLayout>}
+      </Route>
+      <Route path="/admin/clients">
+        {() => <AdminLayout><Clients /></AdminLayout>}
+      </Route>
+      <Route path="/admin/leads">
+        {() => <AdminLayout><Leads /></AdminLayout>}
+      </Route>
+      <Route path="/admin/projects">
+        {() => <AdminLayout><Projects /></AdminLayout>}
+      </Route>
+      <Route path="/admin/invoices">
+        {() => <AdminLayout><Invoices /></AdminLayout>}
+      </Route>
+      <Route path="/admin/contacts">
+        {() => <AdminLayout><Contacts /></AdminLayout>}
+      </Route>
+      <Route path="/admin/testimonials">
+        {() => <AdminLayout><Testimonials /></AdminLayout>}
+      </Route>
+      <Route path="/admin/testimonials/new">
+        {() => <AdminLayout><TestimonialForm /></AdminLayout>}
+      </Route>
+      <Route path="/admin/testimonials/:id/edit">
+        {() => <AdminLayout><TestimonialForm /></AdminLayout>}
+      </Route>
+      <Route path="/admin/analytics">
+        {() => <AdminLayout><Analytics /></AdminLayout>}
+      </Route>
+      <Route path="/admin/settings">
+        {() => <AdminLayout><Settings /></AdminLayout>}
+      </Route>
       
       {/* 404 */}
       <Route component={NotFound} />

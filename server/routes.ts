@@ -349,6 +349,23 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // Placeholder routes for new features (admin only)
+  app.get("/api/clients", isAuthenticated, async (req, res) => {
+    res.json([]);
+  });
+
+  app.get("/api/leads", isAuthenticated, async (req, res) => {
+    res.json([]);
+  });
+
+  app.get("/api/projects", isAuthenticated, async (req, res) => {
+    res.json([]);
+  });
+
+  app.get("/api/invoices", isAuthenticated, async (req, res) => {
+    res.json([]);
+  });
+
   const httpServer = createServer(app);
   return httpServer;
 }
