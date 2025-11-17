@@ -1,7 +1,64 @@
 import { Link, useLocation } from "wouter";
-import { Phone, Mail, Sparkles, Home, Info, Briefcase, UserCheck, MessageCircle, MessageSquare } from "lucide-react";
+import { Phone, Mail, Sparkles, Home, Info, Briefcase, UserCheck, MessageCircle, MessageSquare, Code, ShoppingCart, TrendingUp, Search, Target, Palette, Share2, Wrench } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import {
+  NavigationMenu,
+  NavigationMenuContent,
+  NavigationMenuItem,
+  NavigationMenuLink,
+  NavigationMenuList,
+  NavigationMenuTrigger,
+  navigationMenuTriggerStyle,
+} from "@/components/ui/navigation-menu";
 import logoUrl from "@assets/Screenshot 2025-11-15 182956_1763276506016.png";
+
+const services = [
+  {
+    icon: Code,
+    title: "Web Development",
+    description: "Custom websites built with modern technologies"
+  },
+  {
+    icon: ShoppingCart,
+    title: "Ecommerce Development",
+    description: "Complete online store solutions"
+  },
+  {
+    icon: TrendingUp,
+    title: "Brand Promotion",
+    description: "Strategic brand building campaigns"
+  },
+  {
+    icon: Search,
+    title: "Local SEO",
+    description: "Dominate local search results"
+  },
+  {
+    icon: Target,
+    title: "Ads Management",
+    description: "Data-driven advertising campaigns"
+  },
+  {
+    icon: Palette,
+    title: "Graphic Designing",
+    description: "Creative visual designs"
+  },
+  {
+    icon: MessageCircle,
+    title: "WhatsApp Marketing",
+    description: "Direct customer engagement"
+  },
+  {
+    icon: Share2,
+    title: "Social Media Marketing",
+    description: "Build and engage your community"
+  },
+  {
+    icon: Wrench,
+    title: "Custom Development",
+    description: "Tailored software solutions"
+  }
+];
 
 export function Navbar() {
   const [location] = useLocation();
@@ -99,23 +156,82 @@ export function Navbar() {
             </div>
 
             {/* Desktop Navigation */}
-            <div className="hidden lg:flex items-center gap-1">
-              {navLinks.map((link) => {
-                const Icon = link.icon;
-                return (
-                  <Link key={link.path} href={link.path}>
-                    <Button
-                      variant={location === link.path ? "default" : "ghost"}
-                      size="default"
-                      data-testid={`link-${link.label.toLowerCase().replace(" ", "-")}`}
-                      className="font-medium px-4"
-                    >
-                      <Icon className="h-4 w-4 mr-2" />
-                      {link.label}
-                    </Button>
-                  </Link>
-                );
-              })}
+            <div className="hidden lg:flex items-center">
+              <NavigationMenu>
+                <NavigationMenuList>
+                  {/* Home */}
+                  <NavigationMenuItem>
+                    <NavigationMenuLink asChild className={navigationMenuTriggerStyle()}>
+                      <Link href="/">
+                        <Home className="h-4 w-4 mr-2" />
+                        Home
+                      </Link>
+                    </NavigationMenuLink>
+                  </NavigationMenuItem>
+
+                  {/* About */}
+                  <NavigationMenuItem>
+                    <NavigationMenuLink asChild className={navigationMenuTriggerStyle()}>
+                      <Link href="/about">
+                        <Info className="h-4 w-4 mr-2" />
+                        About
+                      </Link>
+                    </NavigationMenuLink>
+                  </NavigationMenuItem>
+
+                  {/* Services Dropdown */}
+                  <NavigationMenuItem>
+                    <NavigationMenuTrigger data-testid="nav-services-trigger">
+                      <Briefcase className="h-4 w-4 mr-2" />
+                      Services
+                    </NavigationMenuTrigger>
+                    <NavigationMenuContent>
+                      <div className="grid w-[800px] gap-3 p-6 md:grid-cols-3">
+                        {services.map((service) => {
+                          const Icon = service.icon;
+                          return (
+                            <NavigationMenuLink key={service.title} asChild>
+                              <Link href="/services">
+                                <div className="group block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground" data-testid={`nav-service-${service.title.toLowerCase().replace(/\s+/g, '-')}`}>
+                                  <div className="flex items-center gap-2 mb-2">
+                                    <div className="flex items-center justify-center w-8 h-8 rounded-lg bg-primary/10 group-hover:bg-primary/20 transition-colors">
+                                      <Icon className="h-4 w-4 text-primary" />
+                                    </div>
+                                    <div className="text-sm font-medium leading-none">{service.title}</div>
+                                  </div>
+                                  <p className="line-clamp-2 text-xs leading-snug text-muted-foreground">
+                                    {service.description}
+                                  </p>
+                                </div>
+                              </Link>
+                            </NavigationMenuLink>
+                          );
+                        })}
+                      </div>
+                    </NavigationMenuContent>
+                  </NavigationMenuItem>
+
+                  {/* Verify */}
+                  <NavigationMenuItem>
+                    <NavigationMenuLink asChild className={navigationMenuTriggerStyle()}>
+                      <Link href="/verify-employee">
+                        <UserCheck className="h-4 w-4 mr-2" />
+                        Verify
+                      </Link>
+                    </NavigationMenuLink>
+                  </NavigationMenuItem>
+
+                  {/* Contact */}
+                  <NavigationMenuItem>
+                    <NavigationMenuLink asChild className={navigationMenuTriggerStyle()}>
+                      <Link href="/contact">
+                        <MessageCircle className="h-4 w-4 mr-2" />
+                        Contact
+                      </Link>
+                    </NavigationMenuLink>
+                  </NavigationMenuItem>
+                </NavigationMenuList>
+              </NavigationMenu>
             </div>
 
             {/* CTA Button - Desktop */}
