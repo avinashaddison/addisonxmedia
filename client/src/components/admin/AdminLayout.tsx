@@ -32,6 +32,9 @@ import {
   TrendingUp,
 } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { ThemeProvider } from "@/components/ThemeProvider";
+import { ThemeToggle } from "@/components/ThemeToggle";
+import logoUrl from "@assets/image_1763354432379.png";
 
 interface AdminLayoutProps {
   children: React.ReactNode;
@@ -155,20 +158,23 @@ export function AdminLayout({ children }: AdminLayoutProps) {
   };
 
   return (
-    <SidebarProvider style={sidebarStyle as React.CSSProperties}>
-      <div className="flex h-screen w-full">
-        <Sidebar>
-          <SidebarHeader className="border-b border-sidebar-border p-6">
-            <div className="flex items-center gap-3">
-              <div className="flex items-center justify-center w-10 h-10 rounded-lg bg-gradient-to-br from-primary to-orange-600 text-primary-foreground font-bold shadow-md">
-                AX
+    <ThemeProvider defaultTheme="dark" storageKey="admin-ui-theme">
+      <SidebarProvider style={sidebarStyle as React.CSSProperties}>
+        <div className="flex h-screen w-full">
+          <Sidebar>
+            <SidebarHeader className="border-b border-sidebar-border p-6">
+              <div className="flex items-center gap-3">
+                <img 
+                  src={logoUrl} 
+                  alt="AddisonX Media Logo" 
+                  className="w-10 h-10 rounded-lg object-cover shadow-md"
+                />
+                <div>
+                  <h2 className="font-bold text-base tracking-tight">AddisonX Media</h2>
+                  <p className="text-xs text-muted-foreground">Admin Dashboard</p>
+                </div>
               </div>
-              <div>
-                <h2 className="font-bold text-base tracking-tight">AddisonX Media</h2>
-                <p className="text-xs text-muted-foreground">Admin Dashboard</p>
-              </div>
-            </div>
-          </SidebarHeader>
+            </SidebarHeader>
 
           <SidebarContent className="px-2">
             <SidebarGroup>
@@ -239,7 +245,8 @@ export function AdminLayout({ children }: AdminLayoutProps) {
                 </h1>
               </div>
             </div>
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-3">
+              <ThemeToggle />
               <div className="px-3 py-1.5 rounded-md bg-primary/15 text-primary text-xs font-medium border border-primary/20">
                 Admin
               </div>
@@ -250,6 +257,7 @@ export function AdminLayout({ children }: AdminLayoutProps) {
           </main>
         </div>
       </div>
-    </SidebarProvider>
+      </SidebarProvider>
+    </ThemeProvider>
   );
 }
