@@ -28,6 +28,8 @@ export const users = pgTable("users", {
   firstName: varchar("first_name"),
   lastName: varchar("last_name"),
   profileImageUrl: varchar("profile_image_url"),
+  role: varchar("role").notNull().default("admin"), // admin, manager, editor, hr
+  isActive: varchar("is_active").notNull().default("true"),
   createdAt: timestamp("created_at").defaultNow(),
   updatedAt: timestamp("updated_at").defaultNow(),
 });
@@ -135,3 +137,136 @@ export const insertVerificationLogSchema = createInsertSchema(verificationLogs).
 
 export type InsertVerificationLog = z.infer<typeof insertVerificationLogSchema>;
 export type VerificationLog = typeof verificationLogs.$inferSelect;
+
+// Clients table
+export const clients = pgTable("clients", {
+  id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
+  name: varchar("name").notNull(),
+  email: varchar("email").notNull(),
+  phone: varchar("phone"),
+  company: varchar("company"),
+  address: text("address"),
+  status: varchar("status").notNull().default("active"), // active, inactive, pending
+  assignedTo: varchar("assigned_to"), // employee ID
+  notes: text("notes"),
+  createdAt: timestamp("created_at").defaultNow(),
+  updatedAt: timestamp("updated_at").defaultNow(),
+});
+
+export const insertClientSchema = createInsertSchema(clients).omit({
+  id: true,
+  createdAt: true,
+  updatedAt: true,
+});
+
+export const updateClientSchema = insertClientSchema.partial();
+
+export type InsertClient = z.infer<typeof insertClientSchema>;
+export type UpdateClient = z.infer<typeof updateClientSchema>;
+export type Client = typeof clients.$inferSelect;
+
+// Leads table
+export const leads = pgTable("leads", {
+  id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
+  name: varchar("name").notNull(),
+  email: varchar("email").notNull(),
+  phone: varchar("phone"),
+  company: varchar("company"),
+  source: varchar("source").notNull().default("website"), // website, referral, social, ad
+  status: varchar("status").notNull().default("new"), // new, contacted, qualified, converted, lost
+  assignedTo: varchar("assigned_to"), // employee ID
+  notes: text("notes"),
+  followUpDate: timestamp("follow_up_date"),
+  createdAt: timestamp("created_at").defaultNow(),
+  updatedAt: timestamp("updated_at").defaultNow(),
+});
+
+export const insertLeadSchema = createInsertSchema(leads).omit({
+  id: true,
+  createdAt: true,
+  updatedAt: true,
+});
+
+export const updateLeadSchema = insertLeadSchema.partial();
+
+export type InsertLead = z.infer<typeof insertLeadSchema>;
+export type UpdateLead = z.infer<typeof updateLeadSchema>;
+export type Lead = typeof leads.$inferSelect;
+
+// Projects table
+export const projects = pgTable("projects", {
+  id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
+  name: varchar("name").notNull(),
+  clientId: varchar("client_id"),
+  description: text("description"),
+  status: varchar("status").notNull().default("planning"), // planning, in-progress, review, completed, cancelled
+  priority: varchar("priority").notNull().default("medium"), // low, medium, high
+  assignedTo: varchar("assigned_to"), // employee ID
+  startDate: timestamp("start_date"),
+  deadline: timestamp("deadline"),
+  budget: varchar("budget"),
+  paymentStatus: varchar("payment_status").notNull().default("pending"), // pending, partial, paid
+  createdAt: timestamp("created_at").defaultNow(),
+  updatedAt: timestamp("updated_at").defaultNow(),
+});
+
+export const insertProjectSchema = createInsertSchema(projects).omit({
+  id: true,
+  createdAt: true,
+  updatedAt: true,
+});
+
+export const updateProjectSchema = insertProjectSchema.partial();
+
+export type InsertProject = z.infer<typeof insertProjectSchema>;
+export type UpdateProject = z.infer<typeof updateProjectSchema>;
+export type Project = typeof projects.$inferSelect;
+
+// Invoices table
+export const invoices = pgTable("invoices", {
+  id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
+  invoiceNumber: varchar("invoice_number").notNull().unique(),
+  clientId: varchar("client_id"),
+  projectId: varchar("project_id"),
+  amount: varchar("amount").notNull(),
+  tax: varchar("tax").notNull().default("0"),
+  total: varchar("total").notNull(),
+  status: varchar("status").notNull().default("pending"), // pending, paid, overdue, cancelled
+  dueDate: timestamp("due_date"),
+  paidDate: timestamp("paid_date"),
+  notes: text("notes"),
+  createdAt: timestamp("created_at").defaultNow(),
+  updatedAt: timestamp("updated_at").defaultNow(),
+});
+
+export const insertInvoiceSchema = createInsertSchema(invoices).omit({
+  id: true,
+  createdAt: true,
+  updatedAt: true,
+});
+
+export const updateInvoiceSchema = insertInvoiceSchema.partial();
+
+export type InsertInvoice = z.infer<typeof insertInvoiceSchema>;
+export type UpdateInvoice = z.infer<typeof updateInvoiceSchema>;
+export type Invoice = typeof invoices.$inferSelect;
+
+// Settings table
+export const settings = pgTable("settings", {
+  id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
+  key: varchar("key").notNull().unique(),
+  value: text("value"),
+  category: varchar("category").notNull().default("general"), // general, company, email, payment, api
+  updatedAt: timestamp("updated_at").defaultNow(),
+});
+
+export const insertSettingSchema = createInsertSchema(settings).omit({
+  id: true,
+  updatedAt: true,
+});
+
+export const updateSettingSchema = insertSettingSchema.partial();
+
+export type InsertSetting = z.infer<typeof insertSettingSchema>;
+export type UpdateSetting = z.infer<typeof updateSettingSchema>;
+export type Setting = typeof settings.$inferSelect;
