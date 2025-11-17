@@ -17,7 +17,11 @@ import {
   updateProjectSchema,
   insertInvoiceSchema,
   updateInvoiceSchema,
-  insertSettingSchema
+  insertSettingSchema,
+  insertHomepageCustomizationSchema,
+  updateHomepageCustomizationSchema,
+  insertSeoSettingSchema,
+  updateSeoSettingSchema
 } from "@shared/schema";
 import { z } from "zod";
 
@@ -703,6 +707,114 @@ export async function registerRoutes(app: Express): Promise<Server> {
     } catch (error) {
       console.error("Error deleting setting:", error);
       res.status(500).json({ message: "Failed to delete setting" });
+    }
+  });
+
+  // Homepage Customization routes (admin only)
+  app.get("/api/customization", isAuthenticated, async (req, res) => {
+    try {
+      const customizations = await storage.getAllHomepageCustomizations();
+      res.json(customizations);
+    } catch (error) {
+      console.error("Error fetching customizations:", error);
+      res.status(500).json({ message: "Failed to fetch customizations" });
+    }
+  });
+
+  app.get("/api/customization/:section", async (req, res) => {
+    try {
+      const { section } = req.params;
+      const customization = await storage.getHomepageCustomization(section);
+      
+      if (!customization) {
+        return res.status(404).json({ message: "Customization not found" });
+      }
+
+      res.json(customization);
+    } catch (error) {
+      console.error("Error fetching customization:", error);
+      res.status(500).json({ message: "Failed to fetch customization" });
+    }
+  });
+
+  app.post("/api/customization", isAuthenticated, async (req, res) => {
+    try {
+      const parseResult = insertHomepageCustomizationSchema.safeParse(req.body);
+      
+      if (!parseResult.success) {
+        return res.status(400).json({ message: "Invalid data", errors: parseResult.error.errors });
+      }
+
+      const customization = await storage.upsertHomepageCustomization(parseResult.data);
+      res.status(201).json(customization);
+    } catch (error) {
+      console.error("Error upserting customization:", error);
+      res.status(500).json({ message: "Failed to upsert customization" });
+    }
+  });
+
+  app.delete("/api/customization/:section", isAuthenticated, async (req, res) => {
+    try {
+      const { section } = req.params;
+      await storage.deleteHomepageCustomization(section);
+      res.status(204).send();
+    } catch (error) {
+      console.error("Error deleting customization:", error);
+      res.status(500).json({ message: "Failed to delete customization" });
+    }
+  });
+
+  // SEO Settings routes (admin only)
+  app.get("/api/seo", isAuthenticated, async (req, res) => {
+    try {
+      const seoSettings = await storage.getAllSeoSettings();
+      res.json(seoSettings);
+    } catch (error) {
+      console.error("Error fetching SEO settings:", error);
+      res.status(500).json({ message: "Failed to fetch SEO settings" });
+    }
+  });
+
+  app.get("/api/seo/:page", async (req, res) => {
+    try {
+      const { page } = req.params;
+      const seoSetting = await storage.getSeoSetting(page);
+      
+      if (!seoSetting) {
+        return res.status(404).json({ message: "SEO setting not found" });
+      }
+
+      res.json(seoSetting);
+    } catch (error) {
+      console.error("Error fetching SEO setting:", error);
+      res.status(500).json({ message: "Failed to fetch SEO setting" });
+    }
+  });
+
+  app.post("/api/seo", isAuthenticated, async (req, res) => {
+    try {
+      const parseResult = insertSeoSettingSchema.safeParse(req.body);
+      
+      if (!parseResult.success) {
+        return res.status(400).json({ message: "Invalid data", errors: parseResult.error.errors });
+      }
+
+      const seoSetting = await storage.upsertSeoSetting(parseResult.data);
+      res.status(201).json(seoSetting);
+    } catch (error) {
+      console.error("Error upserting SEO setting:", error);
+      res.status(500).json({ message: "Failed to upsert SEO setting" });
+    }
+  });
+
+  app.delete("/api/seo/:page", isAuthenticated, async (req, res) => {
+    try {
+      const { page } = req.params;
+      await storage.deleteSeoSetting(page);
+      res.status(204).send();
+    } catch (error) {
+      console.error("Error deleting SEO setting:", error);
+      res.status(500).json({ message: "Failed to delete SEO setting" });
     }
   });
 
