@@ -21,7 +21,9 @@ import {
   insertHomepageCustomizationSchema,
   updateHomepageCustomizationSchema,
   insertSeoSettingSchema,
-  updateSeoSettingSchema
+  updateSeoSettingSchema,
+  insertTeamMemberSchema,
+  updateTeamMemberSchema
 } from "@shared/schema";
 import { z } from "zod";
 
@@ -815,6 +817,120 @@ export async function registerRoutes(app: Express): Promise<Server> {
     } catch (error) {
       console.error("Error deleting SEO setting:", error);
       res.status(500).json({ message: "Failed to delete SEO setting" });
+    }
+  });
+
+  // Team Members routes
+  app.get("/api/team-members/active", async (req, res) => {
+    try {
+      const teamMembers = await storage.getActiveTeamMembers();
+      res.json(teamMembers);
+    } catch (error) {
+      console.error("Error fetching active team members:", error);
+      res.status(500).json({ message: "Failed to fetch active team members" });
+    }
+  });
+
+  app.get("/api/team-members", isAuthenticated, async (req, res) => {
+    try {
+      const teamMembers = await storage.getAllTeamMembers();
+      res.json(teamMembers);
+    } catch (error) {
+      console.error("Error fetching team members:", error);
+      res.status(500).json({ message: "Failed to fetch team members" });
+    }
+  });
+
+  app.get("/api/team-members/:id", isAuthenticated, async (req, res) => {
+    try {
+      const { id } = req.params;
+      const teamMember = await storage.getTeamMember(id);
+      
+      if (!teamMember) {
+        return res.status(404).json({ message: "Team member not found" });
+      }
+
+      res.json(teamMember);
+    } catch (error) {
+      console.error("Error fetching team member:", error);
+      res.status(500).json({ message: "Failed to fetch team member" });
+    }
+  });
+
+  app.post("/api/team-members/upload-photo", isAuthenticated, async (req, res) => {
+    try {
+      const objectStorageService = new ObjectStorageService();
+      const uploadURL = await objectStorageService.getUploadURL();
+      res.json({ uploadURL });
+    } catch (error) {
+      console.error("Error getting upload URL:", error);
+      res.status(500).json({ message: "Failed to get upload URL" });
+    }
+  });
+
+  app.post("/api/team-members", isAuthenticated, async (req, res) => {
+    try {
+      const validatedData = insertTeamMemberSchema.parse(req.body);
+
+      const objectStorageService = new ObjectStorageService();
+      const photoUrl = validatedData.photoUrl
+        ? objectStorageService.normalizeObjectPath(validatedData.photoUrl)
+        : undefined;
+
+      const teamMember = await storage.createTeamMember({
+        ...validatedData,
+        photoUrl,
+      });
+      
+      res.status(201).json(teamMember);
+    } catch (error: any) {
+      console.error("Error creating team member:", error);
+      if (error.name === 'ZodError') {
+        res.status(400).json({ message: "Invalid data", errors: error.errors });
+      } else {
+        res.status(500).json({ message: "Failed to create team member" });
+      }
+    }
+  });
+
+  app.patch("/api/team-members/:id", isAuthenticated, async (req, res) => {
+    try {
+      const { id } = req.params;
+      const validatedData = updateTeamMemberSchema.parse(req.body);
+
+      const objectStorageService = new ObjectStorageService();
+      const photoUrl = validatedData.photoUrl
+        ? objectStorageService.normalizeObjectPath(validatedData.photoUrl)
+        : undefined;
+
+      const teamMember = await storage.updateTeamMember(id, {
+        ...validatedData,
+        ...(photoUrl !== undefined && { photoUrl }),
+      });
+
+      if (!teamMember) {
+        return res.status(404).json({ message: "Team member not found" });
+      }
+
+      res.json(teamMember);
+    } catch (error: any) {
+      console.error("Error updating team member:", error);
+      if (error.name === 'ZodError') {
+        res.status(400).json({ message: "Invalid data", errors: error.errors });
+      } else {
+        res.status(500).json({ message: "Failed to update team member" });
+      }
+    }
+  });
+
+  app.delete("/api/team-members/:id", isAuthenticated, async (req, res) => {
+    try {
+      const { id } = req.params;
+      await storage.deleteTeamMember(id);
+      res.status(204).send();
+    } catch (error) {
+      console.error("Error deleting team member:", error);
+      res.status(500).json({ message: "Failed to delete team member" });
     }
   });
 
