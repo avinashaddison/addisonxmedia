@@ -158,21 +158,21 @@ export function AdminLayout({ children }: AdminLayoutProps) {
     <SidebarProvider style={sidebarStyle as React.CSSProperties}>
       <div className="flex h-screen w-full">
         <Sidebar>
-          <SidebarHeader className="border-b p-6">
+          <SidebarHeader className="border-b border-sidebar-border p-6">
             <div className="flex items-center gap-3">
-              <div className="flex items-center justify-center w-10 h-10 rounded-lg bg-gradient-to-br from-primary to-orange-600 text-primary-foreground font-bold shadow-lg">
+              <div className="flex items-center justify-center w-10 h-10 rounded-lg bg-gradient-to-br from-primary to-orange-600 text-primary-foreground font-bold shadow-md">
                 AX
               </div>
               <div>
-                <h2 className="font-bold text-base">AddisonX Media</h2>
+                <h2 className="font-bold text-base tracking-tight">AddisonX Media</h2>
                 <p className="text-xs text-muted-foreground">Admin Dashboard</p>
               </div>
             </div>
           </SidebarHeader>
 
-          <SidebarContent>
+          <SidebarContent className="px-2">
             <SidebarGroup>
-              <SidebarGroupLabel>Navigation</SidebarGroupLabel>
+              <SidebarGroupLabel className="text-xs text-muted-foreground px-3 py-2">Navigation</SidebarGroupLabel>
               <SidebarGroupContent>
                 <SidebarMenu>
                   {menuItems.map((item) => {
@@ -198,11 +198,11 @@ export function AdminLayout({ children }: AdminLayoutProps) {
             </SidebarGroup>
           </SidebarContent>
 
-          <SidebarFooter className="border-t p-4">
-            <div className="flex items-center gap-3 mb-3">
-              <Avatar className="h-8 w-8">
+          <SidebarFooter className="border-t border-sidebar-border p-4 bg-sidebar/50">
+            <div className="flex items-center gap-3 mb-3 px-1">
+              <Avatar className="h-8 w-8 border border-sidebar-border">
                 <AvatarImage src={user?.profileImageUrl || undefined} />
-                <AvatarFallback>
+                <AvatarFallback className="bg-sidebar-accent">
                   <UserCircle2 className="h-5 w-5" />
                 </AvatarFallback>
               </Avatar>
@@ -229,18 +229,18 @@ export function AdminLayout({ children }: AdminLayoutProps) {
         </Sidebar>
 
         <div className="flex flex-col flex-1 overflow-hidden">
-          <header className="flex items-center justify-between gap-4 px-6 py-4 border-b bg-card/50 backdrop-blur-sm">
+          <header className="flex items-center justify-between gap-4 px-6 py-4 border-b bg-card/30 backdrop-blur-sm shadow-sm">
             <div className="flex items-center gap-4">
               <SidebarTrigger data-testid="button-sidebar-toggle" />
-              <div className="h-8 w-px bg-border"></div>
+              <div className="h-8 w-px bg-border/50"></div>
               <div>
-                <h1 className="text-lg font-semibold">
+                <h1 className="text-lg font-semibold tracking-tight">
                   {getCurrentPageTitle()}
                 </h1>
               </div>
             </div>
             <div className="flex items-center gap-2">
-              <div className="px-3 py-1.5 rounded-md bg-primary/10 text-primary text-xs font-medium">
+              <div className="px-3 py-1.5 rounded-md bg-primary/15 text-primary text-xs font-medium border border-primary/20">
                 Admin
               </div>
             </div>
