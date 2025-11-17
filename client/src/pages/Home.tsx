@@ -41,30 +41,28 @@ function HeroBanner({ heroContent }: { heroContent?: any }) {
         data-testid="img-hero-banner"
       />
       
-      {/* Hero Content Overlay - Only show if customization exists */}
-      {heroContent && (
-        <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-black/50 to-transparent flex items-center">
-          <div className="max-w-7xl mx-auto px-4 md:px-6 w-full">
-            <div className="max-w-2xl">
-              <h1 className="text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold text-white mb-3 md:mb-4" data-testid="text-hero-title">
-                {title}
-              </h1>
-              <h2 className="text-xl md:text-2xl lg:text-3xl text-white/90 mb-3 md:mb-4" data-testid="text-hero-subtitle">
-                {subtitle}
-              </h2>
-              <p className="text-base md:text-lg text-white/80 mb-6 md:mb-8" data-testid="text-hero-description">
-                {description}
-              </p>
-              <Link href={buttonLink}>
-                <Button size="default" className="shadow-lg hover:shadow-xl transition-all duration-300" data-testid="button-hero-cta">
-                  {buttonText}
-                  <ArrowRight className="ml-2 h-4 w-4 md:h-5 md:w-5" />
-                </Button>
-              </Link>
-            </div>
+      {/* Hero Content Overlay - Always shown with fallback defaults */}
+      <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-black/50 to-transparent flex items-center">
+        <div className="max-w-7xl mx-auto px-4 md:px-6 w-full">
+          <div className="max-w-2xl">
+            <h1 className="text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold text-white mb-3 md:mb-4" data-testid="text-hero-title">
+              {title}
+            </h1>
+            <h2 className="text-xl md:text-2xl lg:text-3xl text-white/90 mb-3 md:mb-4" data-testid="text-hero-subtitle">
+              {subtitle}
+            </h2>
+            <p className="text-base md:text-lg text-white/80 mb-6 md:mb-8" data-testid="text-hero-description">
+              {description}
+            </p>
+            <Link href={buttonLink}>
+              <Button size="default" className="shadow-lg hover:shadow-xl transition-all duration-300" data-testid="button-hero-cta">
+                {buttonText}
+                <ArrowRight className="ml-2 h-4 w-4 md:h-5 md:w-5" />
+              </Button>
+            </Link>
           </div>
         </div>
-      )}
+      </div>
     </div>
   );
 }
