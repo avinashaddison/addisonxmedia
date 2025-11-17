@@ -191,18 +191,16 @@ export function Navbar() {
                           const Icon = service.icon;
                           return (
                             <NavigationMenuLink key={service.title} asChild>
-                              <Link href="/services">
-                                <div className="group block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground" data-testid={`nav-service-${service.title.toLowerCase().replace(/\s+/g, '-')}`}>
-                                  <div className="flex items-center gap-2 mb-2">
-                                    <div className="flex items-center justify-center w-8 h-8 rounded-lg bg-primary/10 group-hover:bg-primary/20 transition-colors">
-                                      <Icon className="h-4 w-4 text-primary" />
-                                    </div>
-                                    <div className="text-sm font-medium leading-none">{service.title}</div>
+                              <Link href="/services" className="group block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground" data-testid={`nav-service-${service.title.toLowerCase().replace(/\s+/g, '-')}`}>
+                                <div className="flex items-center gap-2 mb-2">
+                                  <div className="flex items-center justify-center w-8 h-8 rounded-lg bg-primary/10 group-hover:bg-primary/20 transition-colors">
+                                    <Icon className="h-4 w-4 text-primary" />
                                   </div>
-                                  <p className="line-clamp-2 text-xs leading-snug text-muted-foreground">
-                                    {service.description}
-                                  </p>
+                                  <div className="text-sm font-medium leading-none">{service.title}</div>
                                 </div>
+                                <p className="line-clamp-2 text-xs leading-snug text-muted-foreground">
+                                  {service.description}
+                                </p>
                               </Link>
                             </NavigationMenuLink>
                           );
