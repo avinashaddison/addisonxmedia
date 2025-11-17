@@ -7,7 +7,8 @@ AddisonX Media is a digital marketing agency based in Ranchi, Jharkhand, offerin
 The application follows a modern monorepo structure with a React frontend powered by Vite, an Express.js backend, and PostgreSQL database using Drizzle ORM. It implements Replit's authentication system for admin access and provides both public-facing pages and protected administrative functionality.
 
 **Recent Updates:**
-- **November 17, 2025 (Latest)**: Implemented fully functional dark theme with toggle button - admin panel defaults to dark mode on load, theme toggle in header switches between light/dark with smooth animations, theme preference persists in localStorage, synchronous initialization prevents light-mode flash. Updated admin sidebar to display full horizontal AddisonX Media logo (complete with AX symbol and "AddisonX Media.Com" text) featuring subtle rounded corners, white background, and red/orange glow effect matching brand colors. Added stylish "CEO - Mr. AJAY KUMAR" badge below logo with gradient background, gradient text, and backdrop blur for modern appearance. Enhanced dark theme with deeper backgrounds (3% lightness), darker cards and sidebar, subtler borders, enhanced shadows for better depth. All features architect-approved.
+- **November 17, 2025 (Latest)**: Implemented comprehensive website customization system enabling dynamic homepage control through admin panel. Added new Customize page with 4 tabs (Hero Section, Services, Images, SEO) allowing administrators to modify hero text overlay (title/subtitle/description/CTA button), services section content (title/description/service list), banner/slider images, and SEO meta tags for all pages. Created homepage_customization and seo_settings database tables with upsert-based API routes. Homepage now fetches customization data via TanStack Query with safe fallback to defaults when no customization exists. All forms properly hydrate existing data via useEffect hooks. Hero overlay displays customized text over banner image with dark gradient background. Services section respects admin customizations while maintaining default service list. Architect-reviewed and approved.
+- **November 17, 2025**: Implemented fully functional dark theme with toggle button - admin panel defaults to dark mode on load, theme toggle in header switches between light/dark with smooth animations, theme preference persists in localStorage, synchronous initialization prevents light-mode flash. Updated admin sidebar to display full horizontal AddisonX Media logo (complete with AX symbol and "AddisonX Media.Com" text) featuring subtle rounded corners, white background, and red/orange glow effect matching brand colors. Added stylish "CEO - Mr. AJAY KUMAR" badge below logo with gradient background, gradient text, and backdrop blur for modern appearance. Enhanced dark theme with deeper backgrounds (3% lightness), darker cards and sidebar, subtler borders, enhanced shadows for better depth. All features architect-approved.
 - **November 17, 2025**: Completed full CRUD implementation for all admin features - Clients, Leads, Projects, Invoices, and Settings management. All placeholder pages now have complete functionality including listing pages with statistics, comprehensive forms with validation, and full backend API integration with PostgreSQL storage.
 - **November 17, 2025**: Comprehensive admin panel with vertical Shadcn Sidebar, featuring 13 management categories including dashboard with analytics, contact submissions tracking, employee management. Layout refactored to separate admin and public routes completely.
 - **November 16, 2025**: Homepage hero section now features a custom promotional banner (1728 x 576 pixels) showcasing AddisonX Media's professional digital marketing services with branding, service highlights, and "Get Started Now" CTA.
@@ -49,6 +50,7 @@ Preferred communication style: Simple, everyday language.
   - **Leads**: Lead management with source tracking and follow-up dates (new/contacted/qualified/converted/lost)
   - **Projects**: Project management with budget tracking and payment status (planning/in-progress/review/completed/cancelled)
   - **Invoices**: Invoice management with payment tracking and due dates (pending/paid/overdue/cancelled)
+  - **Customize**: Website customization with tabbed interface for hero section, services, images, and SEO settings management
   - **Settings**: Company configuration management (company info, contact details, system settings)
 - 404 fallback for undefined routes
 
@@ -72,6 +74,8 @@ Preferred communication style: Simple, everyday language.
 - **Public endpoints**:
   - `GET /api/employees/verify/:employeeId` - Employee verification
   - `GET /api/testimonials/active` - Active testimonials for public display
+  - `GET /api/customization` - Get all homepage customizations (used by homepage)
+  - `GET /api/seo` - Get all SEO settings
 - **Protected endpoints** (require authentication):
   - Employee CRUD: GET/POST/PUT/DELETE `/api/employees`
   - Contact submissions: GET `/api/contact`, PATCH `/api/contact/:id/status`
@@ -81,6 +85,8 @@ Preferred communication style: Simple, everyday language.
   - **Leads CRUD**: GET/POST/PUT/DELETE `/api/leads` (name, email, phone, source, status, followUpDate)
   - **Projects CRUD**: GET/POST/PUT/DELETE `/api/projects` (name, clientId, status, priority, budget, paymentStatus)
   - **Invoices CRUD**: GET/POST/PUT/DELETE `/api/invoices` (invoiceNumber, clientId, projectId, amount, tax, status)
+  - **Customization**: POST `/api/customization` (upsert homepage customization by section: hero, services, banners)
+  - **SEO Settings**: POST `/api/seo` (upsert SEO settings by page: home, about, services, contact)
   - **Settings**: GET/POST `/api/settings` (key-value pair storage with upsert functionality)
 - Consistent error handling with appropriate HTTP status codes
 
@@ -172,6 +178,21 @@ settings
 ├── key (unique)
 ├── value
 ├── category
+└── updatedAt
+
+homepage_customization
+├── id (SERIAL, primary key)
+├── section (unique: hero/services/banners)
+├── content (JSONB: flexible structure per section)
+├── isActive (VARCHAR)
+├── createdAt
+└── updatedAt
+
+seo_settings
+├── id (SERIAL, primary key)
+├── page (unique: home/about/services/contact)
+├── metaTitle, metaDescription, metaKeywords
+├── ogTitle, ogDescription, ogImage
 └── updatedAt
 
 sessions (for Replit Auth)
