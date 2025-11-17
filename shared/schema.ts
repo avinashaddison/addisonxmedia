@@ -314,3 +314,30 @@ export const updateSeoSettingSchema = insertSeoSettingSchema.partial();
 export type InsertSeoSetting = z.infer<typeof insertSeoSettingSchema>;
 export type UpdateSeoSetting = z.infer<typeof updateSeoSettingSchema>;
 export type SeoSetting = typeof seoSettings.$inferSelect;
+
+// Team Members table
+export const teamMembers = pgTable("team_members", {
+  id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
+  fullName: varchar("full_name").notNull(),
+  position: varchar("position").notNull(),
+  photoUrl: varchar("photo_url"),
+  displayOrder: varchar("display_order").notNull().default("0"),
+  isActive: varchar("is_active").notNull().default("true"),
+  createdAt: timestamp("created_at").defaultNow(),
+  updatedAt: timestamp("updated_at").defaultNow(),
+});
+
+export const insertTeamMemberSchema = createInsertSchema(teamMembers).omit({
+  id: true,
+  createdAt: true,
+  updatedAt: true,
+}).extend({
+  isActive: z.enum(["true", "false"]).default("true"),
+  displayOrder: z.string().default("0"),
+});
+
+export const updateTeamMemberSchema = insertTeamMemberSchema.partial();
+
+export type InsertTeamMember = z.infer<typeof insertTeamMemberSchema>;
+export type UpdateTeamMember = z.infer<typeof updateTeamMemberSchema>;
+export type TeamMember = typeof teamMembers.$inferSelect;
