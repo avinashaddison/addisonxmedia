@@ -608,16 +608,17 @@ function SeoForm({ seoSettings }: { seoSettings: SeoSetting[] }) {
   });
 
   useEffect(() => {
+    const seo = seoSettings.find(s => s.page === selectedPage);
     form.reset({
       page: selectedPage,
-      metaTitle: currentSeo?.metaTitle || "",
-      metaDescription: currentSeo?.metaDescription || "",
-      metaKeywords: currentSeo?.metaKeywords || "",
-      ogTitle: currentSeo?.ogTitle || "",
-      ogDescription: currentSeo?.ogDescription || "",
-      ogImage: currentSeo?.ogImage || "",
+      metaTitle: seo?.metaTitle || "",
+      metaDescription: seo?.metaDescription || "",
+      metaKeywords: seo?.metaKeywords || "",
+      ogTitle: seo?.ogTitle || "",
+      ogDescription: seo?.ogDescription || "",
+      ogImage: seo?.ogImage || "",
     });
-  }, [currentSeo, selectedPage, form]);
+  }, [seoSettings, selectedPage, form]);
 
   const mutation = useMutation({
     mutationFn: async (data: z.infer<typeof formSchema>) => {
