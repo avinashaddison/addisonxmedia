@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useQuery, useMutation } from "@tanstack/react-query";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -110,6 +110,12 @@ function HeroSectionForm({ customization }: { customization?: HomepageCustomizat
     resolver: zodResolver(formSchema),
     defaultValues: content,
   });
+
+  useEffect(() => {
+    if (customization?.content) {
+      form.reset(customization.content as any);
+    }
+  }, [customization, form]);
 
   const mutation = useMutation({
     mutationFn: async (data: z.infer<typeof formSchema>) => {
@@ -245,6 +251,15 @@ function ServicesForm({ customization }: { customization?: HomepageCustomization
   const [services, setServices] = useState(content.services || []);
   const [title, setTitle] = useState(content.title || "Our Services");
   const [description, setDescription] = useState(content.description || "");
+
+  useEffect(() => {
+    if (customization?.content) {
+      const content = customization.content as any;
+      setTitle(content.title || "Our Services");
+      setDescription(content.description || "");
+      setServices(content.services || []);
+    }
+  }, [customization]);
 
   const mutation = useMutation({
     mutationFn: async () => {
@@ -382,6 +397,14 @@ function BannersForm({ customization }: { customization?: HomepageCustomization 
 
   const [banners, setBanners] = useState(content.banners || []);
   const [sliders, setSliders] = useState(content.sliders || []);
+
+  useEffect(() => {
+    if (customization?.content) {
+      const content = customization.content as any;
+      setBanners(content.banners || []);
+      setSliders(content.sliders || []);
+    }
+  }, [customization]);
 
   const mutation = useMutation({
     mutationFn: async () => {
@@ -583,6 +606,18 @@ function SeoForm({ seoSettings }: { seoSettings: SeoSetting[] }) {
       ogImage: currentSeo?.ogImage || "",
     },
   });
+
+  useEffect(() => {
+    form.reset({
+      page: selectedPage,
+      metaTitle: currentSeo?.metaTitle || "",
+      metaDescription: currentSeo?.metaDescription || "",
+      metaKeywords: currentSeo?.metaKeywords || "",
+      ogTitle: currentSeo?.ogTitle || "",
+      ogDescription: currentSeo?.ogDescription || "",
+      ogImage: currentSeo?.ogImage || "",
+    });
+  }, [currentSeo, selectedPage, form]);
 
   const mutation = useMutation({
     mutationFn: async (data: z.infer<typeof formSchema>) => {
