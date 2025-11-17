@@ -16,7 +16,7 @@ The frontend uses **React 18** with TypeScript, **Vite** for building, and **Wou
 
 **Route Structure**:
 - **Public**: Home, About, Services, Contact, Employee Verification.
-- **Admin**: Dashboard, Employees, Contacts, Testimonials, Analytics, Clients, Leads, Projects, Invoices, Customize (homepage/SEO), Settings.
+- **Admin**: Dashboard, Employees, Contacts, Testimonials, Team Members, Analytics, Clients, Leads, Projects, Invoices, Customize (homepage/SEO), Settings.
 
 ### Backend Architecture
 
@@ -24,8 +24,9 @@ The backend is an **Express.js** application with TypeScript. **Replit OpenID Co
 
 **API Design**:
 - **RESTful endpoints** under `/api`.
-- **Public endpoints** for employee verification, active testimonials, customization data, and SEO settings.
-- **Protected endpoints** for full CRUD operations across Employees, Contact Submissions, Testimonials, Clients, Leads, Projects, Invoices, Customization, and Settings.
+- **Public endpoints** for employee verification, active testimonials, active team members, customization data, and SEO settings.
+- **Protected endpoints** for full CRUD operations across Employees, Contact Submissions, Testimonials, Team Members, Clients, Leads, Projects, Invoices, Customization, and Settings.
+- **Image upload support** for employee photos, testimonial photos, and team member photos via object storage.
 - Consistent error handling is implemented.
 
 **Storage Layer**: An interface-based storage abstraction (`IStorage`) with a `DatabaseStorage` implementation separates data access logic.
@@ -34,11 +35,11 @@ The backend is an **Express.js** application with TypeScript. **Replit OpenID Co
 
 **Database**: **PostgreSQL** (Neon serverless) is used with **Drizzle ORM** for type-safe operations.
 
-**Schema Design**: Key tables include `users`, `employees`, `contact_submissions`, `testimonials`, `clients`, `leads`, `projects`, `invoices`, `settings`, `homepage_customization`, `seo_settings`, `sessions`, and `verification_logs`. Schema definitions are managed via `drizzle-kit`.
+**Schema Design**: Key tables include `users`, `employees`, `contact_submissions`, `testimonials`, `team_members`, `clients`, `leads`, `projects`, `invoices`, `settings`, `homepage_customization`, `seo_settings`, `sessions`, and `verification_logs`. Schema definitions are managed via `drizzle-kit`.
 
 ### UI/UX Decisions
 - **Navbar**: Clean, minimal design with simple logo (no animations or effects). Eye-catching "Contact Us" button with static gradient background (primary→purple), rounded-full pill shape, bold white text, subtle white border, and shadow for depth - no animations.
-- **Team Section**: Cool modern design with 6 team members in 3x2 grid layout. Features gradient title text, premium badge, triple-gradient avatar rings (primary→orange→purple), gradient job titles, enhanced shadows, and consistent card styling. Team: Ajay Kumar (CEO), Neha Kumari (Co-Founder), Vikash Munda (Web Developer), Suraj Munda (Social Media Manager), Priyanshu Singh (Sales Manager), Shubham Kant Mehta (Marketing Specialist).
+- **Team Section**: Dynamic team member display with database-driven content. Cool modern design in 3x2 grid layout with gradient title text, premium badge, triple-gradient avatar rings (primary→orange→purple), gradient job titles, enhanced shadows, and consistent card styling. Supports custom photos via object storage or displays initials. Managed through admin panel with full CRUD, image upload, display ordering, and active/inactive status.
 - **WhatsApp Widget**: Interactive chat with quick reply buttons, custom input, and mobile-responsive design.
 - **Navigation**: Main navigation restructured for service-specific links. Mobile bottom navigation mirrors desktop.
 - **Website Customization**: Admin panel for dynamic homepage control (services, images, SEO meta tags).

@@ -146,8 +146,8 @@ export default function TeamMembers() {
                   </p>
 
                   <div className="flex items-center gap-2 mb-4">
-                    <Badge variant={member.isActive === "true" ? "default" : "secondary"} data-testid={`badge-status-${member.id}`}>
-                      {member.isActive === "true" ? (
+                    <Badge variant={member.isActive ? "default" : "secondary"} data-testid={`badge-status-${member.id}`}>
+                      {member.isActive ? (
                         <>
                           <CheckCircle className="h-3 w-3 mr-1" />
                           Active

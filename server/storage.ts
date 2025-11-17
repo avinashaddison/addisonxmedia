@@ -541,7 +541,7 @@ export class DatabaseStorage implements IStorage {
   }
 
   async getActiveTeamMembers(): Promise<TeamMember[]> {
-    return db.select().from(teamMembers).where(eq(teamMembers.isActive, "true")).orderBy(teamMembers.displayOrder, teamMembers.createdAt);
+    return db.select().from(teamMembers).where(eq(teamMembers.isActive, true)).orderBy(teamMembers.displayOrder, teamMembers.createdAt);
   }
 
   async getTeamMember(id: string): Promise<TeamMember | undefined> {

@@ -57,8 +57,8 @@ export default function TeamMemberForm() {
       fullName: "",
       position: "",
       photoUrl: "",
-      displayOrder: "0",
-      isActive: "true",
+      displayOrder: 0,
+      isActive: true,
     },
   });
 
@@ -69,7 +69,7 @@ export default function TeamMemberForm() {
         position: teamMember.position,
         photoUrl: teamMember.photoUrl || "",
         displayOrder: teamMember.displayOrder,
-        isActive: teamMember.isActive as "true" | "false",
+        isActive: teamMember.isActive,
       });
       if (teamMember.photoUrl) {
         setPhotoPreview(teamMember.photoUrl);
@@ -241,6 +241,8 @@ export default function TeamMemberForm() {
                           type="number"
                           placeholder="0"
                           {...field}
+                          onChange={(e) => field.onChange(parseInt(e.target.value) || 0)}
+                          value={field.value}
                           data-testid="input-display-order"
                         />
                       </FormControl>
@@ -256,8 +258,8 @@ export default function TeamMemberForm() {
                     <FormItem>
                       <FormLabel>Status</FormLabel>
                       <Select
-                        onValueChange={field.onChange}
-                        defaultValue={field.value}
+                        onValueChange={(value) => field.onChange(value === "true")}
+                        value={field.value ? "true" : "false"}
                         data-testid="select-status"
                       >
                         <FormControl>

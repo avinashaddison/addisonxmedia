@@ -153,7 +153,7 @@ export default function Home() {
     queryKey: ["/api/customization"],
   });
 
-  const activeTestimonials = testimonials?.filter(t => t.isActive === "true").slice(0, 3) || [];
+  const activeTestimonials = testimonials?.filter(t => t.isActive === true).slice(0, 3) || [];
   const activeTeamMembers = teamMembers || [];
 
   // Extract customization settings

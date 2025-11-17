@@ -6,6 +6,8 @@ import {
   timestamp,
   varchar,
   text,
+  integer,
+  boolean,
 } from "drizzle-orm/pg-core";
 import { createInsertSchema } from "drizzle-zod";
 import { z } from "zod";
@@ -321,8 +323,8 @@ export const teamMembers = pgTable("team_members", {
   fullName: varchar("full_name").notNull(),
   position: varchar("position").notNull(),
   photoUrl: varchar("photo_url"),
-  displayOrder: varchar("display_order").notNull().default("0"),
-  isActive: varchar("is_active").notNull().default("true"),
+  displayOrder: integer("display_order").notNull().default(0),
+  isActive: boolean("is_active").notNull().default(true),
   createdAt: timestamp("created_at").defaultNow(),
   updatedAt: timestamp("updated_at").defaultNow(),
 });
@@ -331,9 +333,6 @@ export const insertTeamMemberSchema = createInsertSchema(teamMembers).omit({
   id: true,
   createdAt: true,
   updatedAt: true,
-}).extend({
-  isActive: z.enum(["true", "false"]).default("true"),
-  displayOrder: z.string().default("0"),
 });
 
 export const updateTeamMemberSchema = insertTeamMemberSchema.partial();
