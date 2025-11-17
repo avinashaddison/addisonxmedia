@@ -360,7 +360,7 @@ export default function Home() {
                 </div>
               </div>
               <h3 className="text-sm md:text-base lg:text-xl font-bold" data-testid="text-team-name-0">
-                Mr. Ajay Kumar
+                Ajay Kumar
               </h3>
               <p className="text-xs md:text-sm text-primary font-semibold" data-testid="text-team-position-0">
                 CEO & Founder
