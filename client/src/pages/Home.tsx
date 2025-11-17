@@ -454,54 +454,6 @@ export default function Home() {
           </div>
         </div>
       </section>
-
-      {/* Location Highlight */}
-      <section className="py-16 md:py-24 bg-gradient-to-br from-primary/5 to-background">
-        <div className="max-w-7xl mx-auto px-4 md:px-6">
-          <div className="text-center max-w-3xl mx-auto">
-            <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-6" data-testid="text-location-title">
-              Serving Ranchi & Beyond
-            </h2>
-            <p className="text-lg text-muted-foreground mb-8 leading-relaxed" data-testid="text-location-description">
-              Based in Ranchi, Jharkhand, we're your local digital marketing partner 
-              committed to helping businesses thrive in the digital landscape. Our deep 
-              understanding of the local market combined with global best practices 
-              ensures exceptional results for our clients.
-            </p>
-            <Link href="/contact">
-              <Button size="lg" data-testid="button-contact-us">
-                Contact Us Today
-                <ArrowRight className="ml-2 h-5 w-5" />
-              </Button>
-            </Link>
-          </div>
-        </div>
-      </section>
-
-      {/* CTA Section */}
-      <section className="py-16 md:py-24 lg:py-32 bg-gradient-to-br from-primary/10 to-background border-t">
-        <div className="max-w-4xl mx-auto px-4 md:px-6 text-center">
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-6" data-testid="text-cta-title">
-            Ready to Grow Your Business?
-          </h2>
-          <p className="text-lg md:text-xl text-muted-foreground mb-10 leading-relaxed" data-testid="text-cta-description">
-            Let's discuss how we can help you achieve your digital marketing goals and take your business to the next level
-          </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-            <Link href="/contact">
-              <Button size="lg" className="min-w-[200px] h-12" data-testid="button-get-started">
-                Get Started Now
-                <ArrowRight className="ml-2 h-5 w-5" />
-              </Button>
-            </Link>
-            <Link href="/services">
-              <Button size="lg" variant="outline" className="min-w-[200px] h-12" data-testid="button-learn-more">
-                Learn More
-              </Button>
-            </Link>
-          </div>
-        </div>
-      </section>
     </div>
   );
 }
