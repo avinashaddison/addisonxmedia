@@ -35,7 +35,7 @@ The backend is an **Express.js** application with TypeScript. **Replit OpenID Co
 
 **Database**: **PostgreSQL** (Neon serverless) is used with **Drizzle ORM** for type-safe operations.
 
-**Schema Design**: Key tables include `users`, `employees`, `contact_submissions`, `testimonials`, `team_members`, `clients`, `leads`, `projects`, `invoices`, `settings`, `homepage_customization`, `seo_settings`, `sessions`, and `verification_logs`. Schema definitions are managed via `drizzle-kit`.
+**Schema Design**: Key tables include `users`, `employees`, `contact_submissions`, `testimonials`, `team_members`, `clients`, `leads`, `projects`, `invoices`, `settings`, `homepage_customization`, `seo_settings`, `sessions`, and `verification_logs`. The `team_members` table uses proper integer type for `displayOrder` and boolean type for `isActive` to ensure correct sorting and filtering. Schema definitions are managed via `drizzle-kit`.
 
 ### UI/UX Decisions
 - **Navbar**: Clean, minimal design with simple logo (no animations or effects). Eye-catching "Contact Us" button with static gradient background (primary→purple), rounded-full pill shape, bold white text, subtle white border, and shadow for depth - no animations.
