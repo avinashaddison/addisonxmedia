@@ -24,6 +24,7 @@ import {
 import type { Testimonial, TeamMember } from "@shared/schema";
 
 import heroBanner from "@assets/Phoenix_10_Create_a_modern_premium_promotional_banner_in_the_s_2_1763291282547.jpg";
+import reviewQR from "@assets/WhatsApp Image 2025-11-17 at 3.50.29 PM_1763395709789.jpeg";
 
 function HeroBanner() {
   return (
@@ -451,6 +452,77 @@ export default function Home() {
                 </div>
               </div>
             </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Review QR Section - Cool Modern Design */}
+      <section className="py-16 md:py-24 lg:py-32 relative overflow-hidden bg-gradient-to-br from-background via-primary/3 to-purple-500/5">
+        {/* Decorative Background Elements */}
+        <div className="absolute top-0 left-0 w-32 h-32 md:w-48 md:h-48 lg:w-64 lg:h-64 bg-gradient-to-br from-green-500 to-green-600 rounded-full blur-3xl opacity-20"></div>
+        <div className="absolute top-0 right-0 w-32 h-32 md:w-48 md:h-48 lg:w-64 lg:h-64 bg-gradient-to-br from-yellow-500 to-yellow-600 rounded-full blur-3xl opacity-20"></div>
+        <div className="absolute bottom-0 left-0 w-32 h-32 md:w-48 md:h-48 lg:w-64 lg:h-64 bg-gradient-to-br from-red-500 to-red-600 rounded-full blur-3xl opacity-20"></div>
+        <div className="absolute bottom-0 right-0 w-32 h-32 md:w-48 md:h-48 lg:w-64 lg:h-64 bg-gradient-to-br from-blue-500 to-blue-600 rounded-full blur-3xl opacity-20"></div>
+        
+        <div className="max-w-4xl mx-auto px-4 md:px-6 relative z-10">
+          <div className="text-center">
+            {/* Main Heading */}
+            <div className="mb-6 md:mb-8">
+              <h2 className="text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-black mb-4 md:mb-6 leading-tight" data-testid="text-review-title">
+                <span className="block bg-gradient-to-r from-foreground via-primary to-purple-600 bg-clip-text text-transparent">
+                  HOW WAS YOUR
+                </span>
+                <span className="block bg-gradient-to-r from-primary via-orange-500 to-purple-600 bg-clip-text text-transparent">
+                  EXPERIENCE?
+                </span>
+              </h2>
+              <p className="text-base md:text-lg lg:text-xl text-muted-foreground max-w-xl mx-auto" data-testid="text-review-subtitle">
+                Scan the QR code to leave a review and let us know.
+              </p>
+            </div>
+
+            {/* QR Code Card */}
+            <div className="relative inline-block group">
+              {/* Glow effect */}
+              <div className="absolute inset-0 bg-gradient-to-r from-primary via-orange-500 to-purple-600 rounded-3xl blur-2xl opacity-0 group-hover:opacity-30 transition-all duration-500"></div>
+              
+              {/* Card */}
+              <Card className="relative p-6 md:p-8 lg:p-10 bg-gradient-to-br from-card to-primary/5 border-2 border-primary/20 shadow-2xl hover:shadow-3xl transition-all duration-500 hover:-translate-y-2">
+                <div className="relative">
+                  <img
+                    src={reviewQR}
+                    alt="Google Review QR Code"
+                    className="w-full max-w-[280px] md:max-w-[320px] lg:max-w-[360px] mx-auto rounded-lg"
+                    data-testid="img-review-qr"
+                  />
+                </div>
+                
+                {/* Scan Me Badge */}
+                <div className="mt-6 relative">
+                  <div className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-gradient-to-r from-red-500 to-red-600 shadow-lg">
+                    <Star className="h-5 w-5 text-white animate-pulse" />
+                    <span className="text-lg md:text-xl font-bold text-white tracking-wide">SCAN ME!</span>
+                    <Star className="h-5 w-5 text-white animate-pulse" />
+                  </div>
+                </div>
+
+                {/* Google Review Text */}
+                <div className="mt-4 flex items-center justify-center gap-2">
+                  <svg className="h-5 w-5" viewBox="0 0 24 24">
+                    <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
+                    <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
+                    <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/>
+                    <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/>
+                  </svg>
+                  <span className="text-sm md:text-base font-semibold text-muted-foreground">The Google review</span>
+                </div>
+              </Card>
+            </div>
+
+            {/* Optional CTA text */}
+            <p className="mt-8 text-sm md:text-base text-muted-foreground max-w-md mx-auto">
+              Your feedback helps us improve and serve you better
+            </p>
           </div>
         </div>
       </section>
