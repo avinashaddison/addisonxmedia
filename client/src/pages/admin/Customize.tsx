@@ -342,6 +342,7 @@ function BannersForm({ customization }: { customization?: HomepageCustomization 
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["/api/customization"] });
+      queryClient.invalidateQueries({ queryKey: ["/api/customization/banners"] });
       toast({
         title: "Success",
         description: "Banners and sliders updated successfully",
