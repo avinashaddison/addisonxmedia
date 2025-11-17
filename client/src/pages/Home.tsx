@@ -456,72 +456,103 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Review QR Section - Side Layout */}
-      <section className="py-16 md:py-24 lg:py-32 relative overflow-hidden bg-gradient-to-br from-background via-primary/3 to-purple-500/5">
-        {/* Decorative Background Elements */}
-        <div className="absolute top-0 left-0 w-32 h-32 md:w-48 md:h-48 lg:w-64 lg:h-64 bg-gradient-to-br from-green-500 to-green-600 rounded-full blur-3xl opacity-20"></div>
-        <div className="absolute top-0 right-0 w-32 h-32 md:w-48 md:h-48 lg:w-64 lg:h-64 bg-gradient-to-br from-yellow-500 to-yellow-600 rounded-full blur-3xl opacity-20"></div>
-        <div className="absolute bottom-0 left-0 w-32 h-32 md:w-48 md:h-48 lg:w-64 lg:h-64 bg-gradient-to-br from-red-500 to-red-600 rounded-full blur-3xl opacity-20"></div>
-        <div className="absolute bottom-0 right-0 w-32 h-32 md:w-48 md:h-48 lg:w-64 lg:h-64 bg-gradient-to-br from-blue-500 to-blue-600 rounded-full blur-3xl opacity-20"></div>
+      {/* Review QR Section - Ultra Cool Design */}
+      <section className="py-16 md:py-24 lg:py-32 relative overflow-hidden">
+        {/* Animated Gradient Background */}
+        <div className="absolute inset-0 bg-gradient-to-br from-green-500/10 via-yellow-500/10 to-red-500/10"></div>
+        <div className="absolute inset-0 bg-gradient-to-tl from-blue-500/10 via-purple-500/10 to-primary/10"></div>
+        
+        {/* Floating Decorative Elements */}
+        <div className="absolute top-0 left-0 w-40 h-40 md:w-64 md:h-64 lg:w-96 lg:h-96 bg-gradient-to-br from-green-500 to-green-600 rounded-full blur-3xl opacity-30 animate-pulse"></div>
+        <div className="absolute top-10 right-0 w-40 h-40 md:w-64 md:h-64 lg:w-80 lg:h-80 bg-gradient-to-br from-yellow-500 to-yellow-600 rounded-full blur-3xl opacity-25 animate-pulse" style={{ animationDelay: '1s' }}></div>
+        <div className="absolute bottom-0 left-10 w-48 h-48 md:w-72 md:h-72 lg:w-96 lg:h-96 bg-gradient-to-br from-red-500 to-red-600 rounded-full blur-3xl opacity-25 animate-pulse" style={{ animationDelay: '2s' }}></div>
+        <div className="absolute bottom-10 right-10 w-40 h-40 md:w-64 md:h-64 lg:w-80 lg:h-80 bg-gradient-to-br from-blue-500 to-blue-600 rounded-full blur-3xl opacity-30 animate-pulse" style={{ animationDelay: '1.5s' }}></div>
         
         <div className="max-w-7xl mx-auto px-4 md:px-6 relative z-10">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-12 items-center">
-            {/* Left Side - Content */}
-            <div className="order-2 lg:order-1">
-              <h2 className="text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-black mb-4 md:mb-6 leading-tight" data-testid="text-review-title">
-                <span className="block bg-gradient-to-r from-foreground via-primary to-purple-600 bg-clip-text text-transparent">
-                  HOW WAS YOUR
-                </span>
-                <span className="block bg-gradient-to-r from-primary via-orange-500 to-purple-600 bg-clip-text text-transparent">
-                  EXPERIENCE?
-                </span>
-              </h2>
-              <p className="text-base md:text-lg lg:text-xl text-muted-foreground mb-6 leading-relaxed" data-testid="text-review-subtitle">
-                Scan the QR code to leave a review and let us know.
-              </p>
-              <p className="text-sm md:text-base text-muted-foreground leading-relaxed">
-                Your feedback helps us improve and serve you better. Share your experience with AddisonX Media and help us continue delivering exceptional digital marketing services.
-              </p>
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-12 lg:gap-16 items-center">
+            {/* Left Side - QR Code Card with Enhanced Effects */}
+            <div className="order-1 flex justify-center lg:justify-start">
+              <div className="relative group">
+                {/* Multi-layer Glow Effects */}
+                <div className="absolute -inset-4 bg-gradient-to-r from-green-500 via-yellow-500 to-red-500 rounded-3xl blur-2xl opacity-0 group-hover:opacity-40 transition-all duration-700 animate-pulse"></div>
+                <div className="absolute -inset-2 bg-gradient-to-r from-blue-500 via-purple-500 to-primary rounded-3xl blur-xl opacity-0 group-hover:opacity-30 transition-all duration-500"></div>
+                
+                {/* Main Card with Gradient Border */}
+                <div className="relative bg-gradient-to-br from-primary via-orange-500 to-purple-600 p-[3px] rounded-3xl shadow-2xl group-hover:shadow-[0_0_80px_rgba(255,165,0,0.5)] transition-all duration-500">
+                  <Card className="relative p-6 md:p-8 lg:p-10 bg-gradient-to-br from-card via-card to-primary/5 rounded-3xl transition-all duration-500 group-hover:scale-[1.02]">
+                    {/* Animated Corner Accents */}
+                    <div className="absolute top-3 left-3 w-3 h-3 rounded-full bg-gradient-to-br from-green-500 to-yellow-500 opacity-0 group-hover:opacity-100 transition-opacity duration-500 animate-pulse"></div>
+                    <div className="absolute top-3 right-3 w-3 h-3 rounded-full bg-gradient-to-br from-yellow-500 to-red-500 opacity-0 group-hover:opacity-100 transition-opacity duration-500 animate-pulse" style={{ animationDelay: '0.2s' }}></div>
+                    <div className="absolute bottom-3 left-3 w-3 h-3 rounded-full bg-gradient-to-br from-red-500 to-blue-500 opacity-0 group-hover:opacity-100 transition-opacity duration-500 animate-pulse" style={{ animationDelay: '0.4s' }}></div>
+                    <div className="absolute bottom-3 right-3 w-3 h-3 rounded-full bg-gradient-to-br from-blue-500 to-green-500 opacity-0 group-hover:opacity-100 transition-opacity duration-500 animate-pulse" style={{ animationDelay: '0.6s' }}></div>
+                    
+                    <div className="relative">
+                      <img
+                        src={reviewQR}
+                        alt="Google Review QR Code"
+                        className="w-full max-w-[280px] md:max-w-[320px] lg:max-w-[380px] mx-auto rounded-xl shadow-lg"
+                        data-testid="img-review-qr"
+                      />
+                    </div>
+                    
+                    {/* Enhanced Scan Me Badge */}
+                    <div className="mt-6 relative text-center">
+                      <div className="absolute inset-0 flex items-center justify-center">
+                        <div className="w-32 h-16 bg-red-500 rounded-full blur-2xl opacity-50 group-hover:opacity-70 transition-opacity duration-500"></div>
+                      </div>
+                      <div className="relative inline-flex items-center gap-2 px-6 py-3 rounded-full bg-gradient-to-r from-red-500 via-red-600 to-red-500 shadow-xl group-hover:shadow-2xl group-hover:shadow-red-500/50 transition-all duration-300 animate-pulse">
+                        <Star className="h-5 w-5 text-white animate-pulse" />
+                        <span className="text-lg md:text-xl font-black text-white tracking-widest">SCAN ME!</span>
+                        <Star className="h-5 w-5 text-white animate-pulse" />
+                      </div>
+                    </div>
+
+                    {/* Google Review Badge */}
+                    <div className="mt-5 flex items-center justify-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r from-background/80 to-background/60 backdrop-blur-sm border border-primary/20">
+                      <svg className="h-5 w-5" viewBox="0 0 24 24">
+                        <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
+                        <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
+                        <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/>
+                        <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/>
+                      </svg>
+                      <span className="text-sm md:text-base font-bold bg-gradient-to-r from-foreground to-primary bg-clip-text text-transparent">The Google review</span>
+                    </div>
+                  </Card>
+                </div>
+              </div>
             </div>
 
-            {/* Right Side - QR Code Card */}
-            <div className="order-1 lg:order-2 flex justify-center lg:justify-end">
-              <div className="relative group">
-                {/* Glow effect */}
-                <div className="absolute inset-0 bg-gradient-to-r from-primary via-orange-500 to-purple-600 rounded-3xl blur-2xl opacity-0 group-hover:opacity-30 transition-all duration-500"></div>
-                
-                {/* Card */}
-                <Card className="relative p-6 md:p-8 lg:p-10 bg-gradient-to-br from-card to-primary/5 border-2 border-primary/20 shadow-2xl hover:shadow-3xl transition-all duration-500 hover:-translate-y-2">
-                  <div className="relative">
-                    <img
-                      src={reviewQR}
-                      alt="Google Review QR Code"
-                      className="w-full max-w-[280px] md:max-w-[320px] lg:max-w-[360px] mx-auto rounded-lg"
-                      data-testid="img-review-qr"
-                    />
-                  </div>
-                  
-                  {/* Scan Me Badge */}
-                  <div className="mt-6 relative text-center">
-                    <div className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-gradient-to-r from-red-500 to-red-600 shadow-lg">
-                      <Star className="h-5 w-5 text-white animate-pulse" />
-                      <span className="text-lg md:text-xl font-bold text-white tracking-wide">SCAN ME!</span>
-                      <Star className="h-5 w-5 text-white animate-pulse" />
-                    </div>
-                  </div>
-
-                  {/* Google Review Text */}
-                  <div className="mt-4 flex items-center justify-center gap-2">
-                    <svg className="h-5 w-5" viewBox="0 0 24 24">
-                      <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
-                      <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
-                      <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/>
-                      <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/>
-                    </svg>
-                    <span className="text-sm md:text-base font-semibold text-muted-foreground">The Google review</span>
-                  </div>
-                </Card>
+            {/* Right Side - Content with Animations */}
+            <div className="order-2 space-y-6">
+              {/* Heading with Enhanced Gradients */}
+              <div>
+                <h2 className="text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-black mb-4 md:mb-6 leading-tight" data-testid="text-review-title">
+                  <span className="block bg-gradient-to-r from-foreground via-primary to-purple-600 bg-clip-text text-transparent drop-shadow-lg">
+                    HOW WAS YOUR
+                  </span>
+                  <span className="block bg-gradient-to-r from-green-500 via-yellow-500 via-red-500 to-blue-500 bg-clip-text text-transparent drop-shadow-lg animate-pulse">
+                    EXPERIENCE?
+                  </span>
+                </h2>
               </div>
+              
+              {/* Description Cards */}
+              <Card className="p-4 md:p-6 bg-gradient-to-br from-card/80 to-primary/5 border-2 border-primary/20 backdrop-blur-sm hover-elevate">
+                <p className="text-base md:text-lg lg:text-xl text-muted-foreground leading-relaxed" data-testid="text-review-subtitle">
+                  <span className="text-primary font-semibold">Scan the QR code</span> to leave a review and let us know how we did!
+                </p>
+              </Card>
+              
+              <Card className="p-4 md:p-6 bg-gradient-to-br from-card/80 to-purple-500/5 border-2 border-purple-500/20 backdrop-blur-sm hover-elevate">
+                <div className="flex items-start gap-3">
+                  <div className="flex-shrink-0 w-10 h-10 rounded-full bg-gradient-to-br from-green-500 to-blue-500 flex items-center justify-center">
+                    <Star className="h-5 w-5 text-white" />
+                  </div>
+                  <p className="text-sm md:text-base text-muted-foreground leading-relaxed flex-1">
+                    Your feedback helps us improve and serve you better. Share your experience with AddisonX Media and help us continue delivering exceptional digital marketing services.
+                  </p>
+                </div>
+              </Card>
             </div>
           </div>
         </div>
