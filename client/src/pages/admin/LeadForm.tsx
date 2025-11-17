@@ -8,10 +8,12 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
+import { Separator } from "@/components/ui/separator";
 import { useToast } from "@/hooks/use-toast";
 import { apiRequest, queryClient } from "@/lib/queryClient";
+import { normalizeNullableField, prepareFormData } from "@/lib/formHelpers";
 import { insertLeadSchema, type Lead } from "@shared/schema";
-import { ArrowLeft } from "lucide-react";
+import { ArrowLeft, Save, Loader2 } from "lucide-react";
 import { z } from "zod";
 import { format } from "date-fns";
 
@@ -48,9 +50,10 @@ export default function LeadForm() {
 
   const createMutation = useMutation({
     mutationFn: async (data: LeadFormData) => {
+      const prepared = prepareFormData(data, ["phone", "company", "assignedTo", "notes", "followUpDate"]);
       const payload = {
-        ...data,
-        followUpDate: data.followUpDate ? new Date(data.followUpDate) : undefined,
+        ...prepared,
+        followUpDate: prepared.followUpDate ? new Date(prepared.followUpDate) : undefined,
       };
       await apiRequest("POST", "/api/leads", payload);
     },
@@ -73,9 +76,10 @@ export default function LeadForm() {
 
   const updateMutation = useMutation({
     mutationFn: async (data: LeadFormData) => {
+      const prepared = prepareFormData(data, ["phone", "company", "assignedTo", "notes", "followUpDate"]);
       const payload = {
-        ...data,
-        followUpDate: data.followUpDate ? new Date(data.followUpDate) : undefined,
+        ...prepared,
+        followUpDate: prepared.followUpDate ? new Date(prepared.followUpDate) : undefined,
       };
       await apiRequest("PUT", `/api/leads/${id}`, payload);
     },
@@ -106,10 +110,13 @@ export default function LeadForm() {
 
   if (isEditing && isLoading) {
     return (
-      <div className="p-6">
-        <div className="text-center">
-          <div className="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-primary mb-4"></div>
-          <p className="text-muted-foreground">Loading lead...</p>
+      <div className="flex items-center justify-center min-h-[400px]">
+        <div className="text-center space-y-4">
+          <Loader2 className="h-12 w-12 animate-spin text-primary mx-auto" />
+          <div>
+            <p className="text-lg font-semibold">Loading lead...</p>
+            <p className="text-sm text-muted-foreground">Please wait</p>
+          </div>
         </div>
       </div>
     );
@@ -148,137 +155,171 @@ export default function LeadForm() {
         </div>
       </div>
 
-      <Card className="p-6">
+      <Card className="bg-card border border-border shadow-lg p-8">
         <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <FormField
-                control={form.control}
-                name="name"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Name *</FormLabel>
-                    <FormControl>
-                      <Input {...field} placeholder="Lead name" data-testid="input-name" />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-
-              <FormField
-                control={form.control}
-                name="email"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Email *</FormLabel>
-                    <FormControl>
-                      <Input {...field} type="email" placeholder="lead@example.com" data-testid="input-email" />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-
-              <FormField
-                control={form.control}
-                name="phone"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Phone</FormLabel>
-                    <FormControl>
-                      <Input {...field} placeholder="+91 98765 43210" data-testid="input-phone" />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-
-              <FormField
-                control={form.control}
-                name="company"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Company</FormLabel>
-                    <FormControl>
-                      <Input {...field} placeholder="Company name" data-testid="input-company" />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-
-              <FormField
-                control={form.control}
-                name="source"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Source *</FormLabel>
-                    <Select onValueChange={field.onChange} defaultValue={field.value}>
+          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+            <div className="space-y-6">
+              <div>
+                <h3 className="text-lg font-semibold mb-4">Contact Information</h3>
+                <Separator className="mb-6" />
+              </div>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <FormField
+                  control={form.control}
+                  name="name"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel className="text-sm font-semibold">Name *</FormLabel>
                       <FormControl>
-                        <SelectTrigger data-testid="select-source">
-                          <SelectValue placeholder="Select source" />
-                        </SelectTrigger>
+                        <Input {...field} placeholder="Lead name" data-testid="input-name" />
                       </FormControl>
-                      <SelectContent>
-                        <SelectItem value="website">Website</SelectItem>
-                        <SelectItem value="referral">Referral</SelectItem>
-                        <SelectItem value="social">Social</SelectItem>
-                        <SelectItem value="ad">Ad</SelectItem>
-                      </SelectContent>
-                    </Select>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
 
-              <FormField
-                control={form.control}
-                name="status"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Status *</FormLabel>
-                    <Select onValueChange={field.onChange} defaultValue={field.value}>
+                <FormField
+                  control={form.control}
+                  name="email"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel className="text-sm font-semibold">Email *</FormLabel>
                       <FormControl>
-                        <SelectTrigger data-testid="select-status">
-                          <SelectValue placeholder="Select status" />
-                        </SelectTrigger>
+                        <Input {...field} type="email" placeholder="lead@example.com" data-testid="input-email" />
                       </FormControl>
-                      <SelectContent>
-                        <SelectItem value="new">New</SelectItem>
-                        <SelectItem value="contacted">Contacted</SelectItem>
-                        <SelectItem value="qualified">Qualified</SelectItem>
-                        <SelectItem value="converted">Converted</SelectItem>
-                        <SelectItem value="lost">Lost</SelectItem>
-                      </SelectContent>
-                    </Select>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
 
+                <FormField
+                  control={form.control}
+                  name="phone"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel className="text-sm font-semibold">Phone</FormLabel>
+                      <FormControl>
+                        <Input {...normalizeNullableField(field)} placeholder="+91 98765 43210" data-testid="input-phone" />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+
+                <FormField
+                  control={form.control}
+                  name="company"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel className="text-sm font-semibold">Company</FormLabel>
+                      <FormControl>
+                        <Input {...normalizeNullableField(field)} placeholder="Company name" data-testid="input-company" />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+              </div>
+            </div>
+
+            <div className="space-y-6">
+              <div>
+                <h3 className="text-lg font-semibold mb-4">Lead Details</h3>
+                <Separator className="mb-6" />
+              </div>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <FormField
+                  control={form.control}
+                  name="source"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel className="text-sm font-semibold">Source *</FormLabel>
+                      <Select onValueChange={field.onChange} defaultValue={field.value}>
+                        <FormControl>
+                          <SelectTrigger data-testid="select-source">
+                            <SelectValue placeholder="Select source" />
+                          </SelectTrigger>
+                        </FormControl>
+                        <SelectContent>
+                          <SelectItem value="website">Website</SelectItem>
+                          <SelectItem value="referral">Referral</SelectItem>
+                          <SelectItem value="social">Social</SelectItem>
+                          <SelectItem value="ad">Ad</SelectItem>
+                        </SelectContent>
+                      </Select>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+
+                <FormField
+                  control={form.control}
+                  name="status"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel className="text-sm font-semibold">Status *</FormLabel>
+                      <Select onValueChange={field.onChange} defaultValue={field.value}>
+                        <FormControl>
+                          <SelectTrigger data-testid="select-status">
+                            <SelectValue placeholder="Select status" />
+                          </SelectTrigger>
+                        </FormControl>
+                        <SelectContent>
+                          <SelectItem value="new">New</SelectItem>
+                          <SelectItem value="contacted">Contacted</SelectItem>
+                          <SelectItem value="qualified">Qualified</SelectItem>
+                          <SelectItem value="converted">Converted</SelectItem>
+                          <SelectItem value="lost">Lost</SelectItem>
+                        </SelectContent>
+                      </Select>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+
+                <FormField
+                  control={form.control}
+                  name="assignedTo"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel className="text-sm font-semibold">Assigned To (Employee ID)</FormLabel>
+                      <FormControl>
+                        <Input {...normalizeNullableField(field)} placeholder="Employee ID" data-testid="input-assigned-to" />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+
+                <FormField
+                  control={form.control}
+                  name="followUpDate"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel className="text-sm font-semibold">Follow Up Date</FormLabel>
+                      <FormControl>
+                        <Input {...normalizeNullableField(field)} type="date" data-testid="input-follow-up-date" />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+              </div>
+            </div>
+
+            <div className="space-y-6">
+              <div>
+                <h3 className="text-lg font-semibold mb-4">Additional Notes</h3>
+                <Separator className="mb-6" />
+              </div>
               <FormField
                 control={form.control}
-                name="assignedTo"
+                name="notes"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Assigned To (Employee ID)</FormLabel>
+                    <FormLabel className="text-sm font-semibold">Notes</FormLabel>
                     <FormControl>
-                      <Input {...field} placeholder="Employee ID" data-testid="input-assigned-to" />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-
-              <FormField
-                control={form.control}
-                name="followUpDate"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Follow Up Date</FormLabel>
-                    <FormControl>
-                      <Input {...field} type="date" data-testid="input-follow-up-date" />
+                      <Textarea {...normalizeNullableField(field)} placeholder="Additional notes" rows={3} data-testid="input-notes" />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -286,31 +327,31 @@ export default function LeadForm() {
               />
             </div>
 
-            <FormField
-              control={form.control}
-              name="notes"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Notes</FormLabel>
-                  <FormControl>
-                    <Textarea {...field} placeholder="Additional notes" rows={3} data-testid="input-notes" />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-
-            <div className="flex gap-3">
+            <Separator />
+            
+            <div className="flex gap-3 pt-2">
               <Button
                 type="submit"
+                size="lg"
                 disabled={createMutation.isPending || updateMutation.isPending}
                 data-testid="button-submit"
               >
-                {(createMutation.isPending || updateMutation.isPending) ? "Saving..." : (isEditing ? "Update Lead" : "Create Lead")}
+                {(createMutation.isPending || updateMutation.isPending) ? (
+                  <>
+                    <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+                    Saving...
+                  </>
+                ) : (
+                  <>
+                    <Save className="h-4 w-4 mr-2" />
+                    {isEditing ? "Update Lead" : "Create Lead"}
+                  </>
+                )}
               </Button>
               <Button
                 type="button"
                 variant="outline"
+                size="lg"
                 onClick={() => setLocation("/admin/leads")}
                 data-testid="button-cancel"
               >

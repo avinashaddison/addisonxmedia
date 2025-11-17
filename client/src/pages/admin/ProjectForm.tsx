@@ -8,10 +8,12 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
+import { Separator } from "@/components/ui/separator";
 import { useToast } from "@/hooks/use-toast";
 import { apiRequest, queryClient } from "@/lib/queryClient";
+import { normalizeNullableField, prepareFormData } from "@/lib/formHelpers";
 import { insertProjectSchema, type Project } from "@shared/schema";
-import { ArrowLeft } from "lucide-react";
+import { ArrowLeft, Save, Loader2 } from "lucide-react";
 import { z } from "zod";
 import { format } from "date-fns";
 
@@ -50,10 +52,11 @@ export default function ProjectForm() {
 
   const createMutation = useMutation({
     mutationFn: async (data: ProjectFormData) => {
+      const prepared = prepareFormData(data, ["clientId", "assignedTo", "description", "startDate", "deadline", "budget"]);
       const payload = {
-        ...data,
-        startDate: data.startDate ? new Date(data.startDate) : undefined,
-        deadline: data.deadline ? new Date(data.deadline) : undefined,
+        ...prepared,
+        startDate: prepared.startDate ? new Date(prepared.startDate) : undefined,
+        deadline: prepared.deadline ? new Date(prepared.deadline) : undefined,
       };
       await apiRequest("POST", "/api/projects", payload);
     },
@@ -76,10 +79,11 @@ export default function ProjectForm() {
 
   const updateMutation = useMutation({
     mutationFn: async (data: ProjectFormData) => {
+      const prepared = prepareFormData(data, ["clientId", "assignedTo", "description", "startDate", "deadline", "budget"]);
       const payload = {
-        ...data,
-        startDate: data.startDate ? new Date(data.startDate) : undefined,
-        deadline: data.deadline ? new Date(data.deadline) : undefined,
+        ...prepared,
+        startDate: prepared.startDate ? new Date(prepared.startDate) : undefined,
+        deadline: prepared.deadline ? new Date(prepared.deadline) : undefined,
       };
       await apiRequest("PUT", `/api/projects/${id}`, payload);
     },
@@ -110,10 +114,13 @@ export default function ProjectForm() {
 
   if (isEditing && isLoading) {
     return (
-      <div className="p-6">
-        <div className="text-center">
-          <div className="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-primary mb-4"></div>
-          <p className="text-muted-foreground">Loading project...</p>
+      <div className="flex items-center justify-center min-h-[400px]">
+        <div className="text-center space-y-4">
+          <Loader2 className="h-12 w-12 animate-spin text-primary mx-auto" />
+          <div>
+            <p className="text-lg font-semibold">Loading project...</p>
+            <p className="text-sm text-muted-foreground">Please wait</p>
+          </div>
         </div>
       </div>
     );
@@ -153,191 +160,233 @@ export default function ProjectForm() {
         </div>
       </div>
 
-      <Card className="p-6">
+      <Card className="bg-card border border-border shadow-lg p-8">
         <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <FormField
-                control={form.control}
-                name="name"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Project Name *</FormLabel>
-                    <FormControl>
-                      <Input {...field} placeholder="Project name" data-testid="input-name" />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-
-              <FormField
-                control={form.control}
-                name="clientId"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Client ID</FormLabel>
-                    <FormControl>
-                      <Input {...field} placeholder="Client ID" data-testid="input-client-id" />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-
-              <FormField
-                control={form.control}
-                name="status"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Status *</FormLabel>
-                    <Select onValueChange={field.onChange} defaultValue={field.value}>
+          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+            <div className="space-y-6">
+              <div>
+                <h3 className="text-lg font-semibold mb-4">Project Details</h3>
+                <Separator className="mb-6" />
+              </div>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <FormField
+                  control={form.control}
+                  name="name"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel className="text-sm font-semibold">Project Name *</FormLabel>
                       <FormControl>
-                        <SelectTrigger data-testid="select-status">
-                          <SelectValue placeholder="Select status" />
-                        </SelectTrigger>
+                        <Input {...field} placeholder="Project name" data-testid="input-name" />
                       </FormControl>
-                      <SelectContent>
-                        <SelectItem value="planning">Planning</SelectItem>
-                        <SelectItem value="in-progress">In Progress</SelectItem>
-                        <SelectItem value="review">Review</SelectItem>
-                        <SelectItem value="completed">Completed</SelectItem>
-                        <SelectItem value="cancelled">Cancelled</SelectItem>
-                      </SelectContent>
-                    </Select>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
 
-              <FormField
-                control={form.control}
-                name="priority"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Priority *</FormLabel>
-                    <Select onValueChange={field.onChange} defaultValue={field.value}>
+                <FormField
+                  control={form.control}
+                  name="clientId"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel className="text-sm font-semibold">Client ID</FormLabel>
                       <FormControl>
-                        <SelectTrigger data-testid="select-priority">
-                          <SelectValue placeholder="Select priority" />
-                        </SelectTrigger>
+                        <Input {...normalizeNullableField(field)} placeholder="Client ID" data-testid="input-client-id" />
                       </FormControl>
-                      <SelectContent>
-                        <SelectItem value="low">Low</SelectItem>
-                        <SelectItem value="medium">Medium</SelectItem>
-                        <SelectItem value="high">High</SelectItem>
-                      </SelectContent>
-                    </Select>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+              </div>
+            </div>
 
-              <FormField
-                control={form.control}
-                name="assignedTo"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Assigned To (Employee ID)</FormLabel>
-                    <FormControl>
-                      <Input {...field} placeholder="Employee ID" data-testid="input-assigned-to" />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
+            <div className="space-y-6">
+              <div>
+                <h3 className="text-lg font-semibold mb-4">Status & Priority</h3>
+                <Separator className="mb-6" />
+              </div>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <FormField
+                  control={form.control}
+                  name="status"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel className="text-sm font-semibold">Status *</FormLabel>
+                      <Select onValueChange={field.onChange} defaultValue={field.value}>
+                        <FormControl>
+                          <SelectTrigger data-testid="select-status">
+                            <SelectValue placeholder="Select status" />
+                          </SelectTrigger>
+                        </FormControl>
+                        <SelectContent>
+                          <SelectItem value="planning">Planning</SelectItem>
+                          <SelectItem value="in-progress">In Progress</SelectItem>
+                          <SelectItem value="review">Review</SelectItem>
+                          <SelectItem value="completed">Completed</SelectItem>
+                          <SelectItem value="cancelled">Cancelled</SelectItem>
+                        </SelectContent>
+                      </Select>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
 
-              <FormField
-                control={form.control}
-                name="startDate"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Start Date</FormLabel>
-                    <FormControl>
-                      <Input {...field} type="date" data-testid="input-start-date" />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
+                <FormField
+                  control={form.control}
+                  name="priority"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel className="text-sm font-semibold">Priority *</FormLabel>
+                      <Select onValueChange={field.onChange} defaultValue={field.value}>
+                        <FormControl>
+                          <SelectTrigger data-testid="select-priority">
+                            <SelectValue placeholder="Select priority" />
+                          </SelectTrigger>
+                        </FormControl>
+                        <SelectContent>
+                          <SelectItem value="low">Low</SelectItem>
+                          <SelectItem value="medium">Medium</SelectItem>
+                          <SelectItem value="high">High</SelectItem>
+                        </SelectContent>
+                      </Select>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
 
-              <FormField
-                control={form.control}
-                name="deadline"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Deadline</FormLabel>
-                    <FormControl>
-                      <Input {...field} type="date" data-testid="input-deadline" />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-
-              <FormField
-                control={form.control}
-                name="budget"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Budget (₹)</FormLabel>
-                    <FormControl>
-                      <Input {...field} placeholder="50000" data-testid="input-budget" />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-
-              <FormField
-                control={form.control}
-                name="paymentStatus"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Payment Status *</FormLabel>
-                    <Select onValueChange={field.onChange} defaultValue={field.value}>
+                <FormField
+                  control={form.control}
+                  name="assignedTo"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel className="text-sm font-semibold">Assigned To (Employee ID)</FormLabel>
                       <FormControl>
-                        <SelectTrigger data-testid="select-payment-status">
-                          <SelectValue placeholder="Select payment status" />
-                        </SelectTrigger>
+                        <Input {...normalizeNullableField(field)} placeholder="Employee ID" data-testid="input-assigned-to" />
                       </FormControl>
-                      <SelectContent>
-                        <SelectItem value="pending">Pending</SelectItem>
-                        <SelectItem value="partial">Partial</SelectItem>
-                        <SelectItem value="paid">Paid</SelectItem>
-                      </SelectContent>
-                    </Select>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+              </div>
+            </div>
+
+            <div className="space-y-6">
+              <div>
+                <h3 className="text-lg font-semibold mb-4">Timeline & Budget</h3>
+                <Separator className="mb-6" />
+              </div>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <FormField
+                  control={form.control}
+                  name="startDate"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel className="text-sm font-semibold">Start Date</FormLabel>
+                      <FormControl>
+                        <Input {...normalizeNullableField(field)} type="date" data-testid="input-start-date" />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+
+                <FormField
+                  control={form.control}
+                  name="deadline"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel className="text-sm font-semibold">Deadline</FormLabel>
+                      <FormControl>
+                        <Input {...normalizeNullableField(field)} type="date" data-testid="input-deadline" />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+
+                <FormField
+                  control={form.control}
+                  name="budget"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel className="text-sm font-semibold">Budget (₹)</FormLabel>
+                      <FormControl>
+                        <Input {...normalizeNullableField(field)} placeholder="50000" data-testid="input-budget" />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+
+                <FormField
+                  control={form.control}
+                  name="paymentStatus"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel className="text-sm font-semibold">Payment Status *</FormLabel>
+                      <Select onValueChange={field.onChange} defaultValue={field.value}>
+                        <FormControl>
+                          <SelectTrigger data-testid="select-payment-status">
+                            <SelectValue placeholder="Select payment status" />
+                          </SelectTrigger>
+                        </FormControl>
+                        <SelectContent>
+                          <SelectItem value="pending">Pending</SelectItem>
+                          <SelectItem value="partial">Partial</SelectItem>
+                          <SelectItem value="paid">Paid</SelectItem>
+                        </SelectContent>
+                      </Select>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+              </div>
+            </div>
+
+            <div className="space-y-6">
+              <div>
+                <h3 className="text-lg font-semibold mb-4">Project Description</h3>
+                <Separator className="mb-6" />
+              </div>
+              <FormField
+                control={form.control}
+                name="description"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel className="text-sm font-semibold">Description</FormLabel>
+                    <FormControl>
+                      <Textarea {...normalizeNullableField(field)} placeholder="Project description" rows={3} data-testid="input-description" />
+                    </FormControl>
                     <FormMessage />
                   </FormItem>
                 )}
               />
             </div>
 
-            <FormField
-              control={form.control}
-              name="description"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Description</FormLabel>
-                  <FormControl>
-                    <Textarea {...field} placeholder="Project description" rows={3} data-testid="input-description" />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-
-            <div className="flex gap-3">
+            <Separator />
+            
+            <div className="flex gap-3 pt-2">
               <Button
                 type="submit"
+                size="lg"
                 disabled={createMutation.isPending || updateMutation.isPending}
                 data-testid="button-submit"
               >
-                {(createMutation.isPending || updateMutation.isPending) ? "Saving..." : (isEditing ? "Update Project" : "Create Project")}
+                {(createMutation.isPending || updateMutation.isPending) ? (
+                  <>
+                    <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+                    Saving...
+                  </>
+                ) : (
+                  <>
+                    <Save className="h-4 w-4 mr-2" />
+                    {isEditing ? "Update Project" : "Create Project"}
+                  </>
+                )}
               </Button>
               <Button
                 type="button"
                 variant="outline"
+                size="lg"
                 onClick={() => setLocation("/admin/projects")}
                 data-testid="button-cancel"
               >

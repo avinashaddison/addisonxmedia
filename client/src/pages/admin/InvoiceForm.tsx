@@ -9,10 +9,12 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
+import { Separator } from "@/components/ui/separator";
 import { useToast } from "@/hooks/use-toast";
 import { apiRequest, queryClient } from "@/lib/queryClient";
+import { normalizeNullableField, prepareFormData } from "@/lib/formHelpers";
 import { insertInvoiceSchema, type Invoice } from "@shared/schema";
-import { ArrowLeft } from "lucide-react";
+import { ArrowLeft, Save, Loader2 } from "lucide-react";
 import { z } from "zod";
 import { format } from "date-fns";
 
@@ -61,10 +63,11 @@ export default function InvoiceForm() {
 
   const createMutation = useMutation({
     mutationFn: async (data: InvoiceFormData) => {
+      const prepared = prepareFormData(data, ["clientId", "projectId", "notes", "paidDate"]);
       const payload = {
-        ...data,
-        dueDate: data.dueDate ? new Date(data.dueDate) : undefined,
-        paidDate: data.paidDate ? new Date(data.paidDate) : undefined,
+        ...prepared,
+        dueDate: prepared.dueDate ? new Date(prepared.dueDate) : undefined,
+        paidDate: prepared.paidDate ? new Date(prepared.paidDate) : undefined,
       };
       await apiRequest("POST", "/api/invoices", payload);
     },
@@ -87,10 +90,11 @@ export default function InvoiceForm() {
 
   const updateMutation = useMutation({
     mutationFn: async (data: InvoiceFormData) => {
+      const prepared = prepareFormData(data, ["clientId", "projectId", "notes", "paidDate"]);
       const payload = {
-        ...data,
-        dueDate: data.dueDate ? new Date(data.dueDate) : undefined,
-        paidDate: data.paidDate ? new Date(data.paidDate) : undefined,
+        ...prepared,
+        dueDate: prepared.dueDate ? new Date(prepared.dueDate) : undefined,
+        paidDate: prepared.paidDate ? new Date(prepared.paidDate) : undefined,
       };
       await apiRequest("PUT", `/api/invoices/${id}`, payload);
     },
@@ -121,10 +125,13 @@ export default function InvoiceForm() {
 
   if (isEditing && isLoading) {
     return (
-      <div className="p-6">
-        <div className="text-center">
-          <div className="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-primary mb-4"></div>
-          <p className="text-muted-foreground">Loading invoice...</p>
+      <div className="flex items-center justify-center min-h-[400px]">
+        <div className="text-center space-y-4">
+          <Loader2 className="h-12 w-12 animate-spin text-primary mx-auto" />
+          <div>
+            <p className="text-lg font-semibold">Loading invoice...</p>
+            <p className="text-sm text-muted-foreground">Please wait</p>
+          </div>
         </div>
       </div>
     );
@@ -164,140 +171,182 @@ export default function InvoiceForm() {
         </div>
       </div>
 
-      <Card className="p-6">
+      <Card className="bg-card border border-border shadow-lg p-8">
         <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <FormField
-                control={form.control}
-                name="invoiceNumber"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Invoice Number *</FormLabel>
-                    <FormControl>
-                      <Input {...field} placeholder="INV-2024-001" data-testid="input-invoice-number" />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-
-              <FormField
-                control={form.control}
-                name="clientId"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Client ID</FormLabel>
-                    <FormControl>
-                      <Input {...field} placeholder="Client ID" data-testid="input-client-id" />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-
-              <FormField
-                control={form.control}
-                name="projectId"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Project ID</FormLabel>
-                    <FormControl>
-                      <Input {...field} placeholder="Project ID" data-testid="input-project-id" />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-
-              <FormField
-                control={form.control}
-                name="status"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Status *</FormLabel>
-                    <Select onValueChange={field.onChange} defaultValue={field.value}>
+          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+            <div className="space-y-6">
+              <div>
+                <h3 className="text-lg font-semibold mb-4">Invoice Details</h3>
+                <Separator className="mb-6" />
+              </div>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <FormField
+                  control={form.control}
+                  name="invoiceNumber"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel className="text-sm font-semibold">Invoice Number *</FormLabel>
                       <FormControl>
-                        <SelectTrigger data-testid="select-status">
-                          <SelectValue placeholder="Select status" />
-                        </SelectTrigger>
+                        <Input {...field} placeholder="INV-2024-001" data-testid="input-invoice-number" />
                       </FormControl>
-                      <SelectContent>
-                        <SelectItem value="pending">Pending</SelectItem>
-                        <SelectItem value="paid">Paid</SelectItem>
-                        <SelectItem value="overdue">Overdue</SelectItem>
-                        <SelectItem value="cancelled">Cancelled</SelectItem>
-                      </SelectContent>
-                    </Select>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
 
+                <FormField
+                  control={form.control}
+                  name="status"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel className="text-sm font-semibold">Status *</FormLabel>
+                      <Select onValueChange={field.onChange} defaultValue={field.value}>
+                        <FormControl>
+                          <SelectTrigger data-testid="select-status">
+                            <SelectValue placeholder="Select status" />
+                          </SelectTrigger>
+                        </FormControl>
+                        <SelectContent>
+                          <SelectItem value="pending">Pending</SelectItem>
+                          <SelectItem value="paid">Paid</SelectItem>
+                          <SelectItem value="overdue">Overdue</SelectItem>
+                          <SelectItem value="cancelled">Cancelled</SelectItem>
+                        </SelectContent>
+                      </Select>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+
+                <FormField
+                  control={form.control}
+                  name="clientId"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel className="text-sm font-semibold">Client ID</FormLabel>
+                      <FormControl>
+                        <Input {...normalizeNullableField(field)} placeholder="Client ID" data-testid="input-client-id" />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+
+                <FormField
+                  control={form.control}
+                  name="projectId"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel className="text-sm font-semibold">Project ID</FormLabel>
+                      <FormControl>
+                        <Input {...normalizeNullableField(field)} placeholder="Project ID" data-testid="input-project-id" />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+              </div>
+            </div>
+
+            <div className="space-y-6">
+              <div>
+                <h3 className="text-lg font-semibold mb-4">Amount & Calculation</h3>
+                <Separator className="mb-6" />
+              </div>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <FormField
+                  control={form.control}
+                  name="amount"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel className="text-sm font-semibold">Amount (₹) *</FormLabel>
+                      <FormControl>
+                        <Input {...field} type="number" step="0.01" placeholder="10000" data-testid="input-amount" />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+
+                <FormField
+                  control={form.control}
+                  name="tax"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel className="text-sm font-semibold">Tax (₹) *</FormLabel>
+                      <FormControl>
+                        <Input {...field} type="number" step="0.01" placeholder="1800" data-testid="input-tax" />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+
+                <FormField
+                  control={form.control}
+                  name="total"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel className="text-sm font-semibold">Total (₹) *</FormLabel>
+                      <FormControl>
+                        <Input {...field} readOnly data-testid="input-total" className="bg-muted" />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+              </div>
+            </div>
+
+            <div className="space-y-6">
+              <div>
+                <h3 className="text-lg font-semibold mb-4">Payment Schedule</h3>
+                <Separator className="mb-6" />
+              </div>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <FormField
+                  control={form.control}
+                  name="dueDate"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel className="text-sm font-semibold">Due Date</FormLabel>
+                      <FormControl>
+                        <Input {...field} type="date" data-testid="input-due-date" />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+
+                <FormField
+                  control={form.control}
+                  name="paidDate"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel className="text-sm font-semibold">Paid Date</FormLabel>
+                      <FormControl>
+                        <Input {...normalizeNullableField(field)} type="date" data-testid="input-paid-date" />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+              </div>
+            </div>
+
+            <div className="space-y-6">
+              <div>
+                <h3 className="text-lg font-semibold mb-4">Additional Information</h3>
+                <Separator className="mb-6" />
+              </div>
               <FormField
                 control={form.control}
-                name="amount"
+                name="notes"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Amount (₹) *</FormLabel>
+                    <FormLabel className="text-sm font-semibold">Notes</FormLabel>
                     <FormControl>
-                      <Input {...field} type="number" step="0.01" placeholder="10000" data-testid="input-amount" />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-
-              <FormField
-                control={form.control}
-                name="tax"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Tax (₹) *</FormLabel>
-                    <FormControl>
-                      <Input {...field} type="number" step="0.01" placeholder="1800" data-testid="input-tax" />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-
-              <FormField
-                control={form.control}
-                name="total"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Total (₹) *</FormLabel>
-                    <FormControl>
-                      <Input {...field} readOnly data-testid="input-total" className="bg-muted" />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-
-              <FormField
-                control={form.control}
-                name="dueDate"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Due Date</FormLabel>
-                    <FormControl>
-                      <Input {...field} type="date" data-testid="input-due-date" />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-
-              <FormField
-                control={form.control}
-                name="paidDate"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Paid Date</FormLabel>
-                    <FormControl>
-                      <Input {...field} type="date" data-testid="input-paid-date" />
+                      <Textarea {...normalizeNullableField(field)} placeholder="Additional notes" rows={3} data-testid="input-notes" />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -305,31 +354,31 @@ export default function InvoiceForm() {
               />
             </div>
 
-            <FormField
-              control={form.control}
-              name="notes"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Notes</FormLabel>
-                  <FormControl>
-                    <Textarea {...field} placeholder="Additional notes" rows={3} data-testid="input-notes" />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-
-            <div className="flex gap-3">
+            <Separator />
+            
+            <div className="flex gap-3 pt-2">
               <Button
                 type="submit"
+                size="lg"
                 disabled={createMutation.isPending || updateMutation.isPending}
                 data-testid="button-submit"
               >
-                {(createMutation.isPending || updateMutation.isPending) ? "Saving..." : (isEditing ? "Update Invoice" : "Create Invoice")}
+                {(createMutation.isPending || updateMutation.isPending) ? (
+                  <>
+                    <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+                    Saving...
+                  </>
+                ) : (
+                  <>
+                    <Save className="h-4 w-4 mr-2" />
+                    {isEditing ? "Update Invoice" : "Create Invoice"}
+                  </>
+                )}
               </Button>
               <Button
                 type="button"
                 variant="outline"
+                size="lg"
                 onClick={() => setLocation("/admin/invoices")}
                 data-testid="button-cancel"
               >
