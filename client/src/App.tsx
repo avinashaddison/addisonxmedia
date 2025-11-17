@@ -1,4 +1,4 @@
-import { Switch, Route } from "wouter";
+import { Switch, Route, useLocation } from "wouter";
 import { queryClient } from "./lib/queryClient";
 import { QueryClientProvider } from "@tanstack/react-query";
 import { Toaster } from "@/components/ui/toaster";
@@ -92,34 +92,30 @@ function Router() {
 }
 
 function App() {
+  const [location] = useLocation();
+  const isAdminRoute = location.startsWith('/admin');
+
   return (
     <QueryClientProvider client={queryClient}>
       <TooltipProvider>
-        <div className="flex flex-col min-h-screen">
-          <Route path="/admin">
-            {() => null}
-          </Route>
-          <Route path="/admin/:rest*">
-            {() => null}
-          </Route>
-          <Route>
-            {(params) => !params.path?.startsWith('/admin') && <Navbar />}
-          </Route>
-          
-          <div className="flex-1 pb-24 lg:pb-0">
+        {isAdminRoute ? (
+          <>
+            {/* Admin routes - no navbar/footer */}
             <Router />
-          </div>
-          
-          <Route>
-            {(params) => !params.path?.startsWith('/admin') && <Footer />}
-          </Route>
-        </div>
-        
-        {/* WhatsApp Floating Button - Only on public pages */}
-        <Route>
-          {(params) => !params.path?.startsWith('/admin') && <WhatsAppButton />}
-        </Route>
-        
+          </>
+        ) : (
+          <>
+            {/* Public routes - with navbar/footer */}
+            <div className="flex flex-col min-h-screen">
+              <Navbar />
+              <div className="flex-1 pb-24 lg:pb-0">
+                <Router />
+              </div>
+              <Footer />
+            </div>
+            <WhatsAppButton />
+          </>
+        )}
         <Toaster />
       </TooltipProvider>
     </QueryClientProvider>

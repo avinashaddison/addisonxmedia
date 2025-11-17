@@ -159,7 +159,7 @@ export function AdminLayout({ children }: AdminLayoutProps) {
                     const isActive = 
                       item.url === "/admin" 
                         ? location === "/admin" || location === "/admin/dashboard"
-                        : location.startsWith(item.url);
+                        : location?.startsWith(item.url) || false;
                     
                     return (
                       <SidebarMenuItem key={item.title}>

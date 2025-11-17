@@ -25,7 +25,7 @@ export default function NewDashboard() {
   });
 
   const { data: contacts = [] } = useQuery<ContactSubmission[]>({
-    queryKey: ["/api/contact-submissions"],
+    queryKey: ["/api/contact"],
   });
 
   const { data: testimonials = [] } = useQuery<Testimonial[]>({
@@ -54,7 +54,7 @@ export default function NewDashboard() {
   const newLeads = leads.filter(l => l.status === "new").length;
   const activeProjects = projects.filter(p => p.status === "in-progress").length;
   const pendingInvoices = invoices.filter(i => i.status === "pending").length;
-  const activeTestimonials = testimonials.filter(t => t.isActive === "true").length;
+  const activeTestimonials = testimonials.filter(t => t.isActive === true).length;
 
   const stats = [
     {
@@ -119,34 +119,7 @@ export default function NewDashboard() {
       icon: Users,
       link: "/admin/employees/new",
       color: "text-blue-600",
-    },
-    {
-      title: "Add Client",
-      description: "Register a new client",
-      icon: Building2,
-      link: "/admin/clients/new",
-      color: "text-green-600",
-    },
-    {
-      title: "Add Lead",
-      description: "Create a new lead",
-      icon: TrendingUp,
-      link: "/admin/leads/new",
-      color: "text-purple-600",
-    },
-    {
-      title: "Create Project",
-      description: "Start a new project",
-      icon: FolderKanban,
-      link: "/admin/projects/new",
-      color: "text-orange-600",
-    },
-    {
-      title: "Generate Invoice",
-      description: "Create a new invoice",
-      icon: FileText,
-      link: "/admin/invoices/new",
-      color: "text-red-600",
+      enabled: true,
     },
     {
       title: "Add Testimonial",
@@ -154,6 +127,15 @@ export default function NewDashboard() {
       icon: Star,
       link: "/admin/testimonials/new",
       color: "text-yellow-600",
+      enabled: true,
+    },
+    {
+      title: "View Contacts",
+      description: "Manage contact submissions",
+      icon: MessageSquare,
+      link: "/admin/contacts",
+      color: "text-teal-600",
+      enabled: true,
     },
   ];
 
