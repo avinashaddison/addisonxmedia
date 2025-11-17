@@ -2,7 +2,7 @@ import type { Express } from "express";
 import { createServer, type Server } from "http";
 import { storage } from "./storage";
 import { setupAuth, isAuthenticated } from "./replitAuth";
-import { ObjectStorageService } from "./objectStorage";
+import { ObjectStorageService, parseObjectPath, signObjectURL } from "./objectStorage";
 import { 
   insertEmployeeSchema, 
   updateEmployeeSchema, 
@@ -820,11 +820,55 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // Team member photo serving route
+  app.get("/api/team-member-photo/:filename", async (req, res) => {
+    try {
+      const { filename } = req.params;
+      const objectStorageService = new ObjectStorageService();
+      const publicDir = objectStorageService.getPublicObjectDir();
+      
+      if (!publicDir) {
+        return res.status(500).json({ message: "Object storage not configured" });
+      }
+
+      const fullPath = `${publicDir}/team-photos/${filename}`;
+      const { bucketName, objectName } = parseObjectPath(fullPath);
+
+      const signedUrl = await signObjectURL({
+        bucketName,
+        objectName,
+        method: "GET",
+        ttlSec: 3600,
+      });
+
+      res.redirect(signedUrl);
+    } catch (error) {
+      console.error("Error serving team member photo:", error);
+      res.status(500).json({ message: "Failed to serve photo" });
+    }
+  });
+
+  // Helper function to convert photo URLs
+  const convertPhotoUrl = (photoUrl: string | null): string | null => {
+    if (!photoUrl) return null;
+    
+    // Extract filename from the path
+    const parts = photoUrl.split('/');
+    const filename = parts[parts.length - 1];
+    
+    // Return the API endpoint URL
+    return `/api/team-member-photo/${filename}`;
+  };
+
   // Team Members routes
   app.get("/api/team-members/active", async (req, res) => {
     try {
       const teamMembers = await storage.getActiveTeamMembers();
-      res.json(teamMembers);
+      const teamMembersWithUrls = teamMembers.map(member => ({
+        ...member,
+        photoUrl: convertPhotoUrl(member.photoUrl)
+      }));
+      res.json(teamMembersWithUrls);
     } catch (error) {
       console.error("Error fetching active team members:", error);
       res.status(500).json({ message: "Failed to fetch active team members" });
@@ -834,7 +878,11 @@ export async function registerRoutes(app: Express): Promise<Server> {
   app.get("/api/team-members", isAuthenticated, async (req, res) => {
     try {
       const teamMembers = await storage.getAllTeamMembers();
-      res.json(teamMembers);
+      const teamMembersWithUrls = teamMembers.map(member => ({
+        ...member,
+        photoUrl: convertPhotoUrl(member.photoUrl)
+      }));
+      res.json(teamMembersWithUrls);
     } catch (error) {
       console.error("Error fetching team members:", error);
       res.status(500).json({ message: "Failed to fetch team members" });
@@ -850,7 +898,10 @@ export async function registerRoutes(app: Express): Promise<Server> {
         return res.status(404).json({ message: "Team member not found" });
       }
 
-      res.json(teamMember);
+      res.json({
+        ...teamMember,
+        photoUrl: convertPhotoUrl(teamMember.photoUrl)
+      });
     } catch (error) {
       console.error("Error fetching team member:", error);
       res.status(500).json({ message: "Failed to fetch team member" });

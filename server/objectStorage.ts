@@ -42,17 +42,27 @@ export class ObjectStorageService {
     return dir;
   }
 
+  getPublicObjectDir(): string {
+    const paths = process.env.PUBLIC_OBJECT_SEARCH_PATHS;
+    if (!paths) {
+      console.warn("PUBLIC_OBJECT_SEARCH_PATHS not set - public object storage features will not work");
+      return "";
+    }
+    const firstPath = paths.split(',')[0].trim();
+    return firstPath;
+  }
+
   async getUploadURL(): Promise<string> {
-    const privateObjectDir = this.getPrivateObjectDir();
-    if (!privateObjectDir) {
+    const publicObjectDir = this.getPublicObjectDir();
+    if (!publicObjectDir) {
       throw new Error(
-        "PRIVATE_OBJECT_DIR not set. Object storage not configured. " +
+        "PUBLIC_OBJECT_SEARCH_PATHS not set. Object storage not configured. " +
           "Please set up object storage in the Replit environment."
       );
     }
 
     const objectId = randomUUID();
-    const fullPath = `${privateObjectDir}/employee-photos/${objectId}`;
+    const fullPath = `${publicObjectDir}/team-photos/${objectId}`;
 
     const { bucketName, objectName } = parseObjectPath(fullPath);
 
@@ -85,7 +95,7 @@ export class ObjectStorageService {
   }
 }
 
-function parseObjectPath(path: string): {
+export function parseObjectPath(path: string): {
   bucketName: string;
   objectName: string;
 } {
@@ -106,7 +116,7 @@ function parseObjectPath(path: string): {
   };
 }
 
-async function signObjectURL({
+export async function signObjectURL({
   bucketName,
   objectName,
   method,
