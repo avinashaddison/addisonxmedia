@@ -90,11 +90,11 @@ export default function Leads() {
   };
 
   return (
-    <div className="p-6 space-y-6">
+    <div className="p-6 space-y-8">
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-3xl font-bold mb-2">Leads</h1>
-          <p className="text-muted-foreground">Track and manage your sales leads</p>
+          <h1 className="text-4xl font-bold mb-2 tracking-tight">Leads</h1>
+          <p className="text-base text-muted-foreground">Track and manage your sales leads</p>
         </div>
         <Link href="/admin/leads/new">
           <Button data-testid="button-add-lead">
@@ -104,66 +104,79 @@ export default function Leads() {
         </Link>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-5 gap-4">
-        <Card className="p-4">
+      <div className="grid grid-cols-1 md:grid-cols-5 gap-6">
+        <Card className="p-6 border border-border/50 bg-gradient-to-br from-blue-500/10 to-blue-500/5 hover-elevate transition-all">
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-sm text-muted-foreground">New</p>
-              <p className="text-2xl font-bold" data-testid="stat-new">{newLeads}</p>
+              <p className="text-sm font-medium text-muted-foreground mb-1">New</p>
+              <p className="text-3xl font-bold" data-testid="stat-new">{newLeads}</p>
             </div>
-            <TrendingUp className="h-8 w-8 text-blue-600" />
+            <div className="w-12 h-12 rounded-lg bg-blue-500/20 flex items-center justify-center">
+              <TrendingUp className="h-6 w-6 text-blue-600 dark:text-blue-400" />
+            </div>
           </div>
         </Card>
-        <Card className="p-4">
+        <Card className="p-6 border border-border/50 bg-gradient-to-br from-yellow-500/10 to-yellow-500/5 hover-elevate transition-all">
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-sm text-muted-foreground">Contacted</p>
-              <p className="text-2xl font-bold" data-testid="stat-contacted">{contactedLeads}</p>
+              <p className="text-sm font-medium text-muted-foreground mb-1">Contacted</p>
+              <p className="text-3xl font-bold" data-testid="stat-contacted">{contactedLeads}</p>
             </div>
-            <TrendingUp className="h-8 w-8 text-yellow-600" />
+            <div className="w-12 h-12 rounded-lg bg-yellow-500/20 flex items-center justify-center">
+              <TrendingUp className="h-6 w-6 text-yellow-600 dark:text-yellow-400" />
+            </div>
           </div>
         </Card>
-        <Card className="p-4">
+        <Card className="p-6 border border-border/50 bg-gradient-to-br from-purple-500/10 to-purple-500/5 hover-elevate transition-all">
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-sm text-muted-foreground">Qualified</p>
-              <p className="text-2xl font-bold" data-testid="stat-qualified">{qualifiedLeads}</p>
+              <p className="text-sm font-medium text-muted-foreground mb-1">Qualified</p>
+              <p className="text-3xl font-bold" data-testid="stat-qualified">{qualifiedLeads}</p>
             </div>
-            <TrendingUp className="h-8 w-8 text-purple-600" />
+            <div className="w-12 h-12 rounded-lg bg-purple-500/20 flex items-center justify-center">
+              <TrendingUp className="h-6 w-6 text-purple-600 dark:text-purple-400" />
+            </div>
           </div>
         </Card>
-        <Card className="p-4">
+        <Card className="p-6 border border-border/50 bg-gradient-to-br from-green-500/10 to-green-500/5 hover-elevate transition-all">
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-sm text-muted-foreground">Converted</p>
-              <p className="text-2xl font-bold" data-testid="stat-converted">{convertedLeads}</p>
+              <p className="text-sm font-medium text-muted-foreground mb-1">Converted</p>
+              <p className="text-3xl font-bold" data-testid="stat-converted">{convertedLeads}</p>
             </div>
-            <TrendingUp className="h-8 w-8 text-green-600" />
+            <div className="w-12 h-12 rounded-lg bg-green-500/20 flex items-center justify-center">
+              <TrendingUp className="h-6 w-6 text-green-600 dark:text-green-400" />
+            </div>
           </div>
         </Card>
-        <Card className="p-4">
+        <Card className="p-6 border border-border/50 bg-gradient-to-br from-red-500/10 to-red-500/5 hover-elevate transition-all">
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-sm text-muted-foreground">Lost</p>
-              <p className="text-2xl font-bold" data-testid="stat-lost">{lostLeads}</p>
+              <p className="text-sm font-medium text-muted-foreground mb-1">Lost</p>
+              <p className="text-3xl font-bold" data-testid="stat-lost">{lostLeads}</p>
             </div>
-            <TrendingUp className="h-8 w-8 text-red-600" />
+            <div className="w-12 h-12 rounded-lg bg-red-500/20 flex items-center justify-center">
+              <TrendingUp className="h-6 w-6 text-red-600 dark:text-red-400" />
+            </div>
           </div>
         </Card>
       </div>
 
       {leads.length === 0 ? (
-        <Card className="p-12">
+        <Card className="p-16 border border-border/50 bg-gradient-to-br from-muted/50 to-muted/20">
           <div className="text-center">
-            <TrendingUp className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
-            <h3 className="text-lg font-semibold mb-2" data-testid="text-no-leads">
+            <div className="w-20 h-20 rounded-2xl bg-primary/10 flex items-center justify-center mx-auto mb-6">
+              <TrendingUp className="h-10 w-10 text-primary" />
+            </div>
+            <h3 className="text-2xl font-bold mb-3" data-testid="text-no-leads">
               No leads yet
             </h3>
-            <p className="text-muted-foreground mb-6">
-              Get started by adding your first lead
+            <p className="text-base text-muted-foreground mb-8 max-w-md mx-auto">
+              Start tracking your sales pipeline by adding your first lead
             </p>
             <Link href="/admin/leads/new">
-              <Button data-testid="button-add-first-lead">
+              <Button size="lg" data-testid="button-add-first-lead">
+                <Plus className="h-4 w-4 mr-2" />
                 Add Lead
               </Button>
             </Link>
@@ -172,40 +185,46 @@ export default function Leads() {
       ) : (
         <div className="grid grid-cols-1 gap-4">
           {leads.map((lead) => (
-            <Card key={lead.id} className="p-6" data-testid={`card-lead-${lead.id}`}>
-              <div className="flex flex-col md:flex-row gap-4">
+            <Card key={lead.id} className="p-6 border border-border/50 hover-elevate transition-all" data-testid={`card-lead-${lead.id}`}>
+              <div className="flex flex-col md:flex-row gap-6">
                 <div className="flex-1 min-w-0">
-                  <div className="flex items-center gap-2 mb-2">
-                    <h3 className="text-lg font-semibold" data-testid={`text-lead-name-${lead.id}`}>
+                  <div className="flex items-center gap-3 mb-4 flex-wrap">
+                    <h3 className="text-xl font-bold" data-testid={`text-lead-name-${lead.id}`}>
                       {lead.name}
                     </h3>
                     <Badge 
+                      className={
+                        lead.status === "new" ? "bg-blue-500/10 text-blue-700 dark:text-blue-400 border-blue-500/20" :
+                        lead.status === "contacted" ? "bg-yellow-500/10 text-yellow-700 dark:text-yellow-400 border-yellow-500/20" :
+                        lead.status === "qualified" ? "bg-purple-500/10 text-purple-700 dark:text-purple-400 border-purple-500/20" :
+                        lead.status === "converted" ? "bg-green-500/10 text-green-700 dark:text-green-400 border-green-500/20" : ""
+                      }
                       variant={getStatusVariant(lead.status)}
                       data-testid={`badge-status-${lead.id}`}
                     >
                       {lead.status}
                     </Badge>
-                    <Badge variant="outline" data-testid={`badge-source-${lead.id}`}>
+                    <Badge className="bg-muted/50" variant="outline" data-testid={`badge-source-${lead.id}`}>
                       {lead.source}
                     </Badge>
                   </div>
-                  <div className="grid grid-cols-1 md:grid-cols-3 gap-2 text-sm text-muted-foreground">
-                    <p data-testid={`text-lead-email-${lead.id}`}>
-                      <span className="font-semibold">Email:</span> {lead.email}
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-3 text-sm">
+                    <p className="text-muted-foreground" data-testid={`text-lead-email-${lead.id}`}>
+                      <span className="font-semibold text-foreground">Email:</span> {lead.email}
                     </p>
                     {lead.phone && (
-                      <p data-testid={`text-lead-phone-${lead.id}`}>
-                        <span className="font-semibold">Phone:</span> {lead.phone}
+                      <p className="text-muted-foreground" data-testid={`text-lead-phone-${lead.id}`}>
+                        <span className="font-semibold text-foreground">Phone:</span> {lead.phone}
                       </p>
                     )}
                     {lead.company && (
-                      <p data-testid={`text-lead-company-${lead.id}`}>
-                        <span className="font-semibold">Company:</span> {lead.company}
+                      <p className="text-muted-foreground" data-testid={`text-lead-company-${lead.id}`}>
+                        <span className="font-semibold text-foreground">Company:</span> {lead.company}
                       </p>
                     )}
                     {lead.followUpDate && (
-                      <p data-testid={`text-lead-followup-${lead.id}`}>
-                        <span className="font-semibold">Follow up:</span> {format(new Date(lead.followUpDate), "MMM dd, yyyy")}
+                      <p className="text-muted-foreground" data-testid={`text-lead-followup-${lead.id}`}>
+                        <span className="font-semibold text-foreground">Follow up:</span> {format(new Date(lead.followUpDate), "MMM dd, yyyy")}
                       </p>
                     )}
                   </div>

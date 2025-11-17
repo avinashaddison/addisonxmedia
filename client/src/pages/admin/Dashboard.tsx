@@ -54,15 +54,15 @@ export default function Dashboard() {
   return (
     <div className="min-h-screen bg-background">
       {/* Header */}
-      <header className="border-b bg-card">
-        <div className="max-w-7xl mx-auto px-4 md:px-6 py-4">
+      <header className="border-b border-border/50 bg-card/50 backdrop-blur-sm">
+        <div className="max-w-7xl mx-auto px-4 md:px-6 py-6">
           <div className="flex items-center justify-between">
             <div>
-              <h1 className="text-2xl font-bold" data-testid="text-dashboard-title">
+              <h1 className="text-3xl font-bold tracking-tight" data-testid="text-dashboard-title">
                 Admin Dashboard
               </h1>
-              <p className="text-sm text-muted-foreground" data-testid="text-dashboard-subtitle">
-                Manage employee information
+              <p className="text-base text-muted-foreground mt-1" data-testid="text-dashboard-subtitle">
+                Manage employee information and system settings
               </p>
             </div>
             <Button 
@@ -80,15 +80,15 @@ export default function Dashboard() {
       {/* Main Content */}
       <main className="max-w-7xl mx-auto px-4 md:px-6 py-8">
         {/* Quick Navigation */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
           <Link href="/admin/employees/new">
-            <Card className="p-6 hover-elevate transition-all cursor-pointer">
+            <Card className="p-8 border border-border/50 bg-gradient-to-br from-primary/10 to-primary/5 hover-elevate transition-all cursor-pointer">
               <div className="flex items-center gap-4">
-                <div className="w-12 h-12 rounded-md bg-primary/10 flex items-center justify-center">
-                  <Users className="h-6 w-6 text-primary" />
+                <div className="w-16 h-16 rounded-xl bg-primary/20 flex items-center justify-center flex-shrink-0">
+                  <Users className="h-8 w-8 text-primary" />
                 </div>
                 <div>
-                  <h3 className="font-semibold mb-1">Manage Employees</h3>
+                  <h3 className="text-lg font-bold mb-1">Manage Employees</h3>
                   <p className="text-sm text-muted-foreground">
                     {employees.length} employees registered
                   </p>
@@ -98,13 +98,13 @@ export default function Dashboard() {
           </Link>
 
           <Link href="/admin/testimonials">
-            <Card className="p-6 hover-elevate transition-all cursor-pointer" data-testid="card-testimonials">
+            <Card className="p-8 border border-border/50 bg-gradient-to-br from-yellow-500/10 to-yellow-500/5 hover-elevate transition-all cursor-pointer" data-testid="card-testimonials">
               <div className="flex items-center gap-4">
-                <div className="w-12 h-12 rounded-md bg-primary/10 flex items-center justify-center">
-                  <Star className="h-6 w-6 text-primary" />
+                <div className="w-16 h-16 rounded-xl bg-yellow-500/20 flex items-center justify-center flex-shrink-0">
+                  <Star className="h-8 w-8 text-yellow-600 dark:text-yellow-400" />
                 </div>
                 <div>
-                  <h3 className="font-semibold mb-1">Manage Testimonials</h3>
+                  <h3 className="text-lg font-bold mb-1">Manage Testimonials</h3>
                   <p className="text-sm text-muted-foreground">
                     Client reviews and testimonials
                   </p>
@@ -114,13 +114,13 @@ export default function Dashboard() {
           </Link>
 
           <Link href="/admin/analytics">
-            <Card className="p-6 hover-elevate transition-all cursor-pointer" data-testid="card-analytics">
+            <Card className="p-8 border border-border/50 bg-gradient-to-br from-blue-500/10 to-blue-500/5 hover-elevate transition-all cursor-pointer" data-testid="card-analytics">
               <div className="flex items-center gap-4">
-                <div className="w-12 h-12 rounded-md bg-primary/10 flex items-center justify-center">
-                  <BarChart3 className="h-6 w-6 text-primary" />
+                <div className="w-16 h-16 rounded-xl bg-blue-500/20 flex items-center justify-center flex-shrink-0">
+                  <BarChart3 className="h-8 w-8 text-blue-600 dark:text-blue-400" />
                 </div>
                 <div>
-                  <h3 className="font-semibold mb-1">View Analytics</h3>
+                  <h3 className="text-lg font-bold mb-1">View Analytics</h3>
                   <p className="text-sm text-muted-foreground">
                     Verification search statistics
                   </p>
@@ -132,7 +132,7 @@ export default function Dashboard() {
 
         {/* Actions */}
         <div className="flex items-center justify-between mb-6">
-          <h2 className="text-xl font-semibold" data-testid="text-employees-title">
+          <h2 className="text-2xl font-bold tracking-tight" data-testid="text-employees-title">
             Employees
           </h2>
           <Link href="/admin/employees/new">
@@ -145,10 +145,10 @@ export default function Dashboard() {
 
         {/* Employee List */}
         {isLoadingEmployees ? (
-          <Card className="p-8">
+          <Card className="p-16 border border-border/50 bg-gradient-to-br from-muted/50 to-muted/20">
             <div className="text-center">
-              <div className="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-primary mb-4"></div>
-              <p className="text-muted-foreground">Loading employees...</p>
+              <div className="inline-block animate-spin rounded-full h-12 w-12 border-b-2 border-primary mb-6"></div>
+              <p className="text-lg text-muted-foreground">Loading employees...</p>
             </div>
           </Card>
         ) : (

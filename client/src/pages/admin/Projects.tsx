@@ -99,11 +99,11 @@ export default function Projects() {
   };
 
   return (
-    <div className="p-6 space-y-6">
+    <div className="p-6 space-y-8">
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-3xl font-bold mb-2">Projects</h1>
-          <p className="text-muted-foreground">Manage projects and track progress</p>
+          <h1 className="text-4xl font-bold mb-2 tracking-tight">Projects</h1>
+          <p className="text-base text-muted-foreground">Manage projects and track progress</p>
         </div>
         <Link href="/admin/projects/new">
           <Button data-testid="button-add-project">
@@ -113,66 +113,79 @@ export default function Projects() {
         </Link>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-5 gap-4">
-        <Card className="p-4">
+      <div className="grid grid-cols-1 md:grid-cols-5 gap-6">
+        <Card className="p-6 border border-border/50 bg-gradient-to-br from-blue-500/10 to-blue-500/5 hover-elevate transition-all">
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-sm text-muted-foreground">Planning</p>
-              <p className="text-2xl font-bold" data-testid="stat-planning">{planningProjects}</p>
+              <p className="text-sm font-medium text-muted-foreground mb-1">Planning</p>
+              <p className="text-3xl font-bold" data-testid="stat-planning">{planningProjects}</p>
             </div>
-            <FolderKanban className="h-8 w-8 text-blue-600" />
+            <div className="w-12 h-12 rounded-lg bg-blue-500/20 flex items-center justify-center">
+              <FolderKanban className="h-6 w-6 text-blue-600 dark:text-blue-400" />
+            </div>
           </div>
         </Card>
-        <Card className="p-4">
+        <Card className="p-6 border border-border/50 bg-gradient-to-br from-yellow-500/10 to-yellow-500/5 hover-elevate transition-all">
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-sm text-muted-foreground">In Progress</p>
-              <p className="text-2xl font-bold" data-testid="stat-in-progress">{inProgressProjects}</p>
+              <p className="text-sm font-medium text-muted-foreground mb-1">In Progress</p>
+              <p className="text-3xl font-bold" data-testid="stat-in-progress">{inProgressProjects}</p>
             </div>
-            <FolderKanban className="h-8 w-8 text-yellow-600" />
+            <div className="w-12 h-12 rounded-lg bg-yellow-500/20 flex items-center justify-center">
+              <FolderKanban className="h-6 w-6 text-yellow-600 dark:text-yellow-400" />
+            </div>
           </div>
         </Card>
-        <Card className="p-4">
+        <Card className="p-6 border border-border/50 bg-gradient-to-br from-purple-500/10 to-purple-500/5 hover-elevate transition-all">
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-sm text-muted-foreground">Review</p>
-              <p className="text-2xl font-bold" data-testid="stat-review">{reviewProjects}</p>
+              <p className="text-sm font-medium text-muted-foreground mb-1">Review</p>
+              <p className="text-3xl font-bold" data-testid="stat-review">{reviewProjects}</p>
             </div>
-            <FolderKanban className="h-8 w-8 text-purple-600" />
+            <div className="w-12 h-12 rounded-lg bg-purple-500/20 flex items-center justify-center">
+              <FolderKanban className="h-6 w-6 text-purple-600 dark:text-purple-400" />
+            </div>
           </div>
         </Card>
-        <Card className="p-4">
+        <Card className="p-6 border border-border/50 bg-gradient-to-br from-green-500/10 to-green-500/5 hover-elevate transition-all">
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-sm text-muted-foreground">Completed</p>
-              <p className="text-2xl font-bold" data-testid="stat-completed">{completedProjects}</p>
+              <p className="text-sm font-medium text-muted-foreground mb-1">Completed</p>
+              <p className="text-3xl font-bold" data-testid="stat-completed">{completedProjects}</p>
             </div>
-            <FolderKanban className="h-8 w-8 text-green-600" />
+            <div className="w-12 h-12 rounded-lg bg-green-500/20 flex items-center justify-center">
+              <FolderKanban className="h-6 w-6 text-green-600 dark:text-green-400" />
+            </div>
           </div>
         </Card>
-        <Card className="p-4">
+        <Card className="p-6 border border-border/50 bg-gradient-to-br from-red-500/10 to-red-500/5 hover-elevate transition-all">
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-sm text-muted-foreground">Cancelled</p>
-              <p className="text-2xl font-bold" data-testid="stat-cancelled">{cancelledProjects}</p>
+              <p className="text-sm font-medium text-muted-foreground mb-1">Cancelled</p>
+              <p className="text-3xl font-bold" data-testid="stat-cancelled">{cancelledProjects}</p>
             </div>
-            <FolderKanban className="h-8 w-8 text-red-600" />
+            <div className="w-12 h-12 rounded-lg bg-red-500/20 flex items-center justify-center">
+              <FolderKanban className="h-6 w-6 text-red-600 dark:text-red-400" />
+            </div>
           </div>
         </Card>
       </div>
 
       {projects.length === 0 ? (
-        <Card className="p-12">
+        <Card className="p-16 border border-border/50 bg-gradient-to-br from-muted/50 to-muted/20">
           <div className="text-center">
-            <FolderKanban className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
-            <h3 className="text-lg font-semibold mb-2" data-testid="text-no-projects">
+            <div className="w-20 h-20 rounded-2xl bg-primary/10 flex items-center justify-center mx-auto mb-6">
+              <FolderKanban className="h-10 w-10 text-primary" />
+            </div>
+            <h3 className="text-2xl font-bold mb-3" data-testid="text-no-projects">
               No projects yet
             </h3>
-            <p className="text-muted-foreground mb-6">
-              Get started by creating your first project
+            <p className="text-base text-muted-foreground mb-8 max-w-md mx-auto">
+              Start organizing your work by creating your first project
             </p>
             <Link href="/admin/projects/new">
-              <Button data-testid="button-add-first-project">
+              <Button size="lg" data-testid="button-add-first-project">
+                <Plus className="h-4 w-4 mr-2" />
                 Create Project
               </Button>
             </Link>
@@ -181,44 +194,54 @@ export default function Projects() {
       ) : (
         <div className="grid grid-cols-1 gap-4">
           {projects.map((project) => (
-            <Card key={project.id} className="p-6" data-testid={`card-project-${project.id}`}>
-              <div className="flex flex-col md:flex-row gap-4">
+            <Card key={project.id} className="p-6 border border-border/50 hover-elevate transition-all" data-testid={`card-project-${project.id}`}>
+              <div className="flex flex-col md:flex-row gap-6">
                 <div className="flex-1 min-w-0">
-                  <div className="flex items-center gap-2 mb-2">
-                    <h3 className="text-lg font-semibold" data-testid={`text-project-name-${project.id}`}>
+                  <div className="flex items-center gap-3 mb-4 flex-wrap">
+                    <h3 className="text-xl font-bold" data-testid={`text-project-name-${project.id}`}>
                       {project.name}
                     </h3>
                     <Badge 
+                      className={
+                        project.status === "in-progress" ? "bg-yellow-500/10 text-yellow-700 dark:text-yellow-400 border-yellow-500/20" :
+                        project.status === "completed" ? "bg-green-500/10 text-green-700 dark:text-green-400 border-green-500/20" :
+                        project.status === "planning" ? "bg-blue-500/10 text-blue-700 dark:text-blue-400 border-blue-500/20" :
+                        project.status === "review" ? "bg-purple-500/10 text-purple-700 dark:text-purple-400 border-purple-500/20" : ""
+                      }
                       variant={getStatusVariant(project.status)}
                       data-testid={`badge-status-${project.id}`}
                     >
                       {project.status}
                     </Badge>
                     <Badge 
+                      className={
+                        project.priority === "high" ? "bg-red-500/10 text-red-700 dark:text-red-400 border-red-500/20" :
+                        project.priority === "medium" ? "bg-yellow-500/10 text-yellow-700 dark:text-yellow-400 border-yellow-500/20" : ""
+                      }
                       variant={getPriorityVariant(project.priority)}
                       data-testid={`badge-priority-${project.id}`}
                     >
                       {project.priority}
                     </Badge>
                   </div>
-                  <div className="grid grid-cols-1 md:grid-cols-3 gap-2 text-sm text-muted-foreground">
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-3 text-sm">
                     {project.startDate && (
-                      <p data-testid={`text-project-start-${project.id}`}>
-                        <span className="font-semibold">Start:</span> {format(new Date(project.startDate), "MMM dd, yyyy")}
+                      <p className="text-muted-foreground" data-testid={`text-project-start-${project.id}`}>
+                        <span className="font-semibold text-foreground">Start:</span> {format(new Date(project.startDate), "MMM dd, yyyy")}
                       </p>
                     )}
                     {project.deadline && (
-                      <p data-testid={`text-project-deadline-${project.id}`}>
-                        <span className="font-semibold">Deadline:</span> {format(new Date(project.deadline), "MMM dd, yyyy")}
+                      <p className="text-muted-foreground" data-testid={`text-project-deadline-${project.id}`}>
+                        <span className="font-semibold text-foreground">Deadline:</span> {format(new Date(project.deadline), "MMM dd, yyyy")}
                       </p>
                     )}
                     {project.budget && (
-                      <p data-testid={`text-project-budget-${project.id}`}>
-                        <span className="font-semibold">Budget:</span> ₹{project.budget}
+                      <p className="text-muted-foreground" data-testid={`text-project-budget-${project.id}`}>
+                        <span className="font-semibold text-foreground">Budget:</span> ₹{project.budget}
                       </p>
                     )}
-                    <p data-testid={`text-project-payment-${project.id}`}>
-                      <span className="font-semibold">Payment:</span> {project.paymentStatus}
+                    <p className="text-muted-foreground" data-testid={`text-project-payment-${project.id}`}>
+                      <span className="font-semibold text-foreground">Payment:</span> {project.paymentStatus}
                     </p>
                   </div>
                 </div>

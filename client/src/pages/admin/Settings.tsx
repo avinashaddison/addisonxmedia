@@ -66,17 +66,19 @@ export default function Settings() {
   }
 
   return (
-    <div className="p-6 space-y-6">
+    <div className="p-6 space-y-8">
       <div>
-        <h1 className="text-3xl font-bold mb-2">Settings</h1>
-        <p className="text-muted-foreground">Configure system settings and preferences</p>
+        <h1 className="text-4xl font-bold mb-2 tracking-tight">Settings</h1>
+        <p className="text-base text-muted-foreground">Configure system settings and preferences</p>
       </div>
 
       {/* Company Information */}
-      <Card className="p-6">
-        <div className="flex items-center gap-2 mb-6">
-          <Building2 className="h-5 w-5 text-primary" />
-          <h2 className="text-xl font-semibold">Company Information</h2>
+      <Card className="p-8 border border-border/50 bg-gradient-to-br from-primary/5 to-transparent">
+        <div className="flex items-center gap-3 mb-8">
+          <div className="w-12 h-12 rounded-lg bg-primary/20 flex items-center justify-center">
+            <Building2 className="h-6 w-6 text-primary" />
+          </div>
+          <h2 className="text-2xl font-bold">Company Information</h2>
         </div>
         <div className="space-y-4">
           {companySettings.map((setting) => {
@@ -153,32 +155,43 @@ export default function Settings() {
       </Card>
 
       {/* System Settings */}
-      <Card className="p-6">
-        <div className="flex items-center gap-2 mb-6">
-          <SettingsIcon className="h-5 w-5 text-primary" />
-          <h2 className="text-xl font-semibold">System Settings</h2>
+      <Card className="p-8 border border-border/50 bg-gradient-to-br from-blue-500/5 to-transparent">
+        <div className="flex items-center gap-3 mb-8">
+          <div className="w-12 h-12 rounded-lg bg-blue-500/20 flex items-center justify-center">
+            <SettingsIcon className="h-6 w-6 text-blue-600 dark:text-blue-400" />
+          </div>
+          <h2 className="text-2xl font-bold">System Settings</h2>
         </div>
         <div className="space-y-4">
-          <div className="flex items-center justify-between p-4 bg-muted rounded-md">
+          <div className="flex items-center justify-between p-6 bg-gradient-to-br from-green-500/10 to-green-500/5 border border-border/50 rounded-lg hover-elevate transition-all">
             <div>
-              <p className="font-medium">Database</p>
-              <p className="text-sm text-muted-foreground">PostgreSQL via Neon</p>
+              <p className="font-semibold text-lg">Database</p>
+              <p className="text-sm text-muted-foreground mt-1">PostgreSQL via Neon</p>
             </div>
-            <div className="w-2 h-2 rounded-full bg-green-600"></div>
+            <div className="flex items-center gap-2">
+              <div className="w-3 h-3 rounded-full bg-green-500 animate-pulse"></div>
+              <span className="text-sm font-medium text-green-600 dark:text-green-400">Active</span>
+            </div>
           </div>
-          <div className="flex items-center justify-between p-4 bg-muted rounded-md">
+          <div className="flex items-center justify-between p-6 bg-gradient-to-br from-green-500/10 to-green-500/5 border border-border/50 rounded-lg hover-elevate transition-all">
             <div>
-              <p className="font-medium">Object Storage</p>
-              <p className="text-sm text-muted-foreground">Google Cloud Storage</p>
+              <p className="font-semibold text-lg">Object Storage</p>
+              <p className="text-sm text-muted-foreground mt-1">Google Cloud Storage</p>
             </div>
-            <div className="w-2 h-2 rounded-full bg-green-600"></div>
+            <div className="flex items-center gap-2">
+              <div className="w-3 h-3 rounded-full bg-green-500 animate-pulse"></div>
+              <span className="text-sm font-medium text-green-600 dark:text-green-400">Active</span>
+            </div>
           </div>
-          <div className="flex items-center justify-between p-4 bg-muted rounded-md">
+          <div className="flex items-center justify-between p-6 bg-gradient-to-br from-green-500/10 to-green-500/5 border border-border/50 rounded-lg hover-elevate transition-all">
             <div>
-              <p className="font-medium">Authentication</p>
-              <p className="text-sm text-muted-foreground">Replit OIDC</p>
+              <p className="font-semibold text-lg">Authentication</p>
+              <p className="text-sm text-muted-foreground mt-1">Replit OIDC</p>
             </div>
-            <div className="w-2 h-2 rounded-full bg-green-600"></div>
+            <div className="flex items-center gap-2">
+              <div className="w-3 h-3 rounded-full bg-green-500 animate-pulse"></div>
+              <span className="text-sm font-medium text-green-600 dark:text-green-400">Active</span>
+            </div>
           </div>
         </div>
       </Card>

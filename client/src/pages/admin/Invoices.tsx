@@ -91,11 +91,11 @@ export default function Invoices() {
   };
 
   return (
-    <div className="p-6 space-y-6">
+    <div className="p-6 space-y-8">
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-3xl font-bold mb-2">Invoices</h1>
-          <p className="text-muted-foreground">Generate and manage invoices</p>
+          <h1 className="text-4xl font-bold mb-2 tracking-tight">Invoices</h1>
+          <p className="text-base text-muted-foreground">Generate and manage invoices</p>
         </div>
         <Link href="/admin/invoices/new">
           <Button data-testid="button-add-invoice">
@@ -106,74 +106,89 @@ export default function Invoices() {
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-6 gap-4">
-        <Card className="p-4">
+        <Card className="p-6 border border-border/50 bg-gradient-to-br from-primary/10 to-primary/5 hover-elevate transition-all">
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-sm text-muted-foreground">Total</p>
-              <p className="text-2xl font-bold" data-testid="stat-total">{invoices.length}</p>
+              <p className="text-sm font-medium text-muted-foreground mb-1">Total</p>
+              <p className="text-3xl font-bold" data-testid="stat-total">{invoices.length}</p>
             </div>
-            <FileText className="h-8 w-8 text-muted-foreground" />
+            <div className="w-12 h-12 rounded-lg bg-primary/20 flex items-center justify-center">
+              <FileText className="h-6 w-6 text-primary" />
+            </div>
           </div>
         </Card>
-        <Card className="p-4">
+        <Card className="p-6 border border-border/50 bg-gradient-to-br from-yellow-500/10 to-yellow-500/5 hover-elevate transition-all">
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-sm text-muted-foreground">Pending</p>
-              <p className="text-2xl font-bold" data-testid="stat-pending">{pendingInvoices}</p>
+              <p className="text-sm font-medium text-muted-foreground mb-1">Pending</p>
+              <p className="text-3xl font-bold" data-testid="stat-pending">{pendingInvoices}</p>
             </div>
-            <FileText className="h-8 w-8 text-yellow-600" />
+            <div className="w-12 h-12 rounded-lg bg-yellow-500/20 flex items-center justify-center">
+              <FileText className="h-6 w-6 text-yellow-600 dark:text-yellow-400" />
+            </div>
           </div>
         </Card>
-        <Card className="p-4">
+        <Card className="p-6 border border-border/50 bg-gradient-to-br from-green-500/10 to-green-500/5 hover-elevate transition-all">
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-sm text-muted-foreground">Paid</p>
-              <p className="text-2xl font-bold" data-testid="stat-paid">{paidInvoices}</p>
+              <p className="text-sm font-medium text-muted-foreground mb-1">Paid</p>
+              <p className="text-3xl font-bold" data-testid="stat-paid">{paidInvoices}</p>
             </div>
-            <FileText className="h-8 w-8 text-green-600" />
+            <div className="w-12 h-12 rounded-lg bg-green-500/20 flex items-center justify-center">
+              <FileText className="h-6 w-6 text-green-600 dark:text-green-400" />
+            </div>
           </div>
         </Card>
-        <Card className="p-4">
+        <Card className="p-6 border border-border/50 bg-gradient-to-br from-red-500/10 to-red-500/5 hover-elevate transition-all">
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-sm text-muted-foreground">Overdue</p>
-              <p className="text-2xl font-bold" data-testid="stat-overdue">{overdueInvoices}</p>
+              <p className="text-sm font-medium text-muted-foreground mb-1">Overdue</p>
+              <p className="text-3xl font-bold" data-testid="stat-overdue">{overdueInvoices}</p>
             </div>
-            <FileText className="h-8 w-8 text-red-600" />
+            <div className="w-12 h-12 rounded-lg bg-red-500/20 flex items-center justify-center">
+              <FileText className="h-6 w-6 text-red-600 dark:text-red-400" />
+            </div>
           </div>
         </Card>
-        <Card className="p-4">
+        <Card className="p-6 border border-border/50 bg-gradient-to-br from-gray-500/10 to-gray-500/5 hover-elevate transition-all">
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-sm text-muted-foreground">Cancelled</p>
-              <p className="text-2xl font-bold" data-testid="stat-cancelled">{cancelledInvoices}</p>
+              <p className="text-sm font-medium text-muted-foreground mb-1">Cancelled</p>
+              <p className="text-3xl font-bold" data-testid="stat-cancelled">{cancelledInvoices}</p>
             </div>
-            <FileText className="h-8 w-8 text-gray-600" />
+            <div className="w-12 h-12 rounded-lg bg-gray-500/20 flex items-center justify-center">
+              <FileText className="h-6 w-6 text-gray-600 dark:text-gray-400" />
+            </div>
           </div>
         </Card>
-        <Card className="p-4">
+        <Card className="p-6 border border-border/50 bg-gradient-to-br from-green-500/10 to-green-500/5 hover-elevate transition-all">
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-sm text-muted-foreground">Collected</p>
-              <p className="text-lg font-bold" data-testid="stat-collected">₹{paidAmount.toFixed(2)}</p>
+              <p className="text-sm font-medium text-muted-foreground mb-1">Collected</p>
+              <p className="text-2xl font-bold" data-testid="stat-collected">₹{paidAmount.toFixed(2)}</p>
             </div>
-            <FileText className="h-8 w-8 text-green-600" />
+            <div className="w-12 h-12 rounded-lg bg-green-500/20 flex items-center justify-center">
+              <FileText className="h-6 w-6 text-green-600 dark:text-green-400" />
+            </div>
           </div>
         </Card>
       </div>
 
       {invoices.length === 0 ? (
-        <Card className="p-12">
+        <Card className="p-16 border border-border/50 bg-gradient-to-br from-muted/50 to-muted/20">
           <div className="text-center">
-            <FileText className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
-            <h3 className="text-lg font-semibold mb-2" data-testid="text-no-invoices">
+            <div className="w-20 h-20 rounded-2xl bg-primary/10 flex items-center justify-center mx-auto mb-6">
+              <FileText className="h-10 w-10 text-primary" />
+            </div>
+            <h3 className="text-2xl font-bold mb-3" data-testid="text-no-invoices">
               No invoices yet
             </h3>
-            <p className="text-muted-foreground mb-6">
-              Get started by generating your first invoice
+            <p className="text-base text-muted-foreground mb-8 max-w-md mx-auto">
+              Start managing your finances by generating your first invoice
             </p>
             <Link href="/admin/invoices/new">
-              <Button data-testid="button-add-first-invoice">
+              <Button size="lg" data-testid="button-add-first-invoice">
+                <Plus className="h-4 w-4 mr-2" />
                 Generate Invoice
               </Button>
             </Link>
@@ -182,38 +197,43 @@ export default function Invoices() {
       ) : (
         <div className="grid grid-cols-1 gap-4">
           {invoices.map((invoice) => (
-            <Card key={invoice.id} className="p-6" data-testid={`card-invoice-${invoice.id}`}>
-              <div className="flex flex-col md:flex-row gap-4">
+            <Card key={invoice.id} className="p-6 border border-border/50 hover-elevate transition-all" data-testid={`card-invoice-${invoice.id}`}>
+              <div className="flex flex-col md:flex-row gap-6">
                 <div className="flex-1 min-w-0">
-                  <div className="flex items-center gap-2 mb-2">
-                    <h3 className="text-lg font-semibold" data-testid={`text-invoice-number-${invoice.id}`}>
+                  <div className="flex items-center gap-3 mb-4">
+                    <h3 className="text-xl font-bold" data-testid={`text-invoice-number-${invoice.id}`}>
                       {invoice.invoiceNumber}
                     </h3>
                     <Badge 
+                      className={
+                        invoice.status === "paid" ? "bg-green-500/10 text-green-700 dark:text-green-400 border-green-500/20" :
+                        invoice.status === "pending" ? "bg-yellow-500/10 text-yellow-700 dark:text-yellow-400 border-yellow-500/20" :
+                        invoice.status === "overdue" ? "bg-red-500/10 text-red-700 dark:text-red-400 border-red-500/20" : ""
+                      }
                       variant={getStatusVariant(invoice.status)}
                       data-testid={`badge-status-${invoice.id}`}
                     >
                       {invoice.status}
                     </Badge>
                   </div>
-                  <div className="grid grid-cols-1 md:grid-cols-4 gap-2 text-sm text-muted-foreground">
-                    <p data-testid={`text-invoice-amount-${invoice.id}`}>
-                      <span className="font-semibold">Amount:</span> ₹{invoice.amount}
+                  <div className="grid grid-cols-1 md:grid-cols-4 gap-3 text-sm">
+                    <p className="text-muted-foreground" data-testid={`text-invoice-amount-${invoice.id}`}>
+                      <span className="font-semibold text-foreground">Amount:</span> ₹{invoice.amount}
                     </p>
-                    <p data-testid={`text-invoice-tax-${invoice.id}`}>
-                      <span className="font-semibold">Tax:</span> ₹{invoice.tax}
+                    <p className="text-muted-foreground" data-testid={`text-invoice-tax-${invoice.id}`}>
+                      <span className="font-semibold text-foreground">Tax:</span> ₹{invoice.tax}
                     </p>
-                    <p data-testid={`text-invoice-total-${invoice.id}`}>
-                      <span className="font-semibold">Total:</span> ₹{invoice.total}
+                    <p className="text-muted-foreground" data-testid={`text-invoice-total-${invoice.id}`}>
+                      <span className="font-semibold text-foreground">Total:</span> ₹{invoice.total}
                     </p>
                     {invoice.dueDate && (
-                      <p data-testid={`text-invoice-due-${invoice.id}`}>
-                        <span className="font-semibold">Due:</span> {format(new Date(invoice.dueDate), "MMM dd, yyyy")}
+                      <p className="text-muted-foreground" data-testid={`text-invoice-due-${invoice.id}`}>
+                        <span className="font-semibold text-foreground">Due:</span> {format(new Date(invoice.dueDate), "MMM dd, yyyy")}
                       </p>
                     )}
                     {invoice.paidDate && (
-                      <p data-testid={`text-invoice-paid-${invoice.id}`}>
-                        <span className="font-semibold">Paid:</span> {format(new Date(invoice.paidDate), "MMM dd, yyyy")}
+                      <p className="text-muted-foreground" data-testid={`text-invoice-paid-${invoice.id}`}>
+                        <span className="font-semibold text-foreground">Paid:</span> {format(new Date(invoice.paidDate), "MMM dd, yyyy")}
                       </p>
                     )}
                   </div>

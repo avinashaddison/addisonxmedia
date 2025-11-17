@@ -76,11 +76,11 @@ export default function Clients() {
   const pendingClients = clients.filter(c => c.status === "pending").length;
 
   return (
-    <div className="p-6 space-y-6">
+    <div className="p-6 space-y-8">
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-3xl font-bold mb-2">Clients</h1>
-          <p className="text-muted-foreground">Manage your clients and their information</p>
+          <h1 className="text-4xl font-bold mb-2 tracking-tight">Clients</h1>
+          <p className="text-base text-muted-foreground">Manage your clients and their information</p>
         </div>
         <Link href="/admin/clients/new">
           <Button data-testid="button-add-client">
@@ -90,57 +90,68 @@ export default function Clients() {
         </Link>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-        <Card className="p-4">
+      <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
+        <Card className="p-6 border border-border/50 bg-gradient-to-br from-primary/10 to-primary/5 hover-elevate transition-all">
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-sm text-muted-foreground">Total Clients</p>
-              <p className="text-2xl font-bold" data-testid="stat-total">{clients.length}</p>
+              <p className="text-sm font-medium text-muted-foreground mb-1">Total Clients</p>
+              <p className="text-3xl font-bold" data-testid="stat-total">{clients.length}</p>
             </div>
-            <Building2 className="h-8 w-8 text-muted-foreground" />
+            <div className="w-12 h-12 rounded-lg bg-primary/20 flex items-center justify-center">
+              <Building2 className="h-6 w-6 text-primary" />
+            </div>
           </div>
         </Card>
-        <Card className="p-4">
+        <Card className="p-6 border border-border/50 bg-gradient-to-br from-green-500/10 to-green-500/5 hover-elevate transition-all">
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-sm text-muted-foreground">Active</p>
-              <p className="text-2xl font-bold" data-testid="stat-active">{activeClients}</p>
+              <p className="text-sm font-medium text-muted-foreground mb-1">Active</p>
+              <p className="text-3xl font-bold" data-testid="stat-active">{activeClients}</p>
             </div>
-            <Building2 className="h-8 w-8 text-green-600" />
+            <div className="w-12 h-12 rounded-lg bg-green-500/20 flex items-center justify-center">
+              <Building2 className="h-6 w-6 text-green-600 dark:text-green-400" />
+            </div>
           </div>
         </Card>
-        <Card className="p-4">
+        <Card className="p-6 border border-border/50 bg-gradient-to-br from-yellow-500/10 to-yellow-500/5 hover-elevate transition-all">
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-sm text-muted-foreground">Pending</p>
-              <p className="text-2xl font-bold" data-testid="stat-pending">{pendingClients}</p>
+              <p className="text-sm font-medium text-muted-foreground mb-1">Pending</p>
+              <p className="text-3xl font-bold" data-testid="stat-pending">{pendingClients}</p>
             </div>
-            <Building2 className="h-8 w-8 text-yellow-600" />
+            <div className="w-12 h-12 rounded-lg bg-yellow-500/20 flex items-center justify-center">
+              <Building2 className="h-6 w-6 text-yellow-600 dark:text-yellow-400" />
+            </div>
           </div>
         </Card>
-        <Card className="p-4">
+        <Card className="p-6 border border-border/50 bg-gradient-to-br from-gray-500/10 to-gray-500/5 hover-elevate transition-all">
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-sm text-muted-foreground">Inactive</p>
-              <p className="text-2xl font-bold" data-testid="stat-inactive">{inactiveClients}</p>
+              <p className="text-sm font-medium text-muted-foreground mb-1">Inactive</p>
+              <p className="text-3xl font-bold" data-testid="stat-inactive">{inactiveClients}</p>
             </div>
-            <Building2 className="h-8 w-8 text-gray-600" />
+            <div className="w-12 h-12 rounded-lg bg-gray-500/20 flex items-center justify-center">
+              <Building2 className="h-6 w-6 text-gray-600 dark:text-gray-400" />
+            </div>
           </div>
         </Card>
       </div>
 
       {clients.length === 0 ? (
-        <Card className="p-12">
+        <Card className="p-16 border border-border/50 bg-gradient-to-br from-muted/50 to-muted/20">
           <div className="text-center">
-            <Building2 className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
-            <h3 className="text-lg font-semibold mb-2" data-testid="text-no-clients">
+            <div className="w-20 h-20 rounded-2xl bg-primary/10 flex items-center justify-center mx-auto mb-6">
+              <Building2 className="h-10 w-10 text-primary" />
+            </div>
+            <h3 className="text-2xl font-bold mb-3" data-testid="text-no-clients">
               No clients yet
             </h3>
-            <p className="text-muted-foreground mb-6">
-              Get started by adding your first client
+            <p className="text-base text-muted-foreground mb-8 max-w-md mx-auto">
+              Get started by adding your first client to begin tracking your business relationships
             </p>
             <Link href="/admin/clients/new">
-              <Button data-testid="button-add-first-client">
+              <Button size="lg" data-testid="button-add-first-client">
+                <Plus className="h-4 w-4 mr-2" />
                 Add Client
               </Button>
             </Link>
@@ -149,32 +160,33 @@ export default function Clients() {
       ) : (
         <div className="grid grid-cols-1 gap-4">
           {clients.map((client) => (
-            <Card key={client.id} className="p-6" data-testid={`card-client-${client.id}`}>
-              <div className="flex flex-col md:flex-row gap-4">
+            <Card key={client.id} className="p-6 border border-border/50 hover-elevate transition-all" data-testid={`card-client-${client.id}`}>
+              <div className="flex flex-col md:flex-row gap-6">
                 <div className="flex-1 min-w-0">
-                  <div className="flex items-center gap-2 mb-2">
-                    <h3 className="text-lg font-semibold" data-testid={`text-client-name-${client.id}`}>
+                  <div className="flex items-center gap-3 mb-4">
+                    <h3 className="text-xl font-bold" data-testid={`text-client-name-${client.id}`}>
                       {client.name}
                     </h3>
                     <Badge 
+                      className={client.status === "active" ? "bg-green-500/10 text-green-700 dark:text-green-400 border-green-500/20" : client.status === "pending" ? "bg-yellow-500/10 text-yellow-700 dark:text-yellow-400 border-yellow-500/20" : ""}
                       variant={client.status === "active" ? "default" : client.status === "pending" ? "secondary" : "outline"}
                       data-testid={`badge-status-${client.id}`}
                     >
                       {client.status}
                     </Badge>
                   </div>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-2 text-sm text-muted-foreground">
-                    <p data-testid={`text-client-email-${client.id}`}>
-                      <span className="font-semibold">Email:</span> {client.email}
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-3 text-sm">
+                    <p className="text-muted-foreground" data-testid={`text-client-email-${client.id}`}>
+                      <span className="font-semibold text-foreground">Email:</span> {client.email}
                     </p>
                     {client.phone && (
-                      <p data-testid={`text-client-phone-${client.id}`}>
-                        <span className="font-semibold">Phone:</span> {client.phone}
+                      <p className="text-muted-foreground" data-testid={`text-client-phone-${client.id}`}>
+                        <span className="font-semibold text-foreground">Phone:</span> {client.phone}
                       </p>
                     )}
                     {client.company && (
-                      <p data-testid={`text-client-company-${client.id}`}>
-                        <span className="font-semibold">Company:</span> {client.company}
+                      <p className="text-muted-foreground" data-testid={`text-client-company-${client.id}`}>
+                        <span className="font-semibold text-foreground">Company:</span> {client.company}
                       </p>
                     )}
                   </div>

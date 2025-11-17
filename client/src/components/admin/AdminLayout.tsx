@@ -137,14 +137,14 @@ export function AdminLayout({ children }: AdminLayoutProps) {
     <SidebarProvider style={sidebarStyle as React.CSSProperties}>
       <div className="flex h-screen w-full">
         <Sidebar>
-          <SidebarHeader className="border-b p-4">
-            <div className="flex items-center gap-2">
-              <div className="flex items-center justify-center w-8 h-8 rounded-md bg-primary text-primary-foreground font-bold">
+          <SidebarHeader className="border-b p-6">
+            <div className="flex items-center gap-3">
+              <div className="flex items-center justify-center w-10 h-10 rounded-lg bg-gradient-to-br from-primary to-orange-600 text-primary-foreground font-bold shadow-lg">
                 AX
               </div>
               <div>
-                <h2 className="font-semibold text-sm">AddisonX Media</h2>
-                <p className="text-xs text-muted-foreground">Admin Panel</p>
+                <h2 className="font-bold text-base">AddisonX Media</h2>
+                <p className="text-xs text-muted-foreground">Admin Dashboard</p>
               </div>
             </div>
           </SidebarHeader>
@@ -208,9 +208,25 @@ export function AdminLayout({ children }: AdminLayoutProps) {
         </Sidebar>
 
         <div className="flex flex-col flex-1 overflow-hidden">
-          <header className="flex items-center gap-2 p-4 border-b bg-background">
-            <SidebarTrigger data-testid="button-sidebar-toggle" />
-            <div className="flex-1" />
+          <header className="flex items-center justify-between gap-4 px-6 py-4 border-b bg-card/50 backdrop-blur-sm">
+            <div className="flex items-center gap-4">
+              <SidebarTrigger data-testid="button-sidebar-toggle" />
+              <div className="h-8 w-px bg-border"></div>
+              <div>
+                <h1 className="text-lg font-semibold">
+                  {menuItems.find(item => 
+                    item.url === "/admin" 
+                      ? location === "/admin" || location === "/admin/dashboard"
+                      : location?.startsWith(item.url)
+                  )?.title || "Dashboard"}
+                </h1>
+              </div>
+            </div>
+            <div className="flex items-center gap-2">
+              <div className="px-3 py-1.5 rounded-md bg-primary/10 text-primary text-xs font-medium">
+                Admin
+              </div>
+            </div>
           </header>
           <main className="flex-1 overflow-y-auto bg-background">
             {children}
