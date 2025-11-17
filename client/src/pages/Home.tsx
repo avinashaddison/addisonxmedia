@@ -347,16 +347,15 @@ export default function Home() {
         </section>
       )}
 
-      {/* Team Section */}
-      <section className="py-12 md:py-20 lg:py-28 relative">
-        <div className="absolute inset-0 bg-gradient-to-b from-background via-primary/5 to-background"></div>
+      {/* Team Section - Cool Design */}
+      <section className="py-12 md:py-20 lg:py-28 relative bg-gradient-to-br from-background via-primary/3 to-purple-500/5">
         <div className="max-w-7xl mx-auto px-4 md:px-6 relative z-10">
           <div className="text-center mb-8 md:mb-12 lg:mb-16">
-            <Badge variant="secondary" className="mb-3 md:mb-4">
-              <Sparkles className="h-3 w-3 mr-2" />
-              Meet Our Team
-            </Badge>
-            <h2 className="text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold mb-3 md:mb-6" data-testid="text-team-title">
+            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r from-primary/10 to-purple-600/10 border border-primary/20 mb-4">
+              <Sparkles className="h-4 w-4 text-primary" />
+              <span className="text-sm font-semibold text-primary">Meet Our Team</span>
+            </div>
+            <h2 className="text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold mb-3 md:mb-6 bg-gradient-to-r from-foreground via-primary to-purple-600 bg-clip-text text-transparent" data-testid="text-team-title">
               AddisonX Media Team
             </h2>
             <p className="text-base md:text-lg lg:text-xl text-muted-foreground max-w-2xl mx-auto px-2" data-testid="text-team-description">
@@ -366,103 +365,88 @@ export default function Home() {
 
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3 md:gap-6 lg:gap-8">
             {/* CEO & Founder */}
-            <Card className="p-4 md:p-6 lg:p-8 text-center relative overflow-hidden border-2 border-primary/20 hover-elevate active-elevate-2 transition-all duration-300 hover:border-primary/40 hover:shadow-xl group" data-testid="card-team-0">
-              <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-orange-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-              <div className="relative z-10">
-                <div className="mb-3 md:mb-4 lg:mb-6">
-                  <div className="w-16 h-16 md:w-20 md:h-20 lg:w-24 lg:h-24 mx-auto rounded-full bg-gradient-to-br from-primary to-orange-500 p-1 shadow-lg">
-                    <div className="w-full h-full rounded-full bg-background flex items-center justify-center">
-                      <div className="text-2xl md:text-3xl lg:text-4xl font-bold bg-gradient-to-br from-primary to-orange-500 bg-clip-text text-transparent">A</div>
-                    </div>
+            <Card className="p-4 md:p-6 lg:p-8 text-center relative overflow-hidden bg-gradient-to-br from-card to-primary/5 border-2 border-primary/30 shadow-lg" data-testid="card-team-0">
+              <div className="mb-3 md:mb-4 lg:mb-6">
+                <div className="w-20 h-20 md:w-24 md:h-24 lg:w-28 lg:h-28 mx-auto rounded-full bg-gradient-to-br from-primary via-orange-500 to-purple-600 p-[3px] shadow-xl">
+                  <div className="w-full h-full rounded-full bg-background flex items-center justify-center">
+                    <div className="text-2xl md:text-3xl lg:text-4xl font-extrabold bg-gradient-to-br from-primary via-orange-500 to-purple-600 bg-clip-text text-transparent">A</div>
                   </div>
                 </div>
-                <h3 className="text-sm md:text-base lg:text-xl font-bold mb-1" data-testid="text-team-name-0">
-                  Ajay Kumar
-                </h3>
-                <p className="text-xs md:text-sm text-primary font-semibold" data-testid="text-team-position-0">
-                  CEO & Founder
-                </p>
               </div>
+              <h3 className="text-sm md:text-base lg:text-xl font-bold mb-1" data-testid="text-team-name-0">
+                Ajay Kumar
+              </h3>
+              <p className="text-xs md:text-sm font-bold bg-gradient-to-r from-primary to-purple-600 bg-clip-text text-transparent" data-testid="text-team-position-0">
+                CEO & Founder
+              </p>
             </Card>
 
             {/* Co-Founder */}
-            <Card className="p-4 md:p-6 lg:p-8 text-center relative overflow-hidden border-2 border-primary/20 hover-elevate active-elevate-2 transition-all duration-300 hover:border-primary/40 hover:shadow-xl group" data-testid="card-team-1">
-              <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-orange-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-              <div className="relative z-10">
-                <div className="mb-3 md:mb-4 lg:mb-6">
-                  <div className="w-16 h-16 md:w-20 md:h-20 lg:w-24 lg:h-24 mx-auto rounded-full bg-gradient-to-br from-primary to-orange-500 p-1 shadow-lg">
-                    <div className="w-full h-full rounded-full bg-background flex items-center justify-center">
-                      <div className="text-2xl md:text-3xl lg:text-4xl font-bold bg-gradient-to-br from-primary to-orange-500 bg-clip-text text-transparent">N</div>
-                    </div>
+            <Card className="p-4 md:p-6 lg:p-8 text-center relative overflow-hidden bg-gradient-to-br from-card to-primary/5 border-2 border-primary/30 shadow-lg" data-testid="card-team-1">
+              <div className="mb-3 md:mb-4 lg:mb-6">
+                <div className="w-20 h-20 md:w-24 md:h-24 lg:w-28 lg:h-28 mx-auto rounded-full bg-gradient-to-br from-primary via-orange-500 to-purple-600 p-[3px] shadow-xl">
+                  <div className="w-full h-full rounded-full bg-background flex items-center justify-center">
+                    <div className="text-2xl md:text-3xl lg:text-4xl font-extrabold bg-gradient-to-br from-primary via-orange-500 to-purple-600 bg-clip-text text-transparent">N</div>
                   </div>
                 </div>
-                <h3 className="text-sm md:text-base lg:text-xl font-bold mb-1" data-testid="text-team-name-1">
-                  Neha Kumari
-                </h3>
-                <p className="text-xs md:text-sm text-primary font-semibold" data-testid="text-team-position-1">
-                  Co-Founder
-                </p>
               </div>
+              <h3 className="text-sm md:text-base lg:text-xl font-bold mb-1" data-testid="text-team-name-1">
+                Neha Kumari
+              </h3>
+              <p className="text-xs md:text-sm font-bold bg-gradient-to-r from-primary to-purple-600 bg-clip-text text-transparent" data-testid="text-team-position-1">
+                Co-Founder
+              </p>
             </Card>
 
             {/* Web Developer */}
-            <Card className="p-4 md:p-6 lg:p-8 text-center relative overflow-hidden border-2 border-primary/20 hover-elevate active-elevate-2 transition-all duration-300 hover:border-primary/40 hover:shadow-xl group" data-testid="card-team-2">
-              <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-orange-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-              <div className="relative z-10">
-                <div className="mb-3 md:mb-4 lg:mb-6">
-                  <div className="w-16 h-16 md:w-20 md:h-20 lg:w-24 lg:h-24 mx-auto rounded-full bg-gradient-to-br from-primary to-orange-500 p-1 shadow-lg">
-                    <div className="w-full h-full rounded-full bg-background flex items-center justify-center">
-                      <div className="text-2xl md:text-3xl lg:text-4xl font-bold bg-gradient-to-br from-primary to-orange-500 bg-clip-text text-transparent">V</div>
-                    </div>
+            <Card className="p-4 md:p-6 lg:p-8 text-center relative overflow-hidden bg-gradient-to-br from-card to-primary/5 border-2 border-primary/30 shadow-lg" data-testid="card-team-2">
+              <div className="mb-3 md:mb-4 lg:mb-6">
+                <div className="w-20 h-20 md:w-24 md:h-24 lg:w-28 lg:h-28 mx-auto rounded-full bg-gradient-to-br from-primary via-orange-500 to-purple-600 p-[3px] shadow-xl">
+                  <div className="w-full h-full rounded-full bg-background flex items-center justify-center">
+                    <div className="text-2xl md:text-3xl lg:text-4xl font-extrabold bg-gradient-to-br from-primary via-orange-500 to-purple-600 bg-clip-text text-transparent">V</div>
                   </div>
                 </div>
-                <h3 className="text-sm md:text-base lg:text-xl font-bold mb-1" data-testid="text-team-name-2">
-                  Vikash Munda
-                </h3>
-                <p className="text-xs md:text-sm text-primary font-semibold" data-testid="text-team-position-2">
-                  Web Developer
-                </p>
               </div>
+              <h3 className="text-sm md:text-base lg:text-xl font-bold mb-1" data-testid="text-team-name-2">
+                Vikash Munda
+              </h3>
+              <p className="text-xs md:text-sm font-bold bg-gradient-to-r from-primary to-purple-600 bg-clip-text text-transparent" data-testid="text-team-position-2">
+                Web Developer
+              </p>
             </Card>
 
             {/* Social Media Manager */}
-            <Card className="p-4 md:p-6 lg:p-8 text-center relative overflow-hidden border-2 border-primary/20 hover-elevate active-elevate-2 transition-all duration-300 hover:border-primary/40 hover:shadow-xl group" data-testid="card-team-3">
-              <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-orange-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-              <div className="relative z-10">
-                <div className="mb-3 md:mb-4 lg:mb-6">
-                  <div className="w-16 h-16 md:w-20 md:h-20 lg:w-24 lg:h-24 mx-auto rounded-full bg-gradient-to-br from-primary to-orange-500 p-1 shadow-lg">
-                    <div className="w-full h-full rounded-full bg-background flex items-center justify-center">
-                      <div className="text-2xl md:text-3xl lg:text-4xl font-bold bg-gradient-to-br from-primary to-orange-500 bg-clip-text text-transparent">S</div>
-                    </div>
+            <Card className="p-4 md:p-6 lg:p-8 text-center relative overflow-hidden bg-gradient-to-br from-card to-primary/5 border-2 border-primary/30 shadow-lg" data-testid="card-team-3">
+              <div className="mb-3 md:mb-4 lg:mb-6">
+                <div className="w-20 h-20 md:w-24 md:h-24 lg:w-28 lg:h-28 mx-auto rounded-full bg-gradient-to-br from-primary via-orange-500 to-purple-600 p-[3px] shadow-xl">
+                  <div className="w-full h-full rounded-full bg-background flex items-center justify-center">
+                    <div className="text-2xl md:text-3xl lg:text-4xl font-extrabold bg-gradient-to-br from-primary via-orange-500 to-purple-600 bg-clip-text text-transparent">S</div>
                   </div>
                 </div>
-                <h3 className="text-sm md:text-base lg:text-xl font-bold mb-1" data-testid="text-team-name-3">
-                  Suraj Munda
-                </h3>
-                <p className="text-xs md:text-sm text-primary font-semibold" data-testid="text-team-position-3">
-                  Social Media Manager
-                </p>
               </div>
+              <h3 className="text-sm md:text-base lg:text-xl font-bold mb-1" data-testid="text-team-name-3">
+                Suraj Munda
+              </h3>
+              <p className="text-xs md:text-sm font-bold bg-gradient-to-r from-primary to-purple-600 bg-clip-text text-transparent" data-testid="text-team-position-3">
+                Social Media Manager
+              </p>
             </Card>
 
             {/* Sales Manager */}
-            <Card className="p-4 md:p-6 lg:p-8 text-center relative overflow-hidden border-2 border-primary/20 hover-elevate active-elevate-2 transition-all duration-300 hover:border-primary/40 hover:shadow-xl group" data-testid="card-team-4">
-              <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-orange-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-              <div className="relative z-10">
-                <div className="mb-3 md:mb-4 lg:mb-6">
-                  <div className="w-16 h-16 md:w-20 md:h-20 lg:w-24 lg:h-24 mx-auto rounded-full bg-gradient-to-br from-primary to-orange-500 p-1 shadow-lg">
-                    <div className="w-full h-full rounded-full bg-background flex items-center justify-center">
-                      <div className="text-2xl md:text-3xl lg:text-4xl font-bold bg-gradient-to-br from-primary to-orange-500 bg-clip-text text-transparent">P</div>
-                    </div>
+            <Card className="p-4 md:p-6 lg:p-8 text-center relative overflow-hidden bg-gradient-to-br from-card to-primary/5 border-2 border-primary/30 shadow-lg" data-testid="card-team-4">
+              <div className="mb-3 md:mb-4 lg:mb-6">
+                <div className="w-20 h-20 md:w-24 md:h-24 lg:w-28 lg:h-28 mx-auto rounded-full bg-gradient-to-br from-primary via-orange-500 to-purple-600 p-[3px] shadow-xl">
+                  <div className="w-full h-full rounded-full bg-background flex items-center justify-center">
+                    <div className="text-2xl md:text-3xl lg:text-4xl font-extrabold bg-gradient-to-br from-primary via-orange-500 to-purple-600 bg-clip-text text-transparent">P</div>
                   </div>
                 </div>
-                <h3 className="text-sm md:text-base lg:text-xl font-bold mb-1" data-testid="text-team-name-4">
-                  Priyanshu Singh
-                </h3>
-                <p className="text-xs md:text-sm text-primary font-semibold" data-testid="text-team-position-4">
-                  Sales Manager
-                </p>
               </div>
+              <h3 className="text-sm md:text-base lg:text-xl font-bold mb-1" data-testid="text-team-name-4">
+                Priyanshu Singh
+              </h3>
+              <p className="text-xs md:text-sm font-bold bg-gradient-to-r from-primary to-purple-600 bg-clip-text text-transparent" data-testid="text-team-position-4">
+                Sales Manager
+              </p>
             </Card>
           </div>
         </div>
