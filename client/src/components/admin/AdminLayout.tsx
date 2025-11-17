@@ -128,6 +128,27 @@ export function AdminLayout({ children }: AdminLayoutProps) {
     return null;
   }
 
+  // Get current page title based on location
+  const getCurrentPageTitle = () => {
+    // Handle exact dashboard match
+    if (location === "/admin" || location === "/admin/dashboard") {
+      return "Dashboard";
+    }
+    
+    // Sort menu items by URL length (longest first) to match most specific routes first
+    // This prevents "/admin/employee" from matching before "/admin/employees"
+    const sortedItems = [...menuItems]
+      .filter(item => item.url !== "/admin")
+      .sort((a, b) => b.url.length - a.url.length);
+    
+    // Find matching menu item for current location
+    const matchedItem = sortedItems.find(item => 
+      location?.startsWith(item.url)
+    );
+    
+    return matchedItem?.title || "Dashboard";
+  };
+
   const sidebarStyle = {
     "--sidebar-width": "16rem",
     "--sidebar-width-icon": "3rem",
@@ -214,11 +235,7 @@ export function AdminLayout({ children }: AdminLayoutProps) {
               <div className="h-8 w-px bg-border"></div>
               <div>
                 <h1 className="text-lg font-semibold">
-                  {menuItems.find(item => 
-                    item.url === "/admin" 
-                      ? location === "/admin" || location === "/admin/dashboard"
-                      : location?.startsWith(item.url)
-                  )?.title || "Dashboard"}
+                  {getCurrentPageTitle()}
                 </h1>
               </div>
             </div>
