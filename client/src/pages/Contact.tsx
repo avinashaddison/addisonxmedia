@@ -274,23 +274,23 @@ export default function Contact() {
         </div>
       </section>
 
-      <section className="py-12 md:py-16 lg:py-24 bg-muted/30">
+      <section className="py-12 md:py-16 lg:py-24 bg-gradient-to-br from-muted/50 via-background to-muted/30">
         <div className="max-w-7xl mx-auto px-4 md:px-6">
           <div className="text-center max-w-3xl mx-auto mb-8 md:mb-12">
             <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold mb-4 md:mb-6" data-testid="text-location-title">
-              Find Us Here
+              Visit Our Office
             </h2>
             <p className="text-base md:text-lg text-muted-foreground leading-relaxed px-2" data-testid="text-location-description">
-              Visit our office in Ranchi to discuss your digital marketing needs in person. 
-              We're conveniently located near Kawasaki Showroom on Itki Road.
+              Based in Ranchi, Jharkhand, we're your local digital marketing partner committed to helping businesses thrive. 
+              Visit us to discuss your digital marketing needs in person.
             </p>
           </div>
           
           <div className="max-w-5xl mx-auto">
-            <Card className="overflow-hidden" data-testid="card-google-maps">
-              <div className="relative w-full" style={{ paddingBottom: '56.25%' }}>
+            <Card className="overflow-hidden shadow-lg" data-testid="card-google-maps">
+              <div className="relative w-full h-[450px] md:h-[500px] lg:h-[550px]">
                 <iframe 
-                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3662.2116410958984!2d85.29144099999999!3d23.380559699999996!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x39f4e1547faba215%3A0x14446796ff2072c2!2sAddisonX%20Media!5e0!3m2!1sen!2sin!4v1763371489401!5m2!1sen!2sin"
+                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3662.2116410958984!2d85.29144099999999!3d23.380559699999996!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x39f4e1547faba215%3A0x14446796ff2072c2!2sAddisonX%20Media!5e0!3m2!1sen!2sin!4v1763372047781!5m2!1sen!2sin"
                   className="absolute top-0 left-0 w-full h-full border-0"
                   allowFullScreen
                   loading="lazy"
@@ -299,22 +299,22 @@ export default function Contact() {
                   data-testid="iframe-google-maps"
                 />
               </div>
+              <div className="p-4 md:p-6 bg-card border-t">
+                <div className="flex flex-col sm:flex-row items-center justify-center sm:justify-between gap-3">
+                  <p className="text-sm md:text-base text-muted-foreground text-center sm:text-left">
+                    Click the map to explore or navigate to our location
+                  </p>
+                  <Button 
+                    className="w-full sm:w-auto whitespace-nowrap"
+                    onClick={() => window.open('https://www.google.com/maps/place/AddisonX+Media/@23.380559699999996,85.29144099999999,17z', '_blank')}
+                    data-testid="button-get-directions"
+                  >
+                    <MapPin className="mr-2 h-4 w-4" />
+                    Get Directions
+                  </Button>
+                </div>
+              </div>
             </Card>
-          </div>
-        </div>
-      </section>
-
-      <section className="py-12 md:py-16 lg:py-24 bg-card">
-        <div className="max-w-7xl mx-auto px-4 md:px-6">
-          <div className="text-center max-w-3xl mx-auto">
-            <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold mb-4 md:mb-6" data-testid="text-serving-title">
-              Proudly Serving Ranchi & Jharkhand
-            </h2>
-            <p className="text-base md:text-lg text-muted-foreground leading-relaxed px-2" data-testid="text-serving-description">
-              While we're based in Ranchi, our digital marketing services extend across 
-              Jharkhand and beyond. Whether you're a local business or looking to expand 
-              your reach, we're here to help you succeed in the digital landscape.
-            </p>
           </div>
         </div>
       </section>
