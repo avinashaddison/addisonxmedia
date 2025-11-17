@@ -196,7 +196,7 @@ export default function Home() {
       </section>
 
       {/* Services Grid - Cool Modern Design */}
-      <section className="py-12 md:py-20 lg:py-28 relative overflow-hidden">
+      <section className="py-8 md:py-12 lg:py-16 relative overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-br from-background via-primary/5 to-purple-500/5"></div>
         <div className="hidden md:block absolute top-20 right-10 w-96 h-96 bg-gradient-to-br from-primary/20 to-orange-500/20 rounded-full blur-3xl animate-pulse"></div>
         <div className="hidden md:block absolute bottom-20 left-10 w-96 h-96 bg-gradient-to-br from-purple-500/20 to-primary/20 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '1s' }}></div>
@@ -274,7 +274,7 @@ export default function Home() {
 
       {/* Testimonials Section */}
       {activeTestimonials.length > 0 && (
-        <section className="py-16 md:py-24 lg:py-32 bg-card">
+        <section className="py-8 md:py-12 lg:py-16 bg-card">
           <div className="max-w-7xl mx-auto px-4 md:px-6">
             <div className="text-center mb-12 md:mb-16">
               <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-4" data-testid="text-testimonials-title">
@@ -320,7 +320,7 @@ export default function Home() {
       )}
 
       {/* Team Section - Cool Design */}
-      <section className="py-12 md:py-20 lg:py-28 relative bg-gradient-to-br from-background via-primary/3 to-purple-500/5">
+      <section className="py-8 md:py-12 lg:py-16 relative bg-gradient-to-br from-background via-primary/3 to-purple-500/5">
         <div className="max-w-7xl mx-auto px-4 md:px-6 relative z-10">
           <div className="text-center mb-8 md:mb-12 lg:mb-16">
             <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r from-primary/10 to-purple-600/10 border border-primary/20 mb-4">
@@ -369,7 +369,7 @@ export default function Home() {
       </section>
 
       {/* Partners Section */}
-      <section className="py-20 md:py-24 bg-card border-y overflow-hidden">
+      <section className="py-10 md:py-14 bg-card border-y overflow-hidden">
         <div className="max-w-7xl mx-auto px-4 md:px-6">
           <div className="text-center mb-12">
             <Badge variant="secondary" className="mb-4">
@@ -457,7 +457,7 @@ export default function Home() {
       </section>
 
       {/* Review QR Section - Ultra Cool Design */}
-      <section className="py-16 md:py-24 lg:py-32 relative overflow-hidden">
+      <section className="py-8 md:py-12 lg:py-16 relative overflow-hidden">
         {/* Animated Gradient Background */}
         <div className="absolute inset-0 bg-gradient-to-br from-green-500/10 via-yellow-500/10 to-red-500/10"></div>
         <div className="absolute inset-0 bg-gradient-to-tl from-blue-500/10 via-purple-500/10 to-primary/10"></div>
