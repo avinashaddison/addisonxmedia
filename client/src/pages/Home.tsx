@@ -152,9 +152,7 @@ export default function Home() {
   const activeTestimonials = testimonials?.filter(t => t.isActive === "true").slice(0, 3) || [];
 
   // Extract customization settings
-  const heroCustomization = customizationData?.find(c => c.section === 'hero');
   const servicesCustomization = customizationData?.find(c => c.section === 'services');
-  const bannersCustomization = customizationData?.find(c => c.section === 'banners');
 
   // Use customized or default values
   const servicesTitle = servicesCustomization?.content?.title || "Our Services";

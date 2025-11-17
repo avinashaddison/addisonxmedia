@@ -12,12 +12,12 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { useToast } from "@/hooks/use-toast";
 import { apiRequest, queryClient } from "@/lib/queryClient";
-import { Settings, Image, FileText, Search, Plus, X } from "lucide-react";
+import { Settings, Image, Search, Plus, X } from "lucide-react";
 import type { HomepageCustomization, SeoSetting } from "@shared/schema";
 
 export default function Customize() {
   const { toast } = useToast();
-  const [activeTab, setActiveTab] = useState("hero");
+  const [activeTab, setActiveTab] = useState("services");
 
   // Fetch all customizations
   const { data: customizations } = useQuery<HomepageCustomization[]>({
@@ -48,11 +48,7 @@ export default function Customize() {
       </div>
 
       <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-6">
-        <TabsList className="grid w-full grid-cols-4">
-          <TabsTrigger value="hero" data-testid="tab-hero">
-            <FileText className="h-4 w-4 mr-2" />
-            Hero Section
-          </TabsTrigger>
+        <TabsList className="grid w-full grid-cols-3">
           <TabsTrigger value="services" data-testid="tab-services">
             <Settings className="h-4 w-4 mr-2" />
             Services
@@ -67,10 +63,6 @@ export default function Customize() {
           </TabsTrigger>
         </TabsList>
 
-        <TabsContent value="hero">
-          <HeroSectionForm customization={getCustomization("hero")} />
-        </TabsContent>
-
         <TabsContent value="services">
           <ServicesForm customization={getCustomization("services")} />
         </TabsContent>
@@ -84,155 +76,6 @@ export default function Customize() {
         </TabsContent>
       </Tabs>
     </div>
-  );
-}
-
-// Hero Section Form Component
-function HeroSectionForm({ customization }: { customization?: HomepageCustomization }) {
-  const { toast } = useToast();
-  const content = customization?.content as any || {
-    title: "Digital Marketing Excellence",
-    subtitle: "Grow Your Business with AddisonX Media",
-    description: "Professional digital marketing services in Ranchi",
-    buttonText: "Get Started Now",
-    buttonLink: "/contact"
-  };
-
-  const formSchema = z.object({
-    title: z.string().min(1, "Title is required"),
-    subtitle: z.string().min(1, "Subtitle is required"),
-    description: z.string().min(1, "Description is required"),
-    buttonText: z.string().min(1, "Button text is required"),
-    buttonLink: z.string().min(1, "Button link is required"),
-  });
-
-  const form = useForm({
-    resolver: zodResolver(formSchema),
-    defaultValues: content,
-  });
-
-  useEffect(() => {
-    if (customization?.content) {
-      form.reset(customization.content as any);
-    }
-  }, [customization, form]);
-
-  const mutation = useMutation({
-    mutationFn: async (data: z.infer<typeof formSchema>) => {
-      return apiRequest("POST", "/api/customization", {
-        section: "hero",
-        content: data,
-        isActive: "true",
-      });
-    },
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["/api/customization"] });
-      toast({
-        title: "Success",
-        description: "Hero section updated successfully",
-      });
-    },
-    onError: () => {
-      toast({
-        title: "Error",
-        description: "Failed to update hero section",
-        variant: "destructive",
-      });
-    },
-  });
-
-  const onSubmit = (data: z.infer<typeof formSchema>) => {
-    mutation.mutate(data);
-  };
-
-  return (
-    <Card>
-      <CardHeader>
-        <CardTitle>Hero Section Content</CardTitle>
-        <CardDescription>
-          Customize the main hero section of your homepage
-        </CardDescription>
-      </CardHeader>
-      <CardContent>
-        <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
-            <FormField
-              control={form.control}
-              name="title"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Main Title</FormLabel>
-                  <FormControl>
-                    <Input {...field} data-testid="input-hero-title" />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-
-            <FormField
-              control={form.control}
-              name="subtitle"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Subtitle</FormLabel>
-                  <FormControl>
-                    <Input {...field} data-testid="input-hero-subtitle" />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-
-            <FormField
-              control={form.control}
-              name="description"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Description</FormLabel>
-                  <FormControl>
-                    <Textarea {...field} data-testid="textarea-hero-description" />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-
-            <FormField
-              control={form.control}
-              name="buttonText"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Button Text</FormLabel>
-                  <FormControl>
-                    <Input {...field} data-testid="input-hero-button-text" />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-
-            <FormField
-              control={form.control}
-              name="buttonLink"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Button Link</FormLabel>
-                  <FormControl>
-                    <Input {...field} data-testid="input-hero-button-link" />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-
-            <Button type="submit" disabled={mutation.isPending} data-testid="button-save-hero">
-              {mutation.isPending ? "Saving..." : "Save Hero Section"}
-            </Button>
-          </form>
-        </Form>
-      </CardContent>
-    </Card>
   );
 }
 
