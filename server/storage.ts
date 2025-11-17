@@ -4,6 +4,11 @@ import {
   contactSubmissions,
   testimonials,
   verificationLogs,
+  clients,
+  leads,
+  projects,
+  invoices,
+  settings,
   type User,
   type UpsertUser,
   type Employee,
@@ -16,6 +21,21 @@ import {
   type UpdateTestimonial,
   type VerificationLog,
   type InsertVerificationLog,
+  type Client,
+  type InsertClient,
+  type UpdateClient,
+  type Lead,
+  type InsertLead,
+  type UpdateLead,
+  type Project,
+  type InsertProject,
+  type UpdateProject,
+  type Invoice,
+  type InsertInvoice,
+  type UpdateInvoice,
+  type Setting,
+  type InsertSetting,
+  type UpdateSetting,
 } from "@shared/schema";
 import { db } from "./db";
 import { eq, desc, count, sql as sqlQuery } from "drizzle-orm";
@@ -54,6 +74,40 @@ export interface IStorage {
     failedSearches: number;
     recentLogs: VerificationLog[];
   }>;
+
+  // Client operations
+  getAllClients(): Promise<Client[]>;
+  getClient(id: string): Promise<Client | undefined>;
+  createClient(client: InsertClient): Promise<Client>;
+  updateClient(id: string, client: UpdateClient): Promise<Client | undefined>;
+  deleteClient(id: string): Promise<void>;
+
+  // Lead operations
+  getAllLeads(): Promise<Lead[]>;
+  getLead(id: string): Promise<Lead | undefined>;
+  createLead(lead: InsertLead): Promise<Lead>;
+  updateLead(id: string, lead: UpdateLead): Promise<Lead | undefined>;
+  deleteLead(id: string): Promise<void>;
+
+  // Project operations
+  getAllProjects(): Promise<Project[]>;
+  getProject(id: string): Promise<Project | undefined>;
+  createProject(project: InsertProject): Promise<Project>;
+  updateProject(id: string, project: UpdateProject): Promise<Project | undefined>;
+  deleteProject(id: string): Promise<void>;
+
+  // Invoice operations
+  getAllInvoices(): Promise<Invoice[]>;
+  getInvoice(id: string): Promise<Invoice | undefined>;
+  createInvoice(invoice: InsertInvoice): Promise<Invoice>;
+  updateInvoice(id: string, invoice: UpdateInvoice): Promise<Invoice | undefined>;
+  deleteInvoice(id: string): Promise<void>;
+
+  // Settings operations
+  getAllSettings(): Promise<Setting[]>;
+  getSetting(key: string): Promise<Setting | undefined>;
+  upsertSetting(setting: InsertSetting): Promise<Setting>;
+  deleteSetting(key: string): Promise<void>;
 }
 
 export class DatabaseStorage implements IStorage {
@@ -218,6 +272,171 @@ export class DatabaseStorage implements IStorage {
       failedSearches: failedSearchesResult[0]?.count || 0,
       recentLogs,
     };
+  }
+
+  // Client operations
+  async getAllClients(): Promise<Client[]> {
+    return db.select().from(clients).orderBy(desc(clients.createdAt));
+  }
+
+  async getClient(id: string): Promise<Client | undefined> {
+    const [client] = await db.select().from(clients).where(eq(clients.id, id));
+    return client;
+  }
+
+  async createClient(clientData: InsertClient): Promise<Client> {
+    const [client] = await db
+      .insert(clients)
+      .values(clientData)
+      .returning();
+    return client;
+  }
+
+  async updateClient(id: string, clientData: UpdateClient): Promise<Client | undefined> {
+    const [client] = await db
+      .update(clients)
+      .set({
+        ...clientData,
+        updatedAt: new Date(),
+      })
+      .where(eq(clients.id, id))
+      .returning();
+    return client;
+  }
+
+  async deleteClient(id: string): Promise<void> {
+    await db.delete(clients).where(eq(clients.id, id));
+  }
+
+  // Lead operations
+  async getAllLeads(): Promise<Lead[]> {
+    return db.select().from(leads).orderBy(desc(leads.createdAt));
+  }
+
+  async getLead(id: string): Promise<Lead | undefined> {
+    const [lead] = await db.select().from(leads).where(eq(leads.id, id));
+    return lead;
+  }
+
+  async createLead(leadData: InsertLead): Promise<Lead> {
+    const [lead] = await db
+      .insert(leads)
+      .values(leadData)
+      .returning();
+    return lead;
+  }
+
+  async updateLead(id: string, leadData: UpdateLead): Promise<Lead | undefined> {
+    const [lead] = await db
+      .update(leads)
+      .set({
+        ...leadData,
+        updatedAt: new Date(),
+      })
+      .where(eq(leads.id, id))
+      .returning();
+    return lead;
+  }
+
+  async deleteLead(id: string): Promise<void> {
+    await db.delete(leads).where(eq(leads.id, id));
+  }
+
+  // Project operations
+  async getAllProjects(): Promise<Project[]> {
+    return db.select().from(projects).orderBy(desc(projects.createdAt));
+  }
+
+  async getProject(id: string): Promise<Project | undefined> {
+    const [project] = await db.select().from(projects).where(eq(projects.id, id));
+    return project;
+  }
+
+  async createProject(projectData: InsertProject): Promise<Project> {
+    const [project] = await db
+      .insert(projects)
+      .values(projectData)
+      .returning();
+    return project;
+  }
+
+  async updateProject(id: string, projectData: UpdateProject): Promise<Project | undefined> {
+    const [project] = await db
+      .update(projects)
+      .set({
+        ...projectData,
+        updatedAt: new Date(),
+      })
+      .where(eq(projects.id, id))
+      .returning();
+    return project;
+  }
+
+  async deleteProject(id: string): Promise<void> {
+    await db.delete(projects).where(eq(projects.id, id));
+  }
+
+  // Invoice operations
+  async getAllInvoices(): Promise<Invoice[]> {
+    return db.select().from(invoices).orderBy(desc(invoices.createdAt));
+  }
+
+  async getInvoice(id: string): Promise<Invoice | undefined> {
+    const [invoice] = await db.select().from(invoices).where(eq(invoices.id, id));
+    return invoice;
+  }
+
+  async createInvoice(invoiceData: InsertInvoice): Promise<Invoice> {
+    const [invoice] = await db
+      .insert(invoices)
+      .values(invoiceData)
+      .returning();
+    return invoice;
+  }
+
+  async updateInvoice(id: string, invoiceData: UpdateInvoice): Promise<Invoice | undefined> {
+    const [invoice] = await db
+      .update(invoices)
+      .set({
+        ...invoiceData,
+        updatedAt: new Date(),
+      })
+      .where(eq(invoices.id, id))
+      .returning();
+    return invoice;
+  }
+
+  async deleteInvoice(id: string): Promise<void> {
+    await db.delete(invoices).where(eq(invoices.id, id));
+  }
+
+  // Settings operations
+  async getAllSettings(): Promise<Setting[]> {
+    return db.select().from(settings).orderBy(settings.category, settings.key);
+  }
+
+  async getSetting(key: string): Promise<Setting | undefined> {
+    const [setting] = await db.select().from(settings).where(eq(settings.key, key));
+    return setting;
+  }
+
+  async upsertSetting(settingData: InsertSetting): Promise<Setting> {
+    const [setting] = await db
+      .insert(settings)
+      .values(settingData)
+      .onConflictDoUpdate({
+        target: settings.key,
+        set: {
+          ...settingData,
+          updatedAt: new Date(),
+        },
+      })
+      .returning();
+    return setting;
+  }
+
+  async deleteSetting(key: string): Promise<void> {
+    await db.delete(settings).where(eq(settings.key, key));
   }
 }
 

@@ -16,9 +16,13 @@ import NewDashboard from "@/pages/admin/NewDashboard";
 import Employees from "@/pages/admin/Employees";
 import EmployeeForm from "@/pages/admin/EmployeeForm";
 import Clients from "@/pages/admin/Clients";
+import ClientForm from "@/pages/admin/ClientForm";
 import Leads from "@/pages/admin/Leads";
+import LeadForm from "@/pages/admin/LeadForm";
 import Projects from "@/pages/admin/Projects";
+import ProjectForm from "@/pages/admin/ProjectForm";
 import Invoices from "@/pages/admin/Invoices";
+import InvoiceForm from "@/pages/admin/InvoiceForm";
 import Contacts from "@/pages/admin/Contacts";
 import Testimonials from "@/pages/admin/Testimonials";
 import TestimonialForm from "@/pages/admin/TestimonialForm";
@@ -57,14 +61,38 @@ function Router() {
       <Route path="/admin/clients">
         {() => <AdminLayout><Clients /></AdminLayout>}
       </Route>
+      <Route path="/admin/clients/new">
+        {() => <AdminLayout><ClientForm /></AdminLayout>}
+      </Route>
+      <Route path="/admin/clients/:id/edit">
+        {() => <AdminLayout><ClientForm /></AdminLayout>}
+      </Route>
       <Route path="/admin/leads">
         {() => <AdminLayout><Leads /></AdminLayout>}
+      </Route>
+      <Route path="/admin/leads/new">
+        {() => <AdminLayout><LeadForm /></AdminLayout>}
+      </Route>
+      <Route path="/admin/leads/:id/edit">
+        {() => <AdminLayout><LeadForm /></AdminLayout>}
       </Route>
       <Route path="/admin/projects">
         {() => <AdminLayout><Projects /></AdminLayout>}
       </Route>
+      <Route path="/admin/projects/new">
+        {() => <AdminLayout><ProjectForm /></AdminLayout>}
+      </Route>
+      <Route path="/admin/projects/:id/edit">
+        {() => <AdminLayout><ProjectForm /></AdminLayout>}
+      </Route>
       <Route path="/admin/invoices">
         {() => <AdminLayout><Invoices /></AdminLayout>}
+      </Route>
+      <Route path="/admin/invoices/new">
+        {() => <AdminLayout><InvoiceForm /></AdminLayout>}
+      </Route>
+      <Route path="/admin/invoices/:id/edit">
+        {() => <AdminLayout><InvoiceForm /></AdminLayout>}
       </Route>
       <Route path="/admin/contacts">
         {() => <AdminLayout><Contacts /></AdminLayout>}
