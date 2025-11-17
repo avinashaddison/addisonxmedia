@@ -19,9 +19,7 @@ export function WhatsAppButton() {
     const encodedMessage = encodeURIComponent(message || "Hi! I'm interested in your services.");
     const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodedMessage}`;
     
-    setTimeout(() => {
-      window.open(whatsappUrl, '_blank', 'noopener,noreferrer');
-    }, 100);
+    window.open(whatsappUrl, '_blank', 'noopener,noreferrer');
     
     setMessage("");
     setIsOpen(false);
@@ -41,7 +39,7 @@ export function WhatsAppButton() {
       {/* Floating WhatsApp Button */}
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="fixed bottom-24 right-4 md:bottom-6 md:right-6 z-40 group"
+        className={`fixed bottom-24 right-4 md:bottom-6 md:right-6 z-40 group transition-opacity ${isOpen ? 'pointer-events-none opacity-0 md:opacity-100 md:pointer-events-auto' : ''}`}
         data-testid="button-whatsapp-float"
         aria-label="Chat on WhatsApp"
       >
@@ -73,27 +71,27 @@ export function WhatsAppButton() {
         <>
           {/* Backdrop */}
           <div 
-            className="fixed inset-0 bg-black/20 z-[45] md:hidden"
+            className="fixed inset-0 bg-black/20 z-[45] md:hidden pointer-events-auto"
             onClick={handleClose}
             data-testid="whatsapp-backdrop"
           />
           
           {/* Chat Widget */}
           <div 
-            className="fixed bottom-44 right-4 md:bottom-24 md:right-6 w-[calc(100%-2rem)] md:w-96 bg-background dark:bg-card border border-border rounded-2xl shadow-2xl z-[50] animate-in slide-in-from-bottom-4 duration-300"
+            className="fixed bottom-4 md:bottom-24 inset-x-4 md:inset-x-auto md:right-6 md:w-96 h-[min(32rem,calc(100vh-6rem))] bg-background dark:bg-card border border-border rounded-2xl shadow-2xl z-[50] animate-in slide-in-from-bottom-4 duration-300 flex flex-col"
             data-testid="whatsapp-chat-widget"
           >
             {/* Header */}
-            <div className="bg-gradient-to-r from-green-600 to-green-500 dark:from-green-700 dark:to-green-600 p-4 flex items-center justify-between">
-              <div className="flex items-center gap-3">
+            <div className="bg-gradient-to-r from-green-600 to-green-500 dark:from-green-700 dark:to-green-600 p-4 flex items-center justify-between flex-shrink-0">
+              <div className="flex items-center gap-3 min-w-0">
                 <img
                   src={whatsappLogo}
                   alt="WhatsApp"
-                  className="w-12 h-12 rounded-full border-2 border-white shadow-lg"
+                  className="w-12 h-12 rounded-full border-2 border-white shadow-lg flex-shrink-0"
                 />
-                <div>
-                  <h3 className="text-white font-semibold text-lg">AddisonX Media</h3>
-                  <p className="text-green-100 text-sm">Typically replies instantly</p>
+                <div className="min-w-0">
+                  <h3 className="text-white font-semibold text-lg truncate">AddisonX Media</h3>
+                  <p className="text-green-100 text-sm truncate">Typically replies instantly</p>
                 </div>
               </div>
               <button
@@ -107,7 +105,7 @@ export function WhatsAppButton() {
             </div>
 
             {/* Chat Content */}
-            <div className="p-6 bg-gradient-to-b from-green-50/50 to-background dark:from-green-950/20 dark:to-card space-y-4 max-h-[350px] overflow-y-auto overflow-x-hidden">
+            <div className="flex-1 p-6 bg-gradient-to-b from-green-50/50 to-background dark:from-green-950/20 dark:to-card space-y-4 overflow-y-auto overflow-x-hidden">
               {/* Welcome Message */}
               <div className="flex gap-2">
                 <div className="w-8 h-8 rounded-full bg-green-500 flex items-center justify-center flex-shrink-0">
@@ -142,7 +140,7 @@ export function WhatsAppButton() {
             </div>
 
             {/* Message Input */}
-            <div className="p-4 border-t border-border bg-background dark:bg-card">
+            <div className="flex-shrink-0 p-4 border-t border-border bg-background dark:bg-card">
               <div className="flex gap-2">
                 <input
                   type="text"
