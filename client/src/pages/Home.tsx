@@ -119,22 +119,19 @@ function AnimatedCounter({ end, duration = 2000 }: { end: number; duration?: num
 
 export default function Home() {
   const { data: testimonials } = useQuery<Testimonial[]>({
-    queryKey: ["/api/testimonials"],
+    queryKey: ["/api/testimonials/active"],
   });
 
   const { data: teamMembers } = useQuery<TeamMember[]>({
     queryKey: ["/api/team-members/active"],
   });
 
-  const { data: customizationData } = useQuery<any[]>({
-    queryKey: ["/api/customization"],
+  const { data: servicesCustomization } = useQuery<any>({
+    queryKey: ["/api/customization/services"],
   });
 
-  const activeTestimonials = testimonials?.filter(t => t.isActive === true).slice(0, 3) || [];
+  const activeTestimonials = testimonials || [];
   const activeTeamMembers = teamMembers || [];
-
-  // Extract customization settings
-  const servicesCustomization = customizationData?.find(c => c.section === 'services');
 
   // Use customized or default values
   const servicesTitle = servicesCustomization?.content?.title || "Our Services";
@@ -197,18 +194,18 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Services Grid */}
+      {/* Services Grid - Cool Modern Design */}
       <section className="py-12 md:py-20 lg:py-28 relative overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-br from-background via-primary/5 to-background"></div>
-        <div className="hidden md:block absolute top-20 right-10 w-72 h-72 bg-primary/10 rounded-full blur-3xl"></div>
-        <div className="hidden md:block absolute bottom-20 left-10 w-72 h-72 bg-purple-500/10 rounded-full blur-3xl"></div>
+        <div className="absolute inset-0 bg-gradient-to-br from-background via-primary/5 to-purple-500/5"></div>
+        <div className="hidden md:block absolute top-20 right-10 w-96 h-96 bg-gradient-to-br from-primary/20 to-orange-500/20 rounded-full blur-3xl animate-pulse"></div>
+        <div className="hidden md:block absolute bottom-20 left-10 w-96 h-96 bg-gradient-to-br from-purple-500/20 to-primary/20 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '1s' }}></div>
         <div className="max-w-7xl mx-auto px-4 md:px-6 relative z-10">
           <div className="text-center mb-8 md:mb-12 lg:mb-16">
-            <Badge variant="secondary" className="mb-3 md:mb-4">
-              <Sparkles className="h-3 w-3 mr-2" />
-              What We Offer
-            </Badge>
-            <h2 className="text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold mb-3 md:mb-6" data-testid="text-services-title">
+            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r from-primary/10 via-orange-500/10 to-purple-600/10 border border-primary/20 mb-4 shadow-lg">
+              <Zap className="h-4 w-4 text-primary animate-pulse" />
+              <span className="text-sm font-semibold bg-gradient-to-r from-primary via-orange-500 to-purple-600 bg-clip-text text-transparent">What We Offer</span>
+            </div>
+            <h2 className="text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold mb-3 md:mb-6 bg-gradient-to-r from-foreground via-primary to-purple-600 bg-clip-text text-transparent" data-testid="text-services-title">
               {servicesTitle}
             </h2>
             <p className="text-base md:text-lg lg:text-xl text-muted-foreground max-w-2xl mx-auto px-2" data-testid="text-services-description">
@@ -221,18 +218,40 @@ export default function Home() {
               const Icon = service.icon || Code;
               const IconComponent = typeof Icon === 'string' ? Code : Icon;
               return (
-                <Card key={index} className="group p-5 md:p-6 lg:p-8 transition-all duration-500 border-primary/10 hover:border-primary/30 hover:shadow-xl hover:shadow-primary/10 bg-gradient-to-br from-card to-card/80" data-testid={`card-service-${index}`}>
+                <Card 
+                  key={index} 
+                  className="group relative p-5 md:p-6 lg:p-8 transition-all duration-500 border-2 overflow-visible bg-gradient-to-br from-card via-card to-primary/5 hover:shadow-2xl hover:shadow-primary/20 hover:-translate-y-2" 
+                  data-testid={`card-service-${index}`}
+                >
+                  {/* Animated gradient border effect */}
+                  <div className="absolute inset-0 rounded-lg bg-gradient-to-r from-primary via-orange-500 to-purple-600 opacity-0 group-hover:opacity-100 blur-xl transition-all duration-500 -z-10"></div>
+                  
+                  {/* Glowing icon container */}
                   <div className="mb-4 md:mb-5 lg:mb-6 relative">
-                    <div className="inline-flex items-center justify-center w-12 h-12 md:w-14 md:h-14 lg:w-16 lg:h-16 rounded-xl bg-gradient-to-br from-primary/20 to-primary/10 group-hover:from-primary/30 group-hover:to-primary/20 transition-all duration-300">
-                      <IconComponent className="h-6 w-6 md:h-7 md:w-7 lg:h-8 lg:w-8 text-primary group-hover:scale-110 transition-transform duration-300" />
+                    <div className="relative inline-flex items-center justify-center">
+                      {/* Multi-layer glow effect */}
+                      <div className="absolute inset-0 w-12 h-12 md:w-14 md:h-14 lg:w-16 lg:h-16 rounded-2xl bg-gradient-to-br from-primary via-orange-500 to-purple-600 opacity-20 blur-md group-hover:opacity-40 group-hover:blur-lg transition-all duration-500"></div>
+                      <div className="absolute inset-0 w-12 h-12 md:w-14 md:h-14 lg:w-16 lg:h-16 rounded-2xl bg-gradient-to-br from-primary to-purple-600 opacity-10 blur-2xl group-hover:opacity-30 transition-all duration-500"></div>
+                      
+                      {/* Icon box with gradient border */}
+                      <div className="relative w-12 h-12 md:w-14 md:h-14 lg:w-16 lg:h-16 rounded-2xl bg-gradient-to-br from-primary via-orange-500 to-purple-600 p-[2px] group-hover:scale-110 transition-transform duration-300">
+                        <div className="w-full h-full rounded-2xl bg-card flex items-center justify-center">
+                          <IconComponent className="h-6 w-6 md:h-7 md:w-7 lg:h-8 lg:w-8 text-primary group-hover:text-orange-500 transition-colors duration-300" />
+                        </div>
+                      </div>
                     </div>
                   </div>
-                  <h3 className="text-lg md:text-xl lg:text-2xl font-bold mb-2 md:mb-3 group-hover:text-primary transition-colors duration-300" data-testid={`text-service-title-${index}`}>
+                  
+                  {/* Content */}
+                  <h3 className="text-lg md:text-xl lg:text-2xl font-bold mb-2 md:mb-3 bg-gradient-to-r from-foreground to-foreground group-hover:from-primary group-hover:via-orange-500 group-hover:to-purple-600 bg-clip-text transition-all duration-300" data-testid={`text-service-title-${index}`}>
                     {service.title}
                   </h3>
                   <p className="text-sm md:text-base text-muted-foreground leading-relaxed" data-testid={`text-service-description-${index}`}>
                     {service.description}
                   </p>
+                  
+                  {/* Decorative corner accent */}
+                  <div className="absolute top-3 right-3 w-2 h-2 rounded-full bg-gradient-to-br from-primary to-purple-600 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
                 </Card>
               );
             })}
@@ -240,9 +259,12 @@ export default function Home() {
 
           <div className="text-center mt-8 md:mt-12 lg:mt-16">
             <Link href="/services">
-              <Button size="default" className="group shadow-lg hover:shadow-xl transition-all duration-300 md:px-8 lg:px-10" data-testid="button-explore-all-services">
-                Explore All Services
-                <ArrowRight className="ml-2 h-4 w-4 md:h-5 md:w-5 group-hover:translate-x-1 transition-transform" />
+              <Button size="default" className="group relative shadow-lg hover:shadow-2xl hover:shadow-primary/30 transition-all duration-300 md:px-8 lg:px-10 overflow-visible" data-testid="button-explore-all-services">
+                <span className="relative z-10 flex items-center">
+                  Explore All Services
+                  <ArrowRight className="ml-2 h-4 w-4 md:h-5 md:w-5 group-hover:translate-x-1 transition-transform" />
+                </span>
+                <div className="absolute inset-0 rounded-md bg-gradient-to-r from-primary via-orange-500 to-purple-600 opacity-0 group-hover:opacity-20 blur transition-all duration-300"></div>
               </Button>
             </Link>
           </div>
