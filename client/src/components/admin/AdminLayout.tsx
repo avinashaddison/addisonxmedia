@@ -163,7 +163,7 @@ export function AdminLayout({ children }: AdminLayoutProps) {
         <div className="flex h-screen w-full">
           <Sidebar>
             <SidebarHeader className="border-b border-sidebar-border p-6">
-              <div className="flex flex-col gap-2">
+              <div className="flex flex-col gap-3">
                 <img 
                   src={logoUrl} 
                   alt="AddisonX Media Logo" 
@@ -172,7 +172,11 @@ export function AdminLayout({ children }: AdminLayoutProps) {
                     boxShadow: '0 0 20px rgba(255, 77, 54, 0.4), 0 0 40px rgba(255, 77, 54, 0.2)'
                   }}
                 />
-                <p className="text-xs text-muted-foreground">Admin Dashboard</p>
+                <div className="inline-flex items-center justify-center px-3 py-1.5 rounded-md bg-gradient-to-r from-primary/20 via-orange-500/20 to-primary/20 border border-primary/30 backdrop-blur-sm">
+                  <span className="text-xs font-semibold bg-gradient-to-r from-primary to-orange-500 bg-clip-text text-transparent tracking-wide">
+                    ADMIN PANEL
+                  </span>
+                </div>
               </div>
             </SidebarHeader>
 
