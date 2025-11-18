@@ -83,28 +83,46 @@ export function Footer() {
                   Ecommerce Development
                 </span>
               </Link>
-              <Link href="/services/seo">
-                <span className="text-sm text-slate-300 hover:text-primary cursor-pointer transition-all hover:translate-x-1 inline-block group" data-testid="footer-link-seo">
-                  <span className="inline-block w-2 h-2 rounded-full bg-primary/50 mr-2 group-hover:bg-primary transition-colors"></span>
-                  SEO Optimization
-                </span>
-              </Link>
-              <Link href="/services/social-media">
-                <span className="text-sm text-slate-300 hover:text-primary cursor-pointer transition-all hover:translate-x-1 inline-block group" data-testid="footer-link-social-media">
-                  <span className="inline-block w-2 h-2 rounded-full bg-primary/50 mr-2 group-hover:bg-primary transition-colors"></span>
-                  Social Media Marketing
-                </span>
-              </Link>
-              <Link href="/services/branding">
-                <span className="text-sm text-slate-300 hover:text-primary cursor-pointer transition-all hover:translate-x-1 inline-block group" data-testid="footer-link-branding">
+              <Link href="/services/brand-promotion">
+                <span className="text-sm text-slate-300 hover:text-primary cursor-pointer transition-all hover:translate-x-1 inline-block group" data-testid="footer-link-brand-promotion">
                   <span className="inline-block w-2 h-2 rounded-full bg-primary/50 mr-2 group-hover:bg-primary transition-colors"></span>
                   Brand Promotion
                 </span>
               </Link>
-              <Link href="/services/graphic-design">
-                <span className="text-sm text-slate-300 hover:text-primary cursor-pointer transition-all hover:translate-x-1 inline-block group" data-testid="footer-link-graphic-design">
+              <Link href="/services/local-seo">
+                <span className="text-sm text-slate-300 hover:text-primary cursor-pointer transition-all hover:translate-x-1 inline-block group" data-testid="footer-link-local-seo">
                   <span className="inline-block w-2 h-2 rounded-full bg-primary/50 mr-2 group-hover:bg-primary transition-colors"></span>
-                  Graphic Design
+                  Local SEO
+                </span>
+              </Link>
+              <Link href="/services/ads-management">
+                <span className="text-sm text-slate-300 hover:text-primary cursor-pointer transition-all hover:translate-x-1 inline-block group" data-testid="footer-link-ads-management">
+                  <span className="inline-block w-2 h-2 rounded-full bg-primary/50 mr-2 group-hover:bg-primary transition-colors"></span>
+                  Ads Management
+                </span>
+              </Link>
+              <Link href="/services/graphic-designing">
+                <span className="text-sm text-slate-300 hover:text-primary cursor-pointer transition-all hover:translate-x-1 inline-block group" data-testid="footer-link-graphic-designing">
+                  <span className="inline-block w-2 h-2 rounded-full bg-primary/50 mr-2 group-hover:bg-primary transition-colors"></span>
+                  Graphic Designing
+                </span>
+              </Link>
+              <Link href="/services/whatsapp-marketing">
+                <span className="text-sm text-slate-300 hover:text-primary cursor-pointer transition-all hover:translate-x-1 inline-block group" data-testid="footer-link-whatsapp-marketing">
+                  <span className="inline-block w-2 h-2 rounded-full bg-primary/50 mr-2 group-hover:bg-primary transition-colors"></span>
+                  WhatsApp Marketing
+                </span>
+              </Link>
+              <Link href="/services/social-media-marketing">
+                <span className="text-sm text-slate-300 hover:text-primary cursor-pointer transition-all hover:translate-x-1 inline-block group" data-testid="footer-link-social-media-marketing">
+                  <span className="inline-block w-2 h-2 rounded-full bg-primary/50 mr-2 group-hover:bg-primary transition-colors"></span>
+                  Social Media Marketing
+                </span>
+              </Link>
+              <Link href="/services/custom-development">
+                <span className="text-sm text-slate-300 hover:text-primary cursor-pointer transition-all hover:translate-x-1 inline-block group" data-testid="footer-link-custom-development">
+                  <span className="inline-block w-2 h-2 rounded-full bg-primary/50 mr-2 group-hover:bg-primary transition-colors"></span>
+                  Custom Development
                 </span>
               </Link>
             </div>
