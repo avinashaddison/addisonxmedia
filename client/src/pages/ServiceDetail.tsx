@@ -75,7 +75,7 @@ const services = {
       }
     ]
   },
-  "ecommerce": {
+  "ecommerce-development": {
     icon: ShoppingCart,
     title: "Ecommerce Development",
     description: "Complete online store solutions that drive sales and enhance customer engagement",
