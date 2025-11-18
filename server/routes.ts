@@ -43,6 +43,18 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // Helper function to convert employee photo URLs
+  const convertEmployeePhotoUrl = (photoUrl: string | null): string | null => {
+    if (!photoUrl) return null;
+    
+    // Extract filename from the path
+    const parts = photoUrl.split('/');
+    const filename = parts[parts.length - 1];
+    
+    // Return the API endpoint URL
+    return `/api/employee-photo/${filename}`;
+  };
+
   // Employee verification route (public)
   app.get("/api/employees/verify/:employeeId", async (req, res) => {
     try {
@@ -59,7 +71,11 @@ export async function registerRoutes(app: Express): Promise<Server> {
         return res.status(404).json({ message: "Employee not found" });
       }
 
-      res.json(employee);
+      // Convert photo URL to API endpoint
+      res.json({
+        ...employee,
+        photoUrl: convertEmployeePhotoUrl(employee.photoUrl)
+      });
     } catch (error) {
       console.error("Error verifying employee:", error);
       res.status(500).json({ message: "Failed to verify employee" });
@@ -848,6 +864,34 @@ export async function registerRoutes(app: Express): Promise<Server> {
     } catch (error) {
       console.error("Error deleting SEO setting:", error);
       res.status(500).json({ message: "Failed to delete SEO setting" });
+    }
+  });
+
+  // Employee photo serving route
+  app.get("/api/employee-photo/:filename", async (req, res) => {
+    try {
+      const { filename } = req.params;
+      const objectStorageService = new ObjectStorageService();
+      const publicDir = objectStorageService.getPublicObjectDir();
+      
+      if (!publicDir) {
+        return res.status(500).json({ message: "Object storage not configured" });
+      }
+
+      const fullPath = `${publicDir}/team-photos/${filename}`;
+      const { bucketName, objectName } = parseObjectPath(fullPath);
+
+      const signedUrl = await signObjectURL({
+        bucketName,
+        objectName,
+        method: "GET",
+        ttlSec: 3600,
+      });
+
+      res.redirect(signedUrl);
+    } catch (error) {
+      console.error("Error serving employee photo:", error);
+      res.status(500).json({ message: "Failed to serve photo" });
     }
   });
 
