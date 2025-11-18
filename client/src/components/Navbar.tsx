@@ -16,62 +16,69 @@ const services = [
   {
     icon: Code,
     title: "Web Development",
+    slug: "web-development",
     description: "Custom websites built with modern technologies"
   },
   {
     icon: ShoppingCart,
     title: "Ecommerce Development",
+    slug: "ecommerce-development",
     description: "Complete online store solutions"
   },
   {
     icon: TrendingUp,
     title: "Brand Promotion",
+    slug: "brand-promotion",
     description: "Strategic brand building campaigns"
   },
   {
     icon: Search,
     title: "Local SEO",
+    slug: "local-seo",
     description: "Dominate local search results"
   },
   {
     icon: Target,
     title: "Ads Management",
+    slug: "ads-management",
     description: "Data-driven advertising campaigns"
   },
   {
     icon: Palette,
     title: "Graphic Designing",
+    slug: "graphic-designing",
     description: "Creative visual designs"
   },
   {
     icon: MessageCircle,
     title: "WhatsApp Marketing",
+    slug: "whatsapp-marketing",
     description: "Direct customer engagement"
   },
   {
     icon: Share2,
     title: "Social Media Marketing",
+    slug: "social-media-marketing",
     description: "Build and engage your community"
   },
   {
     icon: Wrench,
     title: "Custom Development",
+    slug: "custom-development",
     description: "Tailored software solutions"
   }
 ];
 
 export function Navbar() {
   const [location] = useLocation();
-  const [pathname, search] = location.split('?');
-  const isServicesListPage = pathname === '/services';
-  const searchParams = new URLSearchParams(search || '');
-  const currentFilter = searchParams.get('filter');
+  const isServiceDetailPage = location.startsWith('/service/');
+  const currentServiceSlug = isServiceDetailPage ? location.split('/service/')[1] : null;
 
   const navLinks = [
     { path: "/", label: "Home", icon: Home },
-    { path: "/services?filter=web-development", label: "Web Dev", icon: Code },
-    { path: "/services?filter=ads-management", label: "Ads", icon: Target },
-    { path: "/services?filter=whatsapp-marketing", label: "WhatsApp", icon: MessageCircle },
+    { path: "/service/web-development", label: "Web Dev", icon: Code },
+    { path: "/service/ads-management", label: "Ads", icon: Target },
+    { path: "/service/whatsapp-marketing", label: "WhatsApp", icon: MessageCircle },
     { path: "/services", label: "All Services", icon: Briefcase },
   ];
 
@@ -183,8 +190,8 @@ export function Navbar() {
 
                   {/* Web Development */}
                   <NavigationMenuItem>
-                    <NavigationMenuLink asChild className={`${navigationMenuTriggerStyle()} ${isServicesListPage && currentFilter === 'web-development' ? 'bg-primary text-primary-foreground' : ''}`}>
-                      <Link href="/services?filter=web-development">
+                    <NavigationMenuLink asChild className={`${navigationMenuTriggerStyle()} ${currentServiceSlug === 'web-development' ? 'bg-primary text-primary-foreground' : ''}`}>
+                      <Link href="/service/web-development">
                         <Code className="h-4 w-4 mr-2" />
                         Web Development
                       </Link>
@@ -193,8 +200,8 @@ export function Navbar() {
 
                   {/* Ads Management */}
                   <NavigationMenuItem>
-                    <NavigationMenuLink asChild className={`${navigationMenuTriggerStyle()} ${isServicesListPage && currentFilter === 'ads-management' ? 'bg-primary text-primary-foreground' : ''}`}>
-                      <Link href="/services?filter=ads-management">
+                    <NavigationMenuLink asChild className={`${navigationMenuTriggerStyle()} ${currentServiceSlug === 'ads-management' ? 'bg-primary text-primary-foreground' : ''}`}>
+                      <Link href="/service/ads-management">
                         <Target className="h-4 w-4 mr-2" />
                         Ads Management
                       </Link>
@@ -203,8 +210,8 @@ export function Navbar() {
 
                   {/* WhatsApp Marketing */}
                   <NavigationMenuItem>
-                    <NavigationMenuLink asChild className={`${navigationMenuTriggerStyle()} ${isServicesListPage && currentFilter === 'whatsapp-marketing' ? 'bg-primary text-primary-foreground' : ''}`}>
-                      <Link href="/services?filter=whatsapp-marketing">
+                    <NavigationMenuLink asChild className={`${navigationMenuTriggerStyle()} ${currentServiceSlug === 'whatsapp-marketing' ? 'bg-primary text-primary-foreground' : ''}`}>
+                      <Link href="/service/whatsapp-marketing">
                         <MessageCircle className="h-4 w-4 mr-2" />
                         WhatsApp Marketing
                       </Link>
@@ -213,7 +220,7 @@ export function Navbar() {
 
                   {/* All Services Dropdown */}
                   <NavigationMenuItem>
-                    <NavigationMenuTrigger data-testid="nav-all-services-trigger" className={isServicesListPage && !currentFilter ? 'bg-primary text-primary-foreground' : ''}>
+                    <NavigationMenuTrigger data-testid="nav-all-services-trigger" className={location === '/services' ? 'bg-primary text-primary-foreground' : ''}>
                       <Briefcase className="h-4 w-4 mr-2" />
                       All Services
                     </NavigationMenuTrigger>
@@ -223,9 +230,9 @@ export function Navbar() {
                           const Icon = service.icon;
                           return (
                             <NavigationMenuLink key={service.title} asChild>
-                              <Link href="/services" className="group block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground" data-testid={`nav-service-${service.title.toLowerCase().replace(/\s+/g, '-')}`}>
+                              <Link href={`/service/${service.slug}`} className="group block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground" data-testid={`nav-service-${service.title.toLowerCase().replace(/\s+/g, '-')}`}>
                                 <div className="flex items-center gap-2 mb-2">
-                                  <div className="flex items-center justify-center w-8 h-8 rounded-lg bg-primary/10 group-hover:bg-primary/20 transition-colors">
+                                  <div className="flex items-center justify-center w-8 h-8 rounded-md bg-primary/10">
                                     <Icon className="h-4 w-4 text-primary" />
                                   </div>
                                   <div className="text-sm font-medium leading-none">{service.title}</div>
@@ -282,9 +289,8 @@ export function Navbar() {
             
             if (link.path === '/') {
               isActive = location === '/';
-            } else if (link.path.startsWith('/services')) {
-              const linkFilter = new URLSearchParams(link.path.split('?')[1] || '').get('filter');
-              isActive = isServicesListPage && currentFilter === linkFilter;
+            } else if (link.path.startsWith('/service/')) {
+              isActive = location === link.path;
             } else {
               isActive = location === link.path;
             }
