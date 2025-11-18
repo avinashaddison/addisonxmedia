@@ -71,10 +71,42 @@ export function Footer() {
           <div>
             <h3 className="text-lg font-bold mb-6 text-white">Our Services</h3>
             <div className="flex flex-col gap-3">
-              <span className="text-sm text-slate-300">Web Development</span>
-              <span className="text-sm text-slate-300">Ecommerce Solutions</span>
-              <span className="text-sm text-slate-300">SEO Optimization</span>
-              <span className="text-sm text-slate-300">Digital Marketing</span>
+              <Link href="/services/web-development">
+                <span className="text-sm text-slate-300 hover:text-primary cursor-pointer transition-all hover:translate-x-1 inline-block group" data-testid="footer-link-web-development">
+                  <span className="inline-block w-2 h-2 rounded-full bg-primary/50 mr-2 group-hover:bg-primary transition-colors"></span>
+                  Web Development
+                </span>
+              </Link>
+              <Link href="/services/ecommerce">
+                <span className="text-sm text-slate-300 hover:text-primary cursor-pointer transition-all hover:translate-x-1 inline-block group" data-testid="footer-link-ecommerce">
+                  <span className="inline-block w-2 h-2 rounded-full bg-primary/50 mr-2 group-hover:bg-primary transition-colors"></span>
+                  Ecommerce Development
+                </span>
+              </Link>
+              <Link href="/services/seo">
+                <span className="text-sm text-slate-300 hover:text-primary cursor-pointer transition-all hover:translate-x-1 inline-block group" data-testid="footer-link-seo">
+                  <span className="inline-block w-2 h-2 rounded-full bg-primary/50 mr-2 group-hover:bg-primary transition-colors"></span>
+                  SEO Optimization
+                </span>
+              </Link>
+              <Link href="/services/social-media">
+                <span className="text-sm text-slate-300 hover:text-primary cursor-pointer transition-all hover:translate-x-1 inline-block group" data-testid="footer-link-social-media">
+                  <span className="inline-block w-2 h-2 rounded-full bg-primary/50 mr-2 group-hover:bg-primary transition-colors"></span>
+                  Social Media Marketing
+                </span>
+              </Link>
+              <Link href="/services/branding">
+                <span className="text-sm text-slate-300 hover:text-primary cursor-pointer transition-all hover:translate-x-1 inline-block group" data-testid="footer-link-branding">
+                  <span className="inline-block w-2 h-2 rounded-full bg-primary/50 mr-2 group-hover:bg-primary transition-colors"></span>
+                  Brand Promotion
+                </span>
+              </Link>
+              <Link href="/services/graphic-design">
+                <span className="text-sm text-slate-300 hover:text-primary cursor-pointer transition-all hover:translate-x-1 inline-block group" data-testid="footer-link-graphic-design">
+                  <span className="inline-block w-2 h-2 rounded-full bg-primary/50 mr-2 group-hover:bg-primary transition-colors"></span>
+                  Graphic Design
+                </span>
+              </Link>
             </div>
           </div>
 
