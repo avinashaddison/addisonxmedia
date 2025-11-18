@@ -39,30 +39,16 @@ export function WhatsAppButton() {
       {/* Floating WhatsApp Button */}
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className={`fixed bottom-24 right-4 md:bottom-6 md:right-6 z-40 group transition-opacity ${isOpen ? 'pointer-events-none opacity-0 md:opacity-100 md:pointer-events-auto' : ''}`}
+        className={`fixed bottom-24 right-4 md:bottom-6 md:right-6 z-40 ${isOpen ? 'pointer-events-none opacity-0 md:opacity-100 md:pointer-events-auto' : ''}`}
         data-testid="button-whatsapp-float"
         aria-label="Chat on WhatsApp"
       >
-        <div className="relative">
-          {/* Glow Effect */}
-          <div className="absolute inset-0 bg-green-500 rounded-full blur-2xl opacity-50 group-hover:opacity-75 transition-opacity duration-300 animate-pulse"></div>
-          
-          {/* Icon Container */}
-          <div className="relative w-14 h-14 md:w-16 md:h-16 lg:w-20 lg:h-20 rounded-full shadow-2xl transform transition-all duration-300 group-hover:scale-110 group-hover:shadow-green-500/50 active:scale-95">
-            <img
-              src={whatsappLogo}
-              alt="WhatsApp"
-              className="w-full h-full rounded-full"
-            />
-          </div>
-        </div>
-
-        {/* Tooltip - Hidden on mobile */}
-        <div className="absolute bottom-full right-0 mb-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none hidden md:block">
-          <div className="bg-slate-900 dark:bg-slate-800 text-white text-sm px-4 py-2 rounded-lg shadow-xl whitespace-nowrap">
-            Chat with us on WhatsApp
-            <div className="absolute top-full right-6 w-0 h-0 border-l-8 border-r-8 border-t-8 border-l-transparent border-r-transparent border-t-slate-900 dark:border-t-slate-800"></div>
-          </div>
+        <div className="w-14 h-14 md:w-16 md:h-16 rounded-full shadow-lg hover-elevate">
+          <img
+            src={whatsappLogo}
+            alt="WhatsApp"
+            className="w-full h-full rounded-full"
+          />
         </div>
       </button>
 
@@ -82,7 +68,7 @@ export function WhatsAppButton() {
             data-testid="whatsapp-chat-widget"
           >
             {/* Header */}
-            <div className="bg-gradient-to-r from-green-600 to-green-500 dark:from-green-700 dark:to-green-600 p-4 flex items-center justify-between flex-shrink-0">
+            <div className="bg-green-600 dark:bg-green-700 p-4 flex items-center justify-between flex-shrink-0">
               <div className="flex items-center gap-3 min-w-0">
                 <img
                   src={whatsappLogo}

@@ -145,30 +145,24 @@ export function Navbar() {
               </div>
             </Link>
 
-            {/* Mobile Action Buttons with Premium Style */}
+            {/* Mobile Action Buttons */}
             <div className="lg:hidden flex items-center gap-2">
               {/* Phone Call Button */}
               <a 
                 href="tel:+919709707311"
-                className="relative group"
+                className="flex items-center justify-center w-11 h-11 rounded-md bg-green-50 dark:bg-green-950 border border-green-200 dark:border-green-800 hover-elevate"
                 data-testid="button-mobile-call"
               >
-                <div className="absolute inset-0 bg-gradient-to-br from-green-500/40 to-emerald-600/40 rounded-xl blur-md opacity-0 group-active:opacity-100 transition-opacity duration-300"></div>
-                <div className="relative flex items-center justify-center w-11 h-11 rounded-xl bg-gradient-to-br from-green-50 to-emerald-50 dark:from-green-950 dark:to-emerald-950 border border-green-200/50 dark:border-green-800/50 transition-all duration-300 group-active:scale-90 shadow-lg">
-                  <Phone className="h-4.5 w-4.5 text-green-600 dark:text-green-400" />
-                </div>
+                <Phone className="h-5 w-5 text-green-600 dark:text-green-400" />
               </a>
 
               {/* Contact Message Button */}
               <Link href="/contact">
                 <button 
-                  className="relative group"
+                  className="flex items-center justify-center w-11 h-11 rounded-md bg-primary text-white hover-elevate"
                   data-testid="button-mobile-contact"
                 >
-                  <div className="absolute inset-0 bg-gradient-to-br from-primary to-purple-600 rounded-xl blur-md opacity-60 group-active:opacity-90 transition-opacity duration-300 animate-pulse"></div>
-                  <div className="relative flex items-center justify-center w-11 h-11 rounded-xl bg-gradient-to-br from-primary to-purple-600 shadow-xl shadow-primary/40 transition-all duration-300 group-active:scale-90">
-                    <MessageSquare className="h-4.5 w-4.5 text-white" />
-                  </div>
+                  <MessageSquare className="h-5 w-5" />
                 </button>
               </Link>
             </div>

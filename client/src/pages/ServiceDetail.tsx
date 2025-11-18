@@ -530,7 +530,7 @@ export default function ServiceDetail() {
             {service.stats.map((stat, index) => {
               const StatIcon = stat.icon;
               return (
-                <Card key={index} className="text-center p-6 hover-elevate transition-all">
+                <Card key={index} className="text-center p-6 hover-elevate">
                   <StatIcon className="h-8 w-8 mx-auto mb-3 text-primary" />
                   <div className="text-3xl md:text-4xl font-bold text-foreground mb-2" data-testid={`stat-value-${index}`}>
                     {stat.value}
@@ -559,7 +559,7 @@ export default function ServiceDetail() {
               <h3 className="text-2xl font-bold mb-6">Key Benefits</h3>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 {service.benefits.map((benefit, index) => (
-                  <Card key={index} className="p-4 hover-elevate transition-all">
+                  <Card key={index} className="p-4 hover-elevate">
                     <div className="flex items-start gap-3">
                       <div className="flex-shrink-0 w-6 h-6 rounded-full bg-primary/10 flex items-center justify-center mt-0.5">
                         <Check className="h-4 w-4 text-primary" />
@@ -589,7 +589,7 @@ export default function ServiceDetail() {
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
             {service.features.map((feature, index) => (
-              <Card key={index} className="p-5 hover-elevate transition-all" data-testid={`feature-card-${index}`}>
+              <Card key={index} className="p-5 hover-elevate" data-testid={`feature-card-${index}`}>
                 <div className="flex items-start gap-3">
                   <div className="flex-shrink-0 w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center mt-0.5">
                     <Check className="h-5 w-5 text-primary" />
@@ -617,7 +617,7 @@ export default function ServiceDetail() {
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             {service.process.map((step, index) => (
-              <Card key={index} className="relative p-6 hover-elevate transition-all">
+              <Card key={index} className="relative p-6 hover-elevate">
                 <div className="absolute -top-4 -left-4 w-12 h-12 rounded-full bg-primary flex items-center justify-center text-white font-bold text-xl shadow-lg">
                   {step.step}
                 </div>
@@ -715,14 +715,13 @@ export default function ServiceDetail() {
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {service.portfolio.map((item, index) => (
-                <Card key={index} className="overflow-hidden hover-elevate transition-all group">
-                  <div className="relative overflow-hidden h-64">
+                <Card key={index} className="overflow-hidden hover-elevate">
+                  <div className="h-64">
                     <img 
                       src={item.image} 
                       alt={item.title}
-                      className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
+                      className="w-full h-full object-cover"
                     />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
                   </div>
                   <CardContent className="p-6">
                     <h3 className="text-xl font-bold mb-2">{item.title}</h3>
@@ -736,9 +735,9 @@ export default function ServiceDetail() {
       )}
 
       {/* CTA Section */}
-      <section className="py-16 md:py-24 bg-gradient-to-br from-primary/10 via-background to-primary/5">
+      <section className="py-16 md:py-24 bg-card">
         <div className="max-w-7xl mx-auto px-4 md:px-6">
-          <Card className="p-8 md:p-12 lg:p-16 text-center">
+          <Card className="p-8 md:p-12 text-center">
             <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-6">
               Ready to Get Started?
             </h2>

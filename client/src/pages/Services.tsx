@@ -154,15 +154,15 @@ export default function Services() {
 
   return (
     <div className="flex flex-col">
-      <section className="py-16 md:py-24 lg:py-32 bg-gradient-to-br from-primary/10 via-background to-primary/5">
+      <section className="py-16 md:py-20 border-b">
         <div className="max-w-7xl mx-auto px-4 md:px-6">
           <div className="max-w-4xl mx-auto text-center">
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6" data-testid="text-services-title">
+            <h1 className="text-4xl md:text-5xl font-bold mb-4" data-testid="text-services-title">
               Our Services
             </h1>
-            <p className="text-lg md:text-xl text-muted-foreground leading-relaxed" data-testid="text-services-description">
-              Comprehensive digital marketing solutions to help your business thrive in Ranchi 
-              and beyond. From web development to social media marketing, we've got you covered.
+            <p className="text-lg text-muted-foreground" data-testid="text-services-description">
+              Comprehensive digital marketing solutions to help your business thrive. 
+              From web development to social media marketing, we've got you covered.
             </p>
           </div>
         </div>
@@ -178,7 +178,7 @@ export default function Services() {
                 <Card 
                   key={index} 
                   ref={(el) => { serviceRefs.current[service.slug] = el; }}
-                  className={`p-6 flex flex-col hover-elevate transition-all ${isHighlighted ? 'ring-2 ring-primary' : ''}`}
+                  className={`p-6 flex flex-col hover-elevate ${isHighlighted ? 'ring-2 ring-primary' : ''}`}
                   data-testid={`card-service-${index}`}
                 >
                   <div className="flex items-center gap-4 mb-4">

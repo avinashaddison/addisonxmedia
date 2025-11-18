@@ -28,15 +28,15 @@ export default function About() {
   return (
     <div className="flex flex-col pb-20 lg:pb-0">
       {/* Hero Section */}
-      <section className="py-12 md:py-16 lg:py-24 xl:py-32 bg-gradient-to-br from-primary/10 via-background to-primary/5">
+      <section className="py-16 md:py-20 border-b">
         <div className="max-w-7xl mx-auto px-4 md:px-6">
           <div className="max-w-4xl mx-auto text-center">
-            <h1 className="text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold mb-4 md:mb-6" data-testid="text-about-title">
+            <h1 className="text-4xl md:text-5xl font-bold mb-4" data-testid="text-about-title">
               About AddisonX Media
             </h1>
-            <p className="text-base md:text-lg lg:text-xl text-muted-foreground leading-relaxed px-2" data-testid="text-about-description">
+            <p className="text-lg text-muted-foreground" data-testid="text-about-description">
               Your trusted digital marketing partner in Ranchi, dedicated to transforming 
-              businesses through innovative strategies and creative excellence.
+              businesses through innovative strategies.
             </p>
           </div>
         </div>

@@ -57,15 +57,15 @@ export default function Contact() {
 
   return (
     <div className="flex flex-col pb-20 lg:pb-0">
-      <section className="py-12 md:py-16 lg:py-24 xl:py-32 bg-gradient-to-br from-primary/10 via-background to-primary/5">
+      <section className="py-16 md:py-20 border-b">
         <div className="max-w-7xl mx-auto px-4 md:px-6">
           <div className="max-w-4xl mx-auto text-center">
-            <h1 className="text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold mb-4 md:mb-6" data-testid="text-contact-title">
+            <h1 className="text-4xl md:text-5xl font-bold mb-4" data-testid="text-contact-title">
               Get In Touch
             </h1>
-            <p className="text-base md:text-lg lg:text-xl text-muted-foreground leading-relaxed px-2" data-testid="text-contact-description">
+            <p className="text-lg text-muted-foreground" data-testid="text-contact-description">
               Have a project in mind? We'd love to hear from you. Reach out to discuss 
-              how we can help grow your business in Ranchi and beyond.
+              how we can help grow your business.
             </p>
           </div>
         </div>
