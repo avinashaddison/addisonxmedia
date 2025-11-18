@@ -83,9 +83,13 @@ export function Navbar() {
           <div className="max-w-7xl mx-auto px-4 md:px-6">
             <div className="flex items-center justify-between h-10 text-xs md:text-sm">
               <div className="flex items-center gap-4 md:gap-6 text-white/90">
-                <a href="tel:+919709707311" className="flex items-center gap-1.5 hover:text-white transition-colors" data-testid="link-phone">
+                <a href="tel:+919709707311" className="flex items-center gap-1.5 hover:text-white transition-colors" data-testid="link-phone-1">
                   <Phone className="h-3 w-3 md:h-3.5 md:w-3.5" />
                   <span>+91 97097 07311</span>
+                </a>
+                <a href="tel:+919142647797" className="flex items-center gap-1.5 hover:text-white transition-colors" data-testid="link-phone-2">
+                  <Phone className="h-3 w-3 md:h-3.5 md:w-3.5" />
+                  <span>+91 91426 47797</span>
                 </a>
                 <a href="mailto:team@addisonxmedia.com" className="flex items-center gap-1.5 hover:text-white transition-colors" data-testid="link-email">
                   <Mail className="h-3 w-3 md:h-3.5 md:w-3.5" />

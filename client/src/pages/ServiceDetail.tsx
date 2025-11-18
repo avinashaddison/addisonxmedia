@@ -770,9 +770,14 @@ export default function ServiceDetail() {
                 </div>
                 <div>
                   <div className="font-semibold mb-1">Call Us</div>
-                  <a href="tel:+919709707311" className="text-muted-foreground hover:text-primary transition-colors">
-                    +91 97097 07311
-                  </a>
+                  <div className="space-y-1">
+                    <a href="tel:+919709707311" className="block text-muted-foreground hover:text-primary transition-colors">
+                      +91 97097 07311
+                    </a>
+                    <a href="tel:+919142647797" className="block text-muted-foreground hover:text-primary transition-colors">
+                      +91 91426 47797
+                    </a>
+                  </div>
                 </div>
               </div>
 

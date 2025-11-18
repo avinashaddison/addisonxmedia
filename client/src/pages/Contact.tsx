@@ -108,9 +108,14 @@ export default function Contact() {
                     </div>
                     <div>
                       <h3 className="font-semibold mb-1 md:mb-2 text-sm md:text-base" data-testid="text-phone-title">Phone</h3>
-                      <a href="tel:+919709707311" className="text-primary hover:underline text-sm md:text-base" data-testid="text-phone-number">
-                        +91 97097 07311
-                      </a>
+                      <div className="space-y-1">
+                        <a href="tel:+919709707311" className="block text-primary hover:underline text-sm md:text-base" data-testid="text-phone-number-1">
+                          +91 97097 07311
+                        </a>
+                        <a href="tel:+919142647797" className="block text-primary hover:underline text-sm md:text-base" data-testid="text-phone-number-2">
+                          +91 91426 47797
+                        </a>
+                      </div>
                     </div>
                   </div>
                 </Card>

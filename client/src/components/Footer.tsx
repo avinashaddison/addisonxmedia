@@ -144,8 +144,16 @@ export function Footer() {
                 <div className="flex-shrink-0 w-10 h-10 rounded-lg bg-primary/20 border border-primary/30 flex items-center justify-center group-hover:bg-primary/30 group-hover:border-primary/50 transition-all">
                   <Phone className="h-4 w-4 text-primary" />
                 </div>
-                <span className="text-sm text-slate-300 group-hover:text-primary transition-colors" data-testid="text-phone">
+                <span className="text-sm text-slate-300 group-hover:text-primary transition-colors" data-testid="text-phone-1">
                   +91 97097 07311
+                </span>
+              </a>
+              <a href="tel:+919142647797" className="flex items-center gap-3 group">
+                <div className="flex-shrink-0 w-10 h-10 rounded-lg bg-primary/20 border border-primary/30 flex items-center justify-center group-hover:bg-primary/30 group-hover:border-primary/50 transition-all">
+                  <Phone className="h-4 w-4 text-primary" />
+                </div>
+                <span className="text-sm text-slate-300 group-hover:text-primary transition-colors" data-testid="text-phone-2">
+                  +91 91426 47797
                 </span>
               </a>
               <a href="mailto:team@addisonxmedia.com" className="flex items-center gap-3 group">

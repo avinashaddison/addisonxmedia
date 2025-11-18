@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button";
 export function WhatsAppButton() {
   const [isOpen, setIsOpen] = useState(false);
   const [message, setMessage] = useState("");
-  const phoneNumber = "919709707311";
+  const phoneNumber = "919142647797";
   
   const predefinedMessages = [
     "Hi! I need help with Web Development",

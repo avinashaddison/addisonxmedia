@@ -485,36 +485,26 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Review QR Section - Ultra Cool Design */}
+      {/* Review QR Section */}
       <section className="py-8 md:py-12 lg:py-16 relative overflow-hidden">
-        {/* Animated Gradient Background */}
+        {/* Gradient Background */}
         <div className="absolute inset-0 bg-gradient-to-br from-green-500/10 via-yellow-500/10 to-red-500/10"></div>
         <div className="absolute inset-0 bg-gradient-to-tl from-blue-500/10 via-purple-500/10 to-primary/10"></div>
         
         {/* Floating Decorative Elements */}
-        <div className="absolute top-0 left-0 w-40 h-40 md:w-64 md:h-64 lg:w-96 lg:h-96 bg-gradient-to-br from-green-500 to-green-600 rounded-full blur-3xl opacity-30 animate-pulse"></div>
-        <div className="absolute top-10 right-0 w-40 h-40 md:w-64 md:h-64 lg:w-80 lg:h-80 bg-gradient-to-br from-yellow-500 to-yellow-600 rounded-full blur-3xl opacity-25 animate-pulse" style={{ animationDelay: '1s' }}></div>
-        <div className="absolute bottom-0 left-10 w-48 h-48 md:w-72 md:h-72 lg:w-96 lg:h-96 bg-gradient-to-br from-red-500 to-red-600 rounded-full blur-3xl opacity-25 animate-pulse" style={{ animationDelay: '2s' }}></div>
-        <div className="absolute bottom-10 right-10 w-40 h-40 md:w-64 md:h-64 lg:w-80 lg:h-80 bg-gradient-to-br from-blue-500 to-blue-600 rounded-full blur-3xl opacity-30 animate-pulse" style={{ animationDelay: '1.5s' }}></div>
+        <div className="absolute top-0 left-0 w-40 h-40 md:w-64 md:h-64 lg:w-96 lg:h-96 bg-gradient-to-br from-green-500 to-green-600 rounded-full blur-3xl opacity-30"></div>
+        <div className="absolute top-10 right-0 w-40 h-40 md:w-64 md:h-64 lg:w-80 lg:h-80 bg-gradient-to-br from-yellow-500 to-yellow-600 rounded-full blur-3xl opacity-25"></div>
+        <div className="absolute bottom-0 left-10 w-48 h-48 md:w-72 md:h-72 lg:w-96 lg:h-96 bg-gradient-to-br from-red-500 to-red-600 rounded-full blur-3xl opacity-25"></div>
+        <div className="absolute bottom-10 right-10 w-40 h-40 md:w-64 md:h-64 lg:w-80 lg:h-80 bg-gradient-to-br from-blue-500 to-blue-600 rounded-full blur-3xl opacity-30"></div>
         
         <div className="max-w-7xl mx-auto px-4 md:px-6 relative z-10">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-12 lg:gap-16 items-center">
-            {/* Left Side - QR Code Card with Enhanced Effects */}
+            {/* Left Side - QR Code Card */}
             <div className="order-1 flex justify-center lg:justify-start">
-              <div className="relative group">
-                {/* Multi-layer Glow Effects */}
-                <div className="absolute -inset-4 bg-gradient-to-r from-green-500 via-yellow-500 to-red-500 rounded-3xl blur-2xl opacity-0 group-hover:opacity-40 transition-all duration-700 animate-pulse"></div>
-                <div className="absolute -inset-2 bg-gradient-to-r from-blue-500 via-purple-500 to-primary rounded-3xl blur-xl opacity-0 group-hover:opacity-30 transition-all duration-500"></div>
-                
+              <div className="relative">
                 {/* Main Card with Gradient Border */}
-                <div className="relative bg-gradient-to-br from-primary via-orange-500 to-purple-600 p-[3px] rounded-3xl shadow-2xl group-hover:shadow-[0_0_80px_rgba(255,165,0,0.5)] transition-all duration-500">
-                  <Card className="relative p-6 md:p-8 lg:p-10 bg-gradient-to-br from-card via-card to-primary/5 rounded-3xl transition-all duration-500 group-hover:scale-[1.02]">
-                    {/* Animated Corner Accents */}
-                    <div className="absolute top-3 left-3 w-3 h-3 rounded-full bg-gradient-to-br from-green-500 to-yellow-500 opacity-0 group-hover:opacity-100 transition-opacity duration-500 animate-pulse"></div>
-                    <div className="absolute top-3 right-3 w-3 h-3 rounded-full bg-gradient-to-br from-yellow-500 to-red-500 opacity-0 group-hover:opacity-100 transition-opacity duration-500 animate-pulse" style={{ animationDelay: '0.2s' }}></div>
-                    <div className="absolute bottom-3 left-3 w-3 h-3 rounded-full bg-gradient-to-br from-red-500 to-blue-500 opacity-0 group-hover:opacity-100 transition-opacity duration-500 animate-pulse" style={{ animationDelay: '0.4s' }}></div>
-                    <div className="absolute bottom-3 right-3 w-3 h-3 rounded-full bg-gradient-to-br from-blue-500 to-green-500 opacity-0 group-hover:opacity-100 transition-opacity duration-500 animate-pulse" style={{ animationDelay: '0.6s' }}></div>
-                    
+                <div className="relative bg-gradient-to-br from-primary via-orange-500 to-purple-600 p-[3px] rounded-3xl shadow-2xl">
+                  <Card className="relative p-6 md:p-8 lg:p-10 bg-gradient-to-br from-card via-card to-primary/5 rounded-3xl">
                     <div className="relative">
                       <img
                         src={reviewQR}
@@ -524,15 +514,12 @@ export default function Home() {
                       />
                     </div>
                     
-                    {/* Enhanced Scan Me Badge */}
+                    {/* Scan Me Badge */}
                     <div className="mt-6 relative text-center">
-                      <div className="absolute inset-0 flex items-center justify-center">
-                        <div className="w-32 h-16 bg-red-500 rounded-full blur-2xl opacity-50 group-hover:opacity-70 transition-opacity duration-500"></div>
-                      </div>
-                      <div className="relative inline-flex items-center gap-2 px-6 py-3 rounded-full bg-gradient-to-r from-red-500 via-red-600 to-red-500 shadow-xl group-hover:shadow-2xl group-hover:shadow-red-500/50 transition-all duration-300 animate-pulse">
-                        <Star className="h-5 w-5 text-white animate-pulse" />
+                      <div className="relative inline-flex items-center gap-2 px-6 py-3 rounded-full bg-gradient-to-r from-red-500 via-red-600 to-red-500 shadow-xl">
+                        <Star className="h-5 w-5 text-white" />
                         <span className="text-lg md:text-xl font-black text-white tracking-widest">SCAN ME!</span>
-                        <Star className="h-5 w-5 text-white animate-pulse" />
+                        <Star className="h-5 w-5 text-white" />
                       </div>
                     </div>
 
@@ -551,15 +538,15 @@ export default function Home() {
               </div>
             </div>
 
-            {/* Right Side - Content with Animations */}
+            {/* Right Side - Content */}
             <div className="order-2 space-y-6">
-              {/* Heading with Enhanced Gradients */}
+              {/* Heading with Gradients */}
               <div>
                 <h2 className="text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-black mb-4 md:mb-6 leading-tight" data-testid="text-review-title">
                   <span className="block bg-gradient-to-r from-foreground via-primary to-purple-600 bg-clip-text text-transparent drop-shadow-lg">
                     HOW WAS YOUR
                   </span>
-                  <span className="block bg-gradient-to-r from-green-500 via-yellow-500 via-red-500 to-blue-500 bg-clip-text text-transparent drop-shadow-lg animate-pulse">
+                  <span className="block bg-gradient-to-r from-green-500 via-yellow-500 via-red-500 to-blue-500 bg-clip-text text-transparent drop-shadow-lg">
                     EXPERIENCE?
                   </span>
                 </h2>
