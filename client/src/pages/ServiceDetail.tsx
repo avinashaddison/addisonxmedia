@@ -450,7 +450,7 @@ const services = {
 };
 
 export default function ServiceDetail() {
-  const [, params] = useRoute("/services/:slug");
+  const [, params] = useRoute("/service/:slug");
   const slug = params?.slug;
 
   // TODO: Add admin UI for service banner management
