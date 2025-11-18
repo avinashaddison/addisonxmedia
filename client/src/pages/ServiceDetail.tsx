@@ -514,7 +514,7 @@ export default function ServiceDetail() {
                 </Button>
               </Link>
               <Link href="#features">
-                <Button size="lg" variant="outline" className="text-lg bg-white/10 backdrop-blur-sm border-white/30 text-white hover:bg-white/20">
+                <Button size="lg" variant="outline" data-testid="button-learn-more" className="text-lg bg-white/10 backdrop-blur-sm border-white/30 text-white">
                   Learn More
                 </Button>
               </Link>
