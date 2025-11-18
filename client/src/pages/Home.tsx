@@ -239,42 +239,50 @@ export default function Home() {
             {customServices.map((service: any, index: number) => {
               const Icon = service.icon || Code;
               const IconComponent = typeof Icon === 'string' ? Code : Icon;
+              
+              // Map service titles to their correct slugs
+              const titleToSlugMap: Record<string, string> = {
+                "Web Development": "web-development",
+                "Ecommerce Development": "ecommerce",
+                "Brand Promotion": "brand-promotion",
+                "Local SEO": "local-seo",
+                "Ads Management": "ads-management",
+                "Graphic Designing": "graphic-designing",
+                "WhatsApp Marketing": "whatsapp-marketing",
+                "Social Media Marketing": "social-media-marketing",
+                "Custom Development": "custom-development"
+              };
+              
+              const serviceSlug = titleToSlugMap[service.title] || service.title.toLowerCase().replace(/\s+/g, '-');
+              
               return (
-                <Card 
-                  key={index} 
-                  className="group relative p-5 md:p-6 lg:p-8 transition-all duration-500 border-2 overflow-visible bg-gradient-to-br from-card via-card to-primary/5 hover:shadow-2xl hover:shadow-primary/20 hover:-translate-y-2" 
-                  data-testid={`card-service-${index}`}
-                >
-                  {/* Animated gradient border effect */}
-                  <div className="absolute inset-0 rounded-lg bg-gradient-to-r from-primary via-orange-500 to-purple-600 opacity-0 group-hover:opacity-100 blur-xl transition-all duration-500 -z-10"></div>
-                  
-                  {/* Glowing icon container */}
-                  <div className="mb-4 md:mb-5 lg:mb-6 relative">
-                    <div className="relative inline-flex items-center justify-center">
-                      {/* Multi-layer glow effect */}
-                      <div className="absolute inset-0 w-12 h-12 md:w-14 md:h-14 lg:w-16 lg:h-16 rounded-2xl bg-gradient-to-br from-primary via-orange-500 to-purple-600 opacity-20 blur-md group-hover:opacity-40 group-hover:blur-lg transition-all duration-500"></div>
-                      <div className="absolute inset-0 w-12 h-12 md:w-14 md:h-14 lg:w-16 lg:h-16 rounded-2xl bg-gradient-to-br from-primary to-purple-600 opacity-10 blur-2xl group-hover:opacity-30 transition-all duration-500"></div>
-                      
-                      {/* Icon box with gradient border */}
-                      <div className="relative w-12 h-12 md:w-14 md:h-14 lg:w-16 lg:h-16 rounded-2xl bg-gradient-to-br from-primary via-orange-500 to-purple-600 p-[2px] group-hover:scale-110 transition-transform duration-300">
-                        <div className="w-full h-full rounded-2xl bg-card flex items-center justify-center">
-                          <IconComponent className="h-6 w-6 md:h-7 md:w-7 lg:h-8 lg:w-8 text-primary group-hover:text-orange-500 transition-colors duration-300" />
-                        </div>
+                <Link key={index} href={`/services/${serviceSlug}`}>
+                  <Card 
+                    className="group relative p-5 md:p-6 lg:p-8 transition-all duration-300 cursor-pointer hover-elevate active-elevate-2" 
+                    data-testid={`card-service-${index}`}
+                  >
+                    {/* Icon container */}
+                    <div className="mb-4 md:mb-5 lg:mb-6">
+                      <div className="inline-flex items-center justify-center w-12 h-12 md:w-14 md:h-14 lg:w-16 lg:h-16 rounded-2xl bg-primary/10 border border-primary/20">
+                        <IconComponent className="h-6 w-6 md:h-7 md:w-7 lg:h-8 lg:w-8 text-primary" />
                       </div>
                     </div>
-                  </div>
-                  
-                  {/* Content */}
-                  <h3 className="text-lg md:text-xl lg:text-2xl font-bold mb-2 md:mb-3 bg-gradient-to-r from-foreground to-foreground group-hover:from-primary group-hover:via-orange-500 group-hover:to-purple-600 bg-clip-text transition-all duration-300" data-testid={`text-service-title-${index}`}>
-                    {service.title}
-                  </h3>
-                  <p className="text-sm md:text-base text-muted-foreground leading-relaxed" data-testid={`text-service-description-${index}`}>
-                    {service.description}
-                  </p>
-                  
-                  {/* Decorative corner accent */}
-                  <div className="absolute top-3 right-3 w-2 h-2 rounded-full bg-gradient-to-br from-primary to-purple-600 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-                </Card>
+                    
+                    {/* Content */}
+                    <h3 className="text-lg md:text-xl lg:text-2xl font-bold mb-2 md:mb-3 text-foreground" data-testid={`text-service-title-${index}`}>
+                      {service.title}
+                    </h3>
+                    <p className="text-sm md:text-base text-muted-foreground leading-relaxed mb-4" data-testid={`text-service-description-${index}`}>
+                      {service.description}
+                    </p>
+                    
+                    {/* Learn More Link */}
+                    <div className="flex items-center text-primary text-sm font-semibold">
+                      Learn More
+                      <ArrowRight className="ml-1 h-4 w-4 group-hover:translate-x-1 transition-transform" />
+                    </div>
+                  </Card>
+                </Link>
               );
             })}
           </div>
