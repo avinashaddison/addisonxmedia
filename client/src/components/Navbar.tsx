@@ -78,63 +78,29 @@ export function Navbar() {
   return (
     <>
       <header className="sticky top-0 z-50">
-        {/* Top Bar - Enhanced Cool Design for Desktop */}
-        <div className="relative bg-gradient-to-r from-slate-900 via-primary/95 to-purple-900 backdrop-blur-sm hidden md:block overflow-hidden">
-          {/* Animated Gradient Overlay */}
-          <div className="absolute inset-0 bg-gradient-to-r from-primary/20 via-orange-500/20 to-purple-600/20 animate-pulse opacity-50"></div>
-          
-          {/* Subtle Glow Effects */}
-          <div className="absolute top-0 left-1/4 w-32 h-full bg-primary/30 blur-3xl opacity-40"></div>
-          <div className="absolute top-0 right-1/4 w-32 h-full bg-purple-600/30 blur-3xl opacity-40"></div>
-          
-          <div className="max-w-7xl mx-auto px-4 md:px-6 relative z-10">
-            <div className="flex items-center justify-between h-11 text-xs md:text-sm">
-              <div className="flex items-center gap-4 md:gap-6">
-                {/* Phone Numbers with Enhanced Style */}
-                <a href="tel:+919709707311" className="group flex items-center gap-2 text-white/90 hover:text-white transition-all duration-300 relative" data-testid="link-phone-1">
-                  <div className="relative">
-                    <div className="absolute inset-0 bg-white/20 rounded-full blur-sm opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                    <Phone className="h-3.5 w-3.5 relative z-10 group-hover:rotate-12 transition-transform duration-300" />
-                  </div>
-                  <span className="font-medium">+91 97097 07311</span>
+        {/* Top Bar - Hidden on Mobile for App-like Feel */}
+        <div className="bg-gradient-to-r from-primary/90 to-purple-600/90 backdrop-blur-sm hidden md:block">
+          <div className="max-w-7xl mx-auto px-4 md:px-6">
+            <div className="flex items-center justify-between h-10 text-xs md:text-sm">
+              <div className="flex items-center gap-4 md:gap-6 text-white/90">
+                <a href="tel:+919709707311" className="flex items-center gap-1.5 hover:text-white transition-colors" data-testid="link-phone-1">
+                  <Phone className="h-3 w-3 md:h-3.5 md:w-3.5" />
+                  <span>+91 97097 07311</span>
                 </a>
-                
-                {/* Separator */}
-                <div className="h-4 w-px bg-gradient-to-b from-transparent via-white/30 to-transparent"></div>
-                
-                <a href="tel:+919142647797" className="group flex items-center gap-2 text-white/90 hover:text-white transition-all duration-300 relative" data-testid="link-phone-2">
-                  <div className="relative">
-                    <div className="absolute inset-0 bg-white/20 rounded-full blur-sm opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                    <Phone className="h-3.5 w-3.5 relative z-10 group-hover:rotate-12 transition-transform duration-300" />
-                  </div>
-                  <span className="font-medium">+91 91426 47797</span>
+                <a href="tel:+919142647797" className="flex items-center gap-1.5 hover:text-white transition-colors" data-testid="link-phone-2">
+                  <Phone className="h-3 w-3 md:h-3.5 md:w-3.5" />
+                  <span>+91 91426 47797</span>
                 </a>
-                
-                {/* Separator */}
-                <div className="h-4 w-px bg-gradient-to-b from-transparent via-white/30 to-transparent"></div>
-                
-                <a href="mailto:team@addisonxmedia.com" className="group flex items-center gap-2 text-white/90 hover:text-white transition-all duration-300" data-testid="link-email">
-                  <div className="relative">
-                    <div className="absolute inset-0 bg-white/20 rounded-full blur-sm opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                    <Mail className="h-3.5 w-3.5 relative z-10 group-hover:scale-110 transition-transform duration-300" />
-                  </div>
-                  <span className="font-medium">team@addisonxmedia.com</span>
+                <a href="mailto:team@addisonxmedia.com" className="flex items-center gap-1.5 hover:text-white transition-colors" data-testid="link-email">
+                  <Mail className="h-3 w-3 md:h-3.5 md:w-3.5" />
+                  <span>team@addisonxmedia.com</span>
                 </a>
               </div>
-              
-              {/* Tagline with Sparkle Effect */}
-              <div className="flex items-center gap-2 text-white font-semibold">
-                <Sparkles className="h-4 w-4 text-yellow-300 animate-pulse" />
-                <span className="bg-gradient-to-r from-white via-yellow-100 to-white bg-clip-text text-transparent">
-                  Ranchi's Premier Digital Marketing Agency
-                </span>
-                <Sparkles className="h-4 w-4 text-yellow-300 animate-pulse" />
+              <div className="text-white/90 font-medium">
+                Ranchi's Premier Digital Marketing Agency
               </div>
             </div>
           </div>
-          
-          {/* Bottom Glow Line */}
-          <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-white/50 to-transparent"></div>
         </div>
 
       {/* Main Navigation */}
