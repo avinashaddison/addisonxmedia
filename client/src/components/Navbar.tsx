@@ -1,5 +1,5 @@
 import { Link, useLocation } from "wouter";
-import { Phone, Mail, Sparkles, Home, Info, Briefcase, UserCheck, MessageCircle, MessageSquare, Code, ShoppingCart, TrendingUp, Search, Target, Palette, Share2, Wrench } from "lucide-react";
+import { Phone, Mail, Sparkles, Home, Info, Briefcase, UserCheck, MessageCircle, MessageSquare, Code, ShoppingCart, TrendingUp, Search, Target, Palette, Share2, Wrench, Clock } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   NavigationMenu,
@@ -83,6 +83,10 @@ export function Navbar() {
           <div className="max-w-7xl mx-auto px-4 md:px-6">
             <div className="flex items-center justify-between h-10 text-xs md:text-sm">
               <div className="flex items-center gap-4 md:gap-6 text-white/90">
+                <div className="flex items-center gap-1.5" data-testid="business-hours">
+                  <Clock className="h-3 w-3 md:h-3.5 md:w-3.5" />
+                  <span>10:30 AM - 7:00 PM</span>
+                </div>
                 <a href="tel:+919709707311" className="flex items-center gap-1.5 hover:text-white transition-colors" data-testid="link-phone-1">
                   <Phone className="h-3 w-3 md:h-3.5 md:w-3.5" />
                   <span>+91 97097 07311</span>
