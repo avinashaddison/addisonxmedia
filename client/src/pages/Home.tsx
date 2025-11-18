@@ -348,15 +348,26 @@ export default function Home() {
         </section>
       )}
 
-      {/* Team Section - Cool Design */}
-      <section className="py-8 md:py-12 lg:py-16 relative bg-gradient-to-br from-background via-primary/3 to-purple-500/5">
+      {/* Team Section - Cool Grass Design */}
+      <section className="py-8 md:py-12 lg:py-16 relative overflow-hidden">
+        {/* Nature-Inspired Background */}
+        <div className="absolute inset-0 bg-gradient-to-br from-green-50 via-emerald-50 to-teal-50 dark:from-green-950/20 dark:via-emerald-950/20 dark:to-teal-950/20"></div>
+        
+        {/* Animated Grass Blades (Decorative) */}
+        <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-green-500/10 to-transparent"></div>
+        
+        {/* Floating Elements */}
+        <div className="absolute top-20 left-10 w-20 h-20 bg-green-400/20 rounded-full blur-2xl"></div>
+        <div className="absolute top-40 right-20 w-32 h-32 bg-emerald-400/20 rounded-full blur-3xl"></div>
+        <div className="absolute bottom-20 left-1/4 w-24 h-24 bg-teal-400/20 rounded-full blur-2xl"></div>
+        
         <div className="max-w-7xl mx-auto px-4 md:px-6 relative z-10">
           <div className="text-center mb-8 md:mb-12 lg:mb-16">
-            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r from-primary/10 to-purple-600/10 border border-primary/20 mb-4">
-              <Sparkles className="h-4 w-4 text-primary" />
-              <span className="text-sm font-semibold text-primary">Meet Our Team</span>
+            <div className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-gradient-to-r from-green-500/20 via-emerald-500/20 to-teal-500/20 border-2 border-green-500/30 mb-4 shadow-lg backdrop-blur-sm">
+              <Sparkles className="h-4 w-4 text-green-600 dark:text-green-400" />
+              <span className="text-sm font-bold bg-gradient-to-r from-green-600 to-emerald-600 dark:from-green-400 dark:to-emerald-400 bg-clip-text text-transparent">Meet Our Team</span>
             </div>
-            <h2 className="text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold mb-3 md:mb-6 bg-gradient-to-r from-foreground via-primary to-purple-600 bg-clip-text text-transparent" data-testid="text-team-title">
+            <h2 className="text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-black mb-3 md:mb-6 bg-gradient-to-r from-green-600 via-emerald-600 to-teal-600 dark:from-green-400 dark:via-emerald-400 dark:to-teal-400 bg-clip-text text-transparent drop-shadow-sm" data-testid="text-team-title">
               AddisonX Media Team
             </h2>
             <p className="text-base md:text-lg lg:text-xl text-muted-foreground max-w-2xl mx-auto px-2" data-testid="text-team-description">
@@ -366,31 +377,68 @@ export default function Home() {
 
           <div className="grid grid-cols-2 md:grid-cols-3 gap-4 md:gap-6 lg:gap-8 max-w-5xl mx-auto">
             {activeTeamMembers.map((member, index) => (
-              <Card key={member.id} className="p-4 md:p-6 lg:p-8 text-center relative overflow-hidden bg-gradient-to-br from-card to-primary/5 border-2 border-primary/30 shadow-lg" data-testid={`card-team-${index}`}>
-                <div className="mb-3 md:mb-4 lg:mb-6">
-                  <div className="w-20 h-20 md:w-24 md:h-24 lg:w-28 lg:h-28 mx-auto rounded-full bg-gradient-to-br from-primary via-orange-500 to-purple-600 p-[3px] shadow-xl">
-                    {member.photoUrl ? (
-                      <img
-                        src={member.photoUrl}
-                        alt={member.fullName}
-                        className="w-full h-full rounded-full object-cover bg-background"
-                        data-testid={`img-team-photo-${index}`}
-                      />
-                    ) : (
-                      <div className="w-full h-full rounded-full bg-background flex items-center justify-center">
-                        <div className="text-2xl md:text-3xl lg:text-4xl font-extrabold bg-gradient-to-br from-primary via-orange-500 to-purple-600 bg-clip-text text-transparent">
-                          {member.fullName.charAt(0).toUpperCase()}
-                        </div>
-                      </div>
-                    )}
+              <Card key={member.id} className="group p-4 md:p-6 lg:p-8 text-center relative overflow-hidden bg-gradient-to-br from-white via-green-50/50 to-emerald-50/30 dark:from-card dark:via-green-950/30 dark:to-emerald-950/20 border-2 border-green-200/50 dark:border-green-800/50 shadow-xl hover-elevate transition-all duration-300" data-testid={`card-team-${index}`}>
+                {/* Grass Pattern at Bottom */}
+                <div className="absolute bottom-0 left-0 right-0 h-16 overflow-hidden">
+                  <div className="absolute bottom-0 left-0 right-0 flex justify-around items-end">
+                    {[...Array(12)].map((_, i) => (
+                      <div
+                        key={i}
+                        className="w-1 bg-gradient-to-t from-green-500 via-green-400 to-transparent dark:from-green-600 dark:via-green-500"
+                        style={{
+                          height: `${20 + Math.random() * 30}px`,
+                          opacity: 0.6,
+                          transform: `rotate(${-15 + Math.random() * 30}deg)`,
+                        }}
+                      ></div>
+                    ))}
                   </div>
                 </div>
-                <h3 className="text-sm md:text-base lg:text-xl font-bold mb-1" data-testid={`text-team-name-${index}`}>
-                  {member.fullName}
-                </h3>
-                <p className="text-xs md:text-sm font-bold bg-gradient-to-r from-primary to-purple-600 bg-clip-text text-transparent" data-testid={`text-team-position-${index}`}>
-                  {member.position}
-                </p>
+
+                {/* Team Member Content */}
+                <div className="relative z-10">
+                  <div className="mb-3 md:mb-4 lg:mb-6">
+                    {/* Multi-Ring Avatar with Green Theme */}
+                    <div className="relative w-20 h-20 md:w-24 md:h-24 lg:w-28 lg:h-28 mx-auto">
+                      {/* Outer Glow */}
+                      <div className="absolute inset-0 bg-gradient-to-br from-green-400 to-emerald-500 rounded-full blur-md opacity-50 group-hover:opacity-75 transition-opacity duration-300"></div>
+                      
+                      {/* Triple Ring */}
+                      <div className="relative w-full h-full rounded-full bg-gradient-to-br from-green-500 via-emerald-500 to-teal-500 p-[3px] shadow-2xl">
+                        <div className="w-full h-full rounded-full bg-gradient-to-br from-green-400 via-emerald-400 to-teal-400 p-[2px]">
+                          <div className="w-full h-full rounded-full bg-white dark:bg-card p-[2px]">
+                            {member.photoUrl ? (
+                              <img
+                                src={member.photoUrl}
+                                alt={member.fullName}
+                                className="w-full h-full rounded-full object-cover"
+                                data-testid={`img-team-photo-${index}`}
+                              />
+                            ) : (
+                              <div className="w-full h-full rounded-full bg-gradient-to-br from-green-50 to-emerald-50 dark:from-green-950 dark:to-emerald-950 flex items-center justify-center">
+                                <div className="text-2xl md:text-3xl lg:text-4xl font-black bg-gradient-to-br from-green-600 via-emerald-600 to-teal-600 dark:from-green-400 dark:via-emerald-400 dark:to-teal-400 bg-clip-text text-transparent">
+                                  {member.fullName.charAt(0).toUpperCase()}
+                                </div>
+                              </div>
+                            )}
+                          </div>
+                        </div>
+                      </div>
+                      
+                      {/* Floating Badge */}
+                      <div className="absolute -top-1 -right-1 w-6 h-6 bg-gradient-to-br from-green-500 to-emerald-600 rounded-full flex items-center justify-center shadow-lg border-2 border-white dark:border-card">
+                        <Sparkles className="h-3 w-3 text-white" />
+                      </div>
+                    </div>
+                  </div>
+                  
+                  <h3 className="text-sm md:text-base lg:text-xl font-bold mb-1 text-foreground" data-testid={`text-team-name-${index}`}>
+                    {member.fullName}
+                  </h3>
+                  <p className="text-xs md:text-sm font-bold bg-gradient-to-r from-green-600 to-emerald-600 dark:from-green-400 dark:to-emerald-400 bg-clip-text text-transparent" data-testid={`text-team-position-${index}`}>
+                    {member.position}
+                  </p>
+                </div>
               </Card>
             ))}
           </div>
