@@ -1,6 +1,5 @@
 import { Link } from "wouter";
 import { useQuery } from "@tanstack/react-query";
-import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -109,30 +108,6 @@ const stats = [
   { value: "5+", label: "Years Experience" }
 ];
 
-function AnimatedCounter({ end, duration = 2000 }: { end: number; duration?: number }) {
-  const [count, setCount] = useState(0);
-
-  useEffect(() => {
-    let startTime: number | null = null;
-    let animationFrame: number;
-
-    const animate = (currentTime: number) => {
-      if (startTime === null) startTime = currentTime;
-      const progress = Math.min((currentTime - startTime) / duration, 1);
-      
-      setCount(Math.floor(progress * end));
-
-      if (progress < 1) {
-        animationFrame = requestAnimationFrame(animate);
-      }
-    };
-
-    animationFrame = requestAnimationFrame(animate);
-    return () => cancelAnimationFrame(animationFrame);
-  }, [end, duration]);
-
-  return <span>{count}</span>;
-}
 
 export default function Home() {
   const { data: testimonials } = useQuery<Testimonial[]>({
@@ -172,43 +147,32 @@ export default function Home() {
       </section>
 
       {/* Stats Section */}
-      <section className="py-6 md:py-12 lg:py-16 relative overflow-hidden bg-gradient-to-br from-background via-primary/5 to-background">
-        <div className="hidden md:block absolute top-0 left-1/4 w-96 h-96 bg-primary/10 rounded-full blur-3xl opacity-50"></div>
-        <div className="hidden md:block absolute bottom-0 right-1/4 w-96 h-96 bg-purple-500/10 rounded-full blur-3xl opacity-50"></div>
-        <div className="max-w-7xl mx-auto px-4 md:px-6 relative z-10">
-          <div className="grid grid-cols-3 md:grid-cols-3 gap-3 md:gap-8 lg:gap-12">
-            <div className="text-center group cursor-default">
-              <div className="relative inline-block mb-1 md:mb-2 lg:mb-3">
-                <div className="hidden md:block absolute inset-0 bg-primary/20 rounded-2xl blur-xl group-hover:blur-2xl transition-all"></div>
-                <div className="relative text-2xl md:text-4xl lg:text-5xl xl:text-6xl font-bold bg-gradient-to-r from-primary to-purple-500 bg-clip-text text-transparent" data-testid="text-stat-value-0">
-                  <AnimatedCounter end={100} />+
-                </div>
+      <section className="py-8 md:py-12 bg-muted/30 border-y">
+        <div className="max-w-7xl mx-auto px-4 md:px-6">
+          <div className="grid grid-cols-3 gap-6 md:gap-12">
+            <div className="text-center">
+              <div className="text-3xl md:text-5xl font-bold text-primary mb-2" data-testid="text-stat-value-0">
+                100+
               </div>
-              <div className="text-[10px] md:text-sm lg:text-base font-medium text-muted-foreground" data-testid="text-stat-label-0">
+              <div className="text-xs md:text-sm text-muted-foreground" data-testid="text-stat-label-0">
                 Projects Completed
               </div>
             </div>
             
-            <div className="text-center group cursor-default">
-              <div className="relative inline-block mb-1 md:mb-2 lg:mb-3">
-                <div className="hidden md:block absolute inset-0 bg-primary/20 rounded-2xl blur-xl group-hover:blur-2xl transition-all"></div>
-                <div className="relative text-2xl md:text-4xl lg:text-5xl xl:text-6xl font-bold bg-gradient-to-r from-primary to-purple-500 bg-clip-text text-transparent" data-testid="text-stat-value-1">
-                  <AnimatedCounter end={50} />+
-                </div>
+            <div className="text-center">
+              <div className="text-3xl md:text-5xl font-bold text-primary mb-2" data-testid="text-stat-value-1">
+                50+
               </div>
-              <div className="text-[10px] md:text-sm lg:text-base font-medium text-muted-foreground" data-testid="text-stat-label-1">
+              <div className="text-xs md:text-sm text-muted-foreground" data-testid="text-stat-label-1">
                 Happy Clients
               </div>
             </div>
             
-            <div className="text-center group cursor-default">
-              <div className="relative inline-block mb-1 md:mb-2 lg:mb-3">
-                <div className="hidden md:block absolute inset-0 bg-primary/20 rounded-2xl blur-xl group-hover:blur-2xl transition-all"></div>
-                <div className="relative text-2xl md:text-4xl lg:text-5xl xl:text-6xl font-bold bg-gradient-to-r from-primary to-purple-500 bg-clip-text text-transparent" data-testid="text-stat-value-2">
-                  <AnimatedCounter end={5} />+
-                </div>
+            <div className="text-center">
+              <div className="text-3xl md:text-5xl font-bold text-primary mb-2" data-testid="text-stat-value-2">
+                5+
               </div>
-              <div className="text-[10px] md:text-sm lg:text-base font-medium text-muted-foreground" data-testid="text-stat-label-2">
+              <div className="text-xs md:text-sm text-muted-foreground" data-testid="text-stat-label-2">
                 Years Experience
               </div>
             </div>
@@ -216,21 +180,18 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Services Grid - Cool Modern Design */}
-      <section className="py-8 md:py-12 lg:py-16 relative overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-br from-background via-primary/5 to-purple-500/5"></div>
-        <div className="hidden md:block absolute top-20 right-10 w-96 h-96 bg-gradient-to-br from-primary/20 to-orange-500/20 rounded-full blur-3xl animate-pulse"></div>
-        <div className="hidden md:block absolute bottom-20 left-10 w-96 h-96 bg-gradient-to-br from-purple-500/20 to-primary/20 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '1s' }}></div>
-        <div className="max-w-7xl mx-auto px-4 md:px-6 relative z-10">
-          <div className="text-center mb-8 md:mb-12 lg:mb-16">
-            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r from-primary/10 via-orange-500/10 to-purple-600/10 border border-primary/20 mb-4 shadow-lg">
-              <Zap className="h-4 w-4 text-primary animate-pulse" />
-              <span className="text-sm font-semibold bg-gradient-to-r from-primary via-orange-500 to-purple-600 bg-clip-text text-transparent">What We Offer</span>
-            </div>
-            <h2 className="text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold mb-3 md:mb-6 bg-gradient-to-r from-foreground via-primary to-purple-600 bg-clip-text text-transparent" data-testid="text-services-title">
+      {/* Services Grid */}
+      <section className="py-12 md:py-16 bg-background">
+        <div className="max-w-7xl mx-auto px-4 md:px-6">
+          <div className="text-center mb-12">
+            <Badge variant="secondary" className="mb-4">
+              <Zap className="h-3 w-3 mr-2" />
+              What We Offer
+            </Badge>
+            <h2 className="text-3xl md:text-4xl font-bold mb-4" data-testid="text-services-title">
               {servicesTitle}
             </h2>
-            <p className="text-base md:text-lg lg:text-xl text-muted-foreground max-w-2xl mx-auto px-2" data-testid="text-services-description">
+            <p className="text-muted-foreground max-w-2xl mx-auto" data-testid="text-services-description">
               {servicesDescription}
             </p>
           </div>
@@ -287,14 +248,11 @@ export default function Home() {
             })}
           </div>
 
-          <div className="text-center mt-8 md:mt-12 lg:mt-16">
+          <div className="text-center mt-12">
             <Link href="/services">
-              <Button size="default" className="group relative shadow-lg hover:shadow-2xl hover:shadow-primary/30 transition-all duration-300 md:px-8 lg:px-10 overflow-visible" data-testid="button-explore-all-services">
-                <span className="relative z-10 flex items-center">
-                  Explore All Services
-                  <ArrowRight className="ml-2 h-4 w-4 md:h-5 md:w-5 group-hover:translate-x-1 transition-transform" />
-                </span>
-                <div className="absolute inset-0 rounded-md bg-gradient-to-r from-primary via-orange-500 to-purple-600 opacity-0 group-hover:opacity-20 blur transition-all duration-300"></div>
+              <Button size="lg" data-testid="button-explore-all-services">
+                Explore All Services
+                <ArrowRight className="ml-2 h-4 w-4" />
               </Button>
             </Link>
           </div>
@@ -348,47 +306,35 @@ export default function Home() {
         </section>
       )}
 
-      {/* Team Section - Cool Grass Design */}
-      <section className="py-8 md:py-12 lg:py-16 relative overflow-hidden">
-        {/* Nature-Inspired Background */}
-        <div className="absolute inset-0 bg-gradient-to-br from-green-50 via-emerald-50 to-teal-50 dark:from-green-950/20 dark:via-emerald-950/20 dark:to-teal-950/20"></div>
-        
-        {/* Animated Grass Blades (Decorative) */}
-        <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-green-500/10 to-transparent"></div>
-        
-        {/* Floating Elements */}
-        <div className="absolute top-20 left-10 w-20 h-20 bg-green-400/20 rounded-full blur-2xl"></div>
-        <div className="absolute top-40 right-20 w-32 h-32 bg-emerald-400/20 rounded-full blur-3xl"></div>
-        <div className="absolute bottom-20 left-1/4 w-24 h-24 bg-teal-400/20 rounded-full blur-2xl"></div>
-        
-        <div className="max-w-7xl mx-auto px-4 md:px-6 relative z-10">
-          <div className="text-center mb-8 md:mb-12 lg:mb-16">
-            <div className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-gradient-to-r from-green-500/20 via-emerald-500/20 to-teal-500/20 border-2 border-green-500/30 mb-4 shadow-lg backdrop-blur-sm">
-              <Sparkles className="h-4 w-4 text-green-600 dark:text-green-400" />
-              <span className="text-sm font-bold bg-gradient-to-r from-green-600 to-emerald-600 dark:from-green-400 dark:to-emerald-400 bg-clip-text text-transparent">Meet Our Team</span>
-            </div>
-            <h2 className="text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-black mb-3 md:mb-6 bg-gradient-to-r from-green-600 via-emerald-600 to-teal-600 dark:from-green-400 dark:via-emerald-400 dark:to-teal-400 bg-clip-text text-transparent drop-shadow-sm" data-testid="text-team-title">
+      {/* Team Section - Grass Theme */}
+      <section className="py-12 md:py-16 bg-green-50/50 dark:bg-green-950/10 border-y border-green-200/30 dark:border-green-800/30">
+        <div className="max-w-7xl mx-auto px-4 md:px-6">
+          <div className="text-center mb-12">
+            <Badge variant="secondary" className="mb-4 bg-green-500/10 text-green-700 dark:text-green-400 border-green-500/20">
+              <Sparkles className="h-3 w-3 mr-2" />
+              Meet Our Team
+            </Badge>
+            <h2 className="text-3xl md:text-4xl font-bold mb-4 text-green-800 dark:text-green-300" data-testid="text-team-title">
               AddisonX Media Team
             </h2>
-            <p className="text-base md:text-lg lg:text-xl text-muted-foreground max-w-2xl mx-auto px-2" data-testid="text-team-description">
+            <p className="text-muted-foreground max-w-2xl mx-auto" data-testid="text-team-description">
               Our passionate team of digital marketing experts dedicated to your success
             </p>
           </div>
 
-          <div className="grid grid-cols-2 md:grid-cols-3 gap-4 md:gap-6 lg:gap-8 max-w-5xl mx-auto">
+          <div className="grid grid-cols-2 md:grid-cols-3 gap-6 max-w-5xl mx-auto">
             {activeTeamMembers.map((member, index) => (
-              <Card key={member.id} className="group p-4 md:p-6 lg:p-8 text-center relative overflow-hidden bg-gradient-to-br from-white via-green-50/50 to-emerald-50/30 dark:from-card dark:via-green-950/30 dark:to-emerald-950/20 border-2 border-green-200/50 dark:border-green-800/50 shadow-xl hover-elevate transition-all duration-300" data-testid={`card-team-${index}`}>
+              <Card key={member.id} className="p-6 text-center relative overflow-hidden bg-white dark:bg-card border-2 border-green-200/50 dark:border-green-800/50 hover-elevate" data-testid={`card-team-${index}`}>
                 {/* Grass Pattern at Bottom */}
-                <div className="absolute bottom-0 left-0 right-0 h-16 overflow-hidden">
+                <div className="absolute bottom-0 left-0 right-0 h-12 overflow-hidden">
                   <div className="absolute bottom-0 left-0 right-0 flex justify-around items-end">
-                    {[...Array(12)].map((_, i) => (
+                    {[...Array(10)].map((_, i) => (
                       <div
                         key={i}
-                        className="w-1 bg-gradient-to-t from-green-500 via-green-400 to-transparent dark:from-green-600 dark:via-green-500"
+                        className="w-1 bg-gradient-to-t from-green-500 to-transparent dark:from-green-600"
                         style={{
-                          height: `${20 + Math.random() * 30}px`,
-                          opacity: 0.6,
-                          transform: `rotate(${-15 + Math.random() * 30}deg)`,
+                          height: `${15 + Math.random() * 20}px`,
+                          opacity: 0.5,
                         }}
                       ></div>
                     ))}
@@ -396,46 +342,40 @@ export default function Home() {
                 </div>
 
                 {/* Team Member Content */}
-                <div className="relative z-10">
-                  <div className="mb-3 md:mb-4 lg:mb-6">
-                    {/* Multi-Ring Avatar with Green Theme */}
-                    <div className="relative w-20 h-20 md:w-24 md:h-24 lg:w-28 lg:h-28 mx-auto">
-                      {/* Outer Glow */}
-                      <div className="absolute inset-0 bg-gradient-to-br from-green-400 to-emerald-500 rounded-full blur-md opacity-50 group-hover:opacity-75 transition-opacity duration-300"></div>
-                      
-                      {/* Triple Ring */}
-                      <div className="relative w-full h-full rounded-full bg-gradient-to-br from-green-500 via-emerald-500 to-teal-500 p-[3px] shadow-2xl">
-                        <div className="w-full h-full rounded-full bg-gradient-to-br from-green-400 via-emerald-400 to-teal-400 p-[2px]">
-                          <div className="w-full h-full rounded-full bg-white dark:bg-card p-[2px]">
-                            {member.photoUrl ? (
-                              <img
-                                src={member.photoUrl}
-                                alt={member.fullName}
-                                className="w-full h-full rounded-full object-cover"
-                                data-testid={`img-team-photo-${index}`}
-                              />
-                            ) : (
-                              <div className="w-full h-full rounded-full bg-gradient-to-br from-green-50 to-emerald-50 dark:from-green-950 dark:to-emerald-950 flex items-center justify-center">
-                                <div className="text-2xl md:text-3xl lg:text-4xl font-black bg-gradient-to-br from-green-600 via-emerald-600 to-teal-600 dark:from-green-400 dark:via-emerald-400 dark:to-teal-400 bg-clip-text text-transparent">
-                                  {member.fullName.charAt(0).toUpperCase()}
-                                </div>
+                <div className="relative z-10 mb-8">
+                  <div className="mb-4">
+                    {/* Avatar with Green Ring */}
+                    <div className="relative w-24 h-24 mx-auto">
+                      <div className="w-full h-full rounded-full bg-gradient-to-br from-green-500 to-emerald-500 p-[2px]">
+                        <div className="w-full h-full rounded-full bg-white dark:bg-card p-[2px]">
+                          {member.photoUrl ? (
+                            <img
+                              src={member.photoUrl}
+                              alt={member.fullName}
+                              className="w-full h-full rounded-full object-cover"
+                              data-testid={`img-team-photo-${index}`}
+                            />
+                          ) : (
+                            <div className="w-full h-full rounded-full bg-green-50 dark:bg-green-950 flex items-center justify-center">
+                              <div className="text-3xl font-bold text-green-700 dark:text-green-400">
+                                {member.fullName.charAt(0).toUpperCase()}
                               </div>
-                            )}
-                          </div>
+                            </div>
+                          )}
                         </div>
                       </div>
                       
-                      {/* Floating Badge */}
-                      <div className="absolute -top-1 -right-1 w-6 h-6 bg-gradient-to-br from-green-500 to-emerald-600 rounded-full flex items-center justify-center shadow-lg border-2 border-white dark:border-card">
+                      {/* Badge */}
+                      <div className="absolute -top-1 -right-1 w-6 h-6 bg-green-500 rounded-full flex items-center justify-center border-2 border-white dark:border-card">
                         <Sparkles className="h-3 w-3 text-white" />
                       </div>
                     </div>
                   </div>
                   
-                  <h3 className="text-sm md:text-base lg:text-xl font-bold mb-1 text-foreground" data-testid={`text-team-name-${index}`}>
+                  <h3 className="text-base font-bold mb-1" data-testid={`text-team-name-${index}`}>
                     {member.fullName}
                   </h3>
-                  <p className="text-xs md:text-sm font-bold bg-gradient-to-r from-green-600 to-emerald-600 dark:from-green-400 dark:to-emerald-400 bg-clip-text text-transparent" data-testid={`text-team-position-${index}`}>
+                  <p className="text-sm text-green-700 dark:text-green-400 font-medium" data-testid={`text-team-position-${index}`}>
                     {member.position}
                   </p>
                 </div>
@@ -534,85 +474,58 @@ export default function Home() {
       </section>
 
       {/* Review QR Section */}
-      <section className="py-8 md:py-12 lg:py-16 relative overflow-hidden">
-        {/* Gradient Background */}
-        <div className="absolute inset-0 bg-gradient-to-br from-green-500/10 via-yellow-500/10 to-red-500/10"></div>
-        <div className="absolute inset-0 bg-gradient-to-tl from-blue-500/10 via-purple-500/10 to-primary/10"></div>
-        
-        {/* Floating Decorative Elements */}
-        <div className="absolute top-0 left-0 w-40 h-40 md:w-64 md:h-64 lg:w-96 lg:h-96 bg-gradient-to-br from-green-500 to-green-600 rounded-full blur-3xl opacity-30"></div>
-        <div className="absolute top-10 right-0 w-40 h-40 md:w-64 md:h-64 lg:w-80 lg:h-80 bg-gradient-to-br from-yellow-500 to-yellow-600 rounded-full blur-3xl opacity-25"></div>
-        <div className="absolute bottom-0 left-10 w-48 h-48 md:w-72 md:h-72 lg:w-96 lg:h-96 bg-gradient-to-br from-red-500 to-red-600 rounded-full blur-3xl opacity-25"></div>
-        <div className="absolute bottom-10 right-10 w-40 h-40 md:w-64 md:h-64 lg:w-80 lg:h-80 bg-gradient-to-br from-blue-500 to-blue-600 rounded-full blur-3xl opacity-30"></div>
-        
-        <div className="max-w-7xl mx-auto px-4 md:px-6 relative z-10">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-12 lg:gap-16 items-center">
+      <section className="py-12 md:py-16 bg-card border-y">
+        <div className="max-w-7xl mx-auto px-4 md:px-6">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             {/* Left Side - QR Code Card */}
-            <div className="order-1 flex justify-center lg:justify-start">
-              <div className="relative">
-                {/* Main Card with Gradient Border */}
-                <div className="relative bg-gradient-to-br from-primary via-orange-500 to-purple-600 p-[3px] rounded-3xl shadow-2xl">
-                  <Card className="relative p-6 md:p-8 lg:p-10 bg-gradient-to-br from-card via-card to-primary/5 rounded-3xl">
-                    <div className="relative">
-                      <img
-                        src={reviewQR}
-                        alt="Google Review QR Code"
-                        className="w-full max-w-[280px] md:max-w-[320px] lg:max-w-[380px] mx-auto rounded-xl shadow-lg"
-                        data-testid="img-review-qr"
-                      />
-                    </div>
-                    
-                    {/* Scan Me Badge */}
-                    <div className="mt-6 relative text-center">
-                      <div className="relative inline-flex items-center gap-2 px-6 py-3 rounded-full bg-gradient-to-r from-red-500 via-red-600 to-red-500 shadow-xl">
-                        <Star className="h-5 w-5 text-white" />
-                        <span className="text-lg md:text-xl font-black text-white tracking-widest">SCAN ME!</span>
-                        <Star className="h-5 w-5 text-white" />
-                      </div>
-                    </div>
-
-                    {/* Google Review Badge */}
-                    <div className="mt-5 flex items-center justify-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r from-background/80 to-background/60 backdrop-blur-sm border border-primary/20">
-                      <svg className="h-5 w-5" viewBox="0 0 24 24">
-                        <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
-                        <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
-                        <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/>
-                        <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/>
-                      </svg>
-                      <span className="text-sm md:text-base font-bold bg-gradient-to-r from-foreground to-primary bg-clip-text text-transparent">The Google review</span>
-                    </div>
-                  </Card>
+            <div className="flex justify-center lg:justify-start">
+              <Card className="p-6 md:p-8 border-2 border-primary/20">
+                <img
+                  src={reviewQR}
+                  alt="Google Review QR Code"
+                  className="w-full max-w-[300px] mx-auto rounded-lg"
+                  data-testid="img-review-qr"
+                />
+                
+                {/* Scan Me Badge */}
+                <div className="mt-6 text-center">
+                  <Badge className="px-6 py-3 text-base bg-red-500 hover:bg-red-600 border-none">
+                    <Star className="h-4 w-4 mr-2" />
+                    SCAN ME!
+                    <Star className="h-4 w-4 ml-2" />
+                  </Badge>
                 </div>
-              </div>
+
+                {/* Google Review Badge */}
+                <div className="mt-4 flex items-center justify-center gap-2">
+                  <svg className="h-5 w-5" viewBox="0 0 24 24">
+                    <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
+                    <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
+                    <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/>
+                    <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/>
+                  </svg>
+                  <span className="text-sm font-semibold">Google Review</span>
+                </div>
+              </Card>
             </div>
 
             {/* Right Side - Content */}
-            <div className="order-2 space-y-6">
-              {/* Heading with Gradients */}
+            <div className="space-y-6">
               <div>
-                <h2 className="text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-black mb-4 md:mb-6 leading-tight" data-testid="text-review-title">
-                  <span className="block bg-gradient-to-r from-foreground via-primary to-purple-600 bg-clip-text text-transparent drop-shadow-lg">
-                    HOW WAS YOUR
-                  </span>
-                  <span className="block bg-gradient-to-r from-green-500 via-yellow-500 via-red-500 to-blue-500 bg-clip-text text-transparent drop-shadow-lg">
-                    EXPERIENCE?
-                  </span>
+                <h2 className="text-3xl md:text-4xl font-bold mb-4" data-testid="text-review-title">
+                  How Was Your Experience?
                 </h2>
-              </div>
-              
-              {/* Description Cards */}
-              <Card className="p-4 md:p-6 bg-gradient-to-br from-card/80 to-primary/5 border-2 border-primary/20 backdrop-blur-sm hover-elevate">
-                <p className="text-base md:text-lg lg:text-xl text-muted-foreground leading-relaxed" data-testid="text-review-subtitle">
+                <p className="text-lg text-muted-foreground" data-testid="text-review-subtitle">
                   <span className="text-primary font-semibold">Scan the QR code</span> to leave a review and let us know how we did!
                 </p>
-              </Card>
+              </div>
               
-              <Card className="p-4 md:p-6 bg-gradient-to-br from-card/80 to-purple-500/5 border-2 border-purple-500/20 backdrop-blur-sm hover-elevate">
+              <Card className="p-6 border hover-elevate">
                 <div className="flex items-start gap-3">
-                  <div className="flex-shrink-0 w-10 h-10 rounded-full bg-gradient-to-br from-green-500 to-blue-500 flex items-center justify-center">
-                    <Star className="h-5 w-5 text-white" />
+                  <div className="flex-shrink-0 w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center">
+                    <Star className="h-5 w-5 text-primary" />
                   </div>
-                  <p className="text-sm md:text-base text-muted-foreground leading-relaxed flex-1">
+                  <p className="text-muted-foreground flex-1">
                     Your feedback helps us improve and serve you better. Share your experience with AddisonX Media and help us continue delivering exceptional digital marketing services.
                   </p>
                 </div>
