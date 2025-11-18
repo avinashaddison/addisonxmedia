@@ -15,10 +15,7 @@ import {
   Share2, 
   Wrench,
   Star,
-  ArrowRight,
-  CheckCircle,
-  Sparkles,
-  Zap
+  ArrowRight
 } from "lucide-react";
 import type { Testimonial, TeamMember } from "@shared/schema";
 
@@ -138,16 +135,12 @@ export default function Home() {
   return (
     <div className="flex flex-col">
       {/* Hero Section */}
-      <section className="relative w-full mx-auto overflow-hidden">
-        {/* Hero Banner */}
+      <section className="w-full mx-auto">
         <HeroBanner customBannerUrl={customHeroBanner} />
-        
-        {/* Gradient Transition Overlay - Desktop Only */}
-        <div className="hidden lg:block absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-background to-transparent pointer-events-none"></div>
       </section>
 
       {/* Stats Section */}
-      <section className="py-8 md:py-12 bg-muted/30 border-y">
+      <section className="py-8 md:py-12 border-y">
         <div className="max-w-7xl mx-auto px-4 md:px-6">
           <div className="grid grid-cols-3 gap-6 md:gap-12">
             <div className="text-center">
@@ -181,13 +174,9 @@ export default function Home() {
       </section>
 
       {/* Services Grid */}
-      <section className="py-12 md:py-16 bg-background">
+      <section className="py-12 md:py-16">
         <div className="max-w-7xl mx-auto px-4 md:px-6">
           <div className="text-center mb-12">
-            <Badge variant="secondary" className="mb-4">
-              <Zap className="h-3 w-3 mr-2" />
-              What We Offer
-            </Badge>
             <h2 className="text-3xl md:text-4xl font-bold mb-4" data-testid="text-services-title">
               {servicesTitle}
             </h2>
@@ -196,7 +185,7 @@ export default function Home() {
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6 lg:gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {customServices.map((service: any, index: number) => {
               const Icon = service.icon || Code;
               const IconComponent = typeof Icon === 'string' ? Code : Icon;
@@ -219,28 +208,28 @@ export default function Home() {
               return (
                 <Link key={index} href={`/services/${serviceSlug}`}>
                   <Card 
-                    className="group relative p-5 md:p-6 lg:p-8 transition-all duration-300 cursor-pointer hover-elevate active-elevate-2" 
+                    className="p-6 cursor-pointer hover-elevate" 
                     data-testid={`card-service-${index}`}
                   >
                     {/* Icon container */}
-                    <div className="mb-4 md:mb-5 lg:mb-6">
-                      <div className="inline-flex items-center justify-center w-12 h-12 md:w-14 md:h-14 lg:w-16 lg:h-16 rounded-2xl bg-primary/10 border border-primary/20">
-                        <IconComponent className="h-6 w-6 md:h-7 md:w-7 lg:h-8 lg:w-8 text-primary" />
+                    <div className="mb-4">
+                      <div className="inline-flex items-center justify-center w-12 h-12 rounded-md bg-primary/10">
+                        <IconComponent className="h-6 w-6 text-primary" />
                       </div>
                     </div>
                     
                     {/* Content */}
-                    <h3 className="text-lg md:text-xl lg:text-2xl font-bold mb-2 md:mb-3 text-foreground" data-testid={`text-service-title-${index}`}>
+                    <h3 className="text-xl font-bold mb-2" data-testid={`text-service-title-${index}`}>
                       {service.title}
                     </h3>
-                    <p className="text-sm md:text-base text-muted-foreground leading-relaxed mb-4" data-testid={`text-service-description-${index}`}>
+                    <p className="text-sm text-muted-foreground mb-4" data-testid={`text-service-description-${index}`}>
                       {service.description}
                     </p>
                     
                     {/* Learn More Link */}
                     <div className="flex items-center text-primary text-sm font-semibold">
                       Learn More
-                      <ArrowRight className="ml-1 h-4 w-4 group-hover:translate-x-1 transition-transform" />
+                      <ArrowRight className="ml-1 h-4 w-4" />
                     </div>
                   </Card>
                 </Link>
@@ -261,20 +250,20 @@ export default function Home() {
 
       {/* Testimonials Section */}
       {activeTestimonials.length > 0 && (
-        <section className="py-8 md:py-12 lg:py-16 bg-card">
+        <section className="py-12 md:py-16 bg-card">
           <div className="max-w-7xl mx-auto px-4 md:px-6">
-            <div className="text-center mb-12 md:mb-16">
-              <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-4" data-testid="text-testimonials-title">
+            <div className="text-center mb-12">
+              <h2 className="text-3xl md:text-4xl font-bold mb-4" data-testid="text-testimonials-title">
                 What Our Clients Say
               </h2>
-              <p className="text-lg text-muted-foreground max-w-2xl mx-auto" data-testid="text-testimonials-description">
+              <p className="text-muted-foreground max-w-2xl mx-auto" data-testid="text-testimonials-description">
                 Don't just take our word for it - hear from our satisfied clients
               </p>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {activeTestimonials.map((testimonial, index) => (
-                <Card key={testimonial.id} className="p-6 md:p-8 hover-elevate transition-all duration-300" data-testid={`testimonial-card-${index}`}>
+                <Card key={testimonial.id} className="p-6 hover-elevate" data-testid={`testimonial-card-${index}`}>
                   <div className="flex items-center mb-4">
                     {[...Array(parseInt(testimonial.rating))].map((_, i) => (
                       <Star key={i} className="h-5 w-5 fill-green-700 text-green-700" />
@@ -307,34 +296,30 @@ export default function Home() {
       )}
 
       {/* Team Section - Grass Theme */}
-      <section className="py-12 md:py-16 bg-green-50/50 dark:bg-green-950/10 border-y border-green-200/30 dark:border-green-800/30">
+      <section className="py-12 md:py-16 bg-green-50/30 dark:bg-green-950/10 border-y">
         <div className="max-w-7xl mx-auto px-4 md:px-6">
           <div className="text-center mb-12">
-            <Badge variant="secondary" className="mb-4 bg-green-500/10 text-green-700 dark:text-green-400 border-green-500/20">
-              <Sparkles className="h-3 w-3 mr-2" />
-              Meet Our Team
-            </Badge>
             <h2 className="text-3xl md:text-4xl font-bold mb-4 text-green-800 dark:text-green-300" data-testid="text-team-title">
-              AddisonX Media Team
+              Our Team
             </h2>
             <p className="text-muted-foreground max-w-2xl mx-auto" data-testid="text-team-description">
-              Our passionate team of digital marketing experts dedicated to your success
+              Our passionate team of digital marketing experts
             </p>
           </div>
 
           <div className="grid grid-cols-2 md:grid-cols-3 gap-6 max-w-5xl mx-auto">
             {activeTeamMembers.map((member, index) => (
-              <Card key={member.id} className="p-6 text-center relative overflow-hidden bg-white dark:bg-card border-2 border-green-200/50 dark:border-green-800/50 hover-elevate" data-testid={`card-team-${index}`}>
+              <Card key={member.id} className="p-6 text-center relative overflow-hidden border-green-200 dark:border-green-800 hover-elevate" data-testid={`card-team-${index}`}>
                 {/* Grass Pattern at Bottom */}
-                <div className="absolute bottom-0 left-0 right-0 h-12 overflow-hidden">
+                <div className="absolute bottom-0 left-0 right-0 h-10 overflow-hidden">
                   <div className="absolute bottom-0 left-0 right-0 flex justify-around items-end">
-                    {[...Array(10)].map((_, i) => (
+                    {[...Array(8)].map((_, i) => (
                       <div
                         key={i}
-                        className="w-1 bg-gradient-to-t from-green-500 to-transparent dark:from-green-600"
+                        className="w-1 bg-green-500 dark:bg-green-600"
                         style={{
-                          height: `${15 + Math.random() * 20}px`,
-                          opacity: 0.5,
+                          height: `${12 + Math.random() * 15}px`,
+                          opacity: 0.4,
                         }}
                       ></div>
                     ))}
@@ -342,40 +327,31 @@ export default function Home() {
                 </div>
 
                 {/* Team Member Content */}
-                <div className="relative z-10 mb-8">
+                <div className="relative z-10 mb-6">
                   <div className="mb-4">
-                    {/* Avatar with Green Ring */}
-                    <div className="relative w-24 h-24 mx-auto">
-                      <div className="w-full h-full rounded-full bg-gradient-to-br from-green-500 to-emerald-500 p-[2px]">
-                        <div className="w-full h-full rounded-full bg-white dark:bg-card p-[2px]">
-                          {member.photoUrl ? (
-                            <img
-                              src={member.photoUrl}
-                              alt={member.fullName}
-                              className="w-full h-full rounded-full object-cover"
-                              data-testid={`img-team-photo-${index}`}
-                            />
-                          ) : (
-                            <div className="w-full h-full rounded-full bg-green-50 dark:bg-green-950 flex items-center justify-center">
-                              <div className="text-3xl font-bold text-green-700 dark:text-green-400">
-                                {member.fullName.charAt(0).toUpperCase()}
-                              </div>
-                            </div>
-                          )}
+                    {/* Avatar with Green Border */}
+                    <div className="w-20 h-20 mx-auto rounded-full border-2 border-green-500 overflow-hidden">
+                      {member.photoUrl ? (
+                        <img
+                          src={member.photoUrl}
+                          alt={member.fullName}
+                          className="w-full h-full object-cover"
+                          data-testid={`img-team-photo-${index}`}
+                        />
+                      ) : (
+                        <div className="w-full h-full bg-green-50 dark:bg-green-950 flex items-center justify-center">
+                          <div className="text-2xl font-bold text-green-700 dark:text-green-400">
+                            {member.fullName.charAt(0).toUpperCase()}
+                          </div>
                         </div>
-                      </div>
-                      
-                      {/* Badge */}
-                      <div className="absolute -top-1 -right-1 w-6 h-6 bg-green-500 rounded-full flex items-center justify-center border-2 border-white dark:border-card">
-                        <Sparkles className="h-3 w-3 text-white" />
-                      </div>
+                      )}
                     </div>
                   </div>
                   
                   <h3 className="text-base font-bold mb-1" data-testid={`text-team-name-${index}`}>
                     {member.fullName}
                   </h3>
-                  <p className="text-sm text-green-700 dark:text-green-400 font-medium" data-testid={`text-team-position-${index}`}>
+                  <p className="text-sm text-green-700 dark:text-green-400" data-testid={`text-team-position-${index}`}>
                     {member.position}
                   </p>
                 </div>
@@ -386,17 +362,13 @@ export default function Home() {
       </section>
 
       {/* Partners Section */}
-      <section className="py-10 md:py-14 bg-card border-y overflow-hidden">
+      <section className="py-12 bg-card border-y overflow-hidden">
         <div className="max-w-7xl mx-auto px-4 md:px-6">
           <div className="text-center mb-12">
-            <Badge variant="secondary" className="mb-4">
-              <Sparkles className="h-3 w-3 mr-2" />
-              Trusted Partners
-            </Badge>
-            <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-4" data-testid="text-partners-title">
+            <h2 className="text-3xl md:text-4xl font-bold mb-4" data-testid="text-partners-title">
               Our Partners
             </h2>
-            <p className="text-lg text-muted-foreground max-w-2xl mx-auto" data-testid="text-partners-description">
+            <p className="text-muted-foreground max-w-2xl mx-auto" data-testid="text-partners-description">
               Partnering with industry leaders to deliver exceptional results
             </p>
           </div>
