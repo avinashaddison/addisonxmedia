@@ -1,5 +1,5 @@
 import { Link, useLocation } from "wouter";
-import { Phone, Mail, Sparkles, Home, Info, Briefcase, UserCheck, MessageCircle, MessageSquare, Code, ShoppingCart, TrendingUp, Search, Target, Palette, Share2, Wrench, Clock, ChevronDown } from "lucide-react";
+import { Phone, Mail, Sparkles, Home, Info, Briefcase, UserCheck, MessageCircle, MessageSquare, Code, ShoppingCart, TrendingUp, Search, Target, Palette, Share2, Wrench, Clock } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   NavigationMenu,
@@ -17,160 +17,55 @@ const services = [
     icon: Code,
     title: "Web Development",
     slug: "web-development",
-    description: "Custom websites built with modern technologies",
-    subcategories: [
-      "Business Website",
-      "Portfolio Website",
-      "School / College Website",
-      "Hospital / Clinic Website",
-      "Restaurant & Cafe Website",
-      "Real Estate Website",
-      "NGO Website",
-      "Corporate Website",
-      "Landing Page Design",
-      "Multi-Page / Single Page Websites",
-      "Website Redesign",
-      "Speed Optimization",
-      "Hosting + Domain Setup",
-      "Business Email Setup",
-      "Website Maintenance"
-    ]
+    description: "Custom websites built with modern technologies"
   },
   {
     icon: ShoppingCart,
     title: "Ecommerce Development",
     slug: "ecommerce-development",
-    description: "Complete online store solutions",
-    subcategories: [
-      "Full eCommerce Store",
-      "Product Management System",
-      "Shopping Cart Integration",
-      "Payment Gateway Integration",
-      "COD + Online Payment Setup",
-      "Order Tracking System",
-      "Inventory Management",
-      "Coupon & Discount System",
-      "Multi-Vendor eCommerce",
-      "Product Uploading",
-      "Store Automation (Email/WhatsApp)"
-    ]
+    description: "Complete online store solutions"
   },
   {
     icon: TrendingUp,
     title: "Brand Promotion",
     slug: "brand-promotion",
-    description: "Strategic brand building campaigns",
-    subcategories: [
-      "Online Branding Strategy",
-      "Brand Awareness Campaigns",
-      "Google Business Profile Optimization",
-      "Reputation Management",
-      "Brand Guidelines Creation",
-      "Hashtag Research",
-      "Review Boosting Strategy",
-      "Influencer Collaboration Planning"
-    ]
+    description: "Strategic brand building campaigns"
   },
   {
     icon: Search,
     title: "Local SEO",
     slug: "local-seo",
-    description: "Dominate local search results",
-    subcategories: [
-      "Google Maps Ranking",
-      "Local Keyword Optimization",
-      "Business Listing Optimization",
-      "Review Management",
-      "NAP Citations (Name/Address/Phone)",
-      "Local Backlinks",
-      "Local Content Creation",
-      "Competitor Research"
-    ]
+    description: "Dominate local search results"
   },
   {
     icon: Target,
     title: "Ads Management",
     slug: "ads-management",
-    description: "Data-driven advertising campaigns",
-    subcategories: [
-      "Facebook Ads",
-      "Instagram Ads",
-      "Google Search Ads",
-      "Google Display Ads",
-      "Lead Generation Ads",
-      "Remarketing Ads",
-      "Conversion Optimization",
-      "Ad Creative Designing",
-      "A/B Testing",
-      "Analytics & Reporting"
-    ]
+    description: "Data-driven advertising campaigns"
   },
   {
     icon: Palette,
     title: "Graphic Designing",
     slug: "graphic-designing",
-    description: "Creative visual designs",
-    subcategories: [
-      "Logo Design",
-      "Business Card",
-      "Poster / Banner",
-      "Social Media Creatives",
-      "Brochures / Flyers",
-      "Visiting Card",
-      "Packaging Design",
-      "YouTube Thumbnail",
-      "Ad Creatives",
-      "Brand Identity Kit"
-    ]
+    description: "Creative visual designs"
   },
   {
     icon: MessageCircle,
     title: "WhatsApp Marketing",
     slug: "whatsapp-marketing",
-    description: "Direct customer engagement",
-    subcategories: [
-      "Bulk WhatsApp Messaging",
-      "WhatsApp Chatbot Setup",
-      "Automated Reply System",
-      "WhatsApp API Setup",
-      "Customer Follow-up Automation",
-      "Campaign Management",
-      "Business Catalog Setup"
-    ]
+    description: "Direct customer engagement"
   },
   {
     icon: Share2,
     title: "Social Media Marketing",
     slug: "social-media-marketing",
-    description: "Build and engage your community",
-    subcategories: [
-      "Instagram Management",
-      "Facebook Page Management",
-      "Daily Posting & Scheduling",
-      "Reels Strategy",
-      "Content Writing",
-      "Hashtag Research",
-      "Engagement Boosting",
-      "Page Growth Strategy",
-      "Social Media Ads Integration",
-      "Monthly Analytics Report"
-    ]
+    description: "Build and engage your community"
   },
   {
     icon: Wrench,
     title: "Custom Development",
     slug: "custom-development",
-    description: "Tailored software solutions",
-    subcategories: [
-      "Custom Web Tools",
-      "Client Management System (CRM)",
-      "Booking Systems",
-      "Appointment Software",
-      "Automation Tools",
-      "Custom Dashboard",
-      "Billing/Invoice Software",
-      "Membership/Subscription Systems"
-    ]
+    description: "Tailored software solutions"
   }
 ];
 
@@ -375,76 +270,6 @@ export function Navbar() {
         {/* Mobile Bottom Accent Line */}
         <div className="lg:hidden absolute bottom-0 left-0 right-0 h-0.5 bg-gradient-to-r from-transparent via-primary/50 to-transparent"></div>
       </nav>
-
-      {/* Cool Submenu - Desktop Only */}
-      <div className="hidden lg:block bg-gradient-to-r from-muted/30 via-muted/50 to-muted/30 border-b shadow-sm">
-        <div className="max-w-7xl mx-auto px-4 md:px-6">
-          <div className="flex items-center justify-center">
-            <NavigationMenu>
-              <NavigationMenuList className="gap-1">
-                {services.map((service) => {
-                  const Icon = service.icon;
-                  const isActive = currentServiceSlug === service.slug;
-                  return (
-                    <NavigationMenuItem key={service.slug}>
-                      <NavigationMenuTrigger 
-                        className={`h-11 text-sm font-medium ${isActive ? 'bg-primary/10 text-primary' : 'text-muted-foreground'}`}
-                        data-testid={`submenu-trigger-${service.slug}`}
-                      >
-                        <Icon className="h-4 w-4 mr-1.5" />
-                        {service.title}
-                        <ChevronDown className="ml-1 h-3 w-3 opacity-60" />
-                      </NavigationMenuTrigger>
-                      <NavigationMenuContent>
-                        <div className="w-[450px] p-4">
-                          {/* Service Header */}
-                          <Link href={`/service/${service.slug}`}>
-                            <div className="flex items-center gap-3 p-3 mb-3 rounded-lg bg-gradient-to-r from-primary/10 via-purple-500/10 to-primary/10 border border-primary/20 hover-elevate cursor-pointer group">
-                              <div className="flex items-center justify-center w-10 h-10 rounded-lg bg-primary/20">
-                                <Icon className="h-5 w-5 text-primary" />
-                              </div>
-                              <div className="flex-1">
-                                <h3 className="font-bold text-sm group-hover:text-primary transition-colors">{service.title}</h3>
-                                <p className="text-xs text-muted-foreground">{service.description}</p>
-                              </div>
-                            </div>
-                          </Link>
-
-                          {/* Subcategories Grid */}
-                          <div className="grid grid-cols-2 gap-1.5 max-h-[380px] overflow-y-auto">
-                            {service.subcategories.map((subcategory, idx) => (
-                              <Link 
-                                key={idx} 
-                                href={`/service/${service.slug}`}
-                                className="group"
-                              >
-                                <div className="flex items-center gap-2 p-2.5 rounded-md hover:bg-accent hover:text-accent-foreground transition-colors cursor-pointer">
-                                  <div className="w-1.5 h-1.5 rounded-full bg-primary/40 group-hover:bg-primary transition-colors"></div>
-                                  <span className="text-xs font-medium leading-tight">{subcategory}</span>
-                                </div>
-                              </Link>
-                            ))}
-                          </div>
-
-                          {/* View All Link */}
-                          <Link href={`/service/${service.slug}`}>
-                            <div className="mt-3 pt-3 border-t">
-                              <div className="flex items-center justify-center gap-2 p-2 rounded-md bg-primary/5 hover:bg-primary/10 transition-colors cursor-pointer group">
-                                <span className="text-xs font-semibold text-primary">View {service.title} Details</span>
-                                <ChevronDown className="h-3 w-3 text-primary rotate-[-90deg]" />
-                              </div>
-                            </div>
-                          </Link>
-                        </div>
-                      </NavigationMenuContent>
-                    </NavigationMenuItem>
-                  );
-                })}
-              </NavigationMenuList>
-            </NavigationMenu>
-          </div>
-        </div>
-      </div>
     </header>
 
     {/* Mobile Bottom Navigation Bar - Premium App Experience */}
