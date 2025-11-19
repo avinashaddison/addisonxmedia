@@ -1,6 +1,7 @@
 import { useRoute } from "wouter";
 import { Link } from "wouter";
 import { useQuery } from "@tanstack/react-query";
+import { useEffect } from "react";
 import { Card, CardHeader, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -458,6 +459,10 @@ export default function ServiceDetail() {
     queryKey: ["/api/service-banners", slug],
     enabled: !!slug,
   });
+
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }, [slug]);
 
   if (!slug || !(slug in services)) {
     return (
