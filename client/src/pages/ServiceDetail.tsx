@@ -1,12 +1,12 @@
 import { useRoute } from "wouter";
 import { Link } from "wouter";
 import { useQuery } from "@tanstack/react-query";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Card, CardHeader, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
-import { Check, ArrowRight, Code, ShoppingCart, TrendingUp, Search, Target, Palette, MessageCircle, Share2, Wrench, Phone, Mail, MapPin, Star, Users, Award, Clock } from "lucide-react";
+import { Check, ArrowRight, Code, ShoppingCart, TrendingUp, Search, Target, Palette, MessageCircle, Share2, Wrench, Phone, Mail, MapPin, Star, Users, Award, Clock, Loader2 } from "lucide-react";
 
 // TODO: Implement service banner upload feature in admin panel
 // Helper function will be used when custom banners are added
@@ -454,6 +454,7 @@ const services = {
 export default function ServiceDetail() {
   const [, params] = useRoute("/service/:slug");
   const slug = params?.slug;
+  const [isLoading, setIsLoading] = useState(true);
 
   const { data: serviceBanner } = useQuery<any>({
     queryKey: ["/api/service-banners", slug],
@@ -461,7 +462,14 @@ export default function ServiceDetail() {
   });
 
   useEffect(() => {
+    setIsLoading(true);
     window.scrollTo({ top: 0, behavior: 'instant' });
+    
+    const timer = setTimeout(() => {
+      setIsLoading(false);
+    }, 400);
+    
+    return () => clearTimeout(timer);
   }, [slug]);
 
   if (!slug || !(slug in services)) {
@@ -485,6 +493,17 @@ export default function ServiceDetail() {
         ? serviceBanner.bannerUrl 
         : `/api/service-banner?path=${encodeURIComponent(serviceBanner.bannerUrl)}`)
     : null;
+
+  if (isLoading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-background">
+        <div className="text-center">
+          <Loader2 className="h-12 w-12 animate-spin text-primary mx-auto mb-4" data-testid="loader-service-page" />
+          <p className="text-lg text-muted-foreground">Loading {service.title}...</p>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="flex flex-col">
