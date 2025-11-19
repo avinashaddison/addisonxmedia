@@ -37,9 +37,7 @@ function BannerUploadCard({ title, description, serviceSlug, currentBanner, onBa
     mutationFn: async (file: File) => {
       setIsUploading(true);
       try {
-        const endpoint = serviceSlug ? "/api/service-banners/upload" : "/api/customization/upload-banner";
-        
-        const response = await fetch(endpoint, {
+        const response = await fetch("/api/service-banners/upload", {
           method: "POST",
           credentials: "include",
           headers: { "Content-Type": "application/json" },
@@ -62,13 +60,11 @@ function BannerUploadCard({ title, description, serviceSlug, currentBanner, onBa
           headers: { "Content-Type": file.type },
         });
 
-        if (serviceSlug) {
-          await apiRequest("POST", "/api/service-banners", {
-            serviceSlug,
-            bannerUrl: normalizedPath,
-            isActive: true,
-          });
-        }
+        await apiRequest("POST", "/api/service-banners", {
+          serviceSlug: serviceSlug || "home",
+          bannerUrl: normalizedPath,
+          isActive: true,
+        });
 
         return normalizedPath;
       } finally {
@@ -94,9 +90,8 @@ function BannerUploadCard({ title, description, serviceSlug, currentBanner, onBa
 
   const deleteMutation = useMutation({
     mutationFn: async () => {
-      if (serviceSlug) {
-        await apiRequest("DELETE", `/api/service-banners/${serviceSlug}`);
-      }
+      const slug = serviceSlug || "home";
+      await apiRequest("DELETE", `/api/service-banners/${slug}`);
     },
     onSuccess: () => {
       onBannerUpdate(null);
@@ -211,31 +206,12 @@ export default function WebsiteBannersManager() {
     queryKey: ["/api/service-banners"],
   });
 
-  const { data: customizations } = useQuery<any[]>({
-    queryKey: ["/api/customization"],
-  });
-
-  const [homeBanner, setHomeBanner] = useState<string | null>(null);
-
-  const homeCustomization = customizations?.find(c => c.section === "banners");
-  const currentHomeBanner = homeCustomization?.content?.heroBanner || null;
-
   const getServiceBanner = (slug: string) => {
     return serviceBanners?.find(b => b.serviceSlug === slug)?.bannerUrl || null;
   };
 
-  const updateHomeBanner = (bannerUrl: string | null) => {
-    setHomeBanner(bannerUrl);
-    apiRequest("POST", "/api/customization", {
-      section: "banners",
-      content: {
-        ...homeCustomization?.content,
-        heroBanner: bannerUrl,
-      },
-      isActive: "true",
-    }).then(() => {
-      queryClient.invalidateQueries({ queryKey: ["/api/customization"] });
-    });
+  const getHomeBanner = () => {
+    return serviceBanners?.find(b => b.serviceSlug === "home")?.bannerUrl || null;
   };
 
   return (
@@ -253,8 +229,8 @@ export default function WebsiteBannersManager() {
           <BannerUploadCard
             title="Homepage Hero Section"
             description="Main banner displayed on the home page"
-            currentBanner={homeBanner || currentHomeBanner}
-            onBannerUpdate={updateHomeBanner}
+            currentBanner={getHomeBanner()}
+            onBannerUpdate={() => {}}
           />
         </div>
 

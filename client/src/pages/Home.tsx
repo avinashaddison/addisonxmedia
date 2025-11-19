@@ -119,8 +119,8 @@ export default function Home() {
     queryKey: ["/api/customization/services"],
   });
 
-  const { data: bannersCustomization } = useQuery<any>({
-    queryKey: ["/api/customization/banners"],
+  const { data: homeBanner } = useQuery<any>({
+    queryKey: ["/api/service-banners", "home"],
   });
 
   const activeTestimonials = testimonials || [];
@@ -130,7 +130,7 @@ export default function Home() {
   const servicesTitle = servicesCustomization?.content?.title || "Our Services";
   const servicesDescription = servicesCustomization?.content?.description || "Comprehensive digital marketing solutions tailored to elevate your brand and drive measurable results";
   const customServices = servicesCustomization?.content?.services || services;
-  const customHeroBanner = bannersCustomization?.content?.heroBanner || null;
+  const customHeroBanner = homeBanner?.bannerUrl || null;
 
   return (
     <div className="flex flex-col">
