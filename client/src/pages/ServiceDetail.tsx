@@ -1,5 +1,6 @@
 import { useRoute } from "wouter";
 import { Link } from "wouter";
+import { useQuery } from "@tanstack/react-query";
 import { Card, CardHeader, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -453,17 +454,17 @@ export default function ServiceDetail() {
   const [, params] = useRoute("/service/:slug");
   const slug = params?.slug;
 
-  // TODO: Add admin UI for service banner management
-  // const { data: serviceBannersData } = useQuery<any>({
-  //   queryKey: ["/api/customization/service-banners"],
-  // });
+  const { data: serviceBanner } = useQuery<any>({
+    queryKey: ["/api/service-banners", slug],
+    enabled: !!slug,
+  });
 
   if (!slug || !(slug in services)) {
     return (
       <div className="min-h-screen flex items-center justify-center">
         <div className="text-center">
           <h1 className="text-4xl font-bold mb-4" data-testid="text-service-not-found">Service Not Found</h1>
-          <Link href="/services">
+          <Link href="/service">
             <Button data-testid="button-back-to-services">Back to Services</Button>
           </Link>
         </div>
@@ -474,8 +475,11 @@ export default function ServiceDetail() {
   const service = services[slug as keyof typeof services];
   const Icon = service.icon;
 
-  // For now, use gradient background (custom banners can be added via admin panel later)
-  const bannerUrl = null;
+  const bannerUrl = serviceBanner?.bannerUrl 
+    ? (serviceBanner.bannerUrl.startsWith('http') 
+        ? serviceBanner.bannerUrl 
+        : `/api/hero-banner?path=${encodeURIComponent(serviceBanner.bannerUrl)}`)
+    : null;
 
   return (
     <div className="flex flex-col">
