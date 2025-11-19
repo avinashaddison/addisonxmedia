@@ -22,6 +22,8 @@ import {
   updateHomepageCustomizationSchema,
   insertSeoSettingSchema,
   updateSeoSettingSchema,
+  insertServiceBannerSchema,
+  updateServiceBannerSchema,
   insertTeamMemberSchema,
   updateTeamMemberSchema
 } from "@shared/schema";
@@ -864,6 +866,90 @@ export async function registerRoutes(app: Express): Promise<Server> {
     } catch (error) {
       console.error("Error deleting SEO setting:", error);
       res.status(500).json({ message: "Failed to delete SEO setting" });
+    }
+  });
+
+  // Service Banner routes
+  app.get("/api/service-banners", async (req, res) => {
+    try {
+      const banners = await storage.getAllServiceBanners();
+      res.json(banners);
+    } catch (error) {
+      console.error("Error fetching service banners:", error);
+      res.status(500).json({ message: "Failed to fetch service banners" });
+    }
+  });
+
+  app.get("/api/service-banners/:slug", async (req, res) => {
+    try {
+      const { slug } = req.params;
+      const banner = await storage.getServiceBanner(slug);
+      
+      if (!banner) {
+        return res.status(404).json({ message: "Service banner not found" });
+      }
+
+      res.json(banner);
+    } catch (error) {
+      console.error("Error fetching service banner:", error);
+      res.status(500).json({ message: "Failed to fetch service banner" });
+    }
+  });
+
+  app.post("/api/service-banners", isAuthenticated, async (req, res) => {
+    try {
+      const parseResult = insertServiceBannerSchema.safeParse(req.body);
+      
+      if (!parseResult.success) {
+        return res.status(400).json({ message: "Invalid data", errors: parseResult.error.errors });
+      }
+
+      const banner = await storage.upsertServiceBanner(parseResult.data);
+      res.status(201).json(banner);
+    } catch (error) {
+      console.error("Error upserting service banner:", error);
+      res.status(500).json({ message: "Failed to upsert service banner" });
+    }
+  });
+
+  app.delete("/api/service-banners/:slug", isAuthenticated, async (req, res) => {
+    try {
+      const { slug } = req.params;
+      await storage.deleteServiceBanner(slug);
+      res.status(204).send();
+    } catch (error) {
+      console.error("Error deleting service banner:", error);
+      res.status(500).json({ message: "Failed to delete service banner" });
+    }
+  });
+
+  app.post("/api/service-banners/upload", isAuthenticated, async (req, res) => {
+    try {
+      const { contentType, fileSize } = req.body;
+
+      // Validate MIME type
+      const allowedMimeTypes = ['image/jpeg', 'image/jpg', 'image/png', 'image/webp', 'image/gif'];
+      if (!contentType || !allowedMimeTypes.includes(contentType.toLowerCase())) {
+        return res.status(400).json({ 
+          message: "Invalid file type. Only JPEG, PNG, WebP, and GIF images are allowed." 
+        });
+      }
+
+      // Validate file size (max 5MB)
+      const maxFileSize = 5 * 1024 * 1024;
+      if (!fileSize || fileSize > maxFileSize) {
+        return res.status(400).json({ 
+          message: "File size exceeds maximum limit of 5MB." 
+        });
+      }
+
+      const objectStorageService = new ObjectStorageService();
+      const uploadURL = await objectStorageService.getServiceBannerUploadURL();
+      const normalizedPath = objectStorageService.normalizeObjectPath(uploadURL);
+      res.json({ uploadURL, normalizedPath });
+    } catch (error) {
+      console.error("Error getting upload URL for service banner:", error);
+      res.status(500).json({ message: "Failed to get upload URL" });
     }
   });
 

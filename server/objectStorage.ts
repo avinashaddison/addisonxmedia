@@ -96,6 +96,28 @@ export class ObjectStorageService {
     });
   }
 
+  async getServiceBannerUploadURL(): Promise<string> {
+    const publicObjectDir = this.getPublicObjectDir();
+    if (!publicObjectDir) {
+      throw new Error(
+        "PUBLIC_OBJECT_SEARCH_PATHS not set. Object storage not configured. " +
+          "Please set up object storage in the Replit environment."
+      );
+    }
+
+    const objectId = randomUUID();
+    const fullPath = `${publicObjectDir}/service-banners/${objectId}`;
+
+    const { bucketName, objectName } = parseObjectPath(fullPath);
+
+    return signObjectURL({
+      bucketName,
+      objectName,
+      method: "PUT",
+      ttlSec: 900,
+    });
+  }
+
   normalizeObjectPath(rawPath: string): string {
     if (!rawPath) {
       return rawPath;
