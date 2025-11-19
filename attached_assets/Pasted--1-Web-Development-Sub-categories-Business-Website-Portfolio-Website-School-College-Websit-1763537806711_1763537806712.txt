@@ -1,0 +1,209 @@
+🌐 1. Web Development
+
+Sub-categories:
+
+Business Website
+
+Portfolio Website
+
+School / College Website
+
+Hospital / Clinic Website
+
+Restaurant & Cafe Website
+
+Real Estate Website
+
+NGO Website
+
+Corporate Website
+
+Landing Page Design
+
+Multi-Page / Single Page Websites
+
+Website Redesign
+
+Speed Optimization
+
+Hosting + Domain Setup
+
+Business Email Setup
+
+Website Maintenance
+
+🛒 2. Ecommerce Development
+
+Sub-categories:
+
+Full eCommerce Store
+
+Product Management System
+
+Shopping Cart Integration
+
+Payment Gateway Integration
+
+COD + Online Payment Setup
+
+Order Tracking System
+
+Inventory Management
+
+Coupon & Discount System
+
+Multi-Vendor eCommerce
+
+Product Uploading
+
+Store Automation (Email/WhatsApp)
+
+🚀 3. Brand Promotion
+
+Sub-categories:
+
+Online Branding Strategy
+
+Brand Awareness Campaigns
+
+Google Business Profile Optimization
+
+Reputation Management
+
+Brand Guidelines Creation
+
+Hashtag Research
+
+Review Boosting Strategy
+
+Influencer Collaboration Planning
+
+📍 4. Local SEO
+
+Sub-categories:
+
+Google Maps Ranking
+
+Local Keyword Optimization
+
+Business Listing Optimization
+
+Review Management
+
+NAP Citations (Name/Address/Phone)
+
+Local Backlinks
+
+Local Content Creation
+
+Competitor Research
+
+🎯 5. Ads Management (Google + Meta)
+
+Sub-categories:
+
+Facebook Ads
+
+Instagram Ads
+
+Google Search Ads
+
+Google Display Ads
+
+Lead Generation Ads
+
+Remarketing Ads
+
+Conversion Optimization
+
+Ad Creative Designing
+
+A/B Testing
+
+Analytics & Reporting
+
+🎨 6. Graphic Designing
+
+Sub-categories:
+
+Logo Design
+
+Business Card
+
+Poster / Banner
+
+Social Media Creatives
+
+Brochures / Flyers
+
+Visiting Card
+
+Packaging Design
+
+YouTube Thumbnail
+
+Ad Creatives
+
+Brand Identity Kit
+
+💬 7. WhatsApp Marketing
+
+Sub-categories:
+
+Bulk WhatsApp Messaging
+
+WhatsApp Chatbot Setup
+
+Automated Reply System
+
+WhatsApp API Setup
+
+Customer Follow-up Automation
+
+Campaign Management
+
+Business Catalog Setup
+
+📱 8. Social Media Marketing
+
+Sub-categories:
+
+Instagram Management
+
+Facebook Page Management
+
+Daily Posting & Scheduling
+
+Reels Strategy
+
+Content Writing
+
+Hashtag Research
+
+Engagement Boosting
+
+Page Growth Strategy
+
+Social Media Ads Integration
+
+Monthly Analytics Report
+
+🔧 9. Custom Development
+
+Sub-categories:
+
+Custom Web Tools
+
+Client Management System (CRM)
+
+Booking Systems
+
+Appointment Software
+
+Automation Tools
+
+Custom Dashboard
+
+Billing/Invoice Software
+
+Membership/Subscription Systems
