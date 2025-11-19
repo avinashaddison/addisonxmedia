@@ -46,7 +46,7 @@ export function Footer() {
                   About Us
                 </span>
               </Link>
-              <Link href="/services">
+              <Link href="/service">
                 <span className="text-sm text-slate-300 hover:text-primary cursor-pointer transition-all hover:translate-x-1 inline-block group" data-testid="footer-link-services">
                   <span className="inline-block w-2 h-2 rounded-full bg-primary/50 mr-2 group-hover:bg-primary transition-colors"></span>
                   Our Services

@@ -79,7 +79,7 @@ export function Navbar() {
     { path: "/service/web-development", label: "Web Dev", icon: Code },
     { path: "/service/ads-management", label: "Ads", icon: Target },
     { path: "/service/whatsapp-marketing", label: "WhatsApp", icon: MessageCircle },
-    { path: "/services", label: "All Services", icon: Briefcase },
+    { path: "/service", label: "All Services", icon: Briefcase },
   ];
 
   return (
@@ -220,7 +220,7 @@ export function Navbar() {
 
                   {/* All Services Dropdown */}
                   <NavigationMenuItem>
-                    <NavigationMenuTrigger data-testid="nav-all-services-trigger" className={location === '/services' ? 'bg-primary text-primary-foreground' : ''}>
+                    <NavigationMenuTrigger data-testid="nav-all-services-trigger" className={location === '/service' ? 'bg-primary text-primary-foreground' : ''}>
                       <Briefcase className="h-4 w-4 mr-2" />
                       All Services
                     </NavigationMenuTrigger>
