@@ -193,7 +193,7 @@ export default function Home() {
               // Map service titles to their correct slugs
               const titleToSlugMap: Record<string, string> = {
                 "Web Development": "web-development",
-                "Ecommerce Development": "ecommerce",
+                "Ecommerce Development": "ecommerce-development",
                 "Brand Promotion": "brand-promotion",
                 "Local SEO": "local-seo",
                 "Ads Management": "ads-management",
@@ -206,7 +206,7 @@ export default function Home() {
               const serviceSlug = titleToSlugMap[service.title] || service.title.toLowerCase().replace(/\s+/g, '-');
               
               return (
-                <Link key={index} href={`/services/${serviceSlug}`}>
+                <Link key={index} href={`/service/${serviceSlug}`}>
                   <Card 
                     className="p-6 cursor-pointer hover-elevate" 
                     data-testid={`card-service-${index}`}
@@ -238,7 +238,7 @@ export default function Home() {
           </div>
 
           <div className="text-center mt-12">
-            <Link href="/services">
+            <Link href="/service">
               <Button size="lg" data-testid="button-explore-all-services">
                 Explore All Services
                 <ArrowRight className="ml-2 h-4 w-4" />
