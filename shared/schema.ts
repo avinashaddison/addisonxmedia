@@ -316,6 +316,26 @@ export type InsertSeoSetting = z.infer<typeof insertSeoSettingSchema>;
 export type UpdateSeoSetting = z.infer<typeof updateSeoSettingSchema>;
 export type SeoSetting = typeof seoSettings.$inferSelect;
 
+// Service Banners table for individual service page hero images
+export const serviceBanners = pgTable("service_banners", {
+  id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
+  serviceSlug: varchar("service_slug").notNull().unique(), // web-development, ecommerce-development, etc.
+  bannerUrl: varchar("banner_url"), // Object storage path for banner image
+  isActive: boolean("is_active").notNull().default(true),
+  updatedAt: timestamp("updated_at").defaultNow(),
+});
+
+export const insertServiceBannerSchema = createInsertSchema(serviceBanners).omit({
+  id: true,
+  updatedAt: true,
+});
+
+export const updateServiceBannerSchema = insertServiceBannerSchema.partial();
+
+export type InsertServiceBanner = z.infer<typeof insertServiceBannerSchema>;
+export type UpdateServiceBanner = z.infer<typeof updateServiceBannerSchema>;
+export type ServiceBanner = typeof serviceBanners.$inferSelect;
+
 // Team Members table
 export const teamMembers = pgTable("team_members", {
   id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),

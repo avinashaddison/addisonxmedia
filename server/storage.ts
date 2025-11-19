@@ -11,6 +11,7 @@ import {
   settings,
   homepageCustomization,
   seoSettings,
+  serviceBanners,
   teamMembers,
   type User,
   type UpsertUser,
@@ -45,6 +46,9 @@ import {
   type SeoSetting,
   type InsertSeoSetting,
   type UpdateSeoSetting,
+  type ServiceBanner,
+  type InsertServiceBanner,
+  type UpdateServiceBanner,
   type TeamMember,
   type InsertTeamMember,
   type UpdateTeamMember,
@@ -132,6 +136,12 @@ export interface IStorage {
   getSeoSetting(page: string): Promise<SeoSetting | undefined>;
   upsertSeoSetting(seoSetting: InsertSeoSetting): Promise<SeoSetting>;
   deleteSeoSetting(page: string): Promise<void>;
+
+  // Service Banner operations
+  getAllServiceBanners(): Promise<ServiceBanner[]>;
+  getServiceBanner(serviceSlug: string): Promise<ServiceBanner | undefined>;
+  upsertServiceBanner(banner: InsertServiceBanner): Promise<ServiceBanner>;
+  deleteServiceBanner(serviceSlug: string): Promise<void>;
 
   // Team Member operations
   getAllTeamMembers(): Promise<TeamMember[]>;
@@ -556,6 +566,38 @@ export class DatabaseStorage implements IStorage {
 
   async deleteSeoSetting(page: string): Promise<void> {
     await db.delete(seoSettings).where(eq(seoSettings.page, page));
+  }
+
+  // Service Banner operations
+  async getAllServiceBanners(): Promise<ServiceBanner[]> {
+    return db.select().from(serviceBanners).orderBy(serviceBanners.serviceSlug);
+  }
+
+  async getServiceBanner(serviceSlug: string): Promise<ServiceBanner | undefined> {
+    const [banner] = await db
+      .select()
+      .from(serviceBanners)
+      .where(eq(serviceBanners.serviceSlug, serviceSlug));
+    return banner;
+  }
+
+  async upsertServiceBanner(bannerData: InsertServiceBanner): Promise<ServiceBanner> {
+    const [banner] = await db
+      .insert(serviceBanners)
+      .values(bannerData)
+      .onConflictDoUpdate({
+        target: serviceBanners.serviceSlug,
+        set: {
+          ...bannerData,
+          updatedAt: new Date(),
+        },
+      })
+      .returning();
+    return banner;
+  }
+
+  async deleteServiceBanner(serviceSlug: string): Promise<void> {
+    await db.delete(serviceBanners).where(eq(serviceBanners.serviceSlug, serviceSlug));
   }
 
   // Team Member operations
