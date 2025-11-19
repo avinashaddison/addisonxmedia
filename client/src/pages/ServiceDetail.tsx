@@ -6,7 +6,8 @@ import { Card, CardHeader, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
-import { Check, ArrowRight, Code, ShoppingCart, TrendingUp, Search, Target, Palette, MessageCircle, Share2, Wrench, Phone, Mail, MapPin, Star, Users, Award, Clock, Loader2 } from "lucide-react";
+import { LoadingBar } from "@/components/LoadingBar";
+import { Check, ArrowRight, Code, ShoppingCart, TrendingUp, Search, Target, Palette, MessageCircle, Share2, Wrench, Phone, Mail, MapPin, Star, Users, Award, Clock } from "lucide-react";
 
 // TODO: Implement service banner upload feature in admin panel
 // Helper function will be used when custom banners are added
@@ -467,7 +468,7 @@ export default function ServiceDetail() {
     
     const timer = setTimeout(() => {
       setIsLoading(false);
-    }, 400);
+    }, 700);
     
     return () => clearTimeout(timer);
   }, [slug]);
@@ -494,19 +495,14 @@ export default function ServiceDetail() {
         : `/api/service-banner?path=${encodeURIComponent(serviceBanner.bannerUrl)}`)
     : null;
 
-  if (isLoading) {
-    return (
-      <div className="min-h-screen flex items-center justify-center bg-background">
-        <div className="text-center">
-          <Loader2 className="h-12 w-12 animate-spin text-primary mx-auto mb-4" data-testid="loader-service-page" />
-          <p className="text-lg text-muted-foreground">Loading {service.title}...</p>
-        </div>
-      </div>
-    );
-  }
-
   return (
-    <div className="flex flex-col">
+    <>
+      <LoadingBar isLoading={isLoading} />
+      <div 
+        className={`flex flex-col transition-opacity duration-200 ${isLoading ? 'opacity-30 pointer-events-none' : 'opacity-100'}`}
+        data-testid="service-content-wrapper"
+        data-loading={isLoading ? 'true' : 'false'}
+      >
       {/* Hero Section - Banner Only */}
       <section className="relative min-h-[300px] md:min-h-[400px] lg:min-h-[500px] overflow-hidden">
         {/* Banner Image - Can be uploaded from admin panel */}
@@ -805,6 +801,7 @@ export default function ServiceDetail() {
           </Card>
         </div>
       </section>
-    </div>
+      </div>
+    </>
   );
 }

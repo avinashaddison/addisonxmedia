@@ -42,9 +42,7 @@ function Router() {
       <Route path="/about" component={About} />
       <Route path="/service" component={Services} />
       <Route path="/services">{() => { window.location.href = '/service'; return null; }}</Route>
-      <Route path="/service/:slug">
-        {(params) => <ServiceDetail key={params.slug} />}
-      </Route>
+      <Route path="/service/:slug" component={ServiceDetail} />
       <Route path="/contact" component={Contact} />
       <Route path="/verify-employee" component={VerifyEmployee} />
       
