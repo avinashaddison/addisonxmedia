@@ -13,7 +13,8 @@ import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, For
 import { useToast } from "@/hooks/use-toast";
 import { apiRequest, queryClient } from "@/lib/queryClient";
 import { Settings, Image, Search, Plus, X, Upload, Loader2 } from "lucide-react";
-import type { HomepageCustomization, SeoSetting } from "@shared/schema";
+import type { HomepageCustomization, SeoSetting, ServiceBanner } from "@shared/schema";
+import WebsiteBannersManager from "@/components/WebsiteBannersManager";
 
 // Helper function to convert storage path to displayable API URL
 const convertHeroBannerToUrl = (storagePath: string | null): string | null => {
@@ -82,7 +83,7 @@ export default function Customize() {
         </TabsContent>
 
         <TabsContent value="banners">
-          <BannersForm customization={getCustomization("banners")} />
+          <WebsiteBannersManager />
         </TabsContent>
 
         <TabsContent value="seo">
