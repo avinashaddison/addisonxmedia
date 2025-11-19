@@ -31,7 +31,7 @@ const services = [
     ]
   },
   {
-    slug: "ecommerce",
+    slug: "ecommerce-development",
     icon: ShoppingCart,
     title: "Ecommerce Development",
     description: "Build robust online stores that provide seamless shopping experiences and boost sales.",
@@ -203,7 +203,7 @@ export default function Services() {
                     ))}
                   </div>
 
-                  <Link href={`/services/${service.slug}`}>
+                  <Link href={`/service/${service.slug}`}>
                     <Button className="w-full" variant="outline" data-testid={`button-learn-more-${index}`}>
                       Learn More <ArrowRight className="ml-2 h-4 w-4" />
                     </Button>
