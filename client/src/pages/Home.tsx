@@ -23,21 +23,21 @@ import heroBanner from "@assets/Phoenix_10_Create_a_modern_premium_promotional_b
 import reviewQR from "@assets/WhatsApp Image 2025-11-17 at 3.50.29 PM_1763395709789.jpeg";
 
 // Helper function to convert storage path to displayable API URL
-const convertHeroBannerToUrl = (storagePath: string | null | undefined): string | null => {
+const convertServiceBannerToUrl = (storagePath: string | null | undefined): string | null => {
   if (!storagePath) return null;
   
   // If it's already an API URL, return as is
-  if (storagePath.startsWith('/api/hero-banner')) {
+  if (storagePath.startsWith('/api/service-banner')) {
     return storagePath;
   }
   
   // Convert storage path to API URL
   const encodedPath = encodeURIComponent(storagePath);
-  return `/api/hero-banner?path=${encodedPath}`;
+  return `/api/service-banner?path=${encodedPath}`;
 };
 
 function HeroBanner({ customBannerUrl }: { customBannerUrl?: string | null }) {
-  const bannerUrl = convertHeroBannerToUrl(customBannerUrl) || heroBanner;
+  const bannerUrl = convertServiceBannerToUrl(customBannerUrl) || heroBanner;
   
   return (
     <div className="relative w-full lg:rounded-lg lg:overflow-hidden">

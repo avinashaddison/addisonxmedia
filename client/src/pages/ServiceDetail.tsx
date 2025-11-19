@@ -478,7 +478,7 @@ export default function ServiceDetail() {
   const bannerUrl = serviceBanner?.bannerUrl 
     ? (serviceBanner.bannerUrl.startsWith('http') 
         ? serviceBanner.bannerUrl 
-        : `/api/hero-banner?path=${encodeURIComponent(serviceBanner.bannerUrl)}`)
+        : `/api/service-banner?path=${encodeURIComponent(serviceBanner.bannerUrl)}`)
     : null;
 
   return (
