@@ -479,48 +479,18 @@ export default function ServiceDetail() {
 
   return (
     <div className="flex flex-col">
-      {/* Hero Section with Banner */}
-      <section className="relative min-h-[400px] md:min-h-[500px] lg:min-h-[600px] flex items-center justify-center overflow-hidden">
-        {/* Background Image */}
+      {/* Hero Section - Banner Only */}
+      <section className="relative min-h-[300px] md:min-h-[400px] lg:min-h-[500px] overflow-hidden">
+        {/* Banner Image - Can be uploaded from admin panel */}
         {bannerUrl ? (
-          <div className="absolute inset-0">
-            <img 
-              src={bannerUrl} 
-              alt={service.title}
-              className="w-full h-full object-cover"
-            />
-            <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/60 to-black/40"></div>
-          </div>
+          <img 
+            src={bannerUrl} 
+            alt={service.title}
+            className="w-full h-full object-cover"
+          />
         ) : (
-          <div className="absolute inset-0 bg-gradient-to-br from-primary/20 via-background to-purple-500/20"></div>
+          <div className="w-full h-full bg-gradient-to-br from-primary/20 via-background to-purple-500/20"></div>
         )}
-
-        {/* Hero Content */}
-        <div className="relative z-10 max-w-7xl mx-auto px-4 md:px-6 py-16 md:py-24">
-          <div className="max-w-4xl">
-            <div className="inline-flex items-center justify-center w-16 h-16 md:w-20 md:h-20 rounded-2xl bg-primary/20 backdrop-blur-sm border border-primary/30 mb-6" data-testid="icon-service">
-              <Icon className="h-8 w-8 md:h-10 md:w-10 text-primary" />
-            </div>
-            <h1 className="text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold mb-6 text-white" data-testid="text-service-title">
-              {service.title}
-            </h1>
-            <p className="text-xl md:text-2xl text-white/90 leading-relaxed mb-8" data-testid="text-service-description">
-              {service.description}
-            </p>
-            <div className="flex flex-wrap gap-4">
-              <Link href="/contact">
-                <Button size="lg" className="text-lg" data-testid="button-contact-cta">
-                  Get Started <ArrowRight className="ml-2 h-5 w-5" />
-                </Button>
-              </Link>
-              <Link href="#features">
-                <Button size="lg" variant="outline" data-testid="button-learn-more" className="text-lg bg-white/10 backdrop-blur-sm border-white/30 text-white">
-                  Learn More
-                </Button>
-              </Link>
-            </div>
-          </div>
-        </div>
       </section>
 
       {/* Stats Section */}
