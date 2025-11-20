@@ -15,9 +15,7 @@ import {
   Share2, 
   Wrench,
   Star,
-  ArrowRight,
-  Shield,
-  CheckCircle2
+  ArrowRight
 } from "lucide-react";
 import type { Testimonial, TeamMember } from "@shared/schema";
 
@@ -353,46 +351,24 @@ export default function Home() {
                   <h3 className="text-base font-bold mb-1" data-testid={`text-team-name-${index}`}>
                     {member.fullName}
                   </h3>
-                  <p className="text-sm text-green-700 dark:text-green-400 mb-3" data-testid={`text-team-position-${index}`}>
+                  <p className="text-sm text-green-700 dark:text-green-400 mb-2" data-testid={`text-team-position-${index}`}>
                     {member.position}
                   </p>
                   
                   {member.employeeId && (
-                    <div className="mt-4 pt-3 border-t border-green-200 dark:border-green-800">
-                      {/* Employee ID Badge with Premium Design */}
-                      <div className="relative bg-gradient-to-br from-green-50 to-emerald-50 dark:from-green-950 dark:to-emerald-950 rounded-lg p-3 border-2 border-green-500/30 dark:border-green-500/50 shadow-sm" data-testid={`badge-employee-id-${index}`}>
-                        {/* Verified Badge Icon */}
-                        <div className="absolute -top-2 -right-2 bg-green-500 rounded-full p-1 shadow-lg">
-                          <CheckCircle2 className="w-4 h-4 text-white" />
-                        </div>
-                        
-                        {/* ID Content */}
-                        <div className="flex items-center gap-2 mb-2">
-                          <Shield className="w-4 h-4 text-green-600 dark:text-green-400" />
-                          <span className="text-xs font-semibold text-green-800 dark:text-green-300 uppercase tracking-wider">
-                            Employee ID
-                          </span>
-                        </div>
-                        
-                        {/* ID Number */}
-                        <div className="bg-white dark:bg-gray-900 rounded px-3 py-1.5 border border-green-200 dark:border-green-800">
-                          <p className="text-sm font-mono font-bold text-green-700 dark:text-green-400 text-center tracking-wide">
-                            {member.employeeId}
-                          </p>
-                        </div>
-                        
-                        {/* Verify Button */}
-                        <Link href={`/verify-employee?id=${member.employeeId}`} data-testid={`link-verify-${index}`}>
-                          <Button 
-                            size="sm" 
-                            variant="outline"
-                            className="w-full mt-2 text-xs h-7 border-green-500 text-green-700 dark:text-green-400"
-                          >
-                            <Shield className="w-3 h-3 mr-1" />
-                            Verify Employee
-                          </Button>
-                        </Link>
-                      </div>
+                    <div className="flex flex-col items-center gap-2 mt-3">
+                      <p className="text-xs font-semibold text-muted-foreground" data-testid={`badge-employee-id-${index}`}>
+                        ID No - {member.employeeId}
+                      </p>
+                      <Link href={`/verify-employee?id=${member.employeeId}`} data-testid={`link-verify-${index}`}>
+                        <Button 
+                          size="sm" 
+                          variant="outline"
+                          className="text-xs h-7 border-green-500 text-green-700 dark:text-green-400"
+                        >
+                          Verify Employee
+                        </Button>
+                      </Link>
                     </div>
                   )}
                 </div>
