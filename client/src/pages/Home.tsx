@@ -265,7 +265,7 @@ export default function Home() {
                 What We Offer
               </Badge>
             </div>
-            <h2 className="text-3xl md:text-4xl font-bold mb-4 bg-gradient-to-r from-primary via-purple-600 to-primary bg-clip-text text-transparent" data-testid="text-services-title">
+            <h2 className="text-3xl md:text-4xl font-bold mb-4 text-foreground" data-testid="text-services-title">
               {servicesTitle}
             </h2>
             <p className="text-muted-foreground max-w-2xl mx-auto" data-testid="text-services-description">
