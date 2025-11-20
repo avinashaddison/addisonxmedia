@@ -329,7 +329,7 @@ export default function Home() {
                 <div className="relative z-10 mb-6">
                   <div className="mb-4">
                     {/* Avatar with Green Border */}
-                    <div className="w-20 h-20 mx-auto rounded-full border-2 border-green-500 overflow-hidden">
+                    <div className="w-32 h-32 mx-auto rounded-full border-2 border-green-500 overflow-hidden">
                       {member.photoUrl ? (
                         <img
                           src={member.photoUrl}
@@ -339,7 +339,7 @@ export default function Home() {
                         />
                       ) : (
                         <div className="w-full h-full bg-green-50 dark:bg-green-950 flex items-center justify-center">
-                          <div className="text-2xl font-bold text-green-700 dark:text-green-400">
+                          <div className="text-4xl font-bold text-green-700 dark:text-green-400">
                             {member.fullName.charAt(0).toUpperCase()}
                           </div>
                         </div>
