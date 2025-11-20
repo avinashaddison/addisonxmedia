@@ -247,7 +247,7 @@ export class DatabaseStorage implements IStorage {
   }
 
   async getAllContactSubmissions(): Promise<ContactSubmission[]> {
-    return db.select().from(contactSubmissions).orderBy(contactSubmissions.createdAt);
+    return db.select().from(contactSubmissions).orderBy(desc(contactSubmissions.createdAt));
   }
 
   async updateContactSubmissionStatus(id: string, status: string): Promise<ContactSubmission | undefined> {
