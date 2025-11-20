@@ -261,7 +261,7 @@ export default function Home() {
         <div className="max-w-7xl mx-auto px-4 md:px-6 relative z-10">
           <div className="text-center mb-12">
             <div className="inline-block mb-4">
-              <Badge className="mb-4 px-4 py-1.5 bg-gradient-to-r from-primary/20 to-purple-500/20 border-primary/30 text-primary hover:from-primary/30 hover:to-purple-500/30">
+              <Badge className="mb-4 px-4 py-1.5 bg-gradient-to-r from-primary to-purple-600 border-0 text-white hover:from-primary/90 hover:to-purple-600/90">
                 What We Offer
               </Badge>
             </div>
