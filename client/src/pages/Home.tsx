@@ -253,10 +253,19 @@ export default function Home() {
       </section>
 
       {/* Services Grid */}
-      <section className="py-12 md:py-16">
-        <div className="max-w-7xl mx-auto px-4 md:px-6">
+      <section className="py-12 md:py-16 relative overflow-hidden">
+        {/* Background Decoration */}
+        <div className="absolute top-0 left-1/4 w-72 h-72 bg-primary/5 rounded-full blur-3xl"></div>
+        <div className="absolute bottom-0 right-1/4 w-72 h-72 bg-purple-500/5 rounded-full blur-3xl"></div>
+        
+        <div className="max-w-7xl mx-auto px-4 md:px-6 relative z-10">
           <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold mb-4" data-testid="text-services-title">
+            <div className="inline-block mb-4">
+              <Badge className="mb-4 px-4 py-1.5 bg-gradient-to-r from-primary/20 to-purple-500/20 border-primary/30 text-primary hover:from-primary/30 hover:to-purple-500/30">
+                What We Offer
+              </Badge>
+            </div>
+            <h2 className="text-3xl md:text-4xl font-bold mb-4 bg-gradient-to-r from-primary via-purple-600 to-primary bg-clip-text text-transparent" data-testid="text-services-title">
               {servicesTitle}
             </h2>
             <p className="text-muted-foreground max-w-2xl mx-auto" data-testid="text-services-description">
@@ -287,28 +296,34 @@ export default function Home() {
               return (
                 <a key={index} href={`/service/${serviceSlug}`}>
                   <Card 
-                    className="p-6 cursor-pointer hover-elevate" 
+                    className="group p-6 cursor-pointer hover-elevate relative overflow-hidden border-primary/10 hover:border-primary/30 transition-all duration-300" 
                     data-testid={`card-service-${index}`}
                   >
-                    {/* Icon container */}
-                    <div className="mb-4">
-                      <div className="inline-flex items-center justify-center w-12 h-12 rounded-md bg-primary/10">
-                        <IconComponent className="h-6 w-6 text-primary" />
+                    {/* Hover Gradient Background */}
+                    <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-purple-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                    
+                    {/* Content Container */}
+                    <div className="relative z-10">
+                      {/* Icon container with gradient */}
+                      <div className="mb-4">
+                        <div className="inline-flex items-center justify-center w-14 h-14 rounded-xl bg-gradient-to-br from-primary/20 to-purple-500/20 border border-primary/30 group-hover:scale-110 group-hover:rotate-3 transition-all duration-300">
+                          <IconComponent className="h-7 w-7 text-primary group-hover:scale-110 transition-transform duration-300" />
+                        </div>
                       </div>
-                    </div>
-                    
-                    {/* Content */}
-                    <h3 className="text-xl font-bold mb-2" data-testid={`text-service-title-${index}`}>
-                      {service.title}
-                    </h3>
-                    <p className="text-sm text-muted-foreground mb-4" data-testid={`text-service-description-${index}`}>
-                      {service.description}
-                    </p>
-                    
-                    {/* Learn More Link */}
-                    <div className="flex items-center text-primary text-sm font-semibold">
-                      Learn More
-                      <ArrowRight className="ml-1 h-4 w-4" />
+                      
+                      {/* Content */}
+                      <h3 className="text-xl font-bold mb-2 group-hover:text-primary transition-colors duration-300" data-testid={`text-service-title-${index}`}>
+                        {service.title}
+                      </h3>
+                      <p className="text-sm text-muted-foreground mb-4 leading-relaxed" data-testid={`text-service-description-${index}`}>
+                        {service.description}
+                      </p>
+                      
+                      {/* Learn More Link with Arrow */}
+                      <div className="flex items-center text-primary text-sm font-semibold group-hover:gap-2 transition-all duration-300">
+                        Learn More
+                        <ArrowRight className="ml-1 h-4 w-4 group-hover:translate-x-1 transition-transform duration-300" />
+                      </div>
                     </div>
                   </Card>
                 </a>
@@ -318,9 +333,9 @@ export default function Home() {
 
           <div className="text-center mt-12">
             <a href="/service">
-              <Button size="lg" data-testid="button-explore-all-services">
+              <Button size="lg" className="group" data-testid="button-explore-all-services">
                 Explore All Services
-                <ArrowRight className="ml-2 h-4 w-4" />
+                <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform duration-300" />
               </Button>
             </a>
           </div>
