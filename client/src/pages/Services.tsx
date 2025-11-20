@@ -1,6 +1,5 @@
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Link } from "wouter";
 import { useEffect, useRef } from "react";
 import { 
   Code, 
@@ -203,11 +202,11 @@ export default function Services() {
                     ))}
                   </div>
 
-                  <Link href={`/service/${service.slug}`}>
+                  <a href={`/service/${service.slug}`}>
                     <Button className="w-full" variant="outline" data-testid={`button-learn-more-${index}`}>
                       Learn More <ArrowRight className="ml-2 h-4 w-4" />
                     </Button>
-                  </Link>
+                  </a>
                 </Card>
               );
             })}
@@ -225,11 +224,11 @@ export default function Services() {
               Let's discuss how our services can help your business grow in Ranchi and beyond. 
               Get in touch today for a free consultation.
             </p>
-            <Link href="/contact">
+            <a href="/contact">
               <Button size="lg" data-testid="button-get-started">
                 Get Started <ArrowRight className="ml-2 h-5 w-5" />
               </Button>
-            </Link>
+            </a>
           </div>
         </div>
       </section>

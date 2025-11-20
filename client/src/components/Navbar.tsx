@@ -1,4 +1,3 @@
-import { Link, useLocation } from "wouter";
 import { Phone, Mail, Sparkles, Home, Info, Briefcase, UserCheck, MessageCircle, MessageSquare, Code, ShoppingCart, TrendingUp, Search, Target, Palette, Share2, Wrench, Clock } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
@@ -70,7 +69,7 @@ const services = [
 ];
 
 export function Navbar() {
-  const [location] = useLocation();
+  const location = window.location.pathname;
   const isServiceDetailPage = location.startsWith('/service/');
   const currentServiceSlug = isServiceDetailPage ? location.split('/service/')[1] : null;
 
@@ -119,7 +118,7 @@ export function Navbar() {
         <div className="max-w-7xl mx-auto px-4 md:px-6">
           <div className="flex items-center justify-between h-16 md:h-20">
             {/* Desktop Logo - Simple Design */}
-            <Link href="/" data-testid="link-home" className="hidden lg:block">
+            <a href="/" data-testid="link-home" className="hidden lg:block">
               <div className="flex items-center gap-3 cursor-pointer group">
                 <img 
                   src={logoUrl} 
@@ -128,10 +127,10 @@ export function Navbar() {
                   data-testid="img-logo"
                 />
               </div>
-            </Link>
+            </a>
 
             {/* Mobile Logo with Brand Info */}
-            <Link href="/" data-testid="link-home-mobile" className="flex-1 lg:hidden">
+            <a href="/" data-testid="link-home-mobile" className="flex-1 lg:hidden">
               <div className="flex items-center gap-3 cursor-pointer">
                 <img 
                   src={logoUrl} 
@@ -150,7 +149,7 @@ export function Navbar() {
                   </span>
                 </div>
               </div>
-            </Link>
+            </a>
 
             {/* Mobile Action Buttons */}
             <div className="lg:hidden flex items-center gap-2">
@@ -164,14 +163,14 @@ export function Navbar() {
               </a>
 
               {/* Contact Message Button */}
-              <Link href="/contact">
+              <a href="/contact">
                 <button 
                   className="flex items-center justify-center w-11 h-11 rounded-md bg-primary text-white hover-elevate"
                   data-testid="button-mobile-contact"
                 >
                   <MessageSquare className="h-5 w-5" />
                 </button>
-              </Link>
+              </a>
             </div>
 
             {/* Desktop Navigation */}
@@ -181,40 +180,40 @@ export function Navbar() {
                   {/* Home */}
                   <NavigationMenuItem>
                     <NavigationMenuLink asChild className={`${navigationMenuTriggerStyle()} ${location === '/' ? 'bg-primary text-primary-foreground' : ''}`}>
-                      <Link href="/">
+                      <a href="/">
                         <Home className="h-4 w-4 mr-2" />
                         Home
-                      </Link>
+                      </a>
                     </NavigationMenuLink>
                   </NavigationMenuItem>
 
                   {/* Web Development */}
                   <NavigationMenuItem>
                     <NavigationMenuLink asChild className={`${navigationMenuTriggerStyle()} ${currentServiceSlug === 'web-development' ? 'bg-primary text-primary-foreground' : ''}`}>
-                      <Link href="/service/web-development">
+                      <a href="/service/web-development">
                         <Code className="h-4 w-4 mr-2" />
                         Web Development
-                      </Link>
+                      </a>
                     </NavigationMenuLink>
                   </NavigationMenuItem>
 
                   {/* Ads Management */}
                   <NavigationMenuItem>
                     <NavigationMenuLink asChild className={`${navigationMenuTriggerStyle()} ${currentServiceSlug === 'ads-management' ? 'bg-primary text-primary-foreground' : ''}`}>
-                      <Link href="/service/ads-management">
+                      <a href="/service/ads-management">
                         <Target className="h-4 w-4 mr-2" />
                         Ads Management
-                      </Link>
+                      </a>
                     </NavigationMenuLink>
                   </NavigationMenuItem>
 
                   {/* WhatsApp Marketing */}
                   <NavigationMenuItem>
                     <NavigationMenuLink asChild className={`${navigationMenuTriggerStyle()} ${currentServiceSlug === 'whatsapp-marketing' ? 'bg-primary text-primary-foreground' : ''}`}>
-                      <Link href="/service/whatsapp-marketing">
+                      <a href="/service/whatsapp-marketing">
                         <MessageCircle className="h-4 w-4 mr-2" />
                         WhatsApp Marketing
-                      </Link>
+                      </a>
                     </NavigationMenuLink>
                   </NavigationMenuItem>
 
@@ -230,7 +229,7 @@ export function Navbar() {
                           const Icon = service.icon;
                           return (
                             <NavigationMenuLink key={service.title} asChild>
-                              <Link href={`/service/${service.slug}`} className="group block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground" data-testid={`nav-service-${service.title.toLowerCase().replace(/\s+/g, '-')}`}>
+                              <a href={`/service/${service.slug}`} className="group block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground" data-testid={`nav-service-${service.title.toLowerCase().replace(/\s+/g, '-')}`}>
                                 <div className="flex items-center gap-2 mb-2">
                                   <div className="flex items-center justify-center w-8 h-8 rounded-md bg-primary/10">
                                     <Icon className="h-4 w-4 text-primary" />
@@ -240,7 +239,7 @@ export function Navbar() {
                                 <p className="line-clamp-2 text-xs leading-snug text-muted-foreground">
                                   {service.description}
                                 </p>
-                              </Link>
+                              </a>
                             </NavigationMenuLink>
                           );
                         })}
@@ -253,7 +252,7 @@ export function Navbar() {
 
             {/* CTA Button - Desktop - Cool Static Design */}
             <div className="hidden lg:block">
-              <Link href="/contact">
+              <a href="/contact">
                 <Button 
                   size="default" 
                   className="bg-gradient-to-r from-primary to-purple-600 text-white font-bold shadow-lg px-8 rounded-full border-2 border-white/20"
@@ -262,7 +261,7 @@ export function Navbar() {
                   <MessageSquare className="mr-2 h-4 w-4" />
                   Contact Us
                 </Button>
-              </Link>
+              </a>
             </div>
           </div>
         </div>
@@ -296,7 +295,7 @@ export function Navbar() {
             }
             
             return (
-              <Link key={link.path} href={link.path}>
+              <a key={link.path} href={link.path}>
                 <button
                   className={`
                     relative flex flex-col items-center justify-center gap-1 px-4 py-2 rounded-2xl
@@ -345,7 +344,7 @@ export function Navbar() {
                     {link.label}
                   </span>
                 </button>
-              </Link>
+              </a>
             );
           })}
         </div>

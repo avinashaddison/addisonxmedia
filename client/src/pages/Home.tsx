@@ -1,4 +1,3 @@
-import { Link } from "wouter";
 import { useQuery } from "@tanstack/react-query";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
@@ -206,7 +205,7 @@ export default function Home() {
               const serviceSlug = titleToSlugMap[service.title] || service.title.toLowerCase().replace(/\s+/g, '-');
               
               return (
-                <Link key={index} href={`/service/${serviceSlug}`}>
+                <a key={index} href={`/service/${serviceSlug}`}>
                   <Card 
                     className="p-6 cursor-pointer hover-elevate" 
                     data-testid={`card-service-${index}`}
@@ -232,18 +231,18 @@ export default function Home() {
                       <ArrowRight className="ml-1 h-4 w-4" />
                     </div>
                   </Card>
-                </Link>
+                </a>
               );
             })}
           </div>
 
           <div className="text-center mt-12">
-            <Link href="/service">
+            <a href="/service">
               <Button size="lg" data-testid="button-explore-all-services">
                 Explore All Services
                 <ArrowRight className="ml-2 h-4 w-4" />
               </Button>
-            </Link>
+            </a>
           </div>
         </div>
       </section>

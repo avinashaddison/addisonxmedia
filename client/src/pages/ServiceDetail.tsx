@@ -1,12 +1,9 @@
 import { useRoute } from "wouter";
-import { Link } from "wouter";
 import { useQuery } from "@tanstack/react-query";
-import { useEffect, useState } from "react";
 import { Card, CardHeader, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
-import { LoadingBar } from "@/components/LoadingBar";
 import { Check, ArrowRight, Code, ShoppingCart, TrendingUp, Search, Target, Palette, MessageCircle, Share2, Wrench, Phone, Mail, MapPin, Star, Users, Award, Clock } from "lucide-react";
 
 // TODO: Implement service banner upload feature in admin panel
@@ -455,32 +452,20 @@ const services = {
 export default function ServiceDetail() {
   const [, params] = useRoute("/service/:slug");
   const slug = params?.slug;
-  const [isLoading, setIsLoading] = useState(true);
 
   const { data: serviceBanner } = useQuery<any>({
     queryKey: ["/api/service-banners", slug],
     enabled: !!slug,
   });
 
-  useEffect(() => {
-    setIsLoading(true);
-    window.scrollTo({ top: 0, behavior: 'instant' });
-    
-    const timer = setTimeout(() => {
-      setIsLoading(false);
-    }, 700);
-    
-    return () => clearTimeout(timer);
-  }, [slug]);
-
   if (!slug || !(slug in services)) {
     return (
       <div className="min-h-screen flex items-center justify-center">
         <div className="text-center">
           <h1 className="text-4xl font-bold mb-4" data-testid="text-service-not-found">Service Not Found</h1>
-          <Link href="/service">
+          <a href="/service">
             <Button data-testid="button-back-to-services">Back to Services</Button>
-          </Link>
+          </a>
         </div>
       </div>
     );
@@ -496,13 +481,7 @@ export default function ServiceDetail() {
     : null;
 
   return (
-    <>
-      <LoadingBar isLoading={isLoading} />
-      <div 
-        className={`flex flex-col transition-opacity duration-200 ${isLoading ? 'opacity-30 pointer-events-none' : 'opacity-100'}`}
-        data-testid="service-content-wrapper"
-        data-loading={isLoading ? 'true' : 'false'}
-      >
+    <div className="flex flex-col" data-testid="service-content-wrapper">
       {/* Hero Section - Banner Only */}
       <section className="relative min-h-[300px] md:min-h-[400px] lg:min-h-[500px] overflow-hidden">
         {/* Banner Image - Can be uploaded from admin panel */}
@@ -740,17 +719,17 @@ export default function ServiceDetail() {
             </p>
             
             <div className="flex flex-wrap gap-4 justify-center mb-12">
-              <Link href="/contact">
+              <a href="/contact">
                 <Button size="lg" className="text-lg" data-testid="button-contact-us">
                   <Mail className="mr-2 h-5 w-5" />
                   Contact Us
                 </Button>
-              </Link>
-              <Link href="/services">
+              </a>
+              <a href="/service">
                 <Button size="lg" variant="outline" className="text-lg" data-testid="button-all-services">
                   View All Services
                 </Button>
-              </Link>
+              </a>
             </div>
 
             <Separator className="my-8" />
@@ -801,7 +780,6 @@ export default function ServiceDetail() {
           </Card>
         </div>
       </section>
-      </div>
-    </>
+    </div>
   );
 }

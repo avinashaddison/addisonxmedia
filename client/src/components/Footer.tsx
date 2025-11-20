@@ -1,5 +1,4 @@
 import { MapPin, Phone, Mail, Facebook, Twitter, Instagram, Linkedin } from "lucide-react";
-import { Link } from "wouter";
 import { Button } from "@/components/ui/button";
 
 export function Footer() {
@@ -40,30 +39,30 @@ export function Footer() {
           <div>
             <h3 className="text-lg font-bold mb-6 text-white">Quick Links</h3>
             <div className="flex flex-col gap-3">
-              <Link href="/about">
+              <a href="/about">
                 <span className="text-sm text-slate-300 hover:text-primary cursor-pointer transition-all hover:translate-x-1 inline-block group" data-testid="footer-link-about">
                   <span className="inline-block w-2 h-2 rounded-full bg-primary/50 mr-2 group-hover:bg-primary transition-colors"></span>
                   About Us
                 </span>
-              </Link>
-              <Link href="/service">
+              </a>
+              <a href="/service">
                 <span className="text-sm text-slate-300 hover:text-primary cursor-pointer transition-all hover:translate-x-1 inline-block group" data-testid="footer-link-services">
                   <span className="inline-block w-2 h-2 rounded-full bg-primary/50 mr-2 group-hover:bg-primary transition-colors"></span>
                   Our Services
                 </span>
-              </Link>
-              <Link href="/verify-employee">
+              </a>
+              <a href="/verify-employee">
                 <span className="text-sm text-slate-300 hover:text-primary cursor-pointer transition-all hover:translate-x-1 inline-block group" data-testid="footer-link-verify">
                   <span className="inline-block w-2 h-2 rounded-full bg-primary/50 mr-2 group-hover:bg-primary transition-colors"></span>
                   Verify Employee
                 </span>
-              </Link>
-              <Link href="/contact">
+              </a>
+              <a href="/contact">
                 <span className="text-sm text-slate-300 hover:text-primary cursor-pointer transition-all hover:translate-x-1 inline-block group" data-testid="footer-link-contact">
                   <span className="inline-block w-2 h-2 rounded-full bg-primary/50 mr-2 group-hover:bg-primary transition-colors"></span>
                   Contact Us
                 </span>
-              </Link>
+              </a>
             </div>
           </div>
 
@@ -71,60 +70,60 @@ export function Footer() {
           <div>
             <h3 className="text-lg font-bold mb-6 text-white">Our Services</h3>
             <div className="flex flex-col gap-3">
-              <Link href="/service/web-development">
+              <a href="/service/web-development">
                 <span className="text-sm text-slate-300 hover:text-primary cursor-pointer hover:translate-x-1 inline-block group" data-testid="footer-link-web-development">
                   <span className="inline-block w-2 h-2 rounded-full bg-primary/50 mr-2 group-hover:bg-primary"></span>
                   Web Development
                 </span>
-              </Link>
-              <Link href="/service/ecommerce-development">
+              </a>
+              <a href="/service/ecommerce-development">
                 <span className="text-sm text-slate-300 hover:text-primary cursor-pointer hover:translate-x-1 inline-block group" data-testid="footer-link-ecommerce">
                   <span className="inline-block w-2 h-2 rounded-full bg-primary/50 mr-2 group-hover:bg-primary"></span>
                   Ecommerce Development
                 </span>
-              </Link>
-              <Link href="/service/brand-promotion">
+              </a>
+              <a href="/service/brand-promotion">
                 <span className="text-sm text-slate-300 hover:text-primary cursor-pointer hover:translate-x-1 inline-block group" data-testid="footer-link-brand-promotion">
                   <span className="inline-block w-2 h-2 rounded-full bg-primary/50 mr-2 group-hover:bg-primary"></span>
                   Brand Promotion
                 </span>
-              </Link>
-              <Link href="/service/local-seo">
+              </a>
+              <a href="/service/local-seo">
                 <span className="text-sm text-slate-300 hover:text-primary cursor-pointer hover:translate-x-1 inline-block group" data-testid="footer-link-local-seo">
                   <span className="inline-block w-2 h-2 rounded-full bg-primary/50 mr-2 group-hover:bg-primary"></span>
                   Local SEO
                 </span>
-              </Link>
-              <Link href="/service/ads-management">
+              </a>
+              <a href="/service/ads-management">
                 <span className="text-sm text-slate-300 hover:text-primary cursor-pointer hover:translate-x-1 inline-block group" data-testid="footer-link-ads-management">
                   <span className="inline-block w-2 h-2 rounded-full bg-primary/50 mr-2 group-hover:bg-primary"></span>
                   Ads Management
                 </span>
-              </Link>
-              <Link href="/service/graphic-designing">
+              </a>
+              <a href="/service/graphic-designing">
                 <span className="text-sm text-slate-300 hover:text-primary cursor-pointer hover:translate-x-1 inline-block group" data-testid="footer-link-graphic-designing">
                   <span className="inline-block w-2 h-2 rounded-full bg-primary/50 mr-2 group-hover:bg-primary"></span>
                   Graphic Designing
                 </span>
-              </Link>
-              <Link href="/service/whatsapp-marketing">
+              </a>
+              <a href="/service/whatsapp-marketing">
                 <span className="text-sm text-slate-300 hover:text-primary cursor-pointer hover:translate-x-1 inline-block group" data-testid="footer-link-whatsapp-marketing">
                   <span className="inline-block w-2 h-2 rounded-full bg-primary/50 mr-2 group-hover:bg-primary"></span>
                   WhatsApp Marketing
                 </span>
-              </Link>
-              <Link href="/service/social-media-marketing">
+              </a>
+              <a href="/service/social-media-marketing">
                 <span className="text-sm text-slate-300 hover:text-primary cursor-pointer hover:translate-x-1 inline-block group" data-testid="footer-link-social-media-marketing">
                   <span className="inline-block w-2 h-2 rounded-full bg-primary/50 mr-2 group-hover:bg-primary"></span>
                   Social Media Marketing
                 </span>
-              </Link>
-              <Link href="/service/custom-development">
+              </a>
+              <a href="/service/custom-development">
                 <span className="text-sm text-slate-300 hover:text-primary cursor-pointer hover:translate-x-1 inline-block group" data-testid="footer-link-custom-development">
                   <span className="inline-block w-2 h-2 rounded-full bg-primary/50 mr-2 group-hover:bg-primary"></span>
                   Custom Development
                 </span>
-              </Link>
+              </a>
             </div>
           </div>
 
