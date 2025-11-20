@@ -18,6 +18,8 @@ import {
   ArrowRight
 } from "lucide-react";
 import type { Testimonial, TeamMember } from "@shared/schema";
+import useEmblaCarousel from 'embla-carousel-react';
+import { useCallback, useEffect } from 'react';
 
 import heroBanner from "@assets/Phoenix_10_Create_a_modern_premium_promotional_banner_in_the_s_2_1763291282547.jpg";
 import reviewQR from "@assets/WhatsApp Image 2025-11-17 at 3.50.29 PM_1763395709789.jpeg";
@@ -35,6 +37,83 @@ const convertServiceBannerToUrl = (storagePath: string | null | undefined): stri
   const encodedPath = encodeURIComponent(storagePath);
   return `/api/service-banner?path=${encodedPath}`;
 };
+
+function TestimonialsCarousel({ testimonials }: { testimonials: Testimonial[] }) {
+  const [emblaRef, emblaApi] = useEmblaCarousel({ 
+    loop: true,
+    align: 'start',
+    slidesToScroll: 1,
+    breakpoints: {
+      '(min-width: 1024px)': { slidesToScroll: 4 },
+      '(min-width: 768px)': { slidesToScroll: 2 }
+    }
+  });
+
+  // Auto-play functionality
+  useEffect(() => {
+    if (!emblaApi) return;
+
+    const intervalId = setInterval(() => {
+      emblaApi.scrollNext();
+    }, 4000); // Auto-slide every 4 seconds
+
+    return () => clearInterval(intervalId);
+  }, [emblaApi]);
+
+  return (
+    <section className="py-12 md:py-16 bg-card">
+      <div className="max-w-7xl mx-auto px-4 md:px-6">
+        <div className="text-center mb-12">
+          <h2 className="text-3xl md:text-4xl font-bold mb-4" data-testid="text-testimonials-title">
+            What Our Clients Say
+          </h2>
+          <p className="text-muted-foreground max-w-2xl mx-auto" data-testid="text-testimonials-description">
+            Don't just take our word for it - hear from our satisfied clients
+          </p>
+        </div>
+
+        <div className="overflow-hidden" ref={emblaRef}>
+          <div className="flex gap-6">
+            {testimonials.map((testimonial, index) => (
+              <div 
+                key={testimonial.id} 
+                className="flex-none w-full md:w-[calc(50%-12px)] lg:w-[calc(25%-18px)]"
+                style={{ minWidth: 0 }}
+              >
+                <Card className="p-6 h-full hover-elevate" data-testid={`testimonial-card-${index}`}>
+                  <div className="flex items-center mb-4">
+                    {[...Array(parseInt(testimonial.rating))].map((_, i) => (
+                      <Star key={i} className="h-5 w-5 fill-yellow-400 text-yellow-400" />
+                    ))}
+                  </div>
+                  <p className="text-muted-foreground mb-6 leading-relaxed line-clamp-4" data-testid={`text-testimonial-review-${index}`}>
+                    "{testimonial.testimonialText}"
+                  </p>
+                  <div className="flex items-center gap-3 mt-auto">
+                    <Avatar>
+                      <AvatarImage src={testimonial.photoUrl || undefined} alt={testimonial.clientName} />
+                      <AvatarFallback>{testimonial.clientName.charAt(0)}</AvatarFallback>
+                    </Avatar>
+                    <div>
+                      <p className="font-semibold text-sm" data-testid={`text-testimonial-name-${index}`}>
+                        {testimonial.clientName}
+                      </p>
+                      {testimonial.companyName && (
+                        <p className="text-xs text-muted-foreground" data-testid={`text-testimonial-company-${index}`}>
+                          {testimonial.companyName}
+                        </p>
+                      )}
+                    </div>
+                  </div>
+                </Card>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
 
 function HeroBanner({ customBannerUrl }: { customBannerUrl?: string | null }) {
   const bannerUrl = convertServiceBannerToUrl(customBannerUrl) || heroBanner;
@@ -249,51 +328,7 @@ export default function Home() {
       </section>
 
       {/* Testimonials Section */}
-      {activeTestimonials.length > 0 && (
-        <section className="py-12 md:py-16 bg-card">
-          <div className="max-w-7xl mx-auto px-4 md:px-6">
-            <div className="text-center mb-12">
-              <h2 className="text-3xl md:text-4xl font-bold mb-4" data-testid="text-testimonials-title">
-                What Our Clients Say
-              </h2>
-              <p className="text-muted-foreground max-w-2xl mx-auto" data-testid="text-testimonials-description">
-                Don't just take our word for it - hear from our satisfied clients
-              </p>
-            </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {activeTestimonials.map((testimonial, index) => (
-                <Card key={testimonial.id} className="p-6 hover-elevate" data-testid={`testimonial-card-${index}`}>
-                  <div className="flex items-center mb-4">
-                    {[...Array(parseInt(testimonial.rating))].map((_, i) => (
-                      <Star key={i} className="h-5 w-5 fill-green-700 text-green-700" />
-                    ))}
-                  </div>
-                  <p className="text-muted-foreground mb-6 leading-relaxed" data-testid={`text-testimonial-review-${index}`}>
-                    "{testimonial.testimonialText}"
-                  </p>
-                  <div className="flex items-center gap-3">
-                    <Avatar>
-                      <AvatarImage src={testimonial.photoUrl || undefined} alt={testimonial.clientName} />
-                      <AvatarFallback>{testimonial.clientName.charAt(0)}</AvatarFallback>
-                    </Avatar>
-                    <div>
-                      <p className="font-semibold" data-testid={`text-testimonial-name-${index}`}>
-                        {testimonial.clientName}
-                      </p>
-                      {testimonial.companyName && (
-                        <p className="text-sm text-muted-foreground" data-testid={`text-testimonial-company-${index}`}>
-                          {testimonial.companyName}
-                        </p>
-                      )}
-                    </div>
-                  </div>
-                </Card>
-              ))}
-            </div>
-          </div>
-        </section>
-      )}
+      {activeTestimonials.length > 0 && <TestimonialsCarousel testimonials={activeTestimonials} />}
 
       {/* Team Section - Grass Theme */}
       <section className="py-12 md:py-16 bg-green-50/30 dark:bg-green-950/10 border-y">
