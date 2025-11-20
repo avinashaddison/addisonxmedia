@@ -356,20 +356,13 @@ export default function Home() {
                   </p>
                   
                   {member.employeeId && (
-                    <div className="flex flex-col items-center gap-2 mt-3">
-                      <p className="text-xs font-semibold text-muted-foreground" data-testid={`badge-employee-id-${index}`}>
-                        ID No - {member.employeeId}
-                      </p>
-                      <Link href={`/verify-employee?id=${member.employeeId}`} data-testid={`link-verify-${index}`}>
-                        <Button 
-                          size="sm" 
-                          variant="outline"
-                          className="text-xs h-7 border-green-500 text-green-700 dark:text-green-400"
-                        >
-                          Verify Employee
-                        </Button>
-                      </Link>
-                    </div>
+                    <Link href={`/verify-employee?id=${member.employeeId}`} data-testid={`link-verify-${index}`}>
+                      <div className="inline-flex items-center gap-2 mt-3 px-4 py-2 rounded-md bg-green-50 dark:bg-green-950 border border-green-200 dark:border-green-800 hover-elevate active-elevate-2 cursor-pointer" data-testid={`badge-employee-id-${index}`}>
+                        <span className="text-xs font-semibold text-green-700 dark:text-green-400">
+                          ID No - {member.employeeId}
+                        </span>
+                      </div>
+                    </Link>
                   )}
                 </div>
               </Card>
