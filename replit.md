@@ -2,7 +2,7 @@
 
 ## Overview
 
-AddisonX Media is a digital marketing agency offering web development, ecommerce, SEO, social media marketing, brand promotion, and graphic design services. This full-stack web application showcases services, enables employee verification, and provides an admin dashboard for managing records. It features a modern monorepo architecture with a React frontend (Vite), Express.js backend, and PostgreSQL database (Drizzle ORM), utilizing Replit's authentication for admin access. The project aims to provide a comprehensive platform for the agency's operations and client engagement.
+AddisonX Media is a digital marketing agency offering web development, ecommerce, SEO, social media marketing, brand promotion, and graphic design services. This full-stack web application showcases services, enables employee verification, and provides an admin dashboard for managing records. It features a modern monorepo architecture with a React frontend (Vite), Express.js backend, and MySQL database (Drizzle ORM), utilizing Replit's authentication for admin access. The project aims to provide a comprehensive platform for the agency's operations and client engagement.
 
 ## User Preferences
 
@@ -33,9 +33,17 @@ The backend is an **Express.js** application with TypeScript. **Replit OpenID Co
 
 ### Data Storage
 
-**Database**: **PostgreSQL** (Neon serverless) is used with **Drizzle ORM** for type-safe operations.
+**Database**: **MySQL** (External hosted database at storage2300.is.cc) is used with **Drizzle ORM** for type-safe operations. Migrated from PostgreSQL to MySQL with full schema conversion.
 
-**Schema Design**: Key tables include `users`, `employees`, `contact_submissions`, `testimonials`, `team_members`, `clients`, `leads`, `projects`, `invoices`, `settings`, `homepage_customization`, `seo_settings`, `sessions`, and `verification_logs`. The `team_members` table uses proper integer type for `displayOrder` and boolean type for `isActive` to ensure correct sorting and filtering. Schema definitions are managed via `drizzle-kit`.
+**MySQL-Specific Implementation**:
+- Connection via `mysql2/promise` with connection pooling
+- UUID generation handled in application layer using `uuid` package
+- Storage layer uses `.onDuplicateKeyUpdate()` for upserts instead of PostgreSQL's `.onConflictDoUpdate()`
+- Insert/Update operations manually SELECT after execution (MySQL doesn't support RETURNING clause)
+- All varchar columns have explicit length specifications
+- JSON columns use MySQL's `json` type instead of PostgreSQL's `jsonb`
+
+**Schema Design**: Key tables include `users`, `employees`, `contact_submissions`, `testimonials`, `team_members`, `clients`, `leads`, `projects`, `invoices`, `settings`, `homepage_customization`, `seo_settings`, `service_banners`, `sessions`, and `verification_logs`. All tables use VARCHAR(255) for UUID primary keys. The `team_members` table uses INT for `displayOrder` and BOOLEAN for `isActive`. Schema definitions managed via Drizzle with MySQL dialect.
 
 ### UI/UX Decisions
 - **Navbar**: Clean, minimal design with simple logo (no animations or effects). Eye-catching "Contact Us" button with static gradient background (primary→purple), rounded-full pill shape, bold white text, subtle white border, and shadow for depth - no animations.
@@ -60,12 +68,13 @@ The backend is an **Express.js** application with TypeScript. **Replit OpenID Co
 
 ### Third-Party Services
 - **Replit Authentication**: OpenID Connect for admin login.
-- **Neon Database**: Serverless PostgreSQL hosting.
+- **External MySQL Database**: Hosted at storage2300.is.cc (database: st57186_addisonxmedia).
 - **Google Cloud Storage**: For file uploads (configured).
 
 ### Key NPM Packages
+- **Database**: `mysql2`, `drizzle-orm`, `drizzle-zod`, `uuid` (for UUID generation).
 - **UI**: `@radix-ui/*`, `cmdk`.
-- **Forms & Validation**: `react-hook-form`, `@hookform/resolvers`, `zod`, `drizzle-zod`.
+- **Forms & Validation**: `react-hook-form`, `@hookform/resolvers`, `zod`.
 - **Authentication**: `passport`, `openid-client`, `express-session`, `connect-pg-simple`.
 - **Styling**: `tailwindcss`, `class-variance-authority`, `clsx`, `tailwind-merge`.
 - **Icons**: `lucide-react`.
@@ -78,4 +87,4 @@ The backend is an **Express.js** application with TypeScript. **Replit OpenID Co
 
 ### Deployment Configuration
 - Vite outputs to `dist/public`, server bundle to `dist/index.js`.
-- Utilizes environment variables: `DATABASE_URL`, `SESSION_SECRET`, `ISSUER_URL`, `REPL_ID`, `PRIVATE_OBJECT_DIR`.
+- Utilizes environment variables: `MYSQL_HOST`, `MYSQL_PORT`, `MYSQL_USER`, `MYSQL_PASSWORD`, `MYSQL_DATABASE`, `SESSION_SECRET`, `ISSUER_URL`, `REPL_ID`, `PRIVATE_OBJECT_DIR`.
