@@ -342,6 +342,7 @@ export const teamMembers = mysqlTable("team_members", {
   fullName: varchar("full_name", { length: 255 }).notNull(),
   position: varchar("position", { length: 255 }).notNull(),
   photoUrl: varchar("photo_url", { length: 512 }),
+  employeeId: varchar("employee_id", { length: 100 }), // Optional link to employee verification
   displayOrder: int("display_order").notNull().default(0),
   isActive: boolean("is_active").notNull().default(true),
   createdAt: timestamp("created_at").defaultNow(),

@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
+import { Link } from "wouter";
 import { 
   Code, 
   ShoppingCart, 
@@ -350,9 +351,26 @@ export default function Home() {
                   <h3 className="text-base font-bold mb-1" data-testid={`text-team-name-${index}`}>
                     {member.fullName}
                   </h3>
-                  <p className="text-sm text-green-700 dark:text-green-400" data-testid={`text-team-position-${index}`}>
+                  <p className="text-sm text-green-700 dark:text-green-400 mb-2" data-testid={`text-team-position-${index}`}>
                     {member.position}
                   </p>
+                  
+                  {member.employeeId && (
+                    <div className="flex flex-col items-center gap-2">
+                      <Badge variant="outline" className="text-xs border-green-500 text-green-700 dark:text-green-400" data-testid={`badge-employee-id-${index}`}>
+                        ID: {member.employeeId}
+                      </Badge>
+                      <Link href={`/verify-employee?id=${member.employeeId}`} data-testid={`link-verify-${index}`}>
+                        <Button 
+                          size="sm" 
+                          variant="outline"
+                          className="text-xs h-7 border-green-500 text-green-700 dark:text-green-400"
+                        >
+                          Verify Employee
+                        </Button>
+                      </Link>
+                    </div>
+                  )}
                 </div>
               </Card>
             ))}

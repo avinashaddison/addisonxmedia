@@ -1,5 +1,6 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useQuery } from "@tanstack/react-query";
+import { useLocation } from "wouter";
 import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
@@ -10,8 +11,25 @@ import type { Employee } from "@shared/schema";
 import verifiedBadge from "@assets/verify_1763302805305.png";
 
 export default function VerifyEmployee() {
-  const [employeeId, setEmployeeId] = useState("");
-  const [searchId, setSearchId] = useState("");
+  const [location] = useLocation();
+  
+  // Get employee ID from URL query parameter
+  const getEmployeeIdFromUrl = () => {
+    const urlParams = new URLSearchParams(location.split('?')[1] || '');
+    return urlParams.get('id') || '';
+  };
+  
+  const [employeeId, setEmployeeId] = useState(getEmployeeIdFromUrl());
+  const [searchId, setSearchId] = useState(getEmployeeIdFromUrl());
+  
+  // Update when location changes
+  useEffect(() => {
+    const urlEmployeeId = getEmployeeIdFromUrl();
+    if (urlEmployeeId) {
+      setEmployeeId(urlEmployeeId);
+      setSearchId(urlEmployeeId);
+    }
+  }, [location]);
 
   const { data: employee, isLoading, error } = useQuery<Employee>({
     queryKey: ["/api/employees/verify", searchId],

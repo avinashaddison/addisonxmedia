@@ -57,6 +57,7 @@ export default function TeamMemberForm() {
       fullName: "",
       position: "",
       photoUrl: "",
+      employeeId: "",
       displayOrder: 0,
       isActive: true,
     },
@@ -68,6 +69,7 @@ export default function TeamMemberForm() {
         fullName: teamMember.fullName,
         position: teamMember.position,
         photoUrl: teamMember.photoUrl || "",
+        employeeId: teamMember.employeeId || "",
         displayOrder: teamMember.displayOrder,
         isActive: teamMember.isActive,
       });
@@ -225,6 +227,28 @@ export default function TeamMemberForm() {
                           data-testid="input-position"
                         />
                       </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+
+                <FormField
+                  control={form.control}
+                  name="employeeId"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Employee ID (Optional)</FormLabel>
+                      <FormControl>
+                        <Input
+                          placeholder="e.g., AXM-MKT-001"
+                          {...field}
+                          value={field.value || ""}
+                          data-testid="input-employee-id"
+                        />
+                      </FormControl>
+                      <p className="text-sm text-muted-foreground">
+                        Link this team member to an employee ID for verification
+                      </p>
                       <FormMessage />
                     </FormItem>
                   )}
