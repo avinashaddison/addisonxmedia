@@ -91,8 +91,8 @@ export default function Contact() {
                       <h3 className="font-semibold mb-1 md:mb-2 text-sm md:text-base" data-testid="text-office-title">Office Location</h3>
                       <p className="text-muted-foreground text-sm md:text-base leading-relaxed" data-testid="text-office-address">
                         AddisonX Media<br />
-                        Itki Road, Near Kawasaki Showroom<br />
-                        Ranchi, Jharkhand - 834005<br />
+                        Itki Road, Vishwakarma Complex, Near Kawasaki Showroom<br />
+                        Ranchi, Jharkhand - 834001<br />
                         India
                       </p>
                     </div>

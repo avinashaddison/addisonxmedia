@@ -136,7 +136,7 @@ export function Footer() {
                   <MapPin className="h-4 w-4 text-primary" />
                 </div>
                 <span className="text-sm text-slate-300 leading-relaxed" data-testid="text-location">
-                  AddisonX Media, Itki Road, Near Kawasaki Showroom (834005)
+                  AddisonX Media, Itki Road, Vishwakarma Complex, Near Kawasaki Showroom (834001)
                 </span>
               </div>
               <a href="tel:+919709707311" className="flex items-center gap-3 group">
