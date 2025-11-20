@@ -55,6 +55,7 @@ import {
 } from "@shared/schema";
 import { db } from "./db";
 import { eq, desc, count, sql as sqlQuery } from "drizzle-orm";
+import { v4 as uuidv4 } from 'uuid';
 
 export interface IStorage {
   // User operations for Replit Auth
@@ -165,7 +166,7 @@ export class DatabaseStorage implements IStorage {
     
     if (existingByEmail.length > 0 && existingByEmail[0].id !== userData.id) {
       // Email exists with different ID - update the existing record
-      const [updatedUser] = await db
+      await db
         .update(users)
         .set({
           id: userData.id,
@@ -174,27 +175,27 @@ export class DatabaseStorage implements IStorage {
           profileImageUrl: userData.profileImageUrl,
           updatedAt: new Date(),
         })
-        .where(eq(users.email, userData.email!))
-        .returning();
-      return updatedUser;
+        .where(eq(users.email, userData.email!));
+      const [updatedUser] = await db.select().from(users).where(eq(users.email, userData.email!));
+      return updatedUser!;
     }
     
     // Standard upsert by ID
-    const [user] = await db
+    const id = userData.id || uuidv4();
+    await db
       .insert(users)
-      .values(userData)
-      .onConflictDoUpdate({
-        target: users.id,
+      .values({ ...userData, id })
+      .onDuplicateKeyUpdate({
         set: {
-          email: userData.email,
-          firstName: userData.firstName,
-          lastName: userData.lastName,
-          profileImageUrl: userData.profileImageUrl,
+          email: sqlQuery`values(${users.email})`,
+          firstName: sqlQuery`values(${users.firstName})`,
+          lastName: sqlQuery`values(${users.lastName})`,
+          profileImageUrl: sqlQuery`values(${users.profileImageUrl})`,
           updatedAt: new Date(),
         },
-      })
-      .returning();
-    return user;
+      });
+    const [user] = await db.select().from(users).where(eq(users.id, id));
+    return user!;
   }
 
   // Employee operations
@@ -213,22 +214,21 @@ export class DatabaseStorage implements IStorage {
   }
 
   async createEmployee(employeeData: InsertEmployee): Promise<Employee> {
-    const [employee] = await db
-      .insert(employees)
-      .values(employeeData)
-      .returning();
-    return employee;
+    const id = uuidv4();
+    await db.insert(employees).values({ ...employeeData, id });
+    const [employee] = await db.select().from(employees).where(eq(employees.id, id));
+    return employee!;
   }
 
   async updateEmployee(id: string, employeeData: UpdateEmployee): Promise<Employee | undefined> {
-    const [employee] = await db
+    await db
       .update(employees)
       .set({
         ...employeeData,
         updatedAt: new Date(),
       })
-      .where(eq(employees.id, id))
-      .returning();
+      .where(eq(employees.id, id));
+    const [employee] = await db.select().from(employees).where(eq(employees.id, id));
     return employee;
   }
 
@@ -238,11 +238,10 @@ export class DatabaseStorage implements IStorage {
 
   // Contact submission operations
   async createContactSubmission(submissionData: InsertContactSubmission): Promise<ContactSubmission> {
-    const [submission] = await db
-      .insert(contactSubmissions)
-      .values(submissionData)
-      .returning();
-    return submission;
+    const id = uuidv4();
+    await db.insert(contactSubmissions).values({ ...submissionData, id });
+    const [submission] = await db.select().from(contactSubmissions).where(eq(contactSubmissions.id, id));
+    return submission!;
   }
 
   async getAllContactSubmissions(): Promise<ContactSubmission[]> {
@@ -250,11 +249,11 @@ export class DatabaseStorage implements IStorage {
   }
 
   async updateContactSubmissionStatus(id: string, status: string): Promise<ContactSubmission | undefined> {
-    const [submission] = await db
+    await db
       .update(contactSubmissions)
       .set({ status })
-      .where(eq(contactSubmissions.id, id))
-      .returning();
+      .where(eq(contactSubmissions.id, id));
+    const [submission] = await db.select().from(contactSubmissions).where(eq(contactSubmissions.id, id));
     return submission;
   }
 
@@ -273,22 +272,21 @@ export class DatabaseStorage implements IStorage {
   }
 
   async createTestimonial(testimonialData: InsertTestimonial): Promise<Testimonial> {
-    const [testimonial] = await db
-      .insert(testimonials)
-      .values(testimonialData)
-      .returning();
-    return testimonial;
+    const id = uuidv4();
+    await db.insert(testimonials).values({ ...testimonialData, id });
+    const [testimonial] = await db.select().from(testimonials).where(eq(testimonials.id, id));
+    return testimonial!;
   }
 
   async updateTestimonial(id: string, testimonialData: UpdateTestimonial): Promise<Testimonial | undefined> {
-    const [testimonial] = await db
+    await db
       .update(testimonials)
       .set({
         ...testimonialData,
         updatedAt: new Date(),
       })
-      .where(eq(testimonials.id, id))
-      .returning();
+      .where(eq(testimonials.id, id));
+    const [testimonial] = await db.select().from(testimonials).where(eq(testimonials.id, id));
     return testimonial;
   }
 
@@ -298,11 +296,10 @@ export class DatabaseStorage implements IStorage {
 
   // Verification log operations
   async logVerification(logData: InsertVerificationLog): Promise<VerificationLog> {
-    const [log] = await db
-      .insert(verificationLogs)
-      .values(logData)
-      .returning();
-    return log;
+    const id = uuidv4();
+    await db.insert(verificationLogs).values({ ...logData, id });
+    const [log] = await db.select().from(verificationLogs).where(eq(verificationLogs.id, id));
+    return log!;
   }
 
   async getVerificationStats(): Promise<{
@@ -350,22 +347,21 @@ export class DatabaseStorage implements IStorage {
   }
 
   async createClient(clientData: InsertClient): Promise<Client> {
-    const [client] = await db
-      .insert(clients)
-      .values(clientData)
-      .returning();
-    return client;
+    const id = uuidv4();
+    await db.insert(clients).values({ ...clientData, id });
+    const [client] = await db.select().from(clients).where(eq(clients.id, id));
+    return client!;
   }
 
   async updateClient(id: string, clientData: UpdateClient): Promise<Client | undefined> {
-    const [client] = await db
+    await db
       .update(clients)
       .set({
         ...clientData,
         updatedAt: new Date(),
       })
-      .where(eq(clients.id, id))
-      .returning();
+      .where(eq(clients.id, id));
+    const [client] = await db.select().from(clients).where(eq(clients.id, id));
     return client;
   }
 
@@ -384,22 +380,21 @@ export class DatabaseStorage implements IStorage {
   }
 
   async createLead(leadData: InsertLead): Promise<Lead> {
-    const [lead] = await db
-      .insert(leads)
-      .values(leadData)
-      .returning();
-    return lead;
+    const id = uuidv4();
+    await db.insert(leads).values({ ...leadData, id });
+    const [lead] = await db.select().from(leads).where(eq(leads.id, id));
+    return lead!;
   }
 
   async updateLead(id: string, leadData: UpdateLead): Promise<Lead | undefined> {
-    const [lead] = await db
+    await db
       .update(leads)
       .set({
         ...leadData,
         updatedAt: new Date(),
       })
-      .where(eq(leads.id, id))
-      .returning();
+      .where(eq(leads.id, id));
+    const [lead] = await db.select().from(leads).where(eq(leads.id, id));
     return lead;
   }
 
@@ -418,22 +413,21 @@ export class DatabaseStorage implements IStorage {
   }
 
   async createProject(projectData: InsertProject): Promise<Project> {
-    const [project] = await db
-      .insert(projects)
-      .values(projectData)
-      .returning();
-    return project;
+    const id = uuidv4();
+    await db.insert(projects).values({ ...projectData, id });
+    const [project] = await db.select().from(projects).where(eq(projects.id, id));
+    return project!;
   }
 
   async updateProject(id: string, projectData: UpdateProject): Promise<Project | undefined> {
-    const [project] = await db
+    await db
       .update(projects)
       .set({
         ...projectData,
         updatedAt: new Date(),
       })
-      .where(eq(projects.id, id))
-      .returning();
+      .where(eq(projects.id, id));
+    const [project] = await db.select().from(projects).where(eq(projects.id, id));
     return project;
   }
 
@@ -452,22 +446,21 @@ export class DatabaseStorage implements IStorage {
   }
 
   async createInvoice(invoiceData: InsertInvoice): Promise<Invoice> {
-    const [invoice] = await db
-      .insert(invoices)
-      .values(invoiceData)
-      .returning();
-    return invoice;
+    const id = uuidv4();
+    await db.insert(invoices).values({ ...invoiceData, id });
+    const [invoice] = await db.select().from(invoices).where(eq(invoices.id, id));
+    return invoice!;
   }
 
   async updateInvoice(id: string, invoiceData: UpdateInvoice): Promise<Invoice | undefined> {
-    const [invoice] = await db
+    await db
       .update(invoices)
       .set({
         ...invoiceData,
         updatedAt: new Date(),
       })
-      .where(eq(invoices.id, id))
-      .returning();
+      .where(eq(invoices.id, id));
+    const [invoice] = await db.select().from(invoices).where(eq(invoices.id, id));
     return invoice;
   }
 
@@ -486,18 +479,19 @@ export class DatabaseStorage implements IStorage {
   }
 
   async upsertSetting(settingData: InsertSetting): Promise<Setting> {
-    const [setting] = await db
+    const id = uuidv4();
+    await db
       .insert(settings)
-      .values(settingData)
-      .onConflictDoUpdate({
-        target: settings.key,
+      .values({ ...settingData, id })
+      .onDuplicateKeyUpdate({
         set: {
-          ...settingData,
+          value: sqlQuery`values(${settings.value})`,
+          category: sqlQuery`values(${settings.category})`,
           updatedAt: new Date(),
         },
-      })
-      .returning();
-    return setting;
+      });
+    const [setting] = await db.select().from(settings).where(eq(settings.key, settingData.key));
+    return setting!;
   }
 
   async deleteSetting(key: string): Promise<void> {
@@ -518,18 +512,19 @@ export class DatabaseStorage implements IStorage {
   }
 
   async upsertHomepageCustomization(customizationData: InsertHomepageCustomization): Promise<HomepageCustomization> {
-    const [customization] = await db
+    const id = uuidv4();
+    await db
       .insert(homepageCustomization)
-      .values(customizationData)
-      .onConflictDoUpdate({
-        target: homepageCustomization.section,
+      .values({ ...customizationData, id })
+      .onDuplicateKeyUpdate({
         set: {
-          ...customizationData,
+          content: sqlQuery`values(${homepageCustomization.content})`,
+          isActive: sqlQuery`values(${homepageCustomization.isActive})`,
           updatedAt: new Date(),
         },
-      })
-      .returning();
-    return customization;
+      });
+    const [customization] = await db.select().from(homepageCustomization).where(eq(homepageCustomization.section, customizationData.section));
+    return customization!;
   }
 
   async deleteHomepageCustomization(section: string): Promise<void> {
@@ -550,18 +545,23 @@ export class DatabaseStorage implements IStorage {
   }
 
   async upsertSeoSetting(seoSettingData: InsertSeoSetting): Promise<SeoSetting> {
-    const [seoSetting] = await db
+    const id = uuidv4();
+    await db
       .insert(seoSettings)
-      .values(seoSettingData)
-      .onConflictDoUpdate({
-        target: seoSettings.page,
+      .values({ ...seoSettingData, id })
+      .onDuplicateKeyUpdate({
         set: {
-          ...seoSettingData,
+          metaTitle: sqlQuery`values(${seoSettings.metaTitle})`,
+          metaDescription: sqlQuery`values(${seoSettings.metaDescription})`,
+          metaKeywords: sqlQuery`values(${seoSettings.metaKeywords})`,
+          ogTitle: sqlQuery`values(${seoSettings.ogTitle})`,
+          ogDescription: sqlQuery`values(${seoSettings.ogDescription})`,
+          ogImage: sqlQuery`values(${seoSettings.ogImage})`,
           updatedAt: new Date(),
         },
-      })
-      .returning();
-    return seoSetting;
+      });
+    const [seoSetting] = await db.select().from(seoSettings).where(eq(seoSettings.page, seoSettingData.page));
+    return seoSetting!;
   }
 
   async deleteSeoSetting(page: string): Promise<void> {
@@ -582,18 +582,19 @@ export class DatabaseStorage implements IStorage {
   }
 
   async upsertServiceBanner(bannerData: InsertServiceBanner): Promise<ServiceBanner> {
-    const [banner] = await db
+    const id = uuidv4();
+    await db
       .insert(serviceBanners)
-      .values(bannerData)
-      .onConflictDoUpdate({
-        target: serviceBanners.serviceSlug,
+      .values({ ...bannerData, id })
+      .onDuplicateKeyUpdate({
         set: {
-          ...bannerData,
+          bannerUrl: sqlQuery`values(${serviceBanners.bannerUrl})`,
+          isActive: sqlQuery`values(${serviceBanners.isActive})`,
           updatedAt: new Date(),
         },
-      })
-      .returning();
-    return banner;
+      });
+    const [banner] = await db.select().from(serviceBanners).where(eq(serviceBanners.serviceSlug, bannerData.serviceSlug));
+    return banner!;
   }
 
   async deleteServiceBanner(serviceSlug: string): Promise<void> {
@@ -615,21 +616,23 @@ export class DatabaseStorage implements IStorage {
   }
 
   async createTeamMember(teamMemberData: InsertTeamMember): Promise<TeamMember> {
-    const [teamMember] = await db.insert(teamMembers).values({
+    const id = uuidv4();
+    await db.insert(teamMembers).values({
       ...teamMemberData,
-      updatedAt: new Date(),
-    }).returning();
-    return teamMember;
+      id,
+    });
+    const [teamMember] = await db.select().from(teamMembers).where(eq(teamMembers.id, id));
+    return teamMember!;
   }
 
   async updateTeamMember(id: string, teamMemberData: UpdateTeamMember): Promise<TeamMember | undefined> {
-    const [teamMember] = await db.update(teamMembers)
+    await db.update(teamMembers)
       .set({
         ...teamMemberData,
         updatedAt: new Date(),
       })
-      .where(eq(teamMembers.id, id))
-      .returning();
+      .where(eq(teamMembers.id, id));
+    const [teamMember] = await db.select().from(teamMembers).where(eq(teamMembers.id, id));
     return teamMember;
   }
 

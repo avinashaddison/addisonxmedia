@@ -1,37 +1,37 @@
 import { sql } from 'drizzle-orm';
 import {
   index,
-  jsonb,
-  pgTable,
+  mysqlTable,
   timestamp,
   varchar,
   text,
-  integer,
+  int,
   boolean,
-} from "drizzle-orm/pg-core";
+  json,
+} from "drizzle-orm/mysql-core";
 import { createInsertSchema } from "drizzle-zod";
 import { z } from "zod";
 
 // Session storage table for Replit Auth
-export const sessions = pgTable(
+export const sessions = mysqlTable(
   "sessions",
   {
-    sid: varchar("sid").primaryKey(),
-    sess: jsonb("sess").notNull(),
+    sid: varchar("sid", { length: 255 }).primaryKey(),
+    sess: json("sess").notNull(),
     expire: timestamp("expire").notNull(),
   },
   (table) => [index("IDX_session_expire").on(table.expire)],
 );
 
 // User storage table for admin authentication
-export const users = pgTable("users", {
-  id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
-  email: varchar("email").unique(),
-  firstName: varchar("first_name"),
-  lastName: varchar("last_name"),
-  profileImageUrl: varchar("profile_image_url"),
-  role: varchar("role").notNull().default("admin"), // admin, manager, editor, hr
-  isActive: varchar("is_active").notNull().default("true"),
+export const users = mysqlTable("users", {
+  id: varchar("id", { length: 255 }).primaryKey(),
+  email: varchar("email", { length: 255 }).unique(),
+  firstName: varchar("first_name", { length: 255 }),
+  lastName: varchar("last_name", { length: 255 }),
+  profileImageUrl: varchar("profile_image_url", { length: 512 }),
+  role: varchar("role", { length: 50 }).notNull().default("admin"), // admin, manager, editor, hr
+  isActive: varchar("is_active", { length: 10 }).notNull().default("true"),
   createdAt: timestamp("created_at").defaultNow(),
   updatedAt: timestamp("updated_at").defaultNow(),
 });
@@ -47,14 +47,14 @@ export type UpsertUser = typeof users.$inferInsert;
 export type User = typeof users.$inferSelect;
 
 // Employee storage table
-export const employees = pgTable("employees", {
-  id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
-  employeeId: varchar("employee_id").notNull().unique(),
-  fullName: varchar("full_name").notNull(),
-  mobile: varchar("mobile").notNull(),
+export const employees = mysqlTable("employees", {
+  id: varchar("id", { length: 255 }).primaryKey(),
+  employeeId: varchar("employee_id", { length: 100 }).notNull().unique(),
+  fullName: varchar("full_name", { length: 255 }).notNull(),
+  mobile: varchar("mobile", { length: 20 }).notNull(),
   address: text("address").notNull(),
-  position: varchar("position").notNull(),
-  photoUrl: varchar("photo_url"),
+  position: varchar("position", { length: 100 }).notNull(),
+  photoUrl: varchar("photo_url", { length: 512 }),
   createdAt: timestamp("created_at").defaultNow(),
   updatedAt: timestamp("updated_at").defaultNow(),
 });
@@ -72,14 +72,14 @@ export type UpdateEmployee = z.infer<typeof updateEmployeeSchema>;
 export type Employee = typeof employees.$inferSelect;
 
 // Contact submissions table
-export const contactSubmissions = pgTable("contact_submissions", {
-  id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
-  name: varchar("name").notNull(),
-  email: varchar("email").notNull(),
-  phone: varchar("phone"),
-  company: varchar("company"),
+export const contactSubmissions = mysqlTable("contact_submissions", {
+  id: varchar("id", { length: 255 }).primaryKey(),
+  name: varchar("name", { length: 255 }).notNull(),
+  email: varchar("email", { length: 255 }).notNull(),
+  phone: varchar("phone", { length: 20 }),
+  company: varchar("company", { length: 255 }),
   message: text("message").notNull(),
-  status: varchar("status").notNull().default("new"), // new, contacted, closed
+  status: varchar("status", { length: 50 }).notNull().default("new"), // new, contacted, closed
   createdAt: timestamp("created_at").defaultNow(),
 });
 
@@ -93,14 +93,14 @@ export type InsertContactSubmission = z.infer<typeof insertContactSubmissionSche
 export type ContactSubmission = typeof contactSubmissions.$inferSelect;
 
 // Testimonials table
-export const testimonials = pgTable("testimonials", {
-  id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
-  clientName: varchar("client_name").notNull(),
-  clientPosition: varchar("client_position"),
-  companyName: varchar("company_name"),
+export const testimonials = mysqlTable("testimonials", {
+  id: varchar("id", { length: 255 }).primaryKey(),
+  clientName: varchar("client_name", { length: 255 }).notNull(),
+  clientPosition: varchar("client_position", { length: 255 }),
+  companyName: varchar("company_name", { length: 255 }),
   testimonialText: text("testimonial_text").notNull(),
-  rating: varchar("rating").notNull().default("5"),
-  photoUrl: varchar("photo_url"),
+  rating: varchar("rating", { length: 2 }).notNull().default("5"),
+  photoUrl: varchar("photo_url", { length: 512 }),
   isActive: boolean("is_active").notNull().default(true),
   createdAt: timestamp("created_at").defaultNow(),
   updatedAt: timestamp("updated_at").defaultNow(),
@@ -121,10 +121,10 @@ export type UpdateTestimonial = z.infer<typeof updateTestimonialSchema>;
 export type Testimonial = typeof testimonials.$inferSelect;
 
 // Verification logs table for analytics
-export const verificationLogs = pgTable("verification_logs", {
-  id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
-  employeeId: varchar("employee_id").notNull(),
-  found: varchar("found").notNull().default("false"),
+export const verificationLogs = mysqlTable("verification_logs", {
+  id: varchar("id", { length: 255 }).primaryKey(),
+  employeeId: varchar("employee_id", { length: 100 }).notNull(),
+  found: varchar("found", { length: 10 }).notNull().default("false"),
   searchDate: timestamp("search_date").defaultNow(),
 }, (table) => [
   index("IDX_verification_employee_id").on(table.employeeId),
@@ -140,15 +140,15 @@ export type InsertVerificationLog = z.infer<typeof insertVerificationLogSchema>;
 export type VerificationLog = typeof verificationLogs.$inferSelect;
 
 // Clients table
-export const clients = pgTable("clients", {
-  id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
-  name: varchar("name").notNull(),
-  email: varchar("email").notNull(),
-  phone: varchar("phone"),
-  company: varchar("company"),
+export const clients = mysqlTable("clients", {
+  id: varchar("id", { length: 255 }).primaryKey(),
+  name: varchar("name", { length: 255 }).notNull(),
+  email: varchar("email", { length: 255 }).notNull(),
+  phone: varchar("phone", { length: 20 }),
+  company: varchar("company", { length: 255 }),
   address: text("address"),
-  status: varchar("status").notNull().default("active"), // active, inactive, pending
-  assignedTo: varchar("assigned_to"), // employee ID
+  status: varchar("status", { length: 50 }).notNull().default("active"), // active, inactive, pending
+  assignedTo: varchar("assigned_to", { length: 255 }), // employee ID
   notes: text("notes"),
   createdAt: timestamp("created_at").defaultNow(),
   updatedAt: timestamp("updated_at").defaultNow(),
@@ -167,15 +167,15 @@ export type UpdateClient = z.infer<typeof updateClientSchema>;
 export type Client = typeof clients.$inferSelect;
 
 // Leads table
-export const leads = pgTable("leads", {
-  id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
-  name: varchar("name").notNull(),
-  email: varchar("email").notNull(),
-  phone: varchar("phone"),
-  company: varchar("company"),
-  source: varchar("source").notNull().default("website"), // website, referral, social, ad
-  status: varchar("status").notNull().default("new"), // new, contacted, qualified, converted, lost
-  assignedTo: varchar("assigned_to"), // employee ID
+export const leads = mysqlTable("leads", {
+  id: varchar("id", { length: 255 }).primaryKey(),
+  name: varchar("name", { length: 255 }).notNull(),
+  email: varchar("email", { length: 255 }).notNull(),
+  phone: varchar("phone", { length: 20 }),
+  company: varchar("company", { length: 255 }),
+  source: varchar("source", { length: 50 }).notNull().default("website"), // website, referral, social, ad
+  status: varchar("status", { length: 50 }).notNull().default("new"), // new, contacted, qualified, converted, lost
+  assignedTo: varchar("assigned_to", { length: 255 }), // employee ID
   notes: text("notes"),
   followUpDate: timestamp("follow_up_date"),
   createdAt: timestamp("created_at").defaultNow(),
@@ -195,18 +195,18 @@ export type UpdateLead = z.infer<typeof updateLeadSchema>;
 export type Lead = typeof leads.$inferSelect;
 
 // Projects table
-export const projects = pgTable("projects", {
-  id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
-  name: varchar("name").notNull(),
-  clientId: varchar("client_id"),
+export const projects = mysqlTable("projects", {
+  id: varchar("id", { length: 255 }).primaryKey(),
+  name: varchar("name", { length: 255 }).notNull(),
+  clientId: varchar("client_id", { length: 255 }),
   description: text("description"),
-  status: varchar("status").notNull().default("planning"), // planning, in-progress, review, completed, cancelled
-  priority: varchar("priority").notNull().default("medium"), // low, medium, high
-  assignedTo: varchar("assigned_to"), // employee ID
+  status: varchar("status", { length: 50 }).notNull().default("planning"), // planning, in-progress, review, completed, cancelled
+  priority: varchar("priority", { length: 50 }).notNull().default("medium"), // low, medium, high
+  assignedTo: varchar("assigned_to", { length: 255 }), // employee ID
   startDate: timestamp("start_date"),
   deadline: timestamp("deadline"),
-  budget: varchar("budget"),
-  paymentStatus: varchar("payment_status").notNull().default("pending"), // pending, partial, paid
+  budget: varchar("budget", { length: 100 }),
+  paymentStatus: varchar("payment_status", { length: 50 }).notNull().default("pending"), // pending, partial, paid
   createdAt: timestamp("created_at").defaultNow(),
   updatedAt: timestamp("updated_at").defaultNow(),
 });
@@ -224,15 +224,15 @@ export type UpdateProject = z.infer<typeof updateProjectSchema>;
 export type Project = typeof projects.$inferSelect;
 
 // Invoices table
-export const invoices = pgTable("invoices", {
-  id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
-  invoiceNumber: varchar("invoice_number").notNull().unique(),
-  clientId: varchar("client_id"),
-  projectId: varchar("project_id"),
-  amount: varchar("amount").notNull(),
-  tax: varchar("tax").notNull().default("0"),
-  total: varchar("total").notNull(),
-  status: varchar("status").notNull().default("pending"), // pending, paid, overdue, cancelled
+export const invoices = mysqlTable("invoices", {
+  id: varchar("id", { length: 255 }).primaryKey(),
+  invoiceNumber: varchar("invoice_number", { length: 100 }).notNull().unique(),
+  clientId: varchar("client_id", { length: 255 }),
+  projectId: varchar("project_id", { length: 255 }),
+  amount: varchar("amount", { length: 50 }).notNull(),
+  tax: varchar("tax", { length: 50 }).notNull().default("0"),
+  total: varchar("total", { length: 50 }).notNull(),
+  status: varchar("status", { length: 50 }).notNull().default("pending"), // pending, paid, overdue, cancelled
   dueDate: timestamp("due_date"),
   paidDate: timestamp("paid_date"),
   notes: text("notes"),
@@ -253,11 +253,11 @@ export type UpdateInvoice = z.infer<typeof updateInvoiceSchema>;
 export type Invoice = typeof invoices.$inferSelect;
 
 // Settings table
-export const settings = pgTable("settings", {
-  id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
-  key: varchar("key").notNull().unique(),
+export const settings = mysqlTable("settings", {
+  id: varchar("id", { length: 255 }).primaryKey(),
+  key: varchar("key", { length: 255 }).notNull().unique(),
   value: text("value"),
-  category: varchar("category").notNull().default("general"), // general, company, email, payment, api
+  category: varchar("category", { length: 50 }).notNull().default("general"), // general, company, email, payment, api
   updatedAt: timestamp("updated_at").defaultNow(),
 });
 
@@ -273,11 +273,11 @@ export type UpdateSetting = z.infer<typeof updateSettingSchema>;
 export type Setting = typeof settings.$inferSelect;
 
 // Homepage Customization table
-export const homepageCustomization = pgTable("homepage_customization", {
-  id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
-  section: varchar("section").notNull().unique(), // hero, services, banners, slider
-  content: jsonb("content").notNull(), // Store all section data as JSON
-  isActive: varchar("is_active").notNull().default("true"),
+export const homepageCustomization = mysqlTable("homepage_customization", {
+  id: varchar("id", { length: 255 }).primaryKey(),
+  section: varchar("section", { length: 100 }).notNull().unique(), // hero, services, banners, slider
+  content: json("content").notNull(), // Store all section data as JSON
+  isActive: varchar("is_active", { length: 10 }).notNull().default("true"),
   updatedAt: timestamp("updated_at").defaultNow(),
 });
 
@@ -293,15 +293,15 @@ export type UpdateHomepageCustomization = z.infer<typeof updateHomepageCustomiza
 export type HomepageCustomization = typeof homepageCustomization.$inferSelect;
 
 // SEO Settings table
-export const seoSettings = pgTable("seo_settings", {
-  id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
-  page: varchar("page").notNull().unique(), // home, about, services, contact, etc.
-  metaTitle: varchar("meta_title").notNull(),
+export const seoSettings = mysqlTable("seo_settings", {
+  id: varchar("id", { length: 255 }).primaryKey(),
+  page: varchar("page", { length: 100 }).notNull().unique(), // home, about, services, contact, etc.
+  metaTitle: varchar("meta_title", { length: 255 }).notNull(),
   metaDescription: text("meta_description").notNull(),
   metaKeywords: text("meta_keywords"),
-  ogTitle: varchar("og_title"),
+  ogTitle: varchar("og_title", { length: 255 }),
   ogDescription: text("og_description"),
-  ogImage: varchar("og_image"),
+  ogImage: varchar("og_image", { length: 512 }),
   updatedAt: timestamp("updated_at").defaultNow(),
 });
 
@@ -317,10 +317,10 @@ export type UpdateSeoSetting = z.infer<typeof updateSeoSettingSchema>;
 export type SeoSetting = typeof seoSettings.$inferSelect;
 
 // Service Banners table for individual service page hero images
-export const serviceBanners = pgTable("service_banners", {
-  id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
-  serviceSlug: varchar("service_slug").notNull().unique(), // web-development, ecommerce-development, etc.
-  bannerUrl: varchar("banner_url"), // Object storage path for banner image
+export const serviceBanners = mysqlTable("service_banners", {
+  id: varchar("id", { length: 255 }).primaryKey(),
+  serviceSlug: varchar("service_slug", { length: 100 }).notNull().unique(), // web-development, ecommerce-development, etc.
+  bannerUrl: varchar("banner_url", { length: 512 }), // Object storage path for banner image
   isActive: boolean("is_active").notNull().default(true),
   updatedAt: timestamp("updated_at").defaultNow(),
 });
@@ -337,12 +337,12 @@ export type UpdateServiceBanner = z.infer<typeof updateServiceBannerSchema>;
 export type ServiceBanner = typeof serviceBanners.$inferSelect;
 
 // Team Members table
-export const teamMembers = pgTable("team_members", {
-  id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
-  fullName: varchar("full_name").notNull(),
-  position: varchar("position").notNull(),
-  photoUrl: varchar("photo_url"),
-  displayOrder: integer("display_order").notNull().default(0),
+export const teamMembers = mysqlTable("team_members", {
+  id: varchar("id", { length: 255 }).primaryKey(),
+  fullName: varchar("full_name", { length: 255 }).notNull(),
+  position: varchar("position", { length: 255 }).notNull(),
+  photoUrl: varchar("photo_url", { length: 512 }),
+  displayOrder: int("display_order").notNull().default(0),
   isActive: boolean("is_active").notNull().default(true),
   createdAt: timestamp("created_at").defaultNow(),
   updatedAt: timestamp("updated_at").defaultNow(),
