@@ -3,6 +3,7 @@ import { createServer, type Server } from "http";
 import { storage } from "./storage";
 import { setupAuth, isAuthenticated } from "./replitAuth";
 import { ObjectStorageService, parseObjectPath, signObjectURL } from "./objectStorage";
+import { setupWebSocket, broadcastToAdmins } from "./websocket";
 import { 
   insertEmployeeSchema, 
   updateEmployeeSchema, 
@@ -214,6 +215,15 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
       const submission = await storage.createContactSubmission(parseResult.data);
       
+      // Broadcast new contact submission to all connected admin clients
+      broadcastToAdmins('new_contact_submission', {
+        id: submission.id,
+        name: submission.name,
+        email: submission.email,
+        message: submission.message,
+        createdAt: submission.createdAt
+      });
+      
       // Email notification setup:
       // To enable email notifications, integrate an email service (e.g., Resend, SendGrid, Mailgun)
       // 1. Install email provider SDK
@@ -260,6 +270,32 @@ export async function registerRoutes(app: Express): Promise<Server> {
     } catch (error) {
       console.error("Error updating submission status:", error);
       res.status(500).json({ message: "Failed to update submission status" });
+    }
+  });
+
+  app.get("/api/contact/unread-count", isAuthenticated, async (req, res) => {
+    try {
+      const count = await storage.getUnreadContactCount();
+      res.json({ count });
+    } catch (error) {
+      console.error("Error getting unread count:", error);
+      res.status(500).json({ message: "Failed to get unread count" });
+    }
+  });
+
+  app.patch("/api/contact/:id/mark-read", isAuthenticated, async (req, res) => {
+    try {
+      const { id } = req.params;
+      const submission = await storage.markContactSubmissionAsRead(id);
+      
+      if (!submission) {
+        return res.status(404).json({ message: "Submission not found" });
+      }
+
+      res.json(submission);
+    } catch (error) {
+      console.error("Error marking submission as read:", error);
+      res.status(500).json({ message: "Failed to mark submission as read" });
     }
   });
 
@@ -1218,5 +1254,9 @@ export async function registerRoutes(app: Express): Promise<Server> {
   });
 
   const httpServer = createServer(app);
+  
+  // Set up WebSocket for real-time notifications
+  setupWebSocket(httpServer);
+  
   return httpServer;
 }

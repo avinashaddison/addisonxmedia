@@ -74,6 +74,8 @@ export interface IStorage {
   createContactSubmission(submission: InsertContactSubmission): Promise<ContactSubmission>;
   getAllContactSubmissions(): Promise<ContactSubmission[]>;
   updateContactSubmissionStatus(id: string, status: string): Promise<ContactSubmission | undefined>;
+  getUnreadContactCount(): Promise<number>;
+  markContactSubmissionAsRead(id: string): Promise<ContactSubmission | undefined>;
 
   // Testimonial operations
   getAllTestimonials(): Promise<Testimonial[]>;
@@ -252,6 +254,23 @@ export class DatabaseStorage implements IStorage {
     await db
       .update(contactSubmissions)
       .set({ status })
+      .where(eq(contactSubmissions.id, id));
+    const [submission] = await db.select().from(contactSubmissions).where(eq(contactSubmissions.id, id));
+    return submission;
+  }
+
+  async getUnreadContactCount(): Promise<number> {
+    const result = await db
+      .select({ count: count() })
+      .from(contactSubmissions)
+      .where(eq(contactSubmissions.isRead, false));
+    return result[0]?.count || 0;
+  }
+
+  async markContactSubmissionAsRead(id: string): Promise<ContactSubmission | undefined> {
+    await db
+      .update(contactSubmissions)
+      .set({ isRead: true })
       .where(eq(contactSubmissions.id, id));
     const [submission] = await db.select().from(contactSubmissions).where(eq(contactSubmissions.id, id));
     return submission;

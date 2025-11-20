@@ -3,6 +3,11 @@ import { useAuth } from "@/hooks/useAuth";
 import { useToast } from "@/hooks/use-toast";
 import { Link, useLocation } from "wouter";
 import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
+import { useQuery } from "@tanstack/react-query";
+import { queryClient } from "@/lib/queryClient";
+import { useWebSocket } from "@/hooks/useWebSocket";
+import { playNotificationSound } from "@/lib/notificationSound";
 import {
   Sidebar,
   SidebarContent,
@@ -108,6 +113,34 @@ export function AdminLayout({ children }: AdminLayoutProps) {
   const { toast } = useToast();
   const { isAuthenticated, isLoading, user } = useAuth();
   const [location] = useLocation();
+
+  // Fetch unread contact count
+  const { data: unreadData } = useQuery<{ count: number }>({
+    queryKey: ['/api/contact/unread-count'],
+    enabled: isAuthenticated,
+    refetchInterval: 30000, // Refetch every 30 seconds
+  });
+
+  const unreadCount = unreadData?.count || 0;
+
+  // Set up WebSocket connection for real-time notifications
+  useWebSocket((message) => {
+    if (message.type === 'new_contact_submission') {
+      // Play notification sound
+      playNotificationSound();
+      
+      // Show toast notification
+      toast({
+        title: "New Contact Submission",
+        description: `${message.data.name} sent a message`,
+        duration: 5000,
+      });
+      
+      // Invalidate unread count query to refresh the badge
+      queryClient.invalidateQueries({ queryKey: ['/api/contact/unread-count'] });
+      queryClient.invalidateQueries({ queryKey: ['/api/contact'] });
+    }
+  });
 
   useEffect(() => {
     if (!isLoading && !isAuthenticated) {

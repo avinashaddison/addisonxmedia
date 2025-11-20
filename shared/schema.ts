@@ -80,6 +80,7 @@ export const contactSubmissions = mysqlTable("contact_submissions", {
   company: varchar("company", { length: 255 }),
   message: text("message").notNull(),
   status: varchar("status", { length: 50 }).notNull().default("new"), // new, contacted, closed
+  isRead: boolean("is_read").notNull().default(false),
   createdAt: timestamp("created_at").defaultNow(),
 });
 
