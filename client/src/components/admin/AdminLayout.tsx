@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { useAuth } from "@/hooks/useAuth";
 import { useToast } from "@/hooks/use-toast";
 import { Link, useLocation } from "wouter";
@@ -123,9 +123,22 @@ export function AdminLayout({ children }: AdminLayoutProps) {
 
   const unreadCount = unreadData?.count || 0;
 
+  // Debounce notification handling to prevent duplicates
+  const lastNotificationIdRef = useRef<string | null>(null);
+  const notificationTimeoutRef = useRef<NodeJS.Timeout>();
+
   // Set up WebSocket connection for real-time notifications
   useWebSocket((message) => {
     if (message.type === 'new_contact_submission') {
+      const submissionId = message.data.id;
+      
+      // Prevent duplicate notifications for the same submission within 5 seconds
+      if (lastNotificationIdRef.current === submissionId) {
+        return;
+      }
+      
+      lastNotificationIdRef.current = submissionId;
+      
       // Play notification sound
       playNotificationSound();
       
@@ -139,6 +152,14 @@ export function AdminLayout({ children }: AdminLayoutProps) {
       // Invalidate unread count query to refresh the badge
       queryClient.invalidateQueries({ queryKey: ['/api/contact/unread-count'] });
       queryClient.invalidateQueries({ queryKey: ['/api/contact'] });
+      
+      // Reset the last notification ID after 5 seconds
+      if (notificationTimeoutRef.current) {
+        clearTimeout(notificationTimeoutRef.current);
+      }
+      notificationTimeoutRef.current = setTimeout(() => {
+        lastNotificationIdRef.current = null;
+      }, 5000);
     }
   });
 
@@ -155,6 +176,15 @@ export function AdminLayout({ children }: AdminLayoutProps) {
       return;
     }
   }, [isAuthenticated, isLoading, toast]);
+
+  // Cleanup notification timeout on unmount
+  useEffect(() => {
+    return () => {
+      if (notificationTimeoutRef.current) {
+        clearTimeout(notificationTimeoutRef.current);
+      }
+    };
+  }, []);
 
   const handleLogout = () => {
     window.location.href = "/api/logout";
@@ -236,12 +266,22 @@ export function AdminLayout({ children }: AdminLayoutProps) {
                         ? location === "/admin" || location === "/admin/dashboard"
                         : location?.startsWith(item.url) || false;
                     
+                    const showBadge = item.title === "Contact Submissions" && unreadCount > 0;
+                    
                     return (
                       <SidebarMenuItem key={item.title}>
                         <SidebarMenuButton asChild isActive={isActive} data-testid={`nav-${item.title.toLowerCase().replace(/\s+/g, '-')}`}>
                           <Link href={item.url}>
                             <Icon className="h-4 w-4" />
                             <span>{item.title}</span>
+                            {showBadge && (
+                              <Badge 
+                                className="ml-auto bg-primary text-white animate-pulse" 
+                                data-testid="badge-unread-count"
+                              >
+                                {unreadCount}
+                              </Badge>
+                            )}
                           </Link>
                         </SidebarMenuButton>
                       </SidebarMenuItem>

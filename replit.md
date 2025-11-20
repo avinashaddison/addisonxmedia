@@ -26,6 +26,8 @@ The backend is an **Express.js** application with TypeScript. **Replit OpenID Co
 - **RESTful endpoints** under `/api`.
 - **Public endpoints** for employee verification, active testimonials, active team members, customization data, and SEO settings.
 - **Protected endpoints** for full CRUD operations across Employees, Contact Submissions, Testimonials, Team Members, Clients, Leads, Projects, Invoices, Customization, and Settings.
+- **WebSocket endpoint** at `/ws` for real-time notifications (new contact submissions broadcast to all connected admin clients).
+- **Contact submission tracking**: GET `/api/contact/unread-count` for unread count, PATCH `/api/contact/:id/mark-read` to mark as read.
 - **Image upload support** for employee photos, testimonial photos, and team member photos via object storage.
 - Consistent error handling is implemented.
 
@@ -43,7 +45,7 @@ The backend is an **Express.js** application with TypeScript. **Replit OpenID Co
 - All varchar columns have explicit length specifications
 - JSON columns use MySQL's `json` type instead of PostgreSQL's `jsonb`
 
-**Schema Design**: Key tables include `users`, `employees`, `contact_submissions`, `testimonials`, `team_members`, `clients`, `leads`, `projects`, `invoices`, `settings`, `homepage_customization`, `seo_settings`, `service_banners`, `sessions`, and `verification_logs`. All tables use VARCHAR(255) for UUID primary keys. The `team_members` table uses INT for `displayOrder`, BOOLEAN for `isActive`, and optional VARCHAR(100) for `employeeId` to link team members with employee verification records. Schema definitions managed via Drizzle with MySQL dialect.
+**Schema Design**: Key tables include `users`, `employees`, `contact_submissions`, `testimonials`, `team_members`, `clients`, `leads`, `projects`, `invoices`, `settings`, `homepage_customization`, `seo_settings`, `service_banners`, `sessions`, and `verification_logs`. All tables use VARCHAR(255) for UUID primary keys. The `contact_submissions` table includes `isRead` BOOLEAN field for tracking unread status. The `team_members` table uses INT for `displayOrder`, BOOLEAN for `isActive`, and optional VARCHAR(100) for `employeeId` to link team members with employee verification records. Schema definitions managed via Drizzle with MySQL dialect.
 
 ### UI/UX Decisions
 - **Navbar**: Clean, minimal design with simple logo (no animations or effects). Eye-catching "Contact Us" button with static gradient background (primary→purple), rounded-full pill shape, bold white text, subtle white border, and shadow for depth - no animations.
@@ -62,7 +64,7 @@ The backend is an **Express.js** application with TypeScript. **Replit OpenID Co
 - **Navigation**: Main navigation restructured for service-specific links. Mobile bottom navigation mirrors desktop.
 - **Website Customization**: Admin panel for dynamic homepage control (services, images, SEO meta tags).
 - **Dark Theme**: Fully functional dark theme with toggle, localStorage persistence, and synchronous initialization. Admin panel defaults to dark mode. Enhanced dark theme visuals.
-- **Admin Panel**: Vertical Shadcn Sidebar with a full AddisonX Media logo and a "CEO" badge. Full CRUD for all admin features.
+- **Admin Panel**: Vertical Shadcn Sidebar with a full AddisonX Media logo and a "CEO" badge. Full CRUD for all admin features. **Real-time Notifications**: WebSocket-based real-time notifications for new contact form submissions with sound effects and toast notifications. Unread count badge displayed on "Contact Submissions" sidebar menu item. Auto-mark-as-read functionality with 3-second delay when viewing the Contacts page.
 
 ## External Dependencies
 

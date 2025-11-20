@@ -1,4 +1,5 @@
 import { useQuery, useMutation } from "@tanstack/react-query";
+import { useEffect, useRef } from "react";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -6,14 +7,59 @@ import { useToast } from "@/hooks/use-toast";
 import { apiRequest, queryClient } from "@/lib/queryClient";
 import type { ContactSubmission } from "@shared/schema";
 import { format } from "date-fns";
-import { Mail, Phone, Building2, MessageSquare, CheckCircle2, Clock, X } from "lucide-react";
+import { Mail, Phone, Building2, MessageSquare, CheckCircle2, Clock, X, Eye } from "lucide-react";
 
 export default function Contacts() {
   const { toast } = useToast();
+  const markedIdsRef = useRef<Set<string>>(new Set());
+  const markTimeoutRef = useRef<NodeJS.Timeout>();
   
   const { data: contacts = [], isLoading } = useQuery<ContactSubmission[]>({
     queryKey: ["/api/contact"],
   });
+
+  // Mark all unread contacts as read after a delay (so admin can see the notification)
+  useEffect(() => {
+    if (contacts.length > 0 && !isLoading) {
+      const unreadContacts = contacts.filter(c => !c.isRead && !markedIdsRef.current.has(c.id));
+      
+      if (unreadContacts.length > 0) {
+        // Clear any existing timeout
+        if (markTimeoutRef.current) {
+          clearTimeout(markTimeoutRef.current);
+        }
+        
+        // Wait 3 seconds before marking as read (gives time to see notifications)
+        markTimeoutRef.current = setTimeout(async () => {
+          try {
+            // Add IDs to marked set to prevent re-marking
+            unreadContacts.forEach(c => markedIdsRef.current.add(c.id));
+            
+            // Mark all unread contacts as read in parallel
+            await Promise.all(
+              unreadContacts.map(contact => 
+                apiRequest("PATCH", `/api/contact/${contact.id}/mark-read`, {})
+              )
+            );
+            
+            // Invalidate queries to refresh the data
+            queryClient.invalidateQueries({ queryKey: ['/api/contact/unread-count'] });
+            queryClient.invalidateQueries({ queryKey: ['/api/contact'] });
+          } catch (error) {
+            console.error("Failed to mark contacts as read:", error);
+            // Remove from marked set on error so it can be retried
+            unreadContacts.forEach(c => markedIdsRef.current.delete(c.id));
+          }
+        }, 3000);
+      }
+    }
+    
+    return () => {
+      if (markTimeoutRef.current) {
+        clearTimeout(markTimeoutRef.current);
+      }
+    };
+  }, [contacts, isLoading]);
 
   const updateStatusMutation = useMutation({
     mutationFn: async ({ id, status }: { id: string; status: string }) => {
@@ -143,7 +189,7 @@ export default function Contacts() {
                     )}
                     <div className="flex items-center gap-2 text-sm text-muted-foreground">
                       <Clock className="h-4 w-4" />
-                      {format(new Date(contact.createdAt), "MMM dd, yyyy 'at' h:mm a")}
+                      {contact.createdAt && format(new Date(contact.createdAt), "MMM dd, yyyy 'at' h:mm a")}
                     </div>
                   </div>
 
