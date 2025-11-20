@@ -1211,13 +1211,22 @@ export default function ServiceDetail() {
             </p>
             <div className="flex flex-wrap gap-4">
               <a href="#packages">
-                <Button size="lg" className="text-lg" data-testid="button-view-pricing">
+                <Button 
+                  size="lg" 
+                  className="text-lg bg-gradient-to-r from-primary via-purple-600 to-orange-600 hover:from-primary/90 hover:via-purple-700 hover:to-orange-700 shadow-lg shadow-primary/25 border-0" 
+                  data-testid="button-view-pricing"
+                >
                   View Pricing
                   <ArrowRight className="ml-2 h-5 w-5" />
                 </Button>
               </a>
               <a href="/contact">
-                <Button size="lg" variant="outline" className="text-lg" data-testid="button-get-quote">
+                <Button 
+                  size="lg" 
+                  variant="outline" 
+                  className="text-lg border-2 bg-background/50 backdrop-blur-sm hover:bg-background/80 shadow-md" 
+                  data-testid="button-get-quote"
+                >
                   Get Free Quote
                 </Button>
               </a>
