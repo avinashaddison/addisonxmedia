@@ -4,6 +4,8 @@
 
 AddisonX Media is a digital marketing agency offering web development, ecommerce, SEO, social media marketing, brand promotion, and graphic design services. This full-stack web application showcases services, enables employee verification, and provides an admin dashboard for managing records. It features a modern monorepo architecture with a React frontend (Vite), Express.js backend, and MySQL database (Drizzle ORM), utilizing Replit's authentication for admin access. The project aims to provide a comprehensive platform for the agency's operations and client engagement.
 
+Recent additions: Complete SEO management system with dynamic sitemap.xml generation, robots.txt serving, and favicon management with upload/URL capabilities.
+
 ## User Preferences
 
 Preferred communication style: Simple, everyday language.
@@ -24,11 +26,13 @@ The backend is an **Express.js** application with TypeScript. **Replit OpenID Co
 
 **API Design**:
 - **RESTful endpoints** under `/api`.
-- **Public endpoints** for employee verification, active testimonials, active team members, customization data, and SEO settings.
-- **Protected endpoints** for full CRUD operations across Employees, Contact Submissions, Testimonials, Team Members, Clients, Leads, Projects, Invoices, Customization, and Settings.
+- **Public endpoints** for employee verification, active testimonials, active team members, customization data, SEO settings, sitemap.xml, robots.txt, and favicon serving.
+- **Protected endpoints** for full CRUD operations across Employees, Contact Submissions, Testimonials, Team Members, Clients, Leads, Projects, Invoices, Customization, Settings, SEO Settings, and Favicon Management.
 - **WebSocket endpoint** at `/ws` for real-time notifications (new contact submissions broadcast to all connected admin clients).
 - **Contact submission tracking**: GET `/api/contact/unread-count` for unread count, PATCH `/api/contact/:id/mark-read` to mark as read.
-- **Image upload support** for employee photos, testimonial photos, and team member photos via object storage.
+- **Image upload support** for employee photos, testimonial photos, team member photos, and favicon via object storage.
+- **SEO routes**: GET `/sitemap.xml` for dynamic sitemap, GET `/robots.txt` for robots.txt, GET `/favicon.ico` for favicon serving.
+- **Favicon management**: GET `/api/favicon` to fetch current favicon, POST `/api/favicon` to update favicon URL, POST `/api/favicon/upload-url` for signed upload URL.
 - Consistent error handling is implemented.
 
 **Storage Layer**: An interface-based storage abstraction (`IStorage`) with a `DatabaseStorage` implementation separates data access logic.

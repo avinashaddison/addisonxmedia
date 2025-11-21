@@ -194,39 +194,29 @@ export class DatabaseStorage implements IStorage {
   }
 
   async upsertUser(userData: UpsertUser): Promise<User> {
-    // Check if email already exists
-    const existingByEmail = await db.select().from(users).where(eq(users.email, userData.email!)).limit(1);
+    const id = userData.id || uuidv4();
     
-    if (existingByEmail.length > 0 && existingByEmail[0].id !== userData.id) {
-      // Email exists with different ID - update the existing record
+    // Check if user with this ID already exists
+    const existingById = await db.select().from(users).where(eq(users.id, id)).limit(1);
+    
+    if (existingById.length > 0) {
+      // User ID exists - update the existing record without changing the ID
       await db
         .update(users)
         .set({
-          id: userData.id,
+          email: userData.email,
           firstName: userData.firstName,
           lastName: userData.lastName,
           profileImageUrl: userData.profileImageUrl,
           updatedAt: new Date(),
         })
-        .where(eq(users.email, userData.email!));
-      const [updatedUser] = await db.select().from(users).where(eq(users.email, userData.email!));
+        .where(eq(users.id, id));
+      const [updatedUser] = await db.select().from(users).where(eq(users.id, id));
       return updatedUser!;
     }
     
-    // Standard upsert by ID
-    const id = userData.id || uuidv4();
-    await db
-      .insert(users)
-      .values({ ...userData, id })
-      .onDuplicateKeyUpdate({
-        set: {
-          email: sqlQuery`values(${users.email})`,
-          firstName: sqlQuery`values(${users.firstName})`,
-          lastName: sqlQuery`values(${users.lastName})`,
-          profileImageUrl: sqlQuery`values(${users.profileImageUrl})`,
-          updatedAt: new Date(),
-        },
-      });
+    // User ID doesn't exist - insert new record
+    await db.insert(users).values({ ...userData, id });
     const [user] = await db.select().from(users).where(eq(users.id, id));
     return user!;
   }
