@@ -114,7 +114,7 @@ export function Navbar() {
         </div>
 
       {/* Main Navigation */}
-      <nav className="relative bg-background/95 backdrop-blur-md supports-[backdrop-filter]:bg-background/80 border-b shadow-md">
+      <nav className="relative bg-background/95 backdrop-blur-md supports-[backdrop-filter]:bg-background/80 border-b-2 border-b-primary/20 shadow-lg dark:border-b-primary/10">
         <div className="max-w-7xl mx-auto px-4 md:px-6">
           <div className="flex items-center justify-between h-16 md:h-20">
             {/* Desktop Logo - Simple Design */}
