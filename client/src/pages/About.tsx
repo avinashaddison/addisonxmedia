@@ -1,5 +1,6 @@
 import { Card } from "@/components/ui/card";
 import { Target, Eye, Award, Users } from "lucide-react";
+import { SeoHead, DEFAULT_SEO } from "@/components/SeoHead";
 
 const values = [
   {
@@ -26,7 +27,9 @@ const values = [
 
 export default function About() {
   return (
-    <div className="flex flex-col pb-20 lg:pb-0">
+    <>
+      <SeoHead page="about" fallback={DEFAULT_SEO.about} />
+      <div className="flex flex-col pb-20 lg:pb-0">
       {/* Hero Section */}
       <section className="py-16 md:py-20 border-b">
         <div className="max-w-7xl mx-auto px-4 md:px-6">
@@ -155,6 +158,7 @@ export default function About() {
           </div>
         </div>
       </section>
-    </div>
+      </div>
+    </>
   );
 }

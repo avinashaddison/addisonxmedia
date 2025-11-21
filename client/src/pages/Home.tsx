@@ -20,6 +20,7 @@ import {
 import type { Testimonial, TeamMember } from "@shared/schema";
 import useEmblaCarousel from 'embla-carousel-react';
 import { useCallback, useEffect } from 'react';
+import { SeoHead, DEFAULT_SEO } from "@/components/SeoHead";
 
 import heroBanner from "@assets/Phoenix_10_Create_a_modern_premium_promotional_banner_in_the_s_2_1763291282547.jpg";
 import reviewQR from "@assets/WhatsApp Image 2025-11-17 at 3.50.29 PM_1763395709789.jpeg";
@@ -212,9 +213,11 @@ export default function Home() {
   const customHeroBanner = homeBanner?.bannerUrl || null;
 
   return (
-    <div className="flex flex-col">
-      {/* Hero Section */}
-      <section className="w-full mx-auto">
+    <>
+      <SeoHead page="home" fallback={DEFAULT_SEO.home} />
+      <div className="flex flex-col">
+        {/* Hero Section */}
+        <section className="w-full mx-auto">
         <HeroBanner customBannerUrl={customHeroBanner} />
       </section>
 
@@ -564,6 +567,7 @@ export default function Home() {
           </div>
         </div>
       </section>
-    </div>
+      </div>
+    </>
   );
 }

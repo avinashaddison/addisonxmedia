@@ -1,6 +1,7 @@
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { useEffect, useRef } from "react";
+import { SeoHead, DEFAULT_SEO } from "@/components/SeoHead";
 import { 
   Code, 
   ShoppingCart, 
@@ -152,8 +153,10 @@ export default function Services() {
   }, [filter]);
 
   return (
-    <div className="flex flex-col">
-      <section className="py-16 md:py-20 border-b">
+    <>
+      <SeoHead page="services" fallback={DEFAULT_SEO.services} />
+      <div className="flex flex-col">
+        <section className="py-16 md:py-20 border-b">
         <div className="max-w-7xl mx-auto px-4 md:px-6">
           <div className="max-w-4xl mx-auto text-center">
             <h1 className="text-4xl md:text-5xl font-bold mb-4" data-testid="text-services-title">
@@ -232,6 +235,7 @@ export default function Services() {
           </div>
         </div>
       </section>
-    </div>
+      </div>
+    </>
   );
 }

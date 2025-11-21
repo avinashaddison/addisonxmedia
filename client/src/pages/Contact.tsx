@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { MapPin, Phone, Mail, Clock } from "lucide-react";
+import { SeoHead, DEFAULT_SEO } from "@/components/SeoHead";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { insertContactSubmissionSchema, type InsertContactSubmission } from "@shared/schema";
@@ -56,8 +57,10 @@ export default function Contact() {
   };
 
   return (
-    <div className="flex flex-col pb-20 lg:pb-0">
-      <section className="py-16 md:py-20 border-b">
+    <>
+      <SeoHead page="contact" fallback={DEFAULT_SEO.contact} />
+      <div className="flex flex-col pb-20 lg:pb-0">
+        <section className="py-16 md:py-20 border-b">
         <div className="max-w-7xl mx-auto px-4 md:px-6">
           <div className="max-w-4xl mx-auto text-center">
             <h1 className="text-4xl md:text-5xl font-bold mb-4" data-testid="text-contact-title">
@@ -323,6 +326,7 @@ export default function Contact() {
           </div>
         </div>
       </section>
-    </div>
+      </div>
+    </>
   );
 }
