@@ -11,6 +11,9 @@ import {
   settings,
   homepageCustomization,
   seoSettings,
+  seoRedirects,
+  seoHistory,
+  globalSeoSettings,
   serviceBanners,
   teamMembers,
   type User,
@@ -46,6 +49,14 @@ import {
   type SeoSetting,
   type InsertSeoSetting,
   type UpdateSeoSetting,
+  type SeoRedirect,
+  type InsertSeoRedirect,
+  type UpdateSeoRedirect,
+  type SeoHistory,
+  type InsertSeoHistory,
+  type GlobalSeoSetting,
+  type InsertGlobalSeoSetting,
+  type UpdateGlobalSeoSetting,
   type ServiceBanner,
   type InsertServiceBanner,
   type UpdateServiceBanner,
@@ -139,6 +150,26 @@ export interface IStorage {
   getSeoSetting(page: string): Promise<SeoSetting | undefined>;
   upsertSeoSetting(seoSetting: InsertSeoSetting): Promise<SeoSetting>;
   deleteSeoSetting(page: string): Promise<void>;
+
+  // SEO Redirects operations
+  getAllSeoRedirects(): Promise<SeoRedirect[]>;
+  getActiveSeoRedirects(): Promise<SeoRedirect[]>;
+  getSeoRedirect(id: string): Promise<SeoRedirect | undefined>;
+  getSeoRedirectByPath(fromPath: string): Promise<SeoRedirect | undefined>;
+  createSeoRedirect(redirect: InsertSeoRedirect): Promise<SeoRedirect>;
+  updateSeoRedirect(id: string, redirect: UpdateSeoRedirect): Promise<SeoRedirect | undefined>;
+  deleteSeoRedirect(id: string): Promise<void>;
+
+  // SEO History operations
+  getAllSeoHistory(): Promise<SeoHistory[]>;
+  getSeoHistoryByPage(page: string): Promise<SeoHistory[]>;
+  createSeoHistory(history: InsertSeoHistory): Promise<SeoHistory>;
+
+  // Global SEO Settings operations
+  getAllGlobalSeoSettings(): Promise<GlobalSeoSetting[]>;
+  getGlobalSeoSetting(key: string): Promise<GlobalSeoSetting | undefined>;
+  upsertGlobalSeoSetting(setting: InsertGlobalSeoSetting): Promise<GlobalSeoSetting>;
+  deleteGlobalSeoSetting(key: string): Promise<void>;
 
   // Service Banner operations
   getAllServiceBanners(): Promise<ServiceBanner[]>;
@@ -570,12 +601,26 @@ export class DatabaseStorage implements IStorage {
       .values({ ...seoSettingData, id })
       .onDuplicateKeyUpdate({
         set: {
+          customSlug: sqlQuery`values(${seoSettings.customSlug})`,
           metaTitle: sqlQuery`values(${seoSettings.metaTitle})`,
           metaDescription: sqlQuery`values(${seoSettings.metaDescription})`,
           metaKeywords: sqlQuery`values(${seoSettings.metaKeywords})`,
+          metaRobots: sqlQuery`values(${seoSettings.metaRobots})`,
+          canonicalUrl: sqlQuery`values(${seoSettings.canonicalUrl})`,
           ogTitle: sqlQuery`values(${seoSettings.ogTitle})`,
           ogDescription: sqlQuery`values(${seoSettings.ogDescription})`,
           ogImage: sqlQuery`values(${seoSettings.ogImage})`,
+          ogType: sqlQuery`values(${seoSettings.ogType})`,
+          ogUrl: sqlQuery`values(${seoSettings.ogUrl})`,
+          twitterCard: sqlQuery`values(${seoSettings.twitterCard})`,
+          twitterTitle: sqlQuery`values(${seoSettings.twitterTitle})`,
+          twitterDescription: sqlQuery`values(${seoSettings.twitterDescription})`,
+          twitterImage: sqlQuery`values(${seoSettings.twitterImage})`,
+          structuredData: sqlQuery`values(${seoSettings.structuredData})`,
+          hreflangTags: sqlQuery`values(${seoSettings.hreflangTags})`,
+          isPublished: sqlQuery`values(${seoSettings.isPublished})`,
+          isDraft: sqlQuery`values(${seoSettings.isDraft})`,
+          scheduledPublishAt: sqlQuery`values(${seoSettings.scheduledPublishAt})`,
           updatedAt: new Date(),
         },
       });
@@ -585,6 +630,104 @@ export class DatabaseStorage implements IStorage {
 
   async deleteSeoSetting(page: string): Promise<void> {
     await db.delete(seoSettings).where(eq(seoSettings.page, page));
+  }
+
+  // SEO Redirects operations
+  async getAllSeoRedirects(): Promise<SeoRedirect[]> {
+    return db.select().from(seoRedirects).orderBy(desc(seoRedirects.createdAt));
+  }
+
+  async getActiveSeoRedirects(): Promise<SeoRedirect[]> {
+    return db.select().from(seoRedirects).where(eq(seoRedirects.isActive, true));
+  }
+
+  async getSeoRedirect(id: string): Promise<SeoRedirect | undefined> {
+    const [redirect] = await db
+      .select()
+      .from(seoRedirects)
+      .where(eq(seoRedirects.id, id));
+    return redirect;
+  }
+
+  async getSeoRedirectByPath(fromPath: string): Promise<SeoRedirect | undefined> {
+    const [redirect] = await db
+      .select()
+      .from(seoRedirects)
+      .where(eq(seoRedirects.fromPath, fromPath));
+    return redirect;
+  }
+
+  async createSeoRedirect(redirectData: InsertSeoRedirect): Promise<SeoRedirect> {
+    const id = uuidv4();
+    await db.insert(seoRedirects).values({ ...redirectData, id });
+    const [redirect] = await db.select().from(seoRedirects).where(eq(seoRedirects.id, id));
+    return redirect!;
+  }
+
+  async updateSeoRedirect(id: string, redirectData: UpdateSeoRedirect): Promise<SeoRedirect | undefined> {
+    await db
+      .update(seoRedirects)
+      .set({ ...redirectData, updatedAt: new Date() })
+      .where(eq(seoRedirects.id, id));
+    const [redirect] = await db.select().from(seoRedirects).where(eq(seoRedirects.id, id));
+    return redirect;
+  }
+
+  async deleteSeoRedirect(id: string): Promise<void> {
+    await db.delete(seoRedirects).where(eq(seoRedirects.id, id));
+  }
+
+  // SEO History operations
+  async getAllSeoHistory(): Promise<SeoHistory[]> {
+    return db.select().from(seoHistory).orderBy(desc(seoHistory.createdAt));
+  }
+
+  async getSeoHistoryByPage(page: string): Promise<SeoHistory[]> {
+    return db
+      .select()
+      .from(seoHistory)
+      .where(eq(seoHistory.page, page))
+      .orderBy(desc(seoHistory.createdAt));
+  }
+
+  async createSeoHistory(historyData: InsertSeoHistory): Promise<SeoHistory> {
+    const id = uuidv4();
+    await db.insert(seoHistory).values({ ...historyData, id });
+    const [history] = await db.select().from(seoHistory).where(eq(seoHistory.id, id));
+    return history!;
+  }
+
+  // Global SEO Settings operations
+  async getAllGlobalSeoSettings(): Promise<GlobalSeoSetting[]> {
+    return db.select().from(globalSeoSettings).orderBy(globalSeoSettings.key);
+  }
+
+  async getGlobalSeoSetting(key: string): Promise<GlobalSeoSetting | undefined> {
+    const [setting] = await db
+      .select()
+      .from(globalSeoSettings)
+      .where(eq(globalSeoSettings.key, key));
+    return setting;
+  }
+
+  async upsertGlobalSeoSetting(settingData: InsertGlobalSeoSetting): Promise<GlobalSeoSetting> {
+    const id = uuidv4();
+    await db
+      .insert(globalSeoSettings)
+      .values({ ...settingData, id })
+      .onDuplicateKeyUpdate({
+        set: {
+          value: sqlQuery`values(${globalSeoSettings.value})`,
+          isActive: sqlQuery`values(${globalSeoSettings.isActive})`,
+          updatedAt: new Date(),
+        },
+      });
+    const [setting] = await db.select().from(globalSeoSettings).where(eq(globalSeoSettings.key, settingData.key));
+    return setting!;
+  }
+
+  async deleteGlobalSeoSetting(key: string): Promise<void> {
+    await db.delete(globalSeoSettings).where(eq(globalSeoSettings.key, key));
   }
 
   // Service Banner operations

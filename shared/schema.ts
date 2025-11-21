@@ -293,22 +293,59 @@ export type InsertHomepageCustomization = z.infer<typeof insertHomepageCustomiza
 export type UpdateHomepageCustomization = z.infer<typeof updateHomepageCustomizationSchema>;
 export type HomepageCustomization = typeof homepageCustomization.$inferSelect;
 
-// SEO Settings table
+// Comprehensive SEO Settings table with full control
 export const seoSettings = mysqlTable("seo_settings", {
   id: varchar("id", { length: 255 }).primaryKey(),
   page: varchar("page", { length: 100 }).notNull().unique(), // home, about, services, contact, etc.
+  customSlug: varchar("custom_slug", { length: 255 }), // SEO-friendly URL
+  
+  // Basic Meta Tags
   metaTitle: varchar("meta_title", { length: 255 }).notNull(),
   metaDescription: text("meta_description").notNull(),
   metaKeywords: text("meta_keywords"),
+  
+  // Meta Robots & Canonical
+  metaRobots: varchar("meta_robots", { length: 100 }).notNull().default("index, follow"), // index/noindex, follow/nofollow
+  canonicalUrl: varchar("canonical_url", { length: 512 }),
+  
+  // Open Graph Tags
   ogTitle: varchar("og_title", { length: 255 }),
   ogDescription: text("og_description"),
   ogImage: varchar("og_image", { length: 512 }),
+  ogType: varchar("og_type", { length: 50 }).default("website"),
+  ogUrl: varchar("og_url", { length: 512 }),
+  
+  // Twitter Card Tags
+  twitterCard: varchar("twitter_card", { length: 50 }).default("summary_large_image"),
+  twitterTitle: varchar("twitter_title", { length: 255 }),
+  twitterDescription: text("twitter_description"),
+  twitterImage: varchar("twitter_image", { length: 512 }),
+  
+  // Structured Data (JSON-LD)
+  structuredData: json("structured_data"), // Store JSON-LD schema
+  
+  // Hreflang Tags for multi-language
+  hreflangTags: json("hreflang_tags"), // Array of {lang, url}
+  
+  // Publishing & Visibility
+  isPublished: boolean("is_published").notNull().default(true),
+  isDraft: boolean("is_draft").notNull().default(false), // Page-level noindex for drafts
+  scheduledPublishAt: timestamp("scheduled_publish_at"), // Auto-publish schedule
+  
+  createdAt: timestamp("created_at").defaultNow(),
   updatedAt: timestamp("updated_at").defaultNow(),
 });
 
 export const insertSeoSettingSchema = createInsertSchema(seoSettings).omit({
   id: true,
+  createdAt: true,
   updatedAt: true,
+}).extend({
+  metaRobots: z.string().default("index, follow"),
+  ogType: z.string().default("website"),
+  twitterCard: z.string().default("summary_large_image"),
+  isPublished: z.boolean().default(true),
+  isDraft: z.boolean().default(false),
 });
 
 export const updateSeoSettingSchema = insertSeoSettingSchema.partial();
@@ -316,6 +353,72 @@ export const updateSeoSettingSchema = insertSeoSettingSchema.partial();
 export type InsertSeoSetting = z.infer<typeof insertSeoSettingSchema>;
 export type UpdateSeoSetting = z.infer<typeof updateSeoSettingSchema>;
 export type SeoSetting = typeof seoSettings.$inferSelect;
+
+// SEO Redirects Management (301/302)
+export const seoRedirects = mysqlTable("seo_redirects", {
+  id: varchar("id", { length: 255 }).primaryKey(),
+  fromPath: varchar("from_path", { length: 512 }).notNull().unique(),
+  toPath: varchar("to_path", { length: 512 }).notNull(),
+  redirectType: varchar("redirect_type", { length: 3 }).notNull().default("301"), // 301 or 302
+  isActive: boolean("is_active").notNull().default(true),
+  createdAt: timestamp("created_at").defaultNow(),
+  updatedAt: timestamp("updated_at").defaultNow(),
+});
+
+export const insertSeoRedirectSchema = createInsertSchema(seoRedirects).omit({
+  id: true,
+  createdAt: true,
+  updatedAt: true,
+}).extend({
+  redirectType: z.enum(["301", "302"]).default("301"),
+  isActive: z.boolean().default(true),
+});
+
+export const updateSeoRedirectSchema = insertSeoRedirectSchema.partial();
+
+export type InsertSeoRedirect = z.infer<typeof insertSeoRedirectSchema>;
+export type UpdateSeoRedirect = z.infer<typeof updateSeoRedirectSchema>;
+export type SeoRedirect = typeof seoRedirects.$inferSelect;
+
+// SEO History/Versioning for meta changes
+export const seoHistory = mysqlTable("seo_history", {
+  id: varchar("id", { length: 255 }).primaryKey(),
+  seoSettingId: varchar("seo_setting_id", { length: 255 }).notNull(),
+  page: varchar("page", { length: 100 }).notNull(),
+  changes: json("changes").notNull(), // Store the complete SEO settings snapshot
+  changedBy: varchar("changed_by", { length: 255 }), // User ID who made the change
+  createdAt: timestamp("created_at").defaultNow(),
+});
+
+export const insertSeoHistorySchema = createInsertSchema(seoHistory).omit({
+  id: true,
+  createdAt: true,
+});
+
+export type InsertSeoHistory = z.infer<typeof insertSeoHistorySchema>;
+export type SeoHistory = typeof seoHistory.$inferSelect;
+
+// Global SEO Settings (robots.txt, sitemap config)
+export const globalSeoSettings = mysqlTable("global_seo_settings", {
+  id: varchar("id", { length: 255 }).primaryKey(),
+  key: varchar("key", { length: 100 }).notNull().unique(), // robots_txt, sitemap_config, meta_template
+  value: text("value").notNull(),
+  isActive: boolean("is_active").notNull().default(true),
+  updatedAt: timestamp("updated_at").defaultNow(),
+});
+
+export const insertGlobalSeoSettingSchema = createInsertSchema(globalSeoSettings).omit({
+  id: true,
+  updatedAt: true,
+}).extend({
+  isActive: z.boolean().default(true),
+});
+
+export const updateGlobalSeoSettingSchema = insertGlobalSeoSettingSchema.partial();
+
+export type InsertGlobalSeoSetting = z.infer<typeof insertGlobalSeoSettingSchema>;
+export type UpdateGlobalSeoSetting = z.infer<typeof updateGlobalSeoSettingSchema>;
+export type GlobalSeoSetting = typeof globalSeoSettings.$inferSelect;
 
 // Service Banners table for individual service page hero images
 export const serviceBanners = mysqlTable("service_banners", {

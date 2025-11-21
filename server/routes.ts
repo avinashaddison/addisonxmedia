@@ -23,6 +23,10 @@ import {
   updateHomepageCustomizationSchema,
   insertSeoSettingSchema,
   updateSeoSettingSchema,
+  insertSeoRedirectSchema,
+  updateSeoRedirectSchema,
+  insertGlobalSeoSettingSchema,
+  updateGlobalSeoSettingSchema,
   insertServiceBannerSchema,
   updateServiceBannerSchema,
   insertTeamMemberSchema,
@@ -878,7 +882,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  app.post("/api/seo", isAuthenticated, async (req, res) => {
+  app.post("/api/seo", isAuthenticated, async (req: any, res) => {
     try {
       const parseResult = insertSeoSettingSchema.safeParse(req.body);
       
@@ -886,7 +890,25 @@ export async function registerRoutes(app: Express): Promise<Server> {
         return res.status(400).json({ message: "Invalid data", errors: parseResult.error.errors });
       }
 
+      // Get the current user ID for history tracking
+      const userId = req.user?.claims?.sub || 'system';
+
+      // Get existing SEO setting to check if it's an update
+      const existingSetting = await storage.getSeoSetting(parseResult.data.page);
+
+      // Upsert the SEO setting
       const seoSetting = await storage.upsertSeoSetting(parseResult.data);
+
+      // Create history entry for versioning
+      if (seoSetting) {
+        await storage.createSeoHistory({
+          seoSettingId: seoSetting.id,
+          page: seoSetting.page,
+          changes: seoSetting as any, // Store complete snapshot
+          changedBy: userId,
+        });
+      }
+
       res.status(201).json(seoSetting);
     } catch (error) {
       console.error("Error upserting SEO setting:", error);
@@ -902,6 +924,220 @@ export async function registerRoutes(app: Express): Promise<Server> {
     } catch (error) {
       console.error("Error deleting SEO setting:", error);
       res.status(500).json({ message: "Failed to delete SEO setting" });
+    }
+  });
+
+  // SEO Redirects routes
+  app.get("/api/seo-redirects", isAuthenticated, async (req, res) => {
+    try {
+      const redirects = await storage.getAllSeoRedirects();
+      res.json(redirects);
+    } catch (error) {
+      console.error("Error fetching SEO redirects:", error);
+      res.status(500).json({ message: "Failed to fetch SEO redirects" });
+    }
+  });
+
+  app.get("/api/seo-redirects/active", async (req, res) => {
+    try {
+      const redirects = await storage.getActiveSeoRedirects();
+      res.json(redirects);
+    } catch (error) {
+      console.error("Error fetching active SEO redirects:", error);
+      res.status(500).json({ message: "Failed to fetch active SEO redirects" });
+    }
+  });
+
+  app.get("/api/seo-redirects/:id", isAuthenticated, async (req, res) => {
+    try {
+      const { id } = req.params;
+      const redirect = await storage.getSeoRedirect(id);
+      
+      if (!redirect) {
+        return res.status(404).json({ message: "SEO redirect not found" });
+      }
+
+      res.json(redirect);
+    } catch (error) {
+      console.error("Error fetching SEO redirect:", error);
+      res.status(500).json({ message: "Failed to fetch SEO redirect" });
+    }
+  });
+
+  app.post("/api/seo-redirects", isAuthenticated, async (req, res) => {
+    try {
+      const parseResult = insertSeoRedirectSchema.safeParse(req.body);
+      
+      if (!parseResult.success) {
+        return res.status(400).json({ message: "Invalid data", errors: parseResult.error.errors });
+      }
+
+      const redirect = await storage.createSeoRedirect(parseResult.data);
+      res.status(201).json(redirect);
+    } catch (error) {
+      console.error("Error creating SEO redirect:", error);
+      res.status(500).json({ message: "Failed to create SEO redirect" });
+    }
+  });
+
+  app.patch("/api/seo-redirects/:id", isAuthenticated, async (req, res) => {
+    try {
+      const { id } = req.params;
+      const parseResult = updateSeoRedirectSchema.safeParse(req.body);
+      
+      if (!parseResult.success) {
+        return res.status(400).json({ message: "Invalid data", errors: parseResult.error.errors });
+      }
+
+      const redirect = await storage.updateSeoRedirect(id, parseResult.data);
+      
+      if (!redirect) {
+        return res.status(404).json({ message: "SEO redirect not found" });
+      }
+
+      res.json(redirect);
+    } catch (error) {
+      console.error("Error updating SEO redirect:", error);
+      res.status(500).json({ message: "Failed to update SEO redirect" });
+    }
+  });
+
+  app.delete("/api/seo-redirects/:id", isAuthenticated, async (req, res) => {
+    try {
+      const { id } = req.params;
+      await storage.deleteSeoRedirect(id);
+      res.status(204).send();
+    } catch (error) {
+      console.error("Error deleting SEO redirect:", error);
+      res.status(500).json({ message: "Failed to delete SEO redirect" });
+    }
+  });
+
+  // SEO History routes
+  app.get("/api/seo-history", isAuthenticated, async (req, res) => {
+    try {
+      const history = await storage.getAllSeoHistory();
+      res.json(history);
+    } catch (error) {
+      console.error("Error fetching SEO history:", error);
+      res.status(500).json({ message: "Failed to fetch SEO history" });
+    }
+  });
+
+  app.get("/api/seo-history/:page", isAuthenticated, async (req, res) => {
+    try {
+      const { page } = req.params;
+      const history = await storage.getSeoHistoryByPage(page);
+      res.json(history);
+    } catch (error) {
+      console.error("Error fetching SEO history for page:", error);
+      res.status(500).json({ message: "Failed to fetch SEO history" });
+    }
+  });
+
+  // Global SEO Settings routes (robots.txt, sitemap config, meta templates)
+  app.get("/api/global-seo", isAuthenticated, async (req, res) => {
+    try {
+      const settings = await storage.getAllGlobalSeoSettings();
+      res.json(settings);
+    } catch (error) {
+      console.error("Error fetching global SEO settings:", error);
+      res.status(500).json({ message: "Failed to fetch global SEO settings" });
+    }
+  });
+
+  app.get("/api/global-seo/:key", async (req, res) => {
+    try {
+      const { key } = req.params;
+      const setting = await storage.getGlobalSeoSetting(key);
+      
+      if (!setting) {
+        return res.status(404).json({ message: "Global SEO setting not found" });
+      }
+
+      res.json(setting);
+    } catch (error) {
+      console.error("Error fetching global SEO setting:", error);
+      res.status(500).json({ message: "Failed to fetch global SEO setting" });
+    }
+  });
+
+  app.post("/api/global-seo", isAuthenticated, async (req, res) => {
+    try {
+      const parseResult = insertGlobalSeoSettingSchema.safeParse(req.body);
+      
+      if (!parseResult.success) {
+        return res.status(400).json({ message: "Invalid data", errors: parseResult.error.errors });
+      }
+
+      const setting = await storage.upsertGlobalSeoSetting(parseResult.data);
+      res.status(201).json(setting);
+    } catch (error) {
+      console.error("Error upserting global SEO setting:", error);
+      res.status(500).json({ message: "Failed to upsert global SEO setting" });
+    }
+  });
+
+  app.delete("/api/global-seo/:key", isAuthenticated, async (req, res) => {
+    try {
+      const { key } = req.params;
+      await storage.deleteGlobalSeoSetting(key);
+      res.status(204).send();
+    } catch (error) {
+      console.error("Error deleting global SEO setting:", error);
+      res.status(500).json({ message: "Failed to delete global SEO setting" });
+    }
+  });
+
+  // Sitemap.xml generation
+  app.get("/sitemap.xml", async (req, res) => {
+    try {
+      const seoSettings = await storage.getAllSeoSettings();
+      const publishedPages = seoSettings.filter(s => s.isPublished && !s.isDraft);
+      
+      const baseUrl = process.env.REPL_URL || "https://your-domain.com";
+      
+      let sitemap = '<?xml version="1.0" encoding="UTF-8"?>\n';
+      sitemap += '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n';
+      
+      publishedPages.forEach(page => {
+        const url = page.customSlug || `/${page.page}`;
+        sitemap += '  <url>\n';
+        sitemap += `    <loc>${baseUrl}${url}</loc>\n`;
+        sitemap += `    <lastmod>${new Date(page.updatedAt!).toISOString().split('T')[0]}</lastmod>\n`;
+        sitemap += '    <changefreq>weekly</changefreq>\n';
+        sitemap += '    <priority>0.8</priority>\n';
+        sitemap += '  </url>\n';
+      });
+      
+      sitemap += '</urlset>';
+      
+      res.header('Content-Type', 'application/xml');
+      res.send(sitemap);
+    } catch (error) {
+      console.error("Error generating sitemap:", error);
+      res.status(500).send('Error generating sitemap');
+    }
+  });
+
+  // robots.txt serving
+  app.get("/robots.txt", async (req, res) => {
+    try {
+      const robotsSetting = await storage.getGlobalSeoSetting('robots_txt');
+      
+      if (robotsSetting && robotsSetting.isActive) {
+        res.header('Content-Type', 'text/plain');
+        res.send(robotsSetting.value);
+      } else {
+        // Default robots.txt
+        const baseUrl = process.env.REPL_URL || "https://your-domain.com";
+        const defaultRobots = `User-agent: *\nAllow: /\n\nSitemap: ${baseUrl}/sitemap.xml`;
+        res.header('Content-Type', 'text/plain');
+        res.send(defaultRobots);
+      }
+    } catch (error) {
+      console.error("Error serving robots.txt:", error);
+      res.status(500).send('Error serving robots.txt');
     }
   });
 
