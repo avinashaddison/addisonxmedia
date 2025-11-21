@@ -42,7 +42,7 @@ import {
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { ThemeProvider } from "@/components/ThemeProvider";
 import { ThemeToggle } from "@/components/ThemeToggle";
-import logoUrl from "@assets/Screenshot 2025-11-15 182956_1763354765864.png";
+import logoUrl from "@assets/image_1763672898572.png";
 
 interface AdminLayoutProps {
   children: React.ReactNode;
@@ -254,7 +254,7 @@ export function AdminLayout({ children }: AdminLayoutProps) {
                   <img 
                     src={logoUrl} 
                     alt="AddisonX Media Logo" 
-                    className="h-10 w-10 rounded object-cover bg-white"
+                    className="h-10 w-10 object-contain"
                   />
                 </div>
                 <div className="flex-1 min-w-0 group-data-[collapsible=icon]:hidden">
