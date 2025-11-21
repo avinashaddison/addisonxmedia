@@ -464,3 +464,30 @@ export const updateTeamMemberSchema = insertTeamMemberSchema.partial();
 export type InsertTeamMember = z.infer<typeof insertTeamMemberSchema>;
 export type UpdateTeamMember = z.infer<typeof updateTeamMemberSchema>;
 export type TeamMember = typeof teamMembers.$inferSelect;
+
+// Gmail messages table for caching emails
+export const gmailMessages = mysqlTable("gmail_messages", {
+  id: varchar("id", { length: 255 }).primaryKey(), // Gmail message ID
+  threadId: varchar("thread_id", { length: 255 }).notNull(),
+  subject: varchar("subject", { length: 500 }),
+  snippet: text("snippet"),
+  sender: varchar("sender", { length: 255 }),
+  senderEmail: varchar("sender_email", { length: 255 }),
+  recipient: varchar("recipient", { length: 255 }),
+  receivedAt: timestamp("received_at"),
+  bodyText: text("body_text"),
+  bodyHtml: text("body_html"),
+  labels: json("labels").$type<string[]>(),
+  isUnread: boolean("is_unread").notNull().default(false),
+  hasAttachments: boolean("has_attachments").notNull().default(false),
+  internalDate: varchar("internal_date", { length: 50 }),
+  createdAt: timestamp("created_at").defaultNow(),
+  updatedAt: timestamp("updated_at").defaultNow(),
+}, (table) => [
+  index("idx_thread_id").on(table.threadId),
+  index("idx_received_at").on(table.receivedAt),
+  index("idx_is_unread").on(table.isUnread),
+]);
+
+export type GmailMessage = typeof gmailMessages.$inferSelect;
+export type InsertGmailMessage = typeof gmailMessages.$inferInsert;
