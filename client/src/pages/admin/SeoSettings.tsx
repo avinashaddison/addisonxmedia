@@ -290,11 +290,12 @@ export default function SeoSettings() {
           <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
               <Tabs defaultValue="basic" className="w-full">
-                <TabsList className="grid w-full grid-cols-4">
+                <TabsList className="grid w-full grid-cols-5">
                   <TabsTrigger value="basic">Basic</TabsTrigger>
                   <TabsTrigger value="social">Social</TabsTrigger>
                   <TabsTrigger value="advanced">Advanced</TabsTrigger>
                   <TabsTrigger value="publish">Publishing</TabsTrigger>
+                  <TabsTrigger value="sitemap">Sitemap</TabsTrigger>
                 </TabsList>
 
                 {/* Basic Meta Tags */}
@@ -835,6 +836,157 @@ export default function SeoSettings() {
                           </FormItem>
                         )}
                       />
+                    </CardContent>
+                  </Card>
+                </TabsContent>
+
+                {/* Sitemap & Robots.txt */}
+                <TabsContent value="sitemap" className="space-y-4">
+                  <Card>
+                    <CardHeader>
+                      <CardTitle className="flex items-center gap-2 text-lg">
+                        <Globe className="h-5 w-5" />
+                        Sitemap.xml
+                      </CardTitle>
+                      <CardDescription>
+                        Your sitemap is automatically generated with all public pages
+                      </CardDescription>
+                    </CardHeader>
+                    <CardContent className="space-y-4">
+                      <div className="rounded-lg border p-4 space-y-3">
+                        <div className="flex items-start justify-between">
+                          <div>
+                            <div className="font-medium">Sitemap URL</div>
+                            <div className="text-sm text-muted-foreground mt-1">
+                              Submit this URL to search engines like Google and Bing
+                            </div>
+                          </div>
+                          <CheckCircle2 className="h-5 w-5 text-green-500" />
+                        </div>
+                        <div className="flex gap-2">
+                          <code className="flex-1 px-3 py-2 bg-muted rounded text-sm">
+                            {window.location.origin}/sitemap.xml
+                          </code>
+                          <Button
+                            type="button"
+                            variant="outline"
+                            size="sm"
+                            onClick={() => {
+                              navigator.clipboard.writeText(`${window.location.origin}/sitemap.xml`);
+                              toast({
+                                title: "Copied!",
+                                description: "Sitemap URL copied to clipboard",
+                              });
+                            }}
+                            data-testid="button-copy-sitemap"
+                          >
+                            Copy
+                          </Button>
+                          <Button
+                            type="button"
+                            variant="outline"
+                            size="sm"
+                            onClick={() => window.open('/sitemap.xml', '_blank')}
+                            data-testid="button-view-sitemap"
+                          >
+                            View
+                          </Button>
+                        </div>
+                      </div>
+
+                      <div className="rounded-lg border p-4 space-y-3">
+                        <div className="font-medium">Included Pages</div>
+                        <ul className="text-sm text-muted-foreground space-y-1">
+                          <li className="flex items-center gap-2">
+                            <CheckCircle2 className="h-4 w-4 text-green-500" />
+                            Homepage
+                          </li>
+                          <li className="flex items-center gap-2">
+                            <CheckCircle2 className="h-4 w-4 text-green-500" />
+                            About Page
+                          </li>
+                          <li className="flex items-center gap-2">
+                            <CheckCircle2 className="h-4 w-4 text-green-500" />
+                            Services Page
+                          </li>
+                          <li className="flex items-center gap-2">
+                            <CheckCircle2 className="h-4 w-4 text-green-500" />
+                            Contact Page
+                          </li>
+                          <li className="flex items-center gap-2">
+                            <CheckCircle2 className="h-4 w-4 text-green-500" />
+                            Employee Verification
+                          </li>
+                          <li className="flex items-center gap-2">
+                            <CheckCircle2 className="h-4 w-4 text-green-500" />
+                            All Service Detail Pages (9 services)
+                          </li>
+                        </ul>
+                      </div>
+                    </CardContent>
+                  </Card>
+
+                  <Card>
+                    <CardHeader>
+                      <CardTitle className="flex items-center gap-2 text-lg">
+                        <FileEdit className="h-5 w-5" />
+                        Robots.txt
+                      </CardTitle>
+                      <CardDescription>
+                        Controls how search engines crawl your website
+                      </CardDescription>
+                    </CardHeader>
+                    <CardContent className="space-y-4">
+                      <div className="rounded-lg border p-4 space-y-3">
+                        <div className="flex items-start justify-between">
+                          <div>
+                            <div className="font-medium">Robots.txt URL</div>
+                            <div className="text-sm text-muted-foreground mt-1">
+                              Automatically includes sitemap reference
+                            </div>
+                          </div>
+                          <CheckCircle2 className="h-5 w-5 text-green-500" />
+                        </div>
+                        <div className="flex gap-2">
+                          <code className="flex-1 px-3 py-2 bg-muted rounded text-sm">
+                            {window.location.origin}/robots.txt
+                          </code>
+                          <Button
+                            type="button"
+                            variant="outline"
+                            size="sm"
+                            onClick={() => {
+                              navigator.clipboard.writeText(`${window.location.origin}/robots.txt`);
+                              toast({
+                                title: "Copied!",
+                                description: "Robots.txt URL copied to clipboard",
+                              });
+                            }}
+                            data-testid="button-copy-robots"
+                          >
+                            Copy
+                          </Button>
+                          <Button
+                            type="button"
+                            variant="outline"
+                            size="sm"
+                            onClick={() => window.open('/robots.txt', '_blank')}
+                            data-testid="button-view-robots"
+                          >
+                            View
+                          </Button>
+                        </div>
+                      </div>
+
+                      <div className="rounded-lg border bg-muted/30 p-4">
+                        <div className="text-sm font-medium mb-2">Current Content</div>
+                        <pre className="text-xs text-muted-foreground">
+User-agent: *{'\n'}
+Allow: /{'\n'}
+{'\n'}
+Sitemap: {window.location.origin}/sitemap.xml
+                        </pre>
+                      </div>
                     </CardContent>
                   </Card>
                 </TabsContent>
