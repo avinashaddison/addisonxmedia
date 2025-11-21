@@ -48,9 +48,9 @@ export async function registerRoutes(app: Express): Promise<Server> {
       const pages = [
         { url: '/', priority: '1.0', changefreq: 'daily' },
         { url: '/about', priority: '0.8', changefreq: 'monthly' },
-        { url: '/services', priority: '0.9', changefreq: 'weekly' },
+        { url: '/service', priority: '0.9', changefreq: 'weekly' },
         { url: '/contact', priority: '0.8', changefreq: 'monthly' },
-        { url: '/employee-verification', priority: '0.7', changefreq: 'yearly' },
+        { url: '/verify-employee', priority: '0.7', changefreq: 'yearly' },
         // Service detail pages
         { url: '/service/web-development', priority: '0.9', changefreq: 'weekly' },
         { url: '/service/ecommerce-development', priority: '0.9', changefreq: 'weekly' },
