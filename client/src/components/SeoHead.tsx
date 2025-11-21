@@ -18,6 +18,11 @@ export function SeoHead({ page, fallback = {} }: SeoHeadProps) {
     staleTime: 1000 * 60 * 5, // Cache for 5 minutes
   });
 
+  const { data: faviconData } = useQuery<{ faviconUrl: string | null }>({
+    queryKey: ["/api/favicon"],
+    staleTime: 1000 * 60 * 60, // Cache for 1 hour
+  });
+
   useEffect(() => {
     const dataAttr = `data-seo-${page}`;
     const originalTitle = document.title;
@@ -118,6 +123,16 @@ export function SeoHead({ page, fallback = {} }: SeoHeadProps) {
       });
     }
 
+    // Favicon
+    if (faviconData?.faviconUrl) {
+      const faviconLink = document.createElement("link");
+      faviconLink.rel = "icon";
+      faviconLink.type = "image/x-icon";
+      faviconLink.href = faviconData.faviconUrl;
+      faviconLink.setAttribute(dataAttr, "true");
+      document.head.appendChild(faviconLink);
+    }
+
     // Cleanup function
     return () => {
       // Restore original title
@@ -131,7 +146,7 @@ export function SeoHead({ page, fallback = {} }: SeoHeadProps) {
         }
       });
     };
-  }, [seoSettings, fallback, page]);
+  }, [seoSettings, fallback, page, faviconData]);
 
   return null; // This component doesn't render anything
 }

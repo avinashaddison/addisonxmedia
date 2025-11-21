@@ -38,6 +38,70 @@ export async function registerRoutes(app: Express): Promise<Server> {
   // Auth middleware
   await setupAuth(app);
 
+  // Sitemap.xml route (public)
+  app.get('/sitemap.xml', async (req, res) => {
+    try {
+      const baseUrl = `${req.protocol}://${req.get('host')}`;
+      const now = new Date().toISOString();
+      
+      // Define all public pages with their priorities and change frequencies
+      const pages = [
+        { url: '/', priority: '1.0', changefreq: 'daily' },
+        { url: '/about', priority: '0.8', changefreq: 'monthly' },
+        { url: '/services', priority: '0.9', changefreq: 'weekly' },
+        { url: '/contact', priority: '0.8', changefreq: 'monthly' },
+        { url: '/employee-verification', priority: '0.7', changefreq: 'yearly' },
+        // Service detail pages
+        { url: '/service/web-development', priority: '0.9', changefreq: 'weekly' },
+        { url: '/service/ecommerce-development', priority: '0.9', changefreq: 'weekly' },
+        { url: '/service/brand-promotion', priority: '0.9', changefreq: 'weekly' },
+        { url: '/service/local-seo', priority: '0.9', changefreq: 'weekly' },
+        { url: '/service/ads-management', priority: '0.9', changefreq: 'weekly' },
+        { url: '/service/graphic-designing', priority: '0.9', changefreq: 'weekly' },
+        { url: '/service/whatsapp-marketing', priority: '0.9', changefreq: 'weekly' },
+        { url: '/service/social-media-marketing', priority: '0.9', changefreq: 'weekly' },
+        { url: '/service/custom-development', priority: '0.9', changefreq: 'weekly' },
+      ];
+
+      const sitemap = `<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+${pages.map(page => `  <url>
+    <loc>${baseUrl}${page.url}</loc>
+    <lastmod>${now}</lastmod>
+    <changefreq>${page.changefreq}</changefreq>
+    <priority>${page.priority}</priority>
+  </url>`).join('\n')}
+</urlset>`;
+
+      res.header('Content-Type', 'application/xml');
+      res.send(sitemap);
+    } catch (error) {
+      console.error("Error generating sitemap:", error);
+      res.status(500).send('Error generating sitemap');
+    }
+  });
+
+  // robots.txt route (public)
+  app.get('/robots.txt', async (req, res) => {
+    try {
+      const robotsSetting = await storage.getGlobalSeoSetting('robots_txt');
+      const baseUrl = `${req.protocol}://${req.get('host')}`;
+      
+      const robotsTxt = robotsSetting?.value || `User-agent: *
+Allow: /
+Sitemap: ${baseUrl}/sitemap.xml`;
+
+      res.header('Content-Type', 'text/plain');
+      res.send(robotsTxt);
+    } catch (error) {
+      console.error("Error generating robots.txt:", error);
+      // Fallback robots.txt
+      const baseUrl = `${req.protocol}://${req.get('host')}`;
+      res.header('Content-Type', 'text/plain');
+      res.send(`User-agent: *\nAllow: /\nSitemap: ${baseUrl}/sitemap.xml`);
+    }
+  });
+
   // Auth routes
   app.get('/api/auth/user', isAuthenticated, async (req: any, res) => {
     try {
@@ -918,12 +982,75 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
   app.delete("/api/seo/:page", isAuthenticated, async (req, res) => {
     try {
-      const { page } = req.params;
+      const { page} = req.params;
       await storage.deleteSeoSetting(page);
       res.status(204).send();
     } catch (error) {
       console.error("Error deleting SEO setting:", error);
       res.status(500).json({ message: "Failed to delete SEO setting" });
+    }
+  });
+
+  // Favicon routes
+  app.get("/api/favicon", async (req, res) => {
+    try {
+      const faviconSetting = await storage.getGlobalSeoSetting('site_favicon');
+      res.json({ faviconUrl: faviconSetting?.value || null });
+    } catch (error) {
+      console.error("Error fetching favicon:", error);
+      res.status(500).json({ message: "Failed to fetch favicon" });
+    }
+  });
+
+  app.post("/api/favicon", isAuthenticated, async (req: any, res) => {
+    try {
+      const { faviconUrl } = req.body;
+      
+      if (!faviconUrl) {
+        return res.status(400).json({ message: "Favicon URL is required" });
+      }
+
+      // Upsert the favicon setting
+      const faviconSetting = await storage.upsertGlobalSeoSetting({
+        key: 'site_favicon',
+        value: faviconUrl,
+        isActive: true,
+      });
+
+      res.json({ faviconUrl: faviconSetting.value });
+    } catch (error) {
+      console.error("Error updating favicon:", error);
+      res.status(500).json({ message: "Failed to update favicon" });
+    }
+  });
+
+  // Get upload URL for favicon
+  app.post("/api/favicon/upload-url", isAuthenticated, async (req, res) => {
+    try {
+      const objectStorageService = new ObjectStorageService();
+      const uploadURL = await objectStorageService.getUploadURL();
+      res.json({ uploadURL });
+    } catch (error) {
+      console.error("Error getting favicon upload URL:", error);
+      res.status(500).json({ message: "Failed to get upload URL" });
+    }
+  });
+
+  // Serve favicon.ico
+  app.get("/favicon.ico", async (req, res) => {
+    try {
+      const faviconSetting = await storage.getGlobalSeoSetting('site_favicon');
+      
+      if (faviconSetting?.value) {
+        // Redirect to the actual favicon URL
+        res.redirect(302, faviconSetting.value);
+      } else {
+        // No favicon set, return 404
+        res.status(404).send();
+      }
+    } catch (error) {
+      console.error("Error serving favicon:", error);
+      res.status(404).send();
     }
   });
 

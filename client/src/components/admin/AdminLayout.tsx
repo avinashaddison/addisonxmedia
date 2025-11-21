@@ -37,6 +37,7 @@ import {
   TrendingUp,
   Palette,
   Search,
+  Image,
 } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { ThemeProvider } from "@/components/ThemeProvider";
@@ -107,6 +108,11 @@ const menuItems = [
     title: "SEO Settings",
     url: "/admin/seo",
     icon: Search,
+  },
+  {
+    title: "Favicon",
+    url: "/admin/favicon",
+    icon: Image,
   },
   {
     title: "Settings",
