@@ -128,16 +128,34 @@ export function Footer() {
                   Local SEO
                 </span>
               </a>
-              <a href="/service/social-media-marketing" className="group flex items-center gap-2">
+              <a href="/service/ads-management" className="group flex items-center gap-2">
                 <span className="w-1.5 h-1.5 rounded-full bg-primary/60 group-hover:bg-primary transition-colors"></span>
-                <span className="text-sm text-slate-300 group-hover:text-primary group-hover:translate-x-1 transition-all duration-200" data-testid="footer-link-social-media-marketing">
-                  Social Media Marketing
+                <span className="text-sm text-slate-300 group-hover:text-primary group-hover:translate-x-1 transition-all duration-200" data-testid="footer-link-ads-management">
+                  Ads Management
                 </span>
               </a>
               <a href="/service/graphic-designing" className="group flex items-center gap-2">
                 <span className="w-1.5 h-1.5 rounded-full bg-primary/60 group-hover:bg-primary transition-colors"></span>
                 <span className="text-sm text-slate-300 group-hover:text-primary group-hover:translate-x-1 transition-all duration-200" data-testid="footer-link-graphic-designing">
                   Graphic Designing
+                </span>
+              </a>
+              <a href="/service/whatsapp-marketing" className="group flex items-center gap-2">
+                <span className="w-1.5 h-1.5 rounded-full bg-primary/60 group-hover:bg-primary transition-colors"></span>
+                <span className="text-sm text-slate-300 group-hover:text-primary group-hover:translate-x-1 transition-all duration-200" data-testid="footer-link-whatsapp-marketing">
+                  WhatsApp Marketing
+                </span>
+              </a>
+              <a href="/service/social-media-marketing" className="group flex items-center gap-2">
+                <span className="w-1.5 h-1.5 rounded-full bg-primary/60 group-hover:bg-primary transition-colors"></span>
+                <span className="text-sm text-slate-300 group-hover:text-primary group-hover:translate-x-1 transition-all duration-200" data-testid="footer-link-social-media-marketing">
+                  Social Media Marketing
+                </span>
+              </a>
+              <a href="/service/custom-development" className="group flex items-center gap-2">
+                <span className="w-1.5 h-1.5 rounded-full bg-primary/60 group-hover:bg-primary transition-colors"></span>
+                <span className="text-sm text-slate-300 group-hover:text-primary group-hover:translate-x-1 transition-all duration-200" data-testid="footer-link-custom-development">
+                  Custom Development
                 </span>
               </a>
             </div>
