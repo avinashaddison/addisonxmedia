@@ -235,19 +235,19 @@ export function AdminLayout({ children }: AdminLayoutProps) {
     <ThemeProvider defaultTheme="dark" storageKey="admin-ui-theme">
       <SidebarProvider style={sidebarStyle as React.CSSProperties}>
         <div className="flex h-screen w-full">
-          <Sidebar>
-            <SidebarHeader className="border-b border-sidebar-border p-6">
+          <Sidebar className="border-r border-primary/10">
+            <SidebarHeader className="border-b border-primary/20 p-6 bg-gradient-to-b from-sidebar-accent/30 to-transparent">
               <div className="flex flex-col gap-3">
-                <img 
-                  src={logoUrl} 
-                  alt="AddisonX Media Logo" 
-                  className="h-12 w-auto rounded-md object-contain p-2 bg-white shadow-lg"
-                  style={{
-                    boxShadow: '0 0 20px rgba(255, 77, 54, 0.4), 0 0 40px rgba(255, 77, 54, 0.2)'
-                  }}
-                />
-                <div className="inline-flex items-center justify-center px-3 py-1.5 rounded-md bg-gradient-to-r from-primary/20 via-orange-500/20 to-primary/20 border border-primary/30 backdrop-blur-sm">
-                  <span className="text-xs font-semibold bg-gradient-to-r from-primary to-orange-500 bg-clip-text text-transparent tracking-wide">
+                <div className="relative group">
+                  <div className="absolute -inset-1 bg-gradient-to-r from-primary via-orange-500 to-primary rounded-lg blur opacity-25 group-hover:opacity-40 transition-opacity"></div>
+                  <img 
+                    src={logoUrl} 
+                    alt="AddisonX Media Logo" 
+                    className="relative h-12 w-auto rounded-md object-contain p-2 bg-white shadow-xl"
+                  />
+                </div>
+                <div className="inline-flex items-center justify-center px-3 py-1.5 rounded-lg bg-gradient-to-r from-primary/25 via-orange-500/25 to-primary/25 border border-primary/40 backdrop-blur-sm shadow-lg">
+                  <span className="text-xs font-bold bg-gradient-to-r from-primary via-orange-400 to-primary bg-clip-text text-transparent tracking-wide animate-pulse">
                     CEO - Mr. AJAY KUMAR
                   </span>
                 </div>
@@ -292,16 +292,19 @@ export function AdminLayout({ children }: AdminLayoutProps) {
             </SidebarGroup>
           </SidebarContent>
 
-          <SidebarFooter className="border-t border-sidebar-border p-4 bg-sidebar/50">
+          <SidebarFooter className="border-t border-primary/20 p-4 bg-gradient-to-t from-sidebar-accent/30 to-transparent">
             <div className="flex items-center gap-3 mb-3 px-1">
-              <Avatar className="h-8 w-8 border border-sidebar-border">
-                <AvatarImage src={user?.profileImageUrl || undefined} />
-                <AvatarFallback className="bg-sidebar-accent">
-                  <UserCircle2 className="h-5 w-5" />
-                </AvatarFallback>
-              </Avatar>
+              <div className="relative">
+                <div className="absolute -inset-0.5 bg-gradient-to-r from-primary to-orange-500 rounded-full blur opacity-40"></div>
+                <Avatar className="relative h-8 w-8 border-2 border-primary/30">
+                  <AvatarImage src={user?.profileImageUrl || undefined} />
+                  <AvatarFallback className="bg-gradient-to-br from-primary/20 to-orange-500/20">
+                    <UserCircle2 className="h-5 w-5 text-primary" />
+                  </AvatarFallback>
+                </Avatar>
+              </div>
               <div className="flex-1 min-w-0">
-                <p className="text-sm font-medium truncate">
+                <p className="text-sm font-semibold truncate bg-gradient-to-r from-foreground to-foreground/70 bg-clip-text">
                   {user?.firstName || user?.email || "Admin"}
                 </p>
                 <p className="text-xs text-muted-foreground truncate">
@@ -313,34 +316,35 @@ export function AdminLayout({ children }: AdminLayoutProps) {
               variant="outline"
               size="sm"
               onClick={handleLogout}
-              className="w-full"
+              className="w-full group border-primary/30 hover:border-primary/50"
               data-testid="button-logout"
             >
-              <LogOut className="h-4 w-4 mr-2" />
+              <LogOut className="h-4 w-4 mr-2 group-hover:rotate-12 transition-transform" />
               Logout
             </Button>
           </SidebarFooter>
         </Sidebar>
 
         <div className="flex flex-col flex-1 overflow-hidden">
-          <header className="flex items-center justify-between gap-4 px-6 py-4 border-b bg-card/30 backdrop-blur-sm shadow-sm">
+          <header className="relative flex items-center justify-between gap-4 px-6 py-4 border-b border-primary/20 bg-card/50 backdrop-blur-xl shadow-sm">
+            <div className="absolute top-0 left-0 right-0 h-0.5 bg-gradient-to-r from-transparent via-primary to-transparent"></div>
             <div className="flex items-center gap-4">
-              <SidebarTrigger data-testid="button-sidebar-toggle" />
-              <div className="h-8 w-px bg-border/50"></div>
+              <SidebarTrigger data-testid="button-sidebar-toggle" className="hover:bg-primary/10 hover:text-primary transition-colors" />
+              <div className="h-8 w-px bg-gradient-to-b from-transparent via-border to-transparent"></div>
               <div>
-                <h1 className="text-lg font-semibold tracking-tight">
+                <h1 className="text-lg font-bold tracking-tight bg-gradient-to-r from-primary via-orange-500 to-primary bg-clip-text text-transparent">
                   {getCurrentPageTitle()}
                 </h1>
               </div>
             </div>
             <div className="flex items-center gap-3">
               <ThemeToggle />
-              <div className="px-3 py-1.5 rounded-md bg-primary/15 text-primary text-xs font-medium border border-primary/20">
+              <div className="px-3 py-1.5 rounded-lg bg-gradient-to-r from-primary/20 to-orange-500/20 text-primary text-xs font-bold border border-primary/30 shadow-sm">
                 Admin
               </div>
             </div>
           </header>
-          <main className="flex-1 overflow-y-auto bg-background">
+          <main className="flex-1 overflow-y-auto bg-gradient-to-br from-background via-background to-muted/10">
             {children}
           </main>
         </div>

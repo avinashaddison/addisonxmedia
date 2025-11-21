@@ -52,13 +52,14 @@ export default function Dashboard() {
   }
 
   return (
-    <div className="min-h-screen bg-background">
-      {/* Header */}
-      <header className="border-b border-border/50 bg-card/50 backdrop-blur-sm">
+    <div className="min-h-screen bg-gradient-to-br from-background via-background to-muted/20">
+      {/* Header with gradient accent */}
+      <header className="relative border-b border-primary/20 bg-card/80 backdrop-blur-xl shadow-sm">
+        <div className="absolute top-0 left-0 right-0 h-0.5 bg-gradient-to-r from-transparent via-primary to-transparent"></div>
         <div className="max-w-7xl mx-auto px-4 md:px-6 py-6">
           <div className="flex items-center justify-between">
             <div>
-              <h1 className="text-3xl font-bold tracking-tight" data-testid="text-dashboard-title">
+              <h1 className="text-3xl font-bold tracking-tight bg-gradient-to-r from-primary via-purple-500 to-primary bg-clip-text text-transparent" data-testid="text-dashboard-title">
                 Admin Dashboard
               </h1>
               <p className="text-base text-muted-foreground mt-1" data-testid="text-dashboard-subtitle">
@@ -69,8 +70,9 @@ export default function Dashboard() {
               variant="outline" 
               onClick={handleLogout}
               data-testid="button-logout"
+              className="group"
             >
-              <LogOut className="h-4 w-4 mr-2" />
+              <LogOut className="h-4 w-4 mr-2 group-hover:rotate-12 transition-transform" />
               Logout
             </Button>
           </div>
@@ -79,16 +81,17 @@ export default function Dashboard() {
 
       {/* Main Content */}
       <main className="max-w-7xl mx-auto px-4 md:px-6 py-8">
-        {/* Quick Navigation */}
+        {/* Quick Navigation with enhanced gradients */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
           <Link href="/admin/employees/new">
-            <Card className="p-8 border border-border/50 bg-gradient-to-br from-primary/10 to-primary/5 hover-elevate transition-all cursor-pointer">
-              <div className="flex items-center gap-4">
-                <div className="w-16 h-16 rounded-xl bg-primary/20 flex items-center justify-center flex-shrink-0">
+            <Card className="group relative p-8 border border-primary/30 bg-gradient-to-br from-primary/15 via-primary/10 to-primary/5 hover-elevate active-elevate-2 transition-all cursor-pointer overflow-hidden">
+              <div className="absolute inset-0 bg-gradient-to-br from-primary/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+              <div className="relative flex items-center gap-4">
+                <div className="w-16 h-16 rounded-xl bg-gradient-to-br from-primary/30 to-primary/20 flex items-center justify-center flex-shrink-0 shadow-lg group-hover:scale-110 transition-transform">
                   <Users className="h-8 w-8 text-primary" />
                 </div>
                 <div>
-                  <h3 className="text-lg font-bold mb-1">Manage Employees</h3>
+                  <h3 className="text-lg font-bold mb-1 group-hover:text-primary transition-colors">Manage Employees</h3>
                   <p className="text-sm text-muted-foreground">
                     {employees.length} employees registered
                   </p>
@@ -98,13 +101,14 @@ export default function Dashboard() {
           </Link>
 
           <Link href="/admin/testimonials">
-            <Card className="p-8 border border-border/50 bg-gradient-to-br from-yellow-500/10 to-yellow-500/5 hover-elevate transition-all cursor-pointer" data-testid="card-testimonials">
-              <div className="flex items-center gap-4">
-                <div className="w-16 h-16 rounded-xl bg-yellow-500/20 flex items-center justify-center flex-shrink-0">
+            <Card className="group relative p-8 border border-yellow-500/30 bg-gradient-to-br from-yellow-500/15 via-yellow-500/10 to-yellow-500/5 hover-elevate active-elevate-2 transition-all cursor-pointer overflow-hidden" data-testid="card-testimonials">
+              <div className="absolute inset-0 bg-gradient-to-br from-yellow-500/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+              <div className="relative flex items-center gap-4">
+                <div className="w-16 h-16 rounded-xl bg-gradient-to-br from-yellow-500/30 to-yellow-500/20 flex items-center justify-center flex-shrink-0 shadow-lg group-hover:scale-110 transition-transform">
                   <Star className="h-8 w-8 text-yellow-600 dark:text-yellow-400" />
                 </div>
                 <div>
-                  <h3 className="text-lg font-bold mb-1">Manage Testimonials</h3>
+                  <h3 className="text-lg font-bold mb-1 group-hover:text-yellow-600 dark:group-hover:text-yellow-400 transition-colors">Manage Testimonials</h3>
                   <p className="text-sm text-muted-foreground">
                     Client reviews and testimonials
                   </p>
@@ -114,13 +118,14 @@ export default function Dashboard() {
           </Link>
 
           <Link href="/admin/analytics">
-            <Card className="p-8 border border-border/50 bg-gradient-to-br from-blue-500/10 to-blue-500/5 hover-elevate transition-all cursor-pointer" data-testid="card-analytics">
-              <div className="flex items-center gap-4">
-                <div className="w-16 h-16 rounded-xl bg-blue-500/20 flex items-center justify-center flex-shrink-0">
+            <Card className="group relative p-8 border border-blue-500/30 bg-gradient-to-br from-blue-500/15 via-blue-500/10 to-blue-500/5 hover-elevate active-elevate-2 transition-all cursor-pointer overflow-hidden" data-testid="card-analytics">
+              <div className="absolute inset-0 bg-gradient-to-br from-blue-500/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+              <div className="relative flex items-center gap-4">
+                <div className="w-16 h-16 rounded-xl bg-gradient-to-br from-blue-500/30 to-blue-500/20 flex items-center justify-center flex-shrink-0 shadow-lg group-hover:scale-110 transition-transform">
                   <BarChart3 className="h-8 w-8 text-blue-600 dark:text-blue-400" />
                 </div>
                 <div>
-                  <h3 className="text-lg font-bold mb-1">View Analytics</h3>
+                  <h3 className="text-lg font-bold mb-1 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">View Analytics</h3>
                   <p className="text-sm text-muted-foreground">
                     Verification search statistics
                   </p>
