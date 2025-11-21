@@ -240,35 +240,32 @@ export function AdminLayout({ children }: AdminLayoutProps) {
 
   const sidebarStyle = {
     "--sidebar-width": "16rem",
-    "--sidebar-width-icon": "3rem",
+    "--sidebar-width-icon": "4rem",
   };
 
   return (
     <ThemeProvider defaultTheme="dark" storageKey="admin-ui-theme">
-      <SidebarProvider style={sidebarStyle as React.CSSProperties}>
+      <SidebarProvider style={sidebarStyle as React.CSSProperties} defaultOpen={true}>
         <div className="flex h-screen w-full">
-          <Sidebar className="border-r border-primary/10">
-            <SidebarHeader className="border-b border-primary/20 p-6 bg-gradient-to-b from-sidebar-accent/30 to-transparent">
-              <div className="flex flex-col gap-3">
-                <div className="relative group">
-                  <div className="absolute -inset-1 bg-gradient-to-r from-primary via-orange-500 to-primary rounded-lg blur opacity-25 group-hover:opacity-40 transition-opacity"></div>
+          <Sidebar collapsible="icon" className="border-r bg-sidebar">
+            <SidebarHeader className="border-b p-4 group-data-[collapsible=icon]:p-2">
+              <div className="flex items-center gap-3 group-data-[collapsible=icon]:justify-center">
+                <div className="relative flex-shrink-0">
                   <img 
                     src={logoUrl} 
                     alt="AddisonX Media Logo" 
-                    className="relative h-12 w-auto rounded-md object-contain p-2 bg-white shadow-xl"
+                    className="h-10 w-10 rounded object-cover bg-white"
                   />
                 </div>
-                <div className="inline-flex items-center justify-center px-3 py-1.5 rounded-lg bg-gradient-to-r from-primary/25 via-orange-500/25 to-primary/25 border border-primary/40 backdrop-blur-sm shadow-lg">
-                  <span className="text-xs font-bold bg-gradient-to-r from-primary via-orange-400 to-primary bg-clip-text text-transparent tracking-wide animate-pulse">
-                    CEO - Mr. AJAY KUMAR
-                  </span>
+                <div className="flex-1 min-w-0 group-data-[collapsible=icon]:hidden">
+                  <h2 className="text-sm font-bold truncate">AddisonX Media</h2>
+                  <p className="text-xs text-muted-foreground truncate">Admin Panel</p>
                 </div>
               </div>
             </SidebarHeader>
 
-          <SidebarContent className="px-2">
+          <SidebarContent className="py-2">
             <SidebarGroup>
-              <SidebarGroupLabel className="text-xs text-muted-foreground px-3 py-2">Navigation</SidebarGroupLabel>
               <SidebarGroupContent>
                 <SidebarMenu>
                   {menuItems.map((item) => {
@@ -282,13 +279,19 @@ export function AdminLayout({ children }: AdminLayoutProps) {
                     
                     return (
                       <SidebarMenuItem key={item.title}>
-                        <SidebarMenuButton asChild isActive={isActive} data-testid={`nav-${item.title.toLowerCase().replace(/\s+/g, '-')}`}>
+                        <SidebarMenuButton 
+                          asChild 
+                          isActive={isActive} 
+                          data-testid={`nav-${item.title.toLowerCase().replace(/\s+/g, '-')}`}
+                          tooltip={item.title}
+                          className="h-10"
+                        >
                           <Link href={item.url}>
-                            <Icon className="h-4 w-4" />
-                            <span>{item.title}</span>
+                            <Icon className="h-5 w-5" />
+                            <span className="flex-1">{item.title}</span>
                             {showBadge && (
                               <Badge 
-                                className="ml-auto bg-primary text-white animate-pulse" 
+                                className="ml-auto h-5 px-1.5 bg-primary text-white text-xs group-data-[collapsible=icon]:hidden" 
                                 data-testid="badge-unread-count"
                               >
                                 {unreadCount}
@@ -304,36 +307,35 @@ export function AdminLayout({ children }: AdminLayoutProps) {
             </SidebarGroup>
           </SidebarContent>
 
-          <SidebarFooter className="border-t border-primary/20 p-4 bg-gradient-to-t from-sidebar-accent/30 to-transparent">
-            <div className="flex items-center gap-3 mb-3 px-1">
-              <div className="relative">
-                <div className="absolute -inset-0.5 bg-gradient-to-r from-primary to-orange-500 rounded-full blur opacity-40"></div>
-                <Avatar className="relative h-8 w-8 border-2 border-primary/30">
-                  <AvatarImage src={user?.profileImageUrl || undefined} />
-                  <AvatarFallback className="bg-gradient-to-br from-primary/20 to-orange-500/20">
-                    <UserCircle2 className="h-5 w-5 text-primary" />
-                  </AvatarFallback>
-                </Avatar>
-              </div>
-              <div className="flex-1 min-w-0">
-                <p className="text-sm font-semibold truncate bg-gradient-to-r from-foreground to-foreground/70 bg-clip-text">
-                  {user?.firstName || user?.email || "Admin"}
-                </p>
-                <p className="text-xs text-muted-foreground truncate">
-                  {user?.email}
-                </p>
-              </div>
-            </div>
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={handleLogout}
-              className="w-full group border-primary/30 hover:border-primary/50"
-              data-testid="button-logout"
-            >
-              <LogOut className="h-4 w-4 mr-2 group-hover:rotate-12 transition-transform" />
-              Logout
-            </Button>
+          <SidebarFooter className="border-t p-2">
+            <SidebarMenu>
+              <SidebarMenuItem>
+                <SidebarMenuButton 
+                  onClick={handleLogout}
+                  data-testid="button-logout"
+                  tooltip="Logout"
+                  className="h-10"
+                >
+                  <div className="flex items-center gap-2 w-full">
+                    <div className="relative flex-shrink-0">
+                      <Avatar className="h-6 w-6">
+                        <AvatarImage src={user?.profileImageUrl || undefined} />
+                        <AvatarFallback className="bg-primary/20 text-primary text-xs">
+                          {user?.firstName?.[0] || user?.email?.[0] || "A"}
+                        </AvatarFallback>
+                      </Avatar>
+                    </div>
+                    <div className="flex-1 min-w-0 group-data-[collapsible=icon]:hidden">
+                      <p className="text-xs font-medium truncate">
+                        {user?.firstName || user?.email || "Admin"}
+                      </p>
+                      <p className="text-xs text-muted-foreground truncate">Logout</p>
+                    </div>
+                    <LogOut className="h-4 w-4 flex-shrink-0 group-data-[collapsible=icon]:hidden" />
+                  </div>
+                </SidebarMenuButton>
+              </SidebarMenuItem>
+            </SidebarMenu>
           </SidebarFooter>
         </Sidebar>
 
